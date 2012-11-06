@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="styles/jqm.min.css" />
+        <link rel="stylesheet" href="styles/theme.min.css" />
+        <link rel="stylesheet" href="styles/custom.css" />
+        <!-- build:js scripts/scripts.js -->
+        <script src="scripts/vendor/jquery.min.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/vendor/jqm.js"></script>
+        <script src="scripts/vendor/lodash.min.js"></script>
+        <script src="scripts/vendor/backbone-min.js"></script>
+        <script src="scripts/views/application-view.js"></script>
+        <script src="scripts/models/application-model.js"></script>
+        <script src="scripts/collections/application-collection.js"></script>
+        <script src="scripts/routes/application-router.js"></script>
+        <!-- endbuild -->
+    </head>
+  <body>
+ <!-- Meetings listing -->
+        <div data-role="page" id="meetings">
+            <div data-role="content">
+                <ul data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Filter meetings..." data-theme="a">
+                    <!-- Today -->
+                    <li data-role="list-divider">Today<!--<span class="ui-li-count">1</span>--></li>
+                    <!-- Board meeting -->
+                    <li>
+                    <a href="meeting.html?id=1">
+                        <h3>Meetin.gs board meeting</h3>
+                        <p>Fredrikinkatu 61 A, 8th floor, Helsinki, Finland</p>
+                        <p class="ui-li-aside"><strong>4 PM - 5 PM</strong></p>
+                    </a>
+                    </li>
+
+                    </li>
+                    <li data-role="list-divider">Monday, August 6, 2012 <!-- <span class="ui-li-count">1</span>--></li>
+                    <!-- Usability workshop -->
+                    <li>
+                    <a data-navigation="false" href="#meeting_info">
+                        <h3>Usability workshop</h3>
+                        <p>Westergasfabriek, Amsterdam, The Netherlands</p>
+                        <p class="ui-li-aside"><strong> 8:30 AM - 10 AM</strong></p>
+                    </a>
+                    </li>
+                    <!-- Yesterday -->
+                    <li data-role="list-divider">Friday, August 10, 2012 <!-- <span class="ui-li-count">1</span> --></li>
+                    <!-- Weekly meeting -->
+                    <li>
+                    <a href="#meeting_info">
+                        <h3>Weekly meeting</h3>
+                        <p>Fredrikinkatu 61 A, 8th floor, Helsinki, Finland</p>
+                        <p data-navigation="false" class="ui-li-aside"><strong>11 AM - 13 PM</strong></p>
+                    </a>
+                    </li>
+                </ul>
+            </div><!-- /content -->
+            <div data-role="footer" data-position="fixed" data-id="meeting-footer">
+                <div data-role="navbar" class="meeting-navbar" data-grid="a">
+                    <ul>
+                        <li><a id="nav-info" href="index.html" data-icon="custom" data-transition="fade">Upcoming</a></li>
+                        <li><a id="nav-materials" href="search.html" data-icon="custom" class="ui-btn-active ui-state-persist" data-transition="fade">Search</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div><!-- /page -->
+  </body>
+</html>

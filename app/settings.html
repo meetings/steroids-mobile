@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="styles/custom.css" />
+        <!-- build:js scripts/scripts.js -->
+        <script src="scripts/vendor/jquery.min.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/vendor/jqm.js"></script>
+        <script src="scripts/vendor/lodash.min.js"></script>
+        <script src="scripts/vendor/backbone-min.js"></script>
+        <script src="scripts/vendor/backbone-query-params.js"></script>
+        <script src="scripts/views/meetingListView.js"></script>
+        <script src="scripts/views/meetingInListView.js"></script>
+        <script src="scripts/views/participantListView.js"></script>
+        <script src="scripts/views/participantInListView.js"></script>
+        <script src="scripts/views/materialListView.js"></script>
+        <script src="scripts/views/materialInListView.js"></script>
+        <script src="scripts/views/participantView.js"></script>
+        <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/settingsView.js"></script>
+        <script src="scripts/models/meetingModel.js"></script>
+        <script src="scripts/models/materialModel.js"></script>
+        <script src="scripts/models/participantModel.js"></script>
+        <script src="scripts/collections/meetingCollection.js"></script>
+        <script src="scripts/routes/router.js"></script>
+        <script src="scripts/templates/all.js"></script>
+        <!-- endbuild -->
+    </head>
+<body>
+    <!-- Settings -->
+    <div data-role="page" id="meetings">
+        <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d">
+            <a href="index.html" data-icon="mtngs-back" data-theme="b">Back</a>
+            <h1>Meetin.gs</h1>
+        </div>
+        <div id="settings" data-role="content">
+       </div>
+    </div><!-- /page -->
+</body>
+</html>

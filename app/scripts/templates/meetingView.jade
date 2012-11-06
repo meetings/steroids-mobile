@@ -1,0 +1,32 @@
+h3=title
+p.mtngs-calendar=time_string+' '+date_string
+p.mtngs-location=location
+
+// Links
+ul(data-role='listview',data-inset='true')
+    li
+        a(href="#").open-material-view
+            h3='Materials'
+            p='Agenda & materials'
+    li
+        a(href="#").open-participant-view
+            h3='Participants'
+            .participant-list
+            - if ( participants.length)
+                .participants
+                    - participants.forEach(function(participant){
+                        - if( ! participant.image ) participant.image = app.defaults.user_image
+                        img(src=participant.image, width='20', height='20')
+                    - })
+
+// Skype button
+- if (skype_address)
+    a#skype_button(href=skype_address,data-role='button',data-icon='mtngs-skype',data-them='b')
+
+// Progress bar
+- if (ongoing)
+    div.bar.wrapper
+        div.bar-container
+            div.text=timeleft
+            div.bar(style='width:'+percentage+'%')
+
