@@ -60,7 +60,7 @@ app.router = Backbone.Router.extend({
       });
       app.models.meeting.fetch({ success : function(){
           app.views.meeting.render();
-      }, timeout : 1000 });
+      }, timeout : 5000 });
   },
   participants: function(params) {
       var id = params.id || 0;

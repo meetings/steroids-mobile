@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="manifest.appcache">
     <head>
         <meta charset="utf-8">
         <meta name = "viewport" content = "width = 480, user-scalable = yes">
@@ -27,22 +27,24 @@
 <body>
     <!-- Meetings listing -->
     <div data-role="page" id="meetings" data-theme="a">
-        <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d">
+        <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false" data-tap-toggle="false">
             <a href="#" data-rel="back" data-icon="delete" data-theme="b">Close</a>
             <h1>Materials</h1>
         </div>
         <div data-role="content">
-            <div id="material">
+            <ul data-role="listview" data-inset="true" data-theme="d" id="material">
+                <li>
                 <img alt="" class="loader" src="/images/ajaxloader.gif" />
-            </div>
+                </li>
+                </ul>
             <ul data-role="listview" data-inset="true" id="comments" data-theme="d">
                 <li>
                     <img alt="" class="loader" src="/images/ajaxloader.gif" />
                 </li>
             </ul>
         </div>
-        <div data-role="footer" data-position="fixed" data-id="meeting-footer">
-            <div data-role="navbar" class="meeting-navbar" data-grid="a">
+        <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-tap-toggle="false">
+            <div data-role="navbar" class="meeting-navbar" data-grid="a" data-tap-toggle="false">
                 <ul>
                     <li><a id="nav-upcoming" href="index.html" data-icon="custom" class="ui-btn-active ui-state-persist" data-transition="fade">Upcoming</a></li>
                     <li><a id="nav-past" href="past.html" data-icon="custom" data-transition="fade">Past</a></li>

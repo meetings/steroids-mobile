@@ -2,17 +2,24 @@
     .ui-block-a
         img(src=image,style="width:90%")
     .ui-block-b
-        a(href="#",data-role="button",data-theme="b")='Call'
-        a(href="#",data-role="button",data-theme="b")='SMS'
-        a(href="#",data-role="button",data-theme="b")='Skype'
-h3(style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;")=name
-p(style="margin-top:0px;")=organization+', '+organization_title
-            <ul id="today" data-role="listview" data-inset="true" data-theme="a">
+        - if (phone)
+            a(href="tel:"+phone,data-role="button",data-theme="b")='Call'
+        - if (phone)
+            a(href="sms:"+phone,data-role="button",data-theme="b")='SMS'
+        - if (skype)
+            a(href="skype:"+skype,data-role="button",data-theme="b")='Skype'
+- if(name)
+    h3(style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;")=name
+- if (organization || organization_title)
+    p(style="margin-top:0px;")=organization+', '+organization_title
 ul(data-role="listview",data-inset="true",data-theme="a")
     li
         p.mtngs-email
             a(style="font-weight:normal;color:#555;",href="mailto:"+email)=email
-        p.mtngs-mobile=phone
-        p.mtngs-skype=skype
-        p.mtngs-linkedin
-            a(style="font-weight:normal;color:#555;",href=linkedin)="LinkeIn Profile"
+        - if (phone)
+            p.mtngs-mobile=phone
+        - if (skype)
+            p.mtngs-skype=skype
+        - if (linkedin)
+            p.mtngs-linkedin
+                a(style="font-weight:normal;color:#555;",href=linkedin)="LinkeIn Profile"

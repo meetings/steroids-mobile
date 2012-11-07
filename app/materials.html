@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="manifest.appcache">
     <head>
         <meta charset="utf-8">
         <meta name = "viewport" content = "width = 480, user-scalable = yes">
-        <link rel="stylesheet" href="styles/jqm.min.css" />
-        <link rel="stylesheet" href="styles/theme.min.css" />
         <link rel="stylesheet" href="styles/custom.css" />
         <!-- build:js scripts/scripts.js -->
         <script src="scripts/vendor/jquery.min.js"></script>
@@ -31,7 +29,7 @@
 <body>
     <!-- Meetings listing -->
     <div data-role="page" id="meetings" data-theme="a">
-        <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d">
+        <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
             <a href="#" data-rel="back" data-icon="mtngs-back" data-theme="b">Back</a>
             <h1>Meetin.gs</h1>
         </div>
@@ -42,7 +40,7 @@
                 </li>
             </ul>
         </div>
-        <div data-role="footer" data-position="fixed" data-id="meeting-footer">
+        <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-tap-toggle="false">
             <div data-role="navbar" class="meeting-navbar" data-grid="a">
                 <ul>
                     <li><a id="nav-upcoming" href="index.html" data-icon="custom" class="ui-btn-active ui-state-persist" data-transition="fade">Upcoming</a></li>

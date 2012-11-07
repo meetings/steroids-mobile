@@ -78,11 +78,33 @@ ul#comments{
 }
 // Material list
 ul#materials{
-    .ui-li-has-thumb a{
+     li a{
+        span{
+            width:46px;
+            height:46px;
+            left:10px;
+            top:13px;
+        }
+        span.material-image{
+            @include retina-bg('/images/m_image', 'png', 46px, 46px);
+            background-position:top left;
+            background-color:transparent;
+        }
+        span.material-text{
+            @include retina-bg('/images/m_textj', 'png', 46px, 46px);
+            background-position:top left;
+            background-color:transparent;
+        }
+        span.material-other{
+            @include retina-bg('/images/m_prese', 'png', 46px, 46px);
+            background-position:top left;
+            background-color:transparent;
+        }
         min-height:40px;
         padding-left:70px;
     }
 }
+
 /* Fix material list icon positions */
 .ui-li-thumb, .ui-listview .ui-li-icon{
     top:13px;

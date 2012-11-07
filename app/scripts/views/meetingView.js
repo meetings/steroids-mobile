@@ -1,7 +1,7 @@
 app.meetingView = Backbone.View.extend({
     errors : 0,
     initialize: function(options) {
-        //options.model.bind('error', this.errorHandler, this);
+        options.model.bind('error', this.errorHandler, this);
     },
     render: function() {
         this.$el.html( templatizer.meetingView( this.model.toJSON() ) ); // Render template
@@ -23,8 +23,9 @@ app.meetingView = Backbone.View.extend({
         console.log(this.errors);
         if( this.errors === 0 ){
             this.errors++;
-            this.model.fetch({ success : function(){
-                this.render();
+            var view = this;
+            this.model.fetch({ success : function(a, b){
+                view.render();
             }, timeout : 2000 });
         }
         else{

@@ -1,10 +1,10 @@
 a(href='material.html?id='+material_id)
     - if ( fetch_type === 'image' )
-        img(src='/images/m_image@2x.png',width="46")
+        span.material-imag.ui-li-thumb.ui-corner-tle
     - else if ( fetch_type === 'text' )
-        img(src='/images/m_text@2x.png',width="46")
+        span.material-tex.ui-li-thumb.ui-corner-tlt
     - else
-        img(src='/images/m_prese@2x.png',width="46")
+        span.material-other.ui-li-thumb.ui-corner-tl
     h3=title
     -if ( author_name !== '' )
         p='By ' + author_name + ' ' + time_ago

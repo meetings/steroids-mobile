@@ -56,11 +56,11 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
         }));
         buf.push(">");
         if (fetch_type === "image") {
-            buf.push('<img src="/images/m_image@2x.png" width="46"/>');
+            buf.push('<span class="material-imag ui-li-thumb ui-corner-tle"></span>');
         } else if (fetch_type === "text") {
-            buf.push('<img src="/images/m_text@2x.png" width="46"/>');
+            buf.push('<span class="material-tex ui-li-thumb ui-corner-tlt"></span>');
         } else {
-            buf.push('<img src="/images/m_prese@2x.png" width="46"/>');
+            buf.push('<span class="material-other ui-li-thumb ui-corner-tl"></span>');
         }
         buf.push("\n  <h3>");
         var __val__ = title;
@@ -254,7 +254,9 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
         }, {
             href: true
         }));
-        buf.push("><img");
+        buf.push(">");
+        if (!image) var image = app.defaults.user_image;
+        buf.push("<img");
         buf.push(attrs({
             src: image,
             width: "60",
@@ -309,22 +311,69 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             src: true,
             style: true
         }));
-        buf.push('/></div>\n  <div class="ui-block-b"><a href="#" data-role="button" data-theme="b">');
-        var __val__ = "Call";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</a><a href="#" data-role="button" data-theme="b">');
-        var __val__ = "SMS";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</a><a href="#" data-role="button" data-theme="b">');
-        var __val__ = "Skype";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</a></div>\n</div>\n<h3 style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;">');
-        var __val__ = name;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</h3>\n<p style="margin-top:0px;">');
-        var __val__ = organization + ", " + organization_title;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('<ul id="today" data-role="listview" data-inset="true" data-theme="a"></p>\n<ul data-role="listview" data-inset="true" data-theme="a">\n  <li>\n    <p class="mtngs-email"><a');
+        buf.push('/></div>\n  <div class="ui-block-b">');
+        if (phone) {
+            buf.push("<a");
+            buf.push(attrs({
+                href: "tel:" + phone,
+                "data-role": "button",
+                "data-theme": "b"
+            }, {
+                href: true,
+                "data-role": true,
+                "data-theme": true
+            }));
+            buf.push(">");
+            var __val__ = "Call";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</a>");
+        }
+        if (phone) {
+            buf.push("<a");
+            buf.push(attrs({
+                href: "sms:" + phone,
+                "data-role": "button",
+                "data-theme": "b"
+            }, {
+                href: true,
+                "data-role": true,
+                "data-theme": true
+            }));
+            buf.push(">");
+            var __val__ = "SMS";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</a>");
+        }
+        if (skype) {
+            buf.push("<a");
+            buf.push(attrs({
+                href: "skype:" + skype,
+                "data-role": "button",
+                "data-theme": "b"
+            }, {
+                href: true,
+                "data-role": true,
+                "data-theme": true
+            }));
+            buf.push(">");
+            var __val__ = "Skype";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</a>");
+        }
+        buf.push("\n  </div>\n</div>");
+        if (name) {
+            buf.push('\n<h3 style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;">');
+            var __val__ = name;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</h3>");
+        }
+        if (organization || organization_title) {
+            buf.push('\n<p style="margin-top:0px;">');
+            var __val__ = organization + ", " + organization_title;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        buf.push('\n<ul data-role="listview" data-inset="true" data-theme="a">\n  <li>\n    <p class="mtngs-email"><a');
         buf.push(attrs({
             style: "font-weight:normal;color:#555;",
             href: "mailto:" + email
@@ -335,24 +384,34 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
         buf.push(">");
         var __val__ = email;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</a></p>\n    <p class="mtngs-mobile">');
-        var __val__ = phone;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</p>\n    <p class="mtngs-skype">');
-        var __val__ = skype;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</p>\n    <p class="mtngs-linkedin"><a');
-        buf.push(attrs({
-            style: "font-weight:normal;color:#555;",
-            href: linkedin
-        }, {
-            style: true,
-            href: true
-        }));
-        buf.push(">");
-        var __val__ = "LinkeIn Profile";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</a></p>\n  </li>\n</ul>");
+        buf.push("</a></p>");
+        if (phone) {
+            buf.push('\n    <p class="mtngs-mobile">');
+            var __val__ = phone;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (skype) {
+            buf.push('\n    <p class="mtngs-skype">');
+            var __val__ = skype;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (linkedin) {
+            buf.push('\n    <p class="mtngs-linkedin"><a');
+            buf.push(attrs({
+                style: "font-weight:normal;color:#555;",
+                href: linkedin
+            }, {
+                style: true,
+                href: true
+            }));
+            buf.push(">");
+            var __val__ = "LinkeIn Profile";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</a></p>");
+        }
+        buf.push("\n  </li>\n</ul>");
     }
     return buf.join("");
 };

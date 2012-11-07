@@ -1,4 +1,5 @@
 a(href='participant.html?id='+user_id)
+    - if( !image ) var image = app.defaults.user_image
     img(src=image,width='60').mtngs-profile-image
     h3=name
     p=organization
