@@ -1,0 +1,11 @@
+{
+  "name": "muna",
+  "framework": "0.9.2",
+  "navigation_bar_style": "black",
+  "status_bar_style": "black",
+  "fullscreen": "true",
+  "fullscreen_start_url": "http://localhost:13101/login.html",
+  "client_version": "edge",
+  "background_eval_js_string": "",
+  "bottom_bars": []
+}

@@ -1,4 +1,27 @@
-# How to build
-* You need to have Yeoman setup
-* Run npm install to install all dependencies
-* Run yeoman build and you'll create a dist folder with the app
+Meetings Mobile
+---------------
+
+# Install
+
+	npm install
+
+Which installs yeoman and grunt globally.
+
+	bundle
+
+Which installs compass
+
+
+# Building
+
+	yeoman build
+
+## AppGyver Build
+
+	yeoman build && rm -rf agapp/views && mv dist agapp/views
+
+## Developing
+
+	yeoman start
+
+
