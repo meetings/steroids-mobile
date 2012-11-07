@@ -6,6 +6,21 @@
         <link rel="stylesheet" href="styles/jqm.min.css" />
         <link rel="stylesheet" href="styles/theme.min.css" />
         <link rel="stylesheet" href="styles/custom.css" />
+
+
+		<script src="/appgyver/cordova.js"></script>
+		<script src="/appgyver/appgyver.js?view=meeting"></script>
+
+
+		<script>
+			document.addEventListener("deviceready", onDeviceReady, false);
+
+			function onDeviceReady() {
+		    	AG.GUI.showNavigationBar("Overview");
+			}
+		</script>
+
+
         <!-- build:js scripts/scripts.js -->
         <script src="scripts/vendor/jquery.min.js"></script>
         <script src="scripts/main.js"></script>
@@ -30,13 +45,16 @@
 <body>
     <!-- Meetings listing -->
     <div data-role="page" id="meetings" data-theme="a">
+<!--
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d">
             <a href="#" data-rel="back" data-icon="mtngs-back" data-theme="b">Back</a>
             <h1>Overview</h1>
         </div>
+-->
         <div id="meeting" data-role="content">
             <img alt="" class="loader" src="/images/ajaxloader.gif" />
         </div>
+<!--
         <div data-role="footer" data-position="fixed" data-id="meeting-footer">
             <div data-role="navbar" class="meeting-navbar" data-grid="a">
                 <ul>
@@ -45,6 +63,7 @@
                 </ul>
             </div>
         </div>
+-->
     </div><!-- /page -->
 </body>
 </html>
