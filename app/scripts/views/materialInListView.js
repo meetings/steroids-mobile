@@ -2,7 +2,7 @@ app.materialInListView = Backbone.View.extend({
     initialize: function(options) {
     },
     render: function() {
-        this.$el.html( templatizer.materialInListView( this.model.toJSON() ) ); // Render template
+        this.$el.html( templatizer.materialInListView( _.extend(this.model.toJSON(), { show_url : this.model.show_url }) ) ); // Render template
         return this;
     },
     events: {

@@ -1,6 +1,8 @@
-a(href='participant.html?id='+user_id)
-    - if( !image ) var image = app.defaults.user_image
-    img(src=image,width='60').mtngs-profile-image
+a(href=show_url)
+    - if( image )
+        img(src=image,width='60').mtngs-profile-image
+    - else
+        span.placeholder-60.mtngs-profile-image.ui-li-thumb
     h3=name
     p=organization
     - if ( rsvp === 'attending' )

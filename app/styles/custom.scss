@@ -53,12 +53,47 @@ ul.today li a div.top-bar{
     background-color:#d8e6be;
 }
 
-// Participant images
+// Participant image placeholders
 div.participants{
     img{
         border:1px solid #ccc;
     }
 }
+span.placeholder-100{
+    background-position:top left;
+    background-color:transparent;
+    width:100px;
+    height:100px;
+    display:inline-block;
+    @include retina-bg('/images/default_user_100', 'png', 100px, 100px);
+}
+span.placeholder-60{
+    background-position:top left;
+    background-color:transparent;
+    width:60px;
+    height:60px;
+    display:inline-block;
+    @include retina-bg('/images/default_user_60', 'png', 100px, 100px);
+}
+span.placeholder-20{
+    background-position:top left;
+    background-color:transparent;
+    width:20px;
+    height:20px;
+    display:inline-block;
+    @include retina-bg('/images/default_user_20', 'png', 100px, 100px);
+}
+
+// Commenting
+#comment-input{
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin:5px auto;
+    width:90%;
+}
+
+
 // Single material
 div#material ul{
     p.ui-li-desc{
@@ -76,14 +111,29 @@ ul#comments{
         }
     }
 }
+// Participants list
+ul#participants{
+    li a{
+        min-height:65px;
+        padding-left:80px;
+        span{
+            width:60px;
+            height:60px;
+            left:10px;
+            top:10px;
+        }
+    }
+}
 // Material list
 ul#materials{
      li a{
+        min-height:45px;
+        padding-left:70px;
         span{
             width:46px;
             height:46px;
             left:10px;
-            top:13px;
+            top:10px;
         }
         span.material-image{
             @include retina-bg('/images/m_image', 'png', 46px, 46px);
@@ -100,8 +150,6 @@ ul#materials{
             background-position:top left;
             background-color:transparent;
         }
-        min-height:40px;
-        padding-left:70px;
     }
 }
 
@@ -129,6 +177,12 @@ background-repeat:no-repeat;
 }
 #nav-past .ui-icon {
     @include retina-bg('/images/past', 'png', 20px, 20px);
+    background-position:50% 50%;
+    background-color:transparent;
+    background-repeat:no-repeat;
+}
+#nav-settings .ui-icon {
+    @include retina-bg('/images/settings', 'png', 20px, 20px);
     background-position:50% 50%;
     background-color:transparent;
     background-repeat:no-repeat;
@@ -407,7 +461,7 @@ h3.mtngs-firsth3{
     height:50px;
     width:50px;
 }
-img.mtngs-profile-image{
+.mtngs-profile-image{
     border:1px solid #ccc !important;
 }
 

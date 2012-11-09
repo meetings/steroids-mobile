@@ -50,7 +50,7 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
         var __indent = [];
         buf.push("<a");
         buf.push(attrs({
-            href: "material.html?id=" + material_id
+            href: show_url
         }, {
             href: true
         }));
@@ -168,7 +168,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
         var __val__ = title;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</h3>\n<p class="mtngs-calendar">');
-        var __val__ = time_string + " " + date_string;
+        var __val__ = date_string + " " + time_string + " " + timezone_string;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</p>\n<p class="mtngs-location">');
         var __val__ = location;
@@ -250,22 +250,26 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
         var __indent = [];
         buf.push("<a");
         buf.push(attrs({
-            href: "participant.html?id=" + user_id
+            href: show_url
         }, {
             href: true
         }));
         buf.push(">");
-        if (!image) var image = app.defaults.user_image;
-        buf.push("<img");
-        buf.push(attrs({
-            src: image,
-            width: "60",
-            "class": "mtngs-profile-image"
-        }, {
-            src: true,
-            width: true
-        }));
-        buf.push("/>\n  <h3>");
+        if (image) {
+            buf.push("<img");
+            buf.push(attrs({
+                src: image,
+                width: "60",
+                "class": "mtngs-profile-image"
+            }, {
+                src: true,
+                width: true
+            }));
+            buf.push("/>");
+        } else {
+            buf.push('<span class="placeholder-60 mtngs-profile-image ui-li-thumb"></span>');
+        }
+        buf.push("\n  <h3>");
         var __val__ = name;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</h3>\n  <p>");
@@ -303,15 +307,22 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<div class="ui-grid-a">\n  <div class="ui-block-a"><img');
-        buf.push(attrs({
-            src: image,
-            style: "width:90%"
-        }, {
-            src: true,
-            style: true
-        }));
-        buf.push('/></div>\n  <div class="ui-block-b">');
+        buf.push('\n<div class="ui-grid-a">\n  <div class="ui-block-a">');
+        if (image) {
+            buf.push("<img");
+            buf.push(attrs({
+                src: image,
+                style: "width:100px;",
+                "class": "mtngs-profile-image"
+            }, {
+                src: true,
+                style: true
+            }));
+            buf.push("/>");
+        } else {
+            buf.push('<span class="placeholder-100 mtngs-profile-image"></span>');
+        }
+        buf.push('\n  </div>\n  <div class="ui-block-b">');
         if (phone) {
             buf.push("<a");
             buf.push(attrs({

@@ -1,6 +1,9 @@
 .ui-grid-a
     .ui-block-a
-        img(src=image,style="width:90%")
+        - if( image )
+            img(src=image,style="width:100px;").mtngs-profile-image
+        - else
+            span.placeholder-100.mtngs-profile-image
     .ui-block-b
         - if (phone)
             a(href="tel:"+phone,data-role="button",data-theme="b")='Call'

@@ -22,6 +22,7 @@
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
         <script src="scripts/models/participantModel.js"></script>
+        <script src="scripts/models/commentModel.js"></script>
         <script src="scripts/collections/meetingCollection.js"></script>
         <script src="scripts/collections/commentCollection.js"></script>
         <script src="scripts/collections/materialCollection.js"></script>
@@ -34,7 +35,6 @@
     <!-- Meetings listing -->
     <div data-role="page" id="meetings" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
-            <a href="settings.html" data-icon="mtngs-cog" data-iconpos="notext" data-theme="b"></a>
             <h1>Meetin.gs</h1>
         </div>
         <div data-role="content" data-theme="a">
@@ -53,10 +53,11 @@
             </ul>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-theme="c" data-tap-toggle="false">
-            <div data-role="navbar" class="meeting-navbar" data-grid="a">
+            <div data-role="navbar" class="meeting-navbar" data-grid="b">
                 <ul>
                     <li><a id="nav-upcoming" href="index.html" data-icon="custom" class="ui-btn-active ui-state-persist" data-transition="fade">Upcoming</a></li>
                     <li><a id="nav-past" href="past.html" data-icon="custom" data-transition="fade">Past</a></li>
+                    <li><a id="nav-settings" href="settings.html" data-icon="custom" data-transition="fade" >Settings</a></li>
                 </ul>
             </div>
         </div>

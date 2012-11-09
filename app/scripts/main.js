@@ -14,7 +14,8 @@ window.app = {
         cookievalid : 14 // in days
     },
     defaults : {
-        user_image : 'http://dev.meetin.gs/images/theme/default/default-user-avatar-22px.png'
+        user_image : 'http://dev.meetin.gs/images/theme/default/default-user-avatar-22px.png',
+        api_host : 'http://api-dev.meetin.gs'
     },
     options: {
         appmode : false

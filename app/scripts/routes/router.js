@@ -65,8 +65,7 @@ app.router = Backbone.Router.extend({
   participants: function(params) {
       var id = params.id || 0;
 
-      app.collections.participants = new app.participantCollection();
-      app.collections.participants.url = 'https://api-dev.meetin.gs/v1/meetings/' + id + '/participants';
+      app.collections.participants = new app.participantCollection( [], { meeting_id : id } );
       app.collections.participants.fetch({ success : function(){
           app.views.materials = new app.genericCollectionView({
               el : $('#participants'),
@@ -75,16 +74,14 @@ app.router = Backbone.Router.extend({
               childViewConstructor : app.participantInListView
           });
           app.views.materials.render();
-      }});
+      }
+      });
   },
   materials: function(params) {
       var id = params.id || 0;
-      app.models.current_user = new app.participantModel();
-      app.models.current_user.url = 'https://api-dev.meetin.gs/v1/users/1';
-      app.models.current_user.fetch();
 
-      app.collections.materials = new app.materialCollection();
-      app.collections.materials.url = 'https://api-dev.meetin.gs/v1/meetings/' + id + '/materials';
+      app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
+      app.collections.materials.url = 'http://api-dev.meetin.gs/v1/meetings/' + id + '/materials';
       app.collections.materials.fetch({ success : function(){
           app.views.materials = new app.genericCollectionView({
               el : $('#materials'),
@@ -96,9 +93,10 @@ app.router = Backbone.Router.extend({
       }});
   },
   participant: function(params) {
+      var mid = params.mid || 0;
       var id = params.id || 0;
       app.models.participant = new app.participantModel();
-      app.models.participant.url = 'https://api-dev.meetin.gs/v1/users/'+id;
+      app.models.participant.url = 'http://api-dev.meetin.gs/v1/meetings/' + mid + '/participants/'+id;
       app.models.participant.fetch({ success : function(){
           app.views.user = new app.participantView({
               model : app.models.participant,
@@ -108,9 +106,9 @@ app.router = Backbone.Router.extend({
       }});
   },
   material: function(params) {
-      var mid = params.id || 0;
+      var id = params.id || 0;
       app.models.material = new app.materialModel();
-      app.models.material.url = 'https://api-dev.meetin.gs/v1/materials/' + mid;
+      app.models.material.url = 'http://api-dev.meetin.gs/v1/materials/' + id;
       app.models.material.fetch({ success : function(){
           app.views.material = new app.materialView({
               model : app.models.material,
@@ -119,7 +117,7 @@ app.router = Backbone.Router.extend({
           app.views.material.render();
       }});
       app.collections.comments = new app.commentCollection();
-      app.collections.comments.url = 'https://api-dev.meetin.gs/v1/materials/' + mid + '/comments';
+      app.collections.comments.url = 'http://api-dev.meetin.gs/v1/materials/' + id + '/comments';
       app.collections.comments.fetch({ success : function(){
           app.views.comments = new app.genericCollectionView({
               el : $('#comments'),
@@ -128,6 +126,20 @@ app.router = Backbone.Router.extend({
               childViewConstructor : app.commentInListView
           });
           app.views.comments.render();
+
+          // Hack to get commenting
+          $('#comment-input').on( 'change', function( e ){
+              var c = new app.commentModel();
+              c.url = app.collections.comments.url;
+              c.save({ content : $(this).val() }, { success : function(){
+                  console.log('saved');
+                  app.collections.comments.fetch();
+              }});
+              /*app.collections.comments.create({
+                  content : $(this).val()
+              }, { wait : true });*/
+
+          });
       }});
   }
 });

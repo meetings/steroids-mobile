@@ -17,6 +17,7 @@
         <script src="scripts/views/participantView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
+        <script src="scripts/models/commentModel.js"></script>
         <script src="scripts/collections/commentCollection.js"></script>
         <script src="scripts/models/participantModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
@@ -29,7 +30,7 @@
     <div data-role="page" id="meetings" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false" data-tap-toggle="false">
             <a href="#" data-rel="back" data-icon="delete" data-theme="b">Close</a>
-            <h1>Materials</h1>
+            <h1>Material</h1>
         </div>
         <div data-role="content">
             <ul data-role="listview" data-inset="true" data-theme="d" id="material">
@@ -44,10 +45,14 @@
             </ul>
         </div>
         <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-tap-toggle="false">
-            <div data-role="navbar" class="meeting-navbar" data-grid="a" data-tap-toggle="false">
+            <div data-role="navbar" class="meeting-navbar" data-tap-toggle="false">
                 <ul>
-                    <li><a id="nav-upcoming" href="index.html" data-icon="custom" class="ui-btn-active ui-state-persist" data-transition="fade">Upcoming</a></li>
-                    <li><a id="nav-past" href="past.html" data-icon="custom" data-transition="fade">Past</a></li>
+                <li>
+                <div id="comment-box">
+                    <textarea data-role="none" id="comment-input" name="" placeholder="Write a comment"></textarea>
+                    <a id="comment-send" href="#">Send</a>
+                </div>
+                </li>
                 </ul>
             </div>
         </div>

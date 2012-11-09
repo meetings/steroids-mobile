@@ -10,7 +10,9 @@ app.meetingView = Backbone.View.extend({
     },
     events: {
         'click .open-material-view' : 'openMaterialView',
-        'click .open-participant-view' : 'openParticipantView'
+        'click .open-participant-view' : 'openParticipantView',
+        'click .set-rsvp-yes' : 'setRsvpYes',
+        'click .set-rsvp-no' : 'setRsvpNo'
     },
     openMaterialView : function(e){
         window.location.href = 'materials.html?id='+this.model.get('id');
@@ -32,5 +34,9 @@ app.meetingView = Backbone.View.extend({
             alert('There\'s something really wrong. Try refreshing the page please!');
             this.errors = 0;
         }
+    },
+    setRsvpYes : function(){
+    },
+    setRsvpNo : function(){
     }
 });
