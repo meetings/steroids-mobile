@@ -116,6 +116,12 @@ app.genericCollectionView = Backbone.View.extend({
         //this.el.trigger('create'); // JQM
         this.el.listview("refresh");
         //this.el.page(); // JQM
+
+        // Call render extras if available
+        if( typeof this.renderExtras === 'function' ){
+            this.renderExtras();
+        }
+
         return this;
     },
 

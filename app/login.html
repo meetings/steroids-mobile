@@ -1,10 +1,42 @@
-
-<script>
-	function login() {
-		window.location="index.html?token=1234&user=5";
-	}
-
-</script>
-
-<button onClick="login()">Tap to login</button>
-
+<!DOCTYPE html>
+<html lang="en" manifest="manifest.appcache">
+    <head>
+        <meta charset="utf-8">
+        <meta name = "viewport" content = "width = 480, user-scalable = yes">
+        <link rel="stylesheet" href="styles/custom.css" />
+        <!-- build:js scripts/scripts.js -->
+        <script src="scripts/vendor/jquery.min.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/vendor/jqm.js"></script>
+        <script src="scripts/vendor/lodash.min.js"></script>
+        <script src="scripts/vendor/backbone-min.js"></script>
+        <script src="scripts/vendor/backbone-query-params.js"></script>
+        <script src="scripts/views/commentInListView.js"></script>
+        <script src="scripts/views/meetingInListView.js"></script>
+        <script src="scripts/views/meetingView.js"></script>
+        <script src="scripts/views/participantInListView.js"></script>
+        <script src="scripts/views/materialInListView.js"></script>
+        <script src="scripts/views/materialView.js"></script>
+        <script src="scripts/views/participantView.js"></script>
+        <script src="scripts/views/loginView.js"></script>
+        <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/commentListView.js"></script>
+        <script src="scripts/models/meetingModel.js"></script>
+        <script src="scripts/models/materialModel.js"></script>
+        <script src="scripts/models/participantModel.js"></script>
+        <script src="scripts/models/commentModel.js"></script>
+        <script src="scripts/collections/meetingCollection.js"></script>
+        <script src="scripts/collections/commentCollection.js"></script>
+        <script src="scripts/collections/materialCollection.js"></script>
+        <script src="scripts/collections/participantCollection.js"></script>
+        <script src="scripts/routes/router.js"></script>
+        <script src="scripts/templates/all.js"></script>
+        <!-- endbuild -->
+    </head>
+<body>
+    <div data-role="page" id="meetings" data-theme="a">
+        <div id="login-page" data-role="content" data-theme="a">
+        </div><!-- /content -->
+    </div><!-- /page -->
+</body>
+</html>

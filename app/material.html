@@ -7,7 +7,7 @@
         <!-- build:js scripts/scripts.js -->
         <script src="scripts/vendor/jquery.min.js"></script>
         <script src="scripts/main.js"></script>
-       <script src="scripts/vendor/jqm.js"></script>
+        <script src="scripts/vendor/jqm.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/backbone-query-params.js"></script>
@@ -16,6 +16,7 @@
         <script src="scripts/views/materialView.js"></script>
         <script src="scripts/views/participantView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/commentListView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/commentModel.js"></script>
         <script src="scripts/collections/commentCollection.js"></script>
@@ -25,39 +26,31 @@
         <script src="scripts/templates/all.js"></script>
         <!-- endbuild -->
     </head>
-<body>
-    <!-- Meetings listing -->
-    <div data-role="page" id="meetings" data-theme="a">
-        <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false" data-tap-toggle="false">
-            <a href="#" data-rel="back" data-icon="delete" data-theme="b">Close</a>
-            <h1>Material</h1>
-        </div>
-        <div data-role="content">
-            <ul data-role="listview" data-inset="true" data-theme="d" id="material">
-                <li>
-                <img alt="" class="loader" src="/images/ajaxloader.gif" />
-                </li>
-                </ul>
-            <ul data-role="listview" data-inset="true" id="comments" data-theme="d">
-                <li>
+    <body>
+        <!-- Meetings listing -->
+        <div data-role="page" id="meetings" data-theme="a">
+            <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false" data-tap-toggle="false">
+                <a href="#" data-rel="back" data-icon="delete" data-theme="b">Close</a>
+                <h1>Material</h1>
+            </div>
+            <div data-role="content">
+                <ul data-role="listview" data-inset="true" data-theme="d" id="material">
+                    <li>
                     <img alt="" class="loader" src="/images/ajaxloader.gif" />
-                </li>
-            </ul>
-        </div>
-        <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-tap-toggle="false">
-            <div data-role="navbar" class="meeting-navbar" data-tap-toggle="false">
-                <ul>
-                <li>
-                <div id="comment-box">
-                    <textarea data-role="none" id="comment-input" name="" placeholder="Write a comment"></textarea>
-                    <a id="comment-send" href="#">Send</a>
-                </div>
-                </li>
+                    </li>
+                </ul>
+
+                <ul data-role="listview" data-inset="true" id="comments" data-theme="d">
+                    <li>
+                    <img alt="" class="loader" src="/images/ajaxloader.gif" />
+                    </li>
                 </ul>
             </div>
-        </div>
-    </div><!-- /page -->
-</body>
+            <!-- <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-tap-toggle="false"> -->
+
+            <!-- </div> -->
+        </div><!-- /page -->
+    </body>
 </html>
 
 

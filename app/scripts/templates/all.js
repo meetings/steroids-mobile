@@ -6,6 +6,21 @@ var jade=function(exports){Array.isArray||(Array.isArray=function(arr){return"[o
 
 // create our folder objects
 
+// commentForm.jade compiled template
+exports.commentForm = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('\n<div id="comment-box">\n  <div class="left">\n    <div class="container">\n      <textarea id="comment-input" data-role="none" rows="1" placeholder="Write a comment"></textarea>\n    </div>\n  </div>\n  <div class="right"><a data-role="none" data-enhance="false" href="#" class="send-comment">Send</a></div>\n</div>');
+    }
+    return buf.join("");
+};
+
 // commentInListView.jade compiled template
 exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
@@ -34,6 +49,21 @@ exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, m
         var __val__ = content;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</p>");
+    }
+    return buf.join("");
+};
+
+// loginView.jade compiled template
+exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('\n<h1 class="meetings-logo"></h1>\n<div data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/>\n  <input data-theme="b" type="button" value="Log in" class="login"/>\n</div>');
     }
     return buf.join("");
 };

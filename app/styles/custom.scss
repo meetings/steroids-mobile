@@ -21,11 +21,38 @@
 }
 .meeting-navbar .ui-btn .ui-icon { width: 30px!important; height: 22px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
 
+// Login page stuff
+div#login-page{
+    position:absolute;
+    top:0px;
+    bottom:0px;
+    width:100%;
+    div.ui-field-contain{
+        margin:0 auto;
+        margin-top:30px;
+        width:268px;
+    }
+    h1.meetings-logo{
+        display:block;
+        background-position:top center;
+        background-color:transparent;
+        background-repeat:no-repeat;
+        height:62px;
+        margin-bottom:40px;
+        @include retina-bg('/images/mlogo', 'png', 268px, 62px);
+    }
+    input#email{
+        margin-bottom:15px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+    }
+}
 // Meetings in list view
 ul.meeting-list{
     li{
         a{
-           padding-top:25px !important;
+            padding-top:25px !important;
             div.top-bar{
                 position:absolute;
                 top:0px;
@@ -82,15 +109,6 @@ span.placeholder-20{
     height:20px;
     display:inline-block;
     @include retina-bg('/images/default_user_20', 'png', 100px, 100px);
-}
-
-// Commenting
-#comment-input{
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    margin:5px auto;
-    width:90%;
 }
 
 
@@ -256,7 +274,9 @@ div.bar-wrapper{
 }
 div.bar-container{
     position:relative;
-    border-radius:4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
     border:2px solid #999;
     padding:3px;
     height:20px;
@@ -465,7 +485,63 @@ h3.mtngs-firsth3{
     border:1px solid #ccc !important;
 }
 
-/* material list text closer to icons */
+// material list text closer to icons
 ul#material_list li a{
     padding-left:80px;
 }
+
+// Commenting
+div#comment-box{
+    height:60px;
+    div.left{
+        float:left;
+        width:75%;
+        div.container{
+            margin:8px 8px 8px 0px;
+            padding:10px;
+            border:1px solid silver;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            overflow:hidden;
+            textarea#comment-input{
+                height:18px;
+                width:100%;
+                padding:10px;
+                margin:-10px;
+                resize:none;
+                outline:none;
+                border:none;
+            }
+        }
+    }
+    div.right{
+        float:left;
+        width:25%;
+        a.send-comment{
+            text-align:center;
+            height:18px;
+            margin:8px 0px 8px 8px;
+            padding:10px;
+            border:1px solid #ccc;
+            display:block;
+            text-decoration:none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            border: 1px solid #50a4c3;
+            background: #75ceeb;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0px /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0px /*{b-bup-shadow-radius}*/ #50a4c3 /*{b-bup-shadow-color}*/;
+            background-image: -webkit-gradient(linear, left top, left bottom, from( #6cdaf6 /*{b-bup-background-start}*/), to( #63c1db /*{b-bup-background-end}*/)); /* Saf4+, Chrome */
+            background-image: -webkit-linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
+            background-image:    -moz-linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/); /* FF3.6 */
+            background-image:     -ms-linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/); /* IE10 */
+            background-image:      -o-linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/); /* Opera 11.10+ */
+            background-image:linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/);
+        }
+    }
+}
+
+

@@ -15,7 +15,8 @@ window.app = {
     },
     defaults : {
         user_image : 'http://dev.meetin.gs/images/theme/default/default-user-avatar-22px.png',
-        api_host : 'http://api-dev.meetin.gs'
+        api_host : 'http://api-dev.meetin.gs',
+        return_host : 'http://mjussi.meetin.gs' // TODO: SNiff this
     },
     options: {
         appmode : false
@@ -26,6 +27,7 @@ window.app = {
     router : null,
     init : function() {
         this._requireLogin();
+        this._doRedirects();
         window.router = new app.router();
         Backbone.history.start({pushState: true});
     },
@@ -50,8 +52,11 @@ window.app = {
             // Url params already saved above
         }
         else{
-            //window.location = 'http://google.com';
+            //window.location = '/login.html';
         }
+    },
+    _doRedirects : function(){
+
     },
     _readAuthUrlParams : function(){
         var user = this._getUrlParamByName( 'user' );
