@@ -2,7 +2,6 @@ app.loginView = Backbone.View.extend({
     initialize: function(options) {
     },
     render: function() {
-        this.$el.html('dooooood');
         this.$el.html( templatizer.loginView() );
     },
     events: {

@@ -1,7 +1,7 @@
 app.meetingView = Backbone.View.extend({
     errors : 0,
     initialize: function(options) {
-        options.model.bind('error', this.errorHandler, this);
+        // options.model.bind('error', this.errorHandler, this);
     },
     render: function() {
         this.$el.html( templatizer.meetingView( this.model.toJSON() ) ); // Render template
@@ -10,9 +10,7 @@ app.meetingView = Backbone.View.extend({
     },
     events: {
         'click .open-material-view' : 'openMaterialView',
-        'click .open-participant-view' : 'openParticipantView',
-        'click .set-rsvp-yes' : 'setRsvpYes',
-        'click .set-rsvp-no' : 'setRsvpNo'
+        'click .open-participant-view' : 'openParticipantView'
     },
     openMaterialView : function(e){
         window.location.href = 'materials.html?id='+this.model.get('id');
@@ -34,9 +32,5 @@ app.meetingView = Backbone.View.extend({
             alert('There\'s something really wrong. Try refreshing the page please!');
             this.errors = 0;
         }
-    },
-    setRsvpYes : function(){
-    },
-    setRsvpNo : function(){
     }
 });

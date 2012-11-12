@@ -75,6 +75,15 @@ app.router = Backbone.Router.extend({
         });
         app.models.meeting.fetch({ success : function(){
             app.views.meeting.render();
+
+            // Init current meeting user
+            var data = app.models.meeting.getMeetingUserByID( app.auth.user );
+            app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
+
+            // Show next action bar for the user
+            app.views.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : app.models.meeting_user });
+            app.views.next_action_view.render();
+
         }, timeout : 5000 });
     },
     participants: function(params) {
@@ -96,7 +105,7 @@ app.router = Backbone.Router.extend({
         var id = params.id || 0;
 
         app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
-        app.collections.materials.url = 'http://api-dev.meetin.gs/v1/meetings/' + id + '/materials';
+        app.collections.materials.url = app.defaults.api_host + '/v1/meetings/' + id + '/materials';
         app.collections.materials.fetch({ success : function(){
             app.views.materials = new app.genericCollectionView({
                 el : $('#materials'),
@@ -111,7 +120,7 @@ app.router = Backbone.Router.extend({
         var mid = params.mid || 0;
         var id = params.id || 0;
         app.models.participant = new app.participantModel();
-        app.models.participant.url = 'http://api-dev.meetin.gs/v1/meetings/' + mid + '/participants/'+id;
+        app.models.participant.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/'+id;
         app.models.participant.fetch({ success : function(){
             app.views.user = new app.participantView({
                 model : app.models.participant,
@@ -123,7 +132,7 @@ app.router = Backbone.Router.extend({
     material: function(params) {
         var id = params.id || 0;
         app.models.material = new app.materialModel();
-        app.models.material.url = 'http://api-dev.meetin.gs/v1/materials/' + id;
+        app.models.material.url = app.defaults.api_host + '/v1/materials/' + id;
         app.models.material.fetch({ success : function(){
             app.views.material = new app.materialView({
                 model : app.models.material,
@@ -132,7 +141,7 @@ app.router = Backbone.Router.extend({
             app.views.material.render();
         }});
         app.collections.comments = new app.commentCollection();
-        app.collections.comments.url = 'http://api-dev.meetin.gs/v1/materials/' + id + '/comments';
+        app.collections.comments.url = app.defaults.api_host + '/v1/materials/' + id + '/comments';
         app.collections.comments.fetch({ success : function(){
             app.views.comments = new app.commentListView({
                 el : $('#comments'),

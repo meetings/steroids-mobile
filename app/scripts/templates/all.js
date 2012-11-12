@@ -197,19 +197,20 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
         buf.push("\n<h3>");
         var __val__ = title;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</h3>\n<p class="mtngs-calendar">');
-        var __val__ = date_string + " " + time_string + " " + timezone_string;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</p>\n<p class="mtngs-location">');
-        var __val__ = location;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</p>\n<!-- Links-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-material-view">\n      <h3>');
-        var __val__ = "Materials";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</h3>\n      <p>");
-        var __val__ = "Agenda & materials";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</p></a></li>\n  <li><a href="#" class="open-participant-view">\n      <h3>');
+        buf.push("</h3>");
+        if (date_string) {
+            buf.push('\n<p class="mtngs-calendar">');
+            var __val__ = date_string + " " + time_string + " " + timezone_string;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (location) {
+            buf.push('\n<p class="mtngs-location">');
+            var __val__ = location;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        buf.push('\n<div id="next-action-bar"></div>\n<!-- Links-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-material-view">\n      <h3>Materials</h3>\n      <p>Agenda &amp; materials</p></a></li>\n  <li><a href="#" class="open-participant-view">\n      <h3>');
         var __val__ = "Participants";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</h3>\n      <div class="participant-list"></div>');
@@ -306,21 +307,12 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
         var __val__ = organization;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</p>");
-        if (rsvp === "attending") {
-            buf.push('\n  <p class="rsvp attending">');
-            var __val__ = "Attending";
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
-        } else if (rsvp === "noshow") {
-            buf.push('\n  <p class="rsvp noshow">');
-            var __val__ = "Not attending";
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
-        } else if (rsvp === "unknown") {
-            buf.push('\n  <p class="rsvp unknown">');
-            var __val__ = "Not answered";
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
+        if (rsvp === "yes") {
+            buf.push('\n  <p class="rsvp attending">Attending</p>');
+        } else if (rsvp === "no") {
+            buf.push('\n  <p class="rsvp noshow">Not attending</p>');
+        } else {
+            buf.push('\n  <p class="rsvp unknown">Not answered</p>');
         }
         buf.push("</a>");
     }
@@ -453,6 +445,21 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push("</a></p>");
         }
         buf.push("\n  </li>\n</ul>");
+    }
+    return buf.join("");
+};
+
+// rsvpBarView.jade compiled template
+exports.rsvpBarView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('\n<div class="rsvp-answer"><span class="text">RSVP Status</span><a href="#" class="attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
     }
     return buf.join("");
 };

@@ -20,6 +20,43 @@
     white-space: normal !important;
 }
 .meeting-navbar .ui-btn .ui-icon { width: 30px!important; height: 22px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+// RSVP answers on meeting page
+div.rsvp-answer{
+    height:40px;
+    line-height:40px;
+    a{
+        line-height:normal;
+        text-align:center;
+        height:18px;
+        margin:0px 0px 0px 8px;
+        padding:10px;
+        display:inline-block;
+        text-decoration:none;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        background: #009f01;
+        font-weight: bold;
+        color: #ffffff !important;
+        text-shadow: 0px 1px 0px #50a4c3;
+        border:1px solid #007901;
+        background-image: -webkit-gradient(linear, left top, left bottom, from( #00b81e ), to( #008e02 ));
+        background-image: -webkit-linear-gradient( #00b81e , #008e02 );
+        background-image:    -moz-linear-gradient( #00b81e , #008e02 );
+        background-image:     -ms-linear-gradient( #00b81e , #008e02 );
+        background-image:      -o-linear-gradient( #00b81e , #008e02 );
+        background-image:linear-gradient( #00b81e , #008e02 );
+    }
+    a.not-attending{
+        border:1px solid #9f0d07;
+        background-image: -webkit-gradient(linear, left top, left bottom, from( #ed2310 ), to( #c90d00 ));
+        background-image: -webkit-linear-gradient( #ed2310 , #c90d00 );
+        background-image:    -moz-linear-gradient( #ed2310 , #c90d00 );
+        background-image:     -ms-linear-gradient( #ed2310 , #c90d00 );
+        background-image:      -o-linear-gradient( #ed2310 , #c90d00 );
+        background-image:linear-gradient( #ed2310 , #c90d00 );
+    }
+}
 
 // Login page stuff
 div#login-page{
@@ -188,10 +225,10 @@ body{
 
 /* Bottom bar icons */
 #nav-upcoming .ui-icon {
-@include retina-bg('/images/upcoming', 'png', 20px, 20px);
-background-position:50% 50%;
-background-color:transparent;
-background-repeat:no-repeat;
+    @include retina-bg('/images/upcoming', 'png', 20px, 20px);
+    background-position:50% 50%;
+    background-color:transparent;
+    background-repeat:no-repeat;
 }
 #nav-past .ui-icon {
     @include retina-bg('/images/past', 'png', 20px, 20px);
@@ -220,26 +257,26 @@ ul li.ui-corner-top{
 /* Fix footer active color */
 div.ui-footer{
     .ui-btn-active {
-	border: 1px solid #ccc;
-	background: #27282a /*{global-active-background-color}*/;
-	font-weight: bold;
-	color: #fff /*{global-active-color}*/;
-	cursor: pointer;
-	text-shadow: 0 /*{global-active-shadow-x}*/ 0 /*{global-active-shadow-y}*/ 0 /*{global-active-shadow-radius}*/ #eeeeee /*{global-active-shadow-color}*/;
-	text-decoration: none;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #27282a /*{global-active-background-start}*/), to( #27282a /*{global-active-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #27282a /*{global-active-background-start}*/, #27282a /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #27282a /*{global-active-background-start}*/, #27282a /*{global-active-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #27282a /*{global-active-background-start}*/, #27282a /*{global-active-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #27282a /*{global-active-background-start}*/, #27282a /*{global-active-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #27282a, #27282a);
-	 font-family: Helvetica, Arial, sans-serif;
-}
-.ui-btn-active:visited,
-.ui-btn-active:hover,
-.ui-btn-active a.ui-link-inherit {
-	color: #fff /*{global-active-color}*/;
-}
+        border: 1px solid #ccc;
+        background: #27282a;
+        font-weight: bold;
+        color: #fff;
+        cursor: pointer;
+        text-shadow: 0 0 0  #eeeeee;
+        text-decoration: none;
+        background-image: -webkit-gradient(linear, left top, left bottom, from( #27282a ), to( #27282a ));
+        background-image: -webkit-linear-gradient( #27282a );
+        background-image:    -moz-linear-gradient( #27282a );
+        background-image:     -ms-linear-gradient( #27282a );
+        background-image:      -o-linear-gradient( #27282a );
+        background-image:         linear-gradient( #27282a, #27282a);
+        font-family: Helvetica, Arial, sans-serif;
+    }
+    .ui-btn-active:visited,
+    .ui-btn-active:hover,
+    .ui-btn-active a.ui-link-inherit {
+        color:#fff;
+    }
 }
 
 /* Login page stuff */
@@ -533,13 +570,13 @@ div#comment-box{
             background: #75ceeb;
             font-weight: bold;
             color: #ffffff;
-            text-shadow: 0px /*{b-bup-shadow-x}*/ 1px /*{b-bup-shadow-y}*/ 0px /*{b-bup-shadow-radius}*/ #50a4c3 /*{b-bup-shadow-color}*/;
-            background-image: -webkit-gradient(linear, left top, left bottom, from( #6cdaf6 /*{b-bup-background-start}*/), to( #63c1db /*{b-bup-background-end}*/)); /* Saf4+, Chrome */
-            background-image: -webkit-linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
-            background-image:    -moz-linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/); /* FF3.6 */
-            background-image:     -ms-linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/); /* IE10 */
-            background-image:      -o-linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/); /* Opera 11.10+ */
-            background-image:linear-gradient( #6cdaf6 /*{b-bup-background-start}*/, #63c1db /*{b-bup-background-end}*/);
+            text-shadow: 0px 1px 0px #50a4c3;
+            background-image: -webkit-gradient(linear, left top, left bottom, from( #6cdaf6 ), to( #63c1db ));
+            background-image: -webkit-linear-gradient( #6cdaf6 , #63c1db );
+            background-image:    -moz-linear-gradient( #6cdaf6 , #63c1db );
+            background-image:     -ms-linear-gradient( #6cdaf6 , #63c1db );
+            background-image:      -o-linear-gradient( #6cdaf6 , #63c1db );
+            background-image:linear-gradient( #6cdaf6 , #63c1db );
         }
     }
 }
