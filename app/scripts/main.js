@@ -28,6 +28,18 @@ window.app = {
     init : function() {
         this._requireLogin();
         this._doRedirects();
+
+        Backbone.sync = _.wrap(Backbone.sync, function(originalSync, method, model, options) {
+            var new_options =  _.extend({
+                beforeSend: function(xhr) {
+                    console.log(xhr);
+                    var token = app.auth.token;
+                    if (token) xhr.setRequestHeader('dic', token);
+                }
+            }, options);
+            return originalSync(method, model, new_options);
+        });
+
         window.router = new app.router();
         Backbone.history.start({pushState: true});
     },
@@ -41,15 +53,15 @@ window.app = {
 
         // Cookie available
         var auth_cookie = this._readAuthCookie();
-        if( auth_cookie ){
+
+        // Url has auth & user query params
+        if( this._readAuthUrlParams() ){
+            // Url params already saved above
+        }
+        else if( auth_cookie ){
             var user_and_token = auth_cookie.split( '_', 2 );
             app.auth.user = user_and_token[0];
             app.auth.token = user_and_token[1];
-        }
-
-        // Url has auth & user query params
-        else if( this._readAuthUrlParams() ){
-            // Url params already saved above
         }
         else{
             //window.location = '/login.html';
