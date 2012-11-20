@@ -8,8 +8,8 @@ $(document).bind("mobileinit", function(){
 
 window.app = {
     auth : {
-        user : null,
-        token : null,
+        user : 3028,
+        token : 'v1_e_3028_0_0_IGsCa471H9O2lj4RQLGyIoD_ya4',
         cookiename : 'mtngs_mobile_auth',
         cookievalid : 14 // in days
     },
