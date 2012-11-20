@@ -14,12 +14,12 @@ window.app = {
         cookievalid : 14 // in days
     },
     defaults : {
-        user_image : 'http://dev.meetin.gs/images/theme/default/default-user-avatar-22px.png',
-        api_host : (location.host.indexOf('dev') !== -1 && location.host.indexOf('localhost') !== -1) ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
+        //api_host : (location.host.indexOf('dev') !== -1 && location.host.indexOf('localhost') !== -1) ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
+        api_host : 'https://api-dev.meetin.gs',
         return_host : 'http://' + location.host
     },
     options: {
-        appmode : false
+        appmode : true
     },
     models : {},
     collections : {},
@@ -28,13 +28,13 @@ window.app = {
     init : function() {
 
         // Check login
-        if( this._requireLogin() ){
+        /*if( this._requireLogin() ){
             // Check meeting redirect
             this._doRedirects();
-        }
+        }*/
 
         // Remove navigation bar on IOS
-        this._removeIosNav();
+       // this._removeIosNav();
 
         // Add sending of auth token in headers
         Backbone.sync = _.wrap(Backbone.sync, function(originalSync, method, model, options) {
