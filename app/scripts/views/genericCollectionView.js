@@ -4,9 +4,18 @@
 // * searching
 app.genericCollectionView = Backbone.View.extend({
     defaults : {
-        infiniScroll : false
+        infiniScroll : false,
+        mode : 'normal'
     },
     initialize : function(options) {
+
+        // Extend jquery
+        (function($) {
+            $.fn.outerHTML = function() {
+                return $(this).clone().wrap('<div></div>').parent().html();
+            }
+        })(jQuery);
+
         // Check requirements
         if (!options.childViewConstructor) throw "no child view constructor provided";
         if (!options.childViewTagName) throw "no child view tag name provided";
@@ -20,25 +29,42 @@ app.genericCollectionView = Backbone.View.extend({
         // Cache jQuery selector for parent element
         this.el = $(this.el);
 
+        // Initiate add buffer
+        this.addHtmlBuffer = '';
+
         // Setup infinite scrolling
         if (this.options.infiniScroll){
             var that = this;
-            this.infiniScroll = new Backbone.InfiniScroll(this.collection, {success: function(col, res){ that.scrolledMore(col, res); }});
+            var direction = this.options.infiniScrollDirection || 'down';
+            var extraParams = this.options.infiniScrollExtraParams || {};
+            this.infiniScroll = new Backbone.InfiniScroll(this.collection, {
+                success: function(col, res){ that.scrolledMore(col, res); },
+                onFetch: function(){
+                    this.view.showLoader();
+                },
+                direction: direction,
+                extraParams: extraParams,
+                view: this
+            });
         }
 
         // Setup childviews & bind events
         this._childViewConstructor = options.childViewConstructor;
         this._childViewTagName = options.childViewTagName;
         this._childViews = [];
-        console.log(this.collection);
         this.collection.each(this.add);
         this.collection.bind('add', this.add);
         this.collection.bind('remove', this.remove);
         this.collection.bind('reset', this.reset);
 
         // Setup onRender function
-        if (options.onRender !== null && options.onRender !== undefined) {
+        if ( typeof options.onRender === 'function' ) {
             this.onRender = options.onRender;
+        }
+
+        // Setup on empty function
+        if ( typeof options.emptyString === 'string' ) {
+            this.emptyString = options.emptyString;
         }
     },
 
@@ -63,20 +89,31 @@ app.genericCollectionView = Backbone.View.extend({
             model : model
         });
 
-        if( options.index === 0 ) this._childViews.unshift(childView);
+
+        if( options.index === 0 || this.options.mode === 'addtotop' ) this._childViews.unshift(childView);
         else this._childViews.push(childView);
 
         if (this._rendered) {
 
-            if( options.index === 0 ) this.el.prepend(childView.render().el);
-            else this.el.append(childView.render().el);
-
-            if (this.onRender !== null && this.onRender !== undefined) {
-                this.onRender();
+            if( options.index === 0 || this.options.mode === 'addtotop' ) {
+                this.addHtmlBuffer += $(childView.render().el).outerHTML();
+                this.delayedAdd();
             }
-            this.el.trigger('create'); // JQM
+            else this.el.append(childView.render().el);
+            this.el.listview("refresh");
+
+            if( this.options.mode === 'addtotop' ){
+                this.keepScrollPos();
+            }
+
         }
     },
+
+    delayedAdd : _.debounce( function(){
+        this.el.prepend(this.addHtmlBuffer);
+        this.addHtmlBuffer = '';
+        this.el.listview("refresh");
+    },20),
 
     // Remove model from the collection
     remove : function(model) {
@@ -87,14 +124,9 @@ app.genericCollectionView = Backbone.View.extend({
 
             $(viewToRemove.el).remove();
 
-            if ( this.options.masonry){
-                this.el.masonry( 'appended', $(childView.el), true );
-            }
-
             if (this.onRender !== null && this.onRender !== undefined) {
                 this.onRender();
             }
-            this.el.page(); // JQM
         }
     },
 
@@ -110,26 +142,54 @@ app.genericCollectionView = Backbone.View.extend({
         }
 
         // Call on render function
-        if (this.onRender !== null && this.onRender !== undefined) {
+        if ( typeof this.onRender === 'function' ) {
             this.onRender();
         }
-        //this.el.trigger('create'); // JQM
-        this.el.listview("refresh");
-        //this.el.page(); // JQM
 
         // Call render extras if available
         if( typeof this.renderExtras === 'function' ){
             this.renderExtras();
         }
 
+        // Call onEmpty if no results
+        if( ! s && typeof this.emptyString === 'string' ){
+            this.el.html( this.emptyString );
+        }
+
+        this.el.listview("refresh");
+
         return this;
     },
 
     scrolledMore : function(col, res) {
+        this.loader.remove();
+        if( this.options.mode === 'addtotop'){
+            //swindow.scrollBy(0,-102);
+            window.scrollBy(0, 102 * res.length - 102 );
+            console.log('fix scroll after dom add')
+        }
         if( res.length < 10 ){
-            this.el.after('<div style="width:100%;border:1px solid #ccc; padding:20px"><h2>No more meetings.</h2></div>');
+            if( this.options.mode === 'addtotop'){
+                this.el.prepend(this.emptyString);
+            }
+            else{
+                this.el.append(this.emptyString);
+            }
+        }
+    },
+    keepScrollPos : function(){
+        //window.scrollBy(0,102);
+    },
+    showLoader : function(){
+        this.loader = $('<li style="text-align:center;"><span class="loader" ></span><p>Loading more...</p></li>');
+        if( this.options.mode === 'addtotop'){
+            this.el.prepend(this.loader);
+            console.log('add loader and scroll')
+            window.scrollBy(0,102);
+        }
+        else{
+            this.el.append(this.loader);
         }
     }
-
 });
 

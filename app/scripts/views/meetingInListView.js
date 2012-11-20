@@ -3,6 +3,7 @@ app.meetingInListView = Backbone.View.extend({
     },
     render: function() {
         this.$el.html( templatizer.meetingInListView( this.model.toJSON() ) ); // Render template
+        this.$el.attr('id', this.model.id ); // Set id
         return this;
     },
     events: {

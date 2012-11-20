@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache">
     <head>
+        <title>Settings | Meetin.gs</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,11 +14,8 @@
         <script src="scripts/vendor/lodash.min.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/backbone-query-params.js"></script>
-        <script src="scripts/views/meetingListView.js"></script>
         <script src="scripts/views/meetingInListView.js"></script>
-        <script src="scripts/views/participantListView.js"></script>
         <script src="scripts/views/participantInListView.js"></script>
-        <script src="scripts/views/materialListView.js"></script>
         <script src="scripts/views/materialInListView.js"></script>
         <script src="scripts/views/participantView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
@@ -32,20 +30,18 @@
     </head>
 <body>
     <!-- Settings -->
-    <div data-role="page" id="meetings">
+    <div data-role="page" id="meetings" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d">
-            <a href="index.html" data-icon="mtngs-back" data-theme="b">Back</a>
-            <h1>Meetin.gs</h1>
+            <h1>Settings</h1>
         </div>
 
         <div id="settings" data-role="content">
         </div>
 
         <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-theme="c" data-tap-toggle="false">
-            <div data-role="navbar" class="meeting-navbar" data-grid="b">
+            <div data-role="navbar" class="meeting-navbar" data-grid="a">
                 <ul>
-                    <li><a id="nav-upcoming" href="index.html" data-icon="custom" data-transition="fade">Upcoming</a></li>
-                    <li><a id="nav-past" href="search.html" data-icon="custom" data-transition="fade">Past</a></li>
+                    <li><a id="nav-meetings" href="index.html" data-icon="custom" data-transition="fade">Meetings</a></li>
                     <li><a id="nav-settings" href="settings.html" data-icon="custom" data-transition="fade"  class="ui-btn-active ui-state-persist" >Settings</a></li>
                 </ul>
             </div>

@@ -8,10 +8,9 @@ app.router = Backbone.Router.extend({
         });
     },
     routes: {
-        "" : "upcoming",
+        "" : "meetings",
         "login.html" : "login",
-        "index.html" : "upcoming",
-        "past.html" : "past",
+        "index.html" : "meetings",
         "settings.html" : "settings",
         "meeting.html" : "meeting",
         "participants.html" : "participants",
@@ -19,28 +18,61 @@ app.router = Backbone.Router.extend({
         "participant.html" : "participant",
         "material.html" : "material"
     },
-    upcoming: function() {
-        app.collections.meetings_today = new app.meetingCollection();
-        app.collections.meetings_today.fetch({ success : function(){
-            app.views.today = new app.genericCollectionView({
-                collection : app.collections.meetings_today,
-                childViewConstructor : app.meetingInListView,
-                childViewTagName : 'li',
-                el : $('#today')
-            });
-            app.views.today.render();
-        }});
+    meetings: function() {
 
-        app.collections.meetings_upcoming = new app.meetingCollection();
-        app.collections.meetings_upcoming.fetch({ success : function(){
-            app.views.upcoming = new app.genericCollectionView({
-                collection : app.collections.meetings_upcoming,
+        // Set nav active
+        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
+        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+
+        // Get times
+        // var future_begin = Math.floor ( moment().utc().add('days',-7).sod() / 1000 );
+        var today = Math.floor ( moment().utc().sod() / 1000 );
+
+        // Function to set scroll after both are rendered or show message
+        var afterRender = _.after(2, function(){
+            if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0){
+                document.getElementById('future').scrollIntoView();
+                window.scrollBy(0,-50);
+            }
+            else{
+                $('.main-div').html('<h2>Sorry</h2><p>Our mobile application doesn\'t yet support adding meetings.</p><p>You can create new meetings from the desktop!</p><p class="sorry"><span class="sorry-squrre"></span></p>');
+            }
+        });
+
+        app.collections.future_meetings = new app.meetingCollection();
+        app.collections.future_meetings.fetch({ success : function(){
+            app.views.future = new app.upcomingMeetingsView({
+                collection : app.collections.future_meetings,
                 childViewConstructor : app.meetingInListView,
                 childViewTagName : 'li',
-                el : $('#upcoming')
+                el : $('#future'),
+                emptyString : '<li class="end">No more upcoming meetings.</li>',
+                infiniScroll : true,
+                infiniScrollDirection : 'down',
+                infiniScrollExtraParams : { start_min : today, sort : "asc" }
             });
-            app.views.upcoming.render();
-        }});
+            $('.loader').hide();
+            app.views.future.render();
+            afterRender();
+        },  data : { start_min : today, limit : 10, sort : "asc"} } );
+
+        app.collections.past_meetings = new app.meetingCollection();
+        app.collections.past_meetings.fetch({ success : function(){
+            app.views.past = new app.genericCollectionView({
+                collection : app.collections.past_meetings,
+                childViewConstructor : app.meetingInListView,
+                childViewTagName : 'li',
+                el : $('#past'),
+                emptyString : '<li class="end">No more past meetings.</li>',
+                infiniScroll : true,
+                infiniScrollDirection : 'up',
+                infiniScrollExtraParams : { start_max : today, sort : "desc" },
+                mode : "addtotop"
+            });
+            $('.loader').hide();
+            app.views.past.render();
+            afterRender();
+        },  data : { start_max : today, limit : 10, sort : "desc" } } );
     },
     login : function() {
         app.views.login = new app.loginView({
@@ -48,25 +80,21 @@ app.router = Backbone.Router.extend({
         });
         app.views.login.render();
     },
-    past : function() {
-        app.collections.meetings = new app.meetingCollection();
-        app.collections.meetings.fetch({ success : function(){
-            app.views.past = new app.genericCollectionView({
-                collection : app.collections.meetings,
-                childViewConstructor : app.meetingInListView,
-                childViewTagName : 'li',
-                el : $('#past')
-            });
-            app.views.past.render();
-        }});
-    },
     settings: function() {
+        // Set nav active
+        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
+        $('#nav-settings').addClass('ui-btn-active ui-state-persist');
+
         app.views.settings = new app.settingsView({
             el : $('#settings')
         });
         app.views.settings.render();
     },
     meeting: function(params) {
+        // Set nav active
+        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
+        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+
         var id = params.id || 0;
         app.models.meeting = new app.meetingModel({ id : id });
         app.views.meeting = new app.meetingView({
@@ -87,6 +115,10 @@ app.router = Backbone.Router.extend({
         }, timeout : 5000 });
     },
     participants: function(params) {
+        // Set nav active
+        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
+        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+
         var id = params.id || 0;
 
         app.collections.participants = new app.participantCollection( [], { meeting_id : id } );
@@ -102,6 +134,10 @@ app.router = Backbone.Router.extend({
         });
     },
     materials: function(params) {
+        // Set nav active
+        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
+        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+
         var id = params.id || 0;
 
         app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
@@ -117,6 +153,10 @@ app.router = Backbone.Router.extend({
         }});
     },
     participant: function(params) {
+        // Set nav active
+        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
+        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+
         var mid = params.mid || 0;
         var id = params.id || 0;
         app.models.participant = new app.participantModel();

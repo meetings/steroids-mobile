@@ -13,8 +13,12 @@
             a(href="skype:"+skype,data-role="button",data-theme="b")='Skype'
 - if(name)
     h3(style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;")=name
-- if (organization || organization_title)
-    p(style="margin-top:0px;")=organization+', '+organization_title
+-if( organization && organization_title )
+    p=organization + ', '+organization_title
+-if( organization && ! organization_title )
+    p=organization
+-if( ! organization && organization_title )
+    p=organization_title
 ul(data-role="listview",data-inset="true",data-theme="a")
     li
         p.mtngs-email
@@ -25,4 +29,4 @@ ul(data-role="listview",data-inset="true",data-theme="a")
             p.mtngs-skype=skype
         - if (linkedin)
             p.mtngs-linkedin
-                a(style="font-weight:normal;color:#555;",href=linkedin)="LinkeIn Profile"
+                a(style="font-weight:normal;color:#555;",href=linkedin)="LinkedIn Profile"

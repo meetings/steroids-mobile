@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache">
     <head>
+        <title>Material | Meetin.gs</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -27,6 +28,7 @@
         <script src="scripts/routes/router.js"></script>
         <script src="scripts/templates/all.js"></script>
         <!-- endbuild -->
+        <script type='text/javascript' src='//www.scribd.com/javascripts/scribd_api.js'></script>
     </head>
     <body>
         <!-- Meetings listing -->
@@ -35,13 +37,14 @@
                 <a href="#" data-rel="back" data-icon="delete" data-theme="b">Close</a>
                 <h1>Material</h1>
             </div>
-            <div data-role="content">
-                <ul data-role="listview" data-inset="true" data-theme="d" id="material">
-                    <li>
+            <div id="material-container" data-role="content">
+                <ul data-role="listview" data-inset="true" data-theme="d" >
+                    <li id="material">
                     <img alt="" class="loader" src="/images/ajaxloader.gif" />
                     </li>
                 </ul>
-
+            </div>
+            <div data-role="content">
                 <ul data-role="listview" data-inset="true" id="comments" data-theme="d">
                     <li>
                     <img alt="" class="loader" src="/images/ajaxloader.gif" />

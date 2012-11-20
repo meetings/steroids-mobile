@@ -16,7 +16,7 @@ exports.commentForm = function anonymous(locals, attrs, escape, rethrow, merge) 
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<div id="comment-box">\n  <div class="left">\n    <div class="container">\n      <textarea id="comment-input" data-role="none" rows="1" placeholder="Write a comment"></textarea>\n    </div>\n  </div>\n  <div class="right"><a data-role="none" data-enhance="false" href="#" class="send-comment">Send</a></div>\n</div>');
+        buf.push('\n<div id="comment-box">\n  <div class="left">\n    <div class="container">\n      <textarea id="comment-input" data-role="none" rows="1" placeholder="Tap to comment"></textarea>\n    </div>\n  </div>\n  <div class="right"><a data-role="none" data-enhance="false" href="#" class="send-comment">Send</a></div>\n</div>');
     }
     return buf.join("");
 };
@@ -63,7 +63,7 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<h1 class="meetings-logo"></h1>\n<div data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/>\n  <input data-theme="b" type="button" value="Log in" class="login"/>\n</div>');
+        buf.push('\n<h1 class="meetings-logo"></h1>\n<div id="login-form" data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/><a data-theme="b" type="button" class="login">Request login link</a>\n  <p style="text-align:center;">OR</p><a data-theme="b" type="button" class="register">Register new account</a>\n</div>');
     }
     return buf.join("");
 };
@@ -102,7 +102,10 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
-        buf.push("</a>");
+        buf.push('<span class="ui-li-count">');
+        var __val__ = comment_count;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push("</span></a>");
     }
     return buf.join("");
 };
@@ -118,13 +121,29 @@ exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge)
         var interp;
         var __indent = [];
         if (fetch_type !== "") {
-            buf.push("\n<h3>");
-            var __val__ = title;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push('</h3>\n<ul data-role="listview" data-inset="true" data-theme="d">\n  <li>\n    <p class="notruncation">');
-            var __val__ = content;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>\n  </li>\n</ul>");
+            if (fetch_type === "media") {
+                buf.push("\n<h3>");
+                var __val__ = title;
+                buf.push(escape(null == __val__ ? "" : __val__));
+                buf.push("</h3>");
+                var __val__ = content;
+                buf.push(null == __val__ ? "" : __val__);
+            } else {
+                buf.push("\n<h3>");
+                var __val__ = title;
+                buf.push(escape(null == __val__ ? "" : __val__));
+                buf.push("</h3>");
+                if (title == "Agenda" && content == "") {
+                    buf.push('\n<p class="notruncation">Agenda is empty.</p>');
+                } else if (title == "Action Points" && content == "") {
+                    buf.push('\n<p class="notruncation">Action points are empty.</p>');
+                } else {
+                    buf.push('\n<p class="notruncation">');
+                    var __val__ = content;
+                    buf.push(null == __val__ ? "" : __val__);
+                    buf.push("</p>");
+                }
+            }
         }
     }
     return buf.join("");
@@ -200,17 +219,30 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
         buf.push("</h3>");
         if (date_string) {
             buf.push('\n<p class="mtngs-calendar">');
-            var __val__ = date_string + " " + time_string + " " + timezone_string;
+            var __val__ = date_string + ", " + time_string + " " + timezone_string;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (location) {
-            buf.push('\n<p class="mtngs-location">');
-            var __val__ = location;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
+            if (location === "Skype" || location === "Online" || location === "Location not known") {
+                buf.push('\n<p class="mtngs-location">');
+                var __val__ = location;
+                buf.push(escape(null == __val__ ? "" : __val__));
+                buf.push("</p>");
+            } else {
+                buf.push('\n<p class="mtngs-location"><a');
+                buf.push(attrs({
+                    href: "https://maps.google.com/maps?daddr=" + location
+                }, {
+                    href: true
+                }));
+                buf.push(">");
+                var __val__ = location;
+                buf.push(escape(null == __val__ ? "" : __val__));
+                buf.push("</a></p>");
+            }
         }
-        buf.push('\n<div id="next-action-bar"></div>\n<!-- Links-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-material-view">\n      <h3>Materials</h3>\n      <p>Agenda &amp; materials</p></a></li>\n  <li><a href="#" class="open-participant-view">\n      <h3>');
+        buf.push('\n<div id="next-action-bar"></div>\n<div id="progress-bar"></div>\n<!-- Links-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-material-view">\n      <h3>Materials</h3>\n      <p>Agenda &amp; materials</p></a></li>\n  <li><a href="#" class="open-participant-view">\n      <h3>');
         var __val__ = "Participants";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</h3>\n      <div class="participant-list"></div>');
@@ -222,8 +254,8 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                     buf.push("<img");
                     buf.push(attrs({
                         src: participant.image,
-                        width: "20",
-                        height: "20"
+                        width: "30",
+                        height: "30"
                     }, {
                         src: true,
                         width: true,
@@ -250,20 +282,6 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                 "data-them": true
             }));
             buf.push("></a>");
-        }
-        buf.push("\n<!-- Progress bar-->");
-        if (ongoing) {
-            buf.push('\n<div class="bar wrapper">\n  <div class="bar-container">\n    <div class="text">');
-            var __val__ = timeleft;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</div>\n    <div");
-            buf.push(attrs({
-                style: "width:" + percentage + "%",
-                "class": "bar"
-            }, {
-                style: true
-            }));
-            buf.push("></div>\n  </div>\n</div>");
         }
     }
     return buf.join("");
@@ -303,11 +321,26 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
         buf.push("\n  <h3>");
         var __val__ = name;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</h3>\n  <p>");
-        var __val__ = organization;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</p>");
-        if (rsvp === "yes") {
+        buf.push("</h3>");
+        if (organization && organization_title) {
+            buf.push("\n  <p>");
+            var __val__ = organization + ", " + organization_title;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (organization && !organization_title) {
+            buf.push("\n  <p>");
+            var __val__ = organization;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (!organization && organization_title) {
+            buf.push("\n  <p>");
+            var __val__ = organization_title;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (rsvp === "yes" || !rsvp_required) {
             buf.push('\n  <p class="rsvp attending">Attending</p>');
         } else if (rsvp === "no") {
             buf.push('\n  <p class="rsvp noshow">Not attending</p>');
@@ -400,9 +433,21 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</h3>");
         }
-        if (organization || organization_title) {
-            buf.push('\n<p style="margin-top:0px;">');
+        if (organization && organization_title) {
+            buf.push("\n<p>");
             var __val__ = organization + ", " + organization_title;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (organization && !organization_title) {
+            buf.push("\n<p>");
+            var __val__ = organization;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (!organization && organization_title) {
+            buf.push("\n<p>");
+            var __val__ = organization_title;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
@@ -440,7 +485,7 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
                 href: true
             }));
             buf.push(">");
-            var __val__ = "LinkeIn Profile";
+            var __val__ = "LinkedIn Profile";
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</a></p>");
         }
@@ -474,16 +519,7 @@ exports.settingsView = function anonymous(locals, attrs, escape, rethrow, merge)
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push("\n<h3>");
-        var __val__ = "About";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</h3>\n<p>");
-        var __val__ = "Meetin.gs is a free cloud-based meeting organizer for running awesome business meetings.";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</p><a data-theme="b" data-role="button" href="#" class="logout">');
-        var __val__ = "Log out";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</a>");
+        buf.push('\n<h3>About</h3>\n<p>\n   Meetin.gs is a web and mobile meeting organizer for making the exchange around online\n  and face-to-face meetings more effective and productive. To setup new meetings,\n  use our desktop browser version.\n</p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
     }
     return buf.join("");
 };

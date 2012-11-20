@@ -12,6 +12,6 @@ app.settingsView = Backbone.View.extend({
     logout : function(e){
         e.preventDefault();
         app._removeAuthCookie();
-        // TODO: Redirect where?
+        window.location = '/login.html';
     }
 });

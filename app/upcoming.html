@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" manifest="manifest.appcache">
+    <head>
+        <title>Upcoming | Meetin.gs</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link rel="stylesheet" href="styles/custom.css" />
+        <!-- build:js scripts/scripts.js -->
+        <script src="scripts/vendor/jquery.min.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/vendor/jqm.js"></script>
+        <script src="scripts/vendor/lodash.min.js"></script>
+        <script src="scripts/vendor/backbone-min.js"></script>
+        <script src="scripts/vendor/backbone-query-params.js"></script>
+        <script src="scripts/vendor/moment.js"></script>
+        <script src="scripts/views/commentInListView.js"></script>
+        <script src="scripts/views/meetingInListView.js"></script>
+        <script src="scripts/views/meetingView.js"></script>
+        <script src="scripts/views/participantInListView.js"></script>
+        <script src="scripts/views/materialInListView.js"></script>
+        <script src="scripts/views/materialView.js"></script>
+        <script src="scripts/views/loginView.js"></script>
+        <script src="scripts/views/participantView.js"></script>
+        <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/commentListView.js"></script>
+        <script src="scripts/views/nextActionView.js"></script>
+        <script src="scripts/models/meetingModel.js"></script>
+        <script src="scripts/models/materialModel.js"></script>
+        <script src="scripts/models/participantModel.js"></script>
+        <script src="scripts/models/commentModel.js"></script>
+        <script src="scripts/collections/meetingCollection.js"></script>
+        <script src="scripts/collections/commentCollection.js"></script>
+        <script src="scripts/collections/materialCollection.js"></script>
+        <script src="scripts/collections/participantCollection.js"></script>
+        <script src="scripts/routes/router.js"></script>
+        <script src="scripts/templates/all.js"></script>
+        <!-- endbuild -->
+    </head>
+<body>
+    <!-- Meetings listing -->
+    <div data-role="page" id="meetings" data-theme="a">
+        <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
+            <h1>Meetin.gs</h1>
+        </div>
+        <div data-role="content" data-theme="a">
+            <h3 class="upcoming">Upcoming</h3>
+            <ul id="upcoming" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                <li>
+                    <img alt="" class="loader" src="/images/ajaxloader.gif" />
+                </li>
+            </ul>
+        </div><!-- /content -->
+        <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-theme="c" data-tap-toggle="false">
+            <div data-role="navbar" class="meeting-navbar" data-grid="a">
+                <ul>
+                    <li><a id="nav-meetings" href="index.html" data-icon="custom" data-transition="fade">Meetings</a></li>
+                    <li><a id="nav-settings" href="settings.html" data-icon="custom" data-transition="fade" >Settings</a></li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- /page -->
+</body>
+</html>

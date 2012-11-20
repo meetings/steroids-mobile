@@ -3,7 +3,9 @@ app.nextActionView = Backbone.View.extend({
     },
     render: function() {
         // Depending on user data, render different things
-        this.$el.html( templatizer.rsvpBarView( this.model.toJSON() ) );
+        if( this.model.get('rsvp') === '' && this.model.get('rsvp_required') !== '' ){
+            this.$el.html( templatizer.rsvpBarView( this.model.toJSON() ) );
+        }
     },
     events: {
         'click .attending' : 'setRsvpYes',

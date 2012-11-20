@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache">
     <head>
+        <title>Meetings | Meetin.gs</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -12,7 +13,9 @@
         <script src="scripts/vendor/jqm.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
+        <script src="scripts/vendor/infiniscroll.js"></script>
         <script src="scripts/vendor/backbone-query-params.js"></script>
+        <script src="scripts/vendor/moment.js"></script>
         <script src="scripts/views/commentInListView.js"></script>
         <script src="scripts/views/meetingInListView.js"></script>
         <script src="scripts/views/meetingView.js"></script>
@@ -22,6 +25,8 @@
         <script src="scripts/views/loginView.js"></script>
         <script src="scripts/views/participantView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/upcomingMeetingsView.js"></script>
+        <script src="scripts/views/settingsView.js"></script>
         <script src="scripts/views/commentListView.js"></script>
         <script src="scripts/views/nextActionView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
@@ -42,26 +47,19 @@
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
             <h1>Meetin.gs</h1>
         </div>
-        <div data-role="content" data-theme="a">
-            <h3 class="today">Today</h3>
-            <ul id="today" class="meeting-list today" data-role="listview" data-inset="true" data-theme="a">
-                <li>
-                    <img alt="" class="loader" src="/images/ajaxloader.gif" />
-                </li>
+        <div class="main-div" data-role="content" >
+            <div class="loader">
+                <img alt="" class="loader" src="/images/ajaxloader.gif" />
+            </div>
+            <ul id="past" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
             </ul>
-
-            <h3 class="upcoming">Upcoming</h3>
-            <ul id="upcoming" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                <li>
-                    <img alt="" class="loader" src="/images/ajaxloader.gif" />
-                </li>
+            <ul id="future" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
             </ul>
         </div><!-- /content -->
         <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-theme="c" data-tap-toggle="false">
-            <div data-role="navbar" class="meeting-navbar" data-grid="b">
+            <div data-role="navbar" class="meeting-navbar" data-grid="a">
                 <ul>
-                    <li><a id="nav-upcoming" href="index.html" data-icon="custom" class="ui-btn-active ui-state-persist" data-transition="fade">Upcoming</a></li>
-                    <li><a id="nav-past" href="past.html" data-icon="custom" data-transition="fade">Past</a></li>
+                    <li><a id="nav-meetings" href="index.html" data-icon="custom" data-transition="fade">Meetings</a></li>
                     <li><a id="nav-settings" href="settings.html" data-icon="custom" data-transition="fade" >Settings</a></li>
                 </ul>
             </div>

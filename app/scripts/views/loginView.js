@@ -5,12 +5,49 @@ app.loginView = Backbone.View.extend({
         this.$el.html( templatizer.loginView() );
     },
     events: {
-        'click .login' : 'login'
+        'click .login' : 'login',
+        'click .register' : 'register',
+        'click .tryagain' : 'tryagain'
+    },
+    tryagain : function(e){
+        e.preventDefault();
+        this.render();
+        this.$el.trigger('create');
     },
     login : function(e){
         e.preventDefault();
-        $.post( app.defaults.api_host + '/v1/login', { email : $('#email').val(), return_host : app.defaults.return_host }, function( response ){
-            console.log(response);
-        });
+        var $form = $('#login-form');
+        var $button = $(e.target);
+        var $mail_field = $('#email');
+        $button.html('Sending email...');
+        $.post( app.defaults.api_host + '/v1/login', { email : $mail_field.val(), return_host : app.defaults.return_host }, function( response ){
+            if( response.result === 1 ){
+                $form.fadeOut( function(){
+                    $form.html('<p class="login-message">Open your mobile email client for ' + $mail_field.val() + ' and click the login link to access. </p><p><a class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b tryagain"><span class="ui-btn-inner ui-btn-corner-all">Try again</span></a></p>').fadeIn();
+                });
+            }
+            else{
+               $button.html('Request Login Link');
+               $form.append( $('<p class="error">Sorry, ' + $mail_field.val() + ' not found. Try again!</p>').delay(5000).fadeOut() );
+            }
+        }, 'json');
+    },
+    register : function(e){
+        e.preventDefault();
+        var $form = $('#login-form');
+        var $button = $(e.target);
+        var $mail_field = $('#email');
+        $button.html('Creating account...');
+        $.post( app.defaults.api_host + '/v1/login', { email : $mail_field.val(), return_host : app.defaults.return_host, allow_register : 1 }, function( response ){
+            if( response.result === 1 ){
+                $form.fadeOut( function(){
+                    $form.html('<p class="login-message">Open your mobile email client for ' + $mail_field.val() + ' and click the login link to access. </p>').fadeIn();
+                });
+            }
+            else{
+               $button.html('Request Login Link');
+               $form.append( $('<p class="error">Sorry, ' + $mail_field.val() + ' not found. Try again!</p>').delay(5000).fadeOut() );
+            }
+        }, 'json');
     }
 });

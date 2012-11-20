@@ -8,13 +8,11 @@ app.commentListView = app.genericCollectionView.extend({
     },
     sendComment : function( e ){
         e.preventDefault();
+        $( e.target ).html('...');
         var c = new app.commentModel();
         c.url = app.collections.comments.url;
         c.save({ content : $("#comment-input").val() }, { success : function(){
             app.collections.comments.fetch();
         }});
-              /*app.collections.comments.create({
-                  content : $(this).val()
-              }, { wait : false });*/
     }
 });

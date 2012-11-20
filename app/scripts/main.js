@@ -15,7 +15,7 @@ window.app = {
     },
     defaults : {
         user_image : 'http://dev.meetin.gs/images/theme/default/default-user-avatar-22px.png',
-        api_host : 'http://api-dev.meetin.gs',
+        api_host : (location.host.indexOf('dev') !== -1 && location.host.indexOf('localhost') !== -1) ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
         return_host : 'http://' + location.host
     },
     options: {
@@ -26,20 +26,30 @@ window.app = {
     views : {},
     router : null,
     init : function() {
-        this._requireLogin();
-        this._doRedirects();
 
+        // Check login
+        if( this._requireLogin() ){
+            // Check meeting redirect
+            this._doRedirects();
+        }
+
+        // Remove navigation bar on IOS
+        this._removeIosNav();
+
+        // Add sending of auth token in headers
         Backbone.sync = _.wrap(Backbone.sync, function(originalSync, method, model, options) {
             var new_options =  _.extend({
                 beforeSend: function(xhr) {
-                    console.log(xhr);
                     var token = app.auth.token;
+                    var user = app.auth.user;
                     if (token) xhr.setRequestHeader('dic', token);
+                    if (user) xhr.setRequestHeader('user_id', user);
                 }
             }, options);
             return originalSync(method, model, new_options);
         });
 
+        // Start router
         window.router = new app.router();
         Backbone.history.start({pushState: true});
     },
@@ -56,23 +66,34 @@ window.app = {
 
         // Url has auth & user query params
         if( this._readAuthUrlParams() ){
-            // Url params already saved above
+            return true;
         }
         else if( auth_cookie ){
-            var user_and_token = auth_cookie.split( '_', 2 );
+            var user_and_token = auth_cookie.split(/_(.+)?/,2);
             app.auth.user = user_and_token[0];
             app.auth.token = user_and_token[1];
+            return true;
         }
         else{
-            //window.location = '/login.html';
+            // Throw the user out if no credentials
+            if( window.location.toString().indexOf( 'login.html') === -1 ){
+                window.location = '/login.html';
+                return false;
+            }
         }
     },
     _doRedirects : function(){
-
+        var redirect_meeting = this._getUrlParamByName( 'redirect_to_meeting' );
+        if( redirect_meeting && redirect_meeting !== 0 && redirect_meeting !== '0' ){
+            window.location = '/meeting.html?id=' + redirect_meeting;
+        }
+        else if( window.location.toString().indexOf( 'login.html') !== -1 ){
+            window.location = '/index.html';
+        }
     },
     _readAuthUrlParams : function(){
-        var user = this._getUrlParamByName( 'user' );
-        var token = this._getUrlParamByName( 'token' );
+        var user = this._getUrlParamByName( 'user_id' );
+        var token = this._getUrlParamByName( 'dic' );
         if( user && token ){
             app.auth.user = user;
             app.auth.token = token;
@@ -83,6 +104,7 @@ window.app = {
                 storage.auth.user = user;
                 storage.auth.token = token;
             }*/
+            return true;
         }
         else{
             return false;
@@ -111,14 +133,18 @@ window.app = {
         document.cookie = app.auth.cookiename + "=" + value + expires + "; path=/";
     },
     _removeAuthCookie : function(){
-        createCookie( app.auth.cookiename, "", -1 );
+        document.cookie = app.auth.cookiename + "=; expires=-1; path=/";
     },
-    _getLocalStorage : function supports_html5_storage() {
+    _getLocalStorage : function() {
         try {
             return 'localStorage' in window && window['localStorage'] !== null;
         } catch (e) {
             return false;
         }
+    },
+    _removeIosNav : function(){
+        /mobile/i.test(navigator.userAgent) && !location.hash &&
+            setTimeout(function () { window.scrollTo(0, 1); }, 1000);
     }
 };
 
