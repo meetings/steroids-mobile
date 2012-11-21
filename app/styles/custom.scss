@@ -150,6 +150,10 @@ div.participants{
         border:1px solid #ccc;
         margin-right:2px;
     }
+    span{
+        border:1px solid #ccc;
+        margin-right:2px;
+    }
 }
 span.placeholder-100{
     background-position:top left;
@@ -167,6 +171,15 @@ span.placeholder-60{
     display:inline-block;
     @include retina-bg('/images/default_user_60', 'png', 100px, 100px);
 }
+span.placeholder-30{
+    background-position:top left;
+    background-color:transparent;
+    width:30px;
+    height:30px;
+    display:inline-block;
+    @include retina-bg('/images/default_user_30', 'png', 100px, 100px);
+}
+
 span.placeholder-20{
     background-position:top left;
     background-color:transparent;

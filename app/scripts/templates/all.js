@@ -182,18 +182,21 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
             buf.push('\n  <div class="participants">');
             participants.forEach(function(participant) {
                 {
-                    if (!participant.image) participant.image = app.defaults.user_image;
-                    buf.push("<img");
-                    buf.push(attrs({
-                        src: participant.image,
-                        width: "20",
-                        height: "20"
-                    }, {
-                        src: true,
-                        width: true,
-                        height: true
-                    }));
-                    buf.push("/>");
+                    if (participant.image !== "") {
+                        buf.push("<img");
+                        buf.push(attrs({
+                            src: participant.image,
+                            width: "20",
+                            height: "20"
+                        }, {
+                            src: true,
+                            width: true,
+                            height: true
+                        }));
+                        buf.push("/>");
+                    } else {
+                        buf.push('<span class="placeholder-20"></span>');
+                    }
                 }
             });
             buf.push("\n  </div>");
@@ -252,18 +255,21 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push('\n      <div class="participants">');
             participants.forEach(function(participant) {
                 {
-                    if (!participant.image) participant.image = app.defaults.user_image;
-                    buf.push("<img");
-                    buf.push(attrs({
-                        src: participant.image,
-                        width: "30",
-                        height: "30"
-                    }, {
-                        src: true,
-                        width: true,
-                        height: true
-                    }));
-                    buf.push("/>");
+                    if (participant.image !== "") {
+                        buf.push("<img");
+                        buf.push(attrs({
+                            src: participant.image,
+                            width: "30",
+                            height: "30"
+                        }, {
+                            src: true,
+                            width: true,
+                            height: true
+                        }));
+                        buf.push("/>");
+                    } else {
+                        buf.push('<span class="placeholder-30"></span>');
+                    }
                 }
             });
             buf.push("\n      </div>");
