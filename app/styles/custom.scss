@@ -28,7 +28,12 @@
 .meeting-navbar .ui-btn .ui-icon { width: 30px!important; height: 22px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
 // RSVP answers on meeting page
 div.rsvp-answer{
-    height:40px;
+    span.text{
+        display:block;
+        height:32px;
+        margin-left:7px;
+    }
+    height:80px;
     line-height:40px;
     a{
         line-height:normal;
@@ -76,15 +81,18 @@ div#login-page{
         margin-top:30px;
         width:268px;
     }
-    h1.meetings-logo{
-        display:block;
-        background-position:top center;
-        background-color:transparent;
-        background-repeat:no-repeat;
-        height:62px;
-        margin-bottom:40px;
-        margin-top:40px;
-        @include retina-bg('/images/mlogo', 'png', 268px, 62px);
+    div.logo{
+        text-align:center;
+        h1.meetings-logo{
+            display:block;
+            background-position:top center;
+            background-color:transparent;
+            background-repeat:no-repeat;
+            width:268px;
+            height:62px;
+            margin:40px auto;
+            @include retina-bg('/images/mlogo', 'png', 268px, 62px);
+        }
     }
     input#email{
         margin-bottom:15px;
@@ -124,11 +132,23 @@ ul.meeting-list{
 ul li.today a div.top-bar{
     background-color:#d8e6be;
 }
+// Single participant
+div#participant{
+    img{
+        max-width:90%;
+    }
+    .ui-block-b a:first-child{
+        margin-top:1px;
+    }
+}
 
 // Participant image placeholders
 div.participants{
+    max-width:92%;
+    overflow:hidden;
     img{
         border:1px solid #ccc;
+        margin-right:2px;
     }
 }
 span.placeholder-100{
@@ -172,11 +192,11 @@ p.sorry{
     text-align:center;
     span.sorry-squrre{
         display:inline-block;
-        height:200px;
-        width:163px;
+        width:200px;
+        height:163px;
         background-image:url(/images/sorry_squrre.png);
         background-repeat:no-repeat;
-        background-size:163px 200px;
+        background-size:200px 163px;
     }
 }
 
@@ -194,13 +214,12 @@ div#material-container.scribd{
     padding-left:0px;
 }
 li#material{
-
     padding-left:15px;
     p.ui-li-desc{
         display:inline;
     }
-    li.nopadding{
-        padding:0px !important;
+    img{
+        max-width:100%;
     }
 }
 // Comments
@@ -343,6 +362,7 @@ div.ui-footer{
 
 
 
+// Loader styles
 div.loader {
     text-align:center;
     img.loader{
@@ -350,12 +370,23 @@ div.loader {
         width:40px;
         padding:5px 0 0 20px;;
     }
+    span.loader{
+        display:inline-block;
+        height:40px;
+        width:40px;
+        background-image:url("/images/ajaxloader.gif");
+        background-repeat:no-repeat;
+        background-size:40px 40px;
+    }
+
 }
+// Should be soon deprectaed
 li img.loader{
     height:40px;
     width:40px;
     padding:5px 0 0 0px;;
 }
+// Also deprecated
 li span.loader{
     display:inline-block;
     height:40px;
@@ -388,8 +419,9 @@ div.bar-container .bar{
 }
 div.bar-container .text{
     position:absolute;
+    text-align:center;
     top:5px;
-    left:40%;
+    left:0px;
     z-index: 2;
     width: 100%;
     height: 18px;
@@ -513,7 +545,7 @@ h3.past {
     background-color:transparent;
     left:10px !important;
     top:50% !important;
-    background-color:transparent;
+    background-ui-icon-mtngs-extcolor:transparent;
     box-shadow:none;
 }
 .ui-icon-mtngs-ext {
@@ -605,6 +637,8 @@ div#comment-box{
             border-radius: 5px;
             overflow:hidden;
             textarea#comment-input{
+                display:block;
+                font-size:16px;
                 height:18px;
                 width:100%;
                 padding:10px;

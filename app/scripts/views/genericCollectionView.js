@@ -110,6 +110,7 @@ app.genericCollectionView = Backbone.View.extend({
     },
 
     delayedAdd : _.debounce( function(){
+        console.log('addtodom')
         this.el.prepend(this.addHtmlBuffer);
         this.addHtmlBuffer = '';
         this.el.listview("refresh");
@@ -166,7 +167,7 @@ app.genericCollectionView = Backbone.View.extend({
         if( this.options.mode === 'addtotop'){
             //swindow.scrollBy(0,-102);
             window.scrollBy(0, 102 * res.length - 102 );
-            console.log('fix scroll after dom add')
+            //console.log('fix scroll after dom add')
         }
         if( res.length < 10 ){
             if( this.options.mode === 'addtotop'){
@@ -184,7 +185,7 @@ app.genericCollectionView = Backbone.View.extend({
         this.loader = $('<li style="text-align:center;"><span class="loader" ></span><p>Loading more...</p></li>');
         if( this.options.mode === 'addtotop'){
             this.el.prepend(this.loader);
-            console.log('add loader and scroll')
+            //console.log('add loader and scroll')
             window.scrollBy(0,102);
         }
         else{

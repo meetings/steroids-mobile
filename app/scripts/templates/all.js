@@ -63,7 +63,7 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<h1 class="meetings-logo"></h1>\n<div id="login-form" data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/><a data-theme="b" type="button" class="login">Request login link</a>\n  <p style="text-align:center;">OR</p><a data-theme="b" type="button" class="register">Register new account</a>\n</div>');
+        buf.push('\n<div class="logo">\n  <h1 class="meetings-logo"></h1>\n</div>\n<div id="login-form" data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/><a data-theme="b" type="button" class="login">Request login link</a>\n  <p style="text-align:center;">OR</p><a data-theme="b" type="button" class="register">Register new account</a>\n</div>');
     }
     return buf.join("");
 };
@@ -367,11 +367,9 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push("<img");
             buf.push(attrs({
                 src: image,
-                style: "width:100px;",
                 "class": "mtngs-profile-image"
             }, {
-                src: true,
-                style: true
+                src: true
             }));
             buf.push("/>");
         } else {
@@ -494,6 +492,31 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
     return buf.join("");
 };
 
+// progressBar.jade compiled template
+exports.progressBar = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('\n<!-- Progress bar-->\n<div class="bar wrapper">\n  <div class="bar-container">\n    <div class="text">');
+        var __val__ = timeleft;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push("</div>\n    <div");
+        buf.push(attrs({
+            style: "width:" + progress + "%",
+            "class": "bar"
+        }, {
+            style: true
+        }));
+        buf.push("></div>\n  </div>\n</div>");
+    }
+    return buf.join("");
+};
+
 // rsvpBarView.jade compiled template
 exports.rsvpBarView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
@@ -504,7 +527,7 @@ exports.rsvpBarView = function anonymous(locals, attrs, escape, rethrow, merge) 
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<div class="rsvp-answer"><span class="text">RSVP Status</span><a href="#" class="attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
+        buf.push('\n<div class="rsvp-answer"><span class="text">Set your RSVP status:</span><a href="#" class="attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
     }
     return buf.join("");
 };
@@ -519,7 +542,7 @@ exports.settingsView = function anonymous(locals, attrs, escape, rethrow, merge)
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<h3>About</h3>\n<p>\n   Meetin.gs is a web and mobile meeting organizer for making the exchange around online\n  and face-to-face meetings more effective and productive. To setup new meetings,\n  use our desktop browser version.\n</p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
+        buf.push('\n<h3>About</h3>\n<p>\n   Meetin.gs is the smartest way to meet, online or face-to-face.\n  We put meetings on the cloud, accessible from any device.\n  To setup new meetings, go to www.meetin.gs on a desktop browser.\n</p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
     }
     return buf.join("");
 };

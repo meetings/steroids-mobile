@@ -14,8 +14,8 @@ window.app = {
         cookievalid : 14 // in days
     },
     defaults : {
-        user_image : 'http://dev.meetin.gs/images/theme/default/default-user-avatar-22px.png',
-        api_host : (location.host.indexOf('dev') !== -1 && location.host.indexOf('localhost') !== -1) ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
+        //api_host : (location.host.indexOf('dev') !== -1 && location.host.indexOf('localhost') !== -1) ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
+        api_host : 'https://api.meetin.gs' ,
         return_host : 'http://' + location.host
     },
     options: {
@@ -84,6 +84,12 @@ window.app = {
     },
     _doRedirects : function(){
         var redirect_meeting = this._getUrlParamByName( 'redirect_to_meeting' );
+        var clear = this._getUrlParamByName( 'clear' );
+        if ( clear == 'true'){
+            app.auth.user = '';
+            app.auth.token = '';
+            return;
+        }
         if( redirect_meeting && redirect_meeting !== 0 && redirect_meeting !== '0' ){
             window.location = '/meeting.html?id=' + redirect_meeting;
         }
@@ -111,8 +117,7 @@ window.app = {
         }
     },
     _getUrlParamByName : function( name ){
-        var match = RegExp('[?&]' + name + '=([^&]*)')
-        .exec(window.location.search);
+        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
         return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     },
     _readAuthCookie : function(){

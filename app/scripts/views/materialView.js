@@ -9,10 +9,13 @@ app.materialView = Backbone.View.extend({
         this.initScribd();
         return this;
     },
-    events: {
-    },
     initDownloadLink: function(){
-
+        if( this.model.get('download_url')){
+            $('#download-link').attr('href', this.model.get('download_url'));
+        }
+        else{
+            $('#download-link').hide();
+        }
     },
     initScribd: function(){
 
