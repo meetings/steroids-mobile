@@ -110,7 +110,6 @@ app.genericCollectionView = Backbone.View.extend({
     },
 
     delayedAdd : _.debounce( function(){
-        console.log('addtodom')
         this.el.prepend(this.addHtmlBuffer);
         this.addHtmlBuffer = '';
         this.el.listview("refresh");
