@@ -570,7 +570,7 @@ p.mtngs-location{
     background-position:0px 50%;
     background-repeat:no-repeat;
     padding:5px 0 0 34px;
-    height:20px;
+    min-height:20px;
 }
 p.mtngs-email{
     @include retina-bg('/images/icon_mail' , 'png', 20px, 20px);

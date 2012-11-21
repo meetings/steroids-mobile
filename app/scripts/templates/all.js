@@ -47,7 +47,7 @@ exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, m
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</p>\n<p>");
         var __val__ = content;
-        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push(null == __val__ ? "" : __val__);
         buf.push("</p>");
     }
     return buf.join("");
@@ -232,8 +232,10 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             } else {
                 buf.push('\n<p class="mtngs-location"><a');
                 buf.push(attrs({
+                    target: "_blank",
                     href: "https://maps.google.com/maps?daddr=" + location
                 }, {
+                    target: true,
                     href: true
                 }));
                 buf.push(">");
