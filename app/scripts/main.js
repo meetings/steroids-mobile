@@ -14,8 +14,8 @@ window.app = {
         cookievalid : 14 // in days
     },
     defaults : {
-        //api_host : (location.host.indexOf('dev') !== -1 && location.host.indexOf('localhost') !== -1) ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
-        api_host : 'https://api.meetin.gs' ,
+        api_host : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://api-dev.meetin.gs' : 'https://api.meetin.gs',
+        desktop_link : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://dev.meetin.gs/meetings_global/detect' : 'https://meetin.gs/meetings_global/detect',
         return_host : 'http://' + location.host
     },
     options: {

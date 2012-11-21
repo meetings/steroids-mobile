@@ -542,7 +542,13 @@ exports.settingsView = function anonymous(locals, attrs, escape, rethrow, merge)
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<h3>About</h3>\n<p>\n   Meetin.gs is the smartest way to meet, online or face-to-face.\n  We put meetings on the cloud, accessible from any device.\n  To setup new meetings, go to www.meetin.gs on a desktop browser.\n</p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
+        buf.push("\n<h3>About</h3>\n<p>\n   Meetin.gs is the smartest way to meet, online or face-to-face.\n  We put meetings on the cloud, accessible from any device.\n  To setup new meetings, go to www.meetin.gs on a desktop browser.\n</p>\n<p><a");
+        buf.push(attrs({
+            href: desktop_link
+        }, {
+            href: true
+        }));
+        buf.push('>Switch to desktop version</a></p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
     }
     return buf.join("");
 };
