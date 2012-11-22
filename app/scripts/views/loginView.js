@@ -7,7 +7,8 @@ app.loginView = Backbone.View.extend({
     events: {
         'click .login' : 'login',
         'click .register' : 'register',
-        'click .tryagain' : 'tryagain'
+        'click .tryagain' : 'tryagain',
+        'click #no-mobile' : 'nomobile'
     },
     tryagain : function(e){
         e.preventDefault();
@@ -19,6 +20,10 @@ app.loginView = Backbone.View.extend({
         var $form = $('#login-form');
         var $button = $(e.target);
         var $mail_field = $('#email');
+        if( ! $mail_field.val() ){
+             $form.append( $('<p class="error">Oops, you forgot to type in an email.</p>').delay(5000).fadeOut() );
+             return;
+        }
         $button.html('Sending email...');
         $.post( app.defaults.api_host + '/v1/login', { email : $mail_field.val(), return_host : app.defaults.return_host }, function( response ){
             if( response.result === 1 ){
@@ -37,6 +42,10 @@ app.loginView = Backbone.View.extend({
         var $form = $('#login-form');
         var $button = $(e.target);
         var $mail_field = $('#email');
+        if( ! $mail_field.val() ){
+             $form.append( $('<p class="error">Oops, you forgot to type in an email.</p>').delay(5000).fadeOut() );
+             return;
+        }
         $button.html('Creating account...');
         $.post( app.defaults.api_host + '/v1/login', { email : $mail_field.val(), return_host : app.defaults.return_host, allow_register : 1 }, function( response ){
             if( response.result === 1 ){
@@ -45,9 +54,13 @@ app.loginView = Backbone.View.extend({
                 });
             }
             else{
-               $button.html('Request Login Link');
+               $button.html('Register new account');
                $form.append( $('<p class="error">Sorry, ' + $mail_field.val() + ' not found. Try again!</p>').delay(5000).fadeOut() );
             }
         }, 'json');
+    },
+    nomobile : function(e){
+        e.preventDefault();
+        window.location = 'http://www.meetin.gs/nomobile.php';
     }
 });

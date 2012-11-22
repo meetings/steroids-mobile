@@ -63,7 +63,7 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<div class="logo">\n  <h1 class="meetings-logo"></h1>\n</div>\n<div id="login-form" data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/><a data-theme="b" type="button" class="login">Request login link</a>\n  <p style="text-align:center;">OR</p><a data-theme="b" type="button" class="register">Register new account</a>\n</div>');
+        buf.push('\n<div class="logo">\n  <h1 class="meetings-logo"></h1>\n</div>\n<div id="login-form" data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/><a data-theme="b" type="button" class="login">Request login link</a>\n  <p style="text-align:center;">OR</p><a data-theme="b" type="button" class="register">Register new account</a>\n</div>\n<div class="no-mobile-link"><a id="no-mobile" href="#">Switch to normal website</a></div>');
     }
     return buf.join("");
 };
