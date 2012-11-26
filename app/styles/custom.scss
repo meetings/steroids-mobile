@@ -20,6 +20,12 @@
     white-space: normal !important;
 }
 
+// Add grid background
+div.ui-page{
+    @include retina-bg('/images/mobile_bg', 'png', 3px, 3px);
+    background-repeat:repeat
+}
+
 // Fix headr button
 .ui-header .ui-btn{
     top:5px;
