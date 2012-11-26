@@ -34,7 +34,7 @@ window.app = {
         }
 
         // Remove navigation bar on IOS
-        this._removeIosNav();
+        //this._removeIosNav();
 
         // Add sending of auth token in headers
         Backbone.sync = _.wrap(Backbone.sync, function(originalSync, method, model, options) {
@@ -149,7 +149,7 @@ window.app = {
     },
     _removeIosNav : function(){
         /mobile/i.test(navigator.userAgent) && !location.hash &&
-            setTimeout(function () { window.scrollTo(0, 1); }, 1000);
+            setTimeout(function () { window.scrollBy(0, 1); console.log('fix ios ') }, 3000);
     }
 };
 

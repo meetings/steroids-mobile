@@ -109,6 +109,7 @@ app.genericCollectionView = Backbone.View.extend({
         }
     },
 
+    // We want to add content to dom all at once, so underscores debounce is used to achieve this
     delayedAdd : _.debounce( function(){
         this.el.prepend(this.addHtmlBuffer);
         this.addHtmlBuffer = '';
@@ -164,17 +165,22 @@ app.genericCollectionView = Backbone.View.extend({
     scrolledMore : function(col, res) {
         this.loader.remove();
         if( this.options.mode === 'addtotop'){
-            //swindow.scrollBy(0,-102);
-            window.scrollBy(0, 102 * res.length - 102 );
-            //console.log('fix scroll after dom add')
+            window.scrollBy(0, 102 * res.length  );
         }
         if( res.length < 10 ){
-            if( this.options.mode === 'addtotop'){
-                this.el.prepend(this.emptyString);
-            }
-            else{
-                this.el.append(this.emptyString);
-            }
+            var msg = this.emptyString;
+            var mode = this.options.mode;
+            var el = this.el;
+
+            // Allow time for the delayed render function to complete
+            setTimeout(function(){
+                if( mode === 'addtotop'){
+                    el.prepend(msg);
+                }
+                else{
+                    el.append(msg);
+                }
+            },500);
         }
     },
     keepScrollPos : function(){
@@ -184,8 +190,6 @@ app.genericCollectionView = Backbone.View.extend({
         this.loader = $('<li style="text-align:center;"><span class="loader" ></span><p>Loading more...</p></li>');
         if( this.options.mode === 'addtotop'){
             this.el.prepend(this.loader);
-            //console.log('add loader and scroll')
-            window.scrollBy(0,102);
         }
         else{
             this.el.append(this.loader);

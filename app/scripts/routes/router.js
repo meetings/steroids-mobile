@@ -31,8 +31,8 @@ app.router = Backbone.Router.extend({
         // Function to set scroll after both are rendered or show message
         var afterRender = _.after(2, function(){
             if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0){
-                document.getElementById('future').scrollIntoView();
-                window.scrollBy(0,-50);
+                var offset = $('#future').offset();
+                window.scrollTo(0, offset.top - 50);
             }
             else{
                 $('.main-div').html('<h2>Sorry</h2><p>Our mobile app doesn\'t yet support creating meetings.</p><p>Open the login link in your email with a desktop browser to get started!</p><p class="sorry"><span class="sorry-squrre"></span></p>');
