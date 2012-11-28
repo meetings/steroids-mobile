@@ -5,6 +5,5 @@ app.participantCollection = Backbone.Collection.extend({
         this.url = app.defaults.api_host + '/v1/meetings/' + options.meeting_id + '/participants';
     },
     fetchMore: function(){
-        console.log('fetch more called');
     }
 });

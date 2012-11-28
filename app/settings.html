@@ -13,17 +13,30 @@
         <script src="scripts/vendor/jqm.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
+        <script src="scripts/vendor/infiniscroll.js"></script>
         <script src="scripts/vendor/backbone-query-params.js"></script>
+        <script src="scripts/vendor/moment.js"></script>
+        <script src="scripts/views/commentInListView.js"></script>
         <script src="scripts/views/meetingInListView.js"></script>
+        <script src="scripts/views/meetingView.js"></script>
         <script src="scripts/views/participantInListView.js"></script>
         <script src="scripts/views/materialInListView.js"></script>
+        <script src="scripts/views/materialView.js"></script>
+        <script src="scripts/views/loginView.js"></script>
         <script src="scripts/views/participantView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/upcomingMeetingsView.js"></script>
         <script src="scripts/views/settingsView.js"></script>
+        <script src="scripts/views/commentListView.js"></script>
+        <script src="scripts/views/nextActionView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
         <script src="scripts/models/participantModel.js"></script>
+        <script src="scripts/models/commentModel.js"></script>
         <script src="scripts/collections/meetingCollection.js"></script>
+        <script src="scripts/collections/commentCollection.js"></script>
+        <script src="scripts/collections/materialCollection.js"></script>
+        <script src="scripts/collections/participantCollection.js"></script>
         <script src="scripts/routes/router.js"></script>
         <script src="scripts/templates/all.js"></script>
         <!-- endbuild -->
@@ -36,6 +49,9 @@
         </div>
 
         <div id="settings" data-role="content">
+            <div class="loader">
+                <span class="loader"></span>
+            </div>
         </div>
 
         <div data-role="footer" data-position="fixed" data-id="meeting-footer" data-theme="c" data-tap-toggle="false">
@@ -47,5 +63,15 @@
             </div>
         </div>
     </div><!-- /page -->
+    <script type="text/javascript" charset="utf-8">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount','UA-3314001-23']);
+_gaq.push(['_trackPageview']);
+(function() {
+ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+ })();
+    </script>
 </body>
 </html>

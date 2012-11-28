@@ -6,7 +6,7 @@ h3=title
         p.mtngs-location=location
     - else
         p.mtngs-location
-            a(href="https://maps.google.com/maps?daddr="+location,)=location
+            a(target="_blank",href="https://maps.google.com/maps?daddr="+location)=location
 
 div#next-action-bar
 
@@ -25,8 +25,10 @@ ul(data-role='listview',data-inset='true')
             - if ( participants.length)
                 .participants
                     - participants.forEach(function(participant){
-                        - if( ! participant.image ) participant.image = app.defaults.user_image
-                        img(src=participant.image, width='30', height='30')
+                        - if( participant.image !== '' )
+                            img(src=participant.image, width='30', height='30')
+                        - else
+                            span.placeholder-30
                     - })
 
 // Skype button

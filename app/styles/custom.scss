@@ -20,6 +20,19 @@
     white-space: normal !important;
 }
 
+// Add grid background
+div.ui-page{
+    @include retina-bg('/images/mobile_bg', 'png', 3px, 3px);
+    background-repeat:repeat
+}
+
+// Shadow to header
+div.ui-header{
+    -webkit-box-shadow: 0px 0px 4px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 4px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 4px rgba(50, 50, 50, 0.75);
+}
+
 // Fix headr button
 .ui-header .ui-btn{
     top:5px;
@@ -28,7 +41,12 @@
 .meeting-navbar .ui-btn .ui-icon { width: 30px!important; height: 22px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
 // RSVP answers on meeting page
 div.rsvp-answer{
-    height:40px;
+    span.text{
+        display:block;
+        height:32px;
+        margin-left:7px;
+    }
+    height:80px;
     line-height:40px;
     a{
         line-height:normal;
@@ -71,26 +89,38 @@ div#login-page{
     bottom:0px;
     width:100%;
     padding:0px;
+    .ui-br{
+        border:none;
+    }
     div.ui-field-contain{
         margin:0 auto;
         margin-top:30px;
         width:268px;
     }
-    h1.meetings-logo{
-        display:block;
-        background-position:top center;
-        background-color:transparent;
-        background-repeat:no-repeat;
-        height:62px;
-        margin-bottom:40px;
-        margin-top:40px;
-        @include retina-bg('/images/mlogo', 'png', 268px, 62px);
+    div.logo{
+        text-align:center;
+        h1.meetings-logo{
+            display:block;
+            background-position:top center;
+            background-color:transparent;
+            background-repeat:no-repeat;
+            width:268px;
+            height:62px;
+            margin:40px auto;
+            @include retina-bg('/images/mlogo', 'png', 268px, 62px);
+        }
     }
     input#email{
         margin-bottom:15px;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
         border-radius: 4px;
+    }
+    div.no-mobile-link{
+        margin:0 auto;
+        text-align:center;
+        margin-top:15px;
+        width:268px;
     }
 }
 // Meetings in list view
@@ -124,11 +154,27 @@ ul.meeting-list{
 ul li.today a div.top-bar{
     background-color:#d8e6be;
 }
+// Single participant
+div#participant{
+    img{
+        max-width:90%;
+    }
+    .ui-block-b a:first-child{
+        margin-top:1px;
+    }
+}
 
 // Participant image placeholders
 div.participants{
+    max-width:92%;
+    overflow:hidden;
     img{
         border:1px solid #ccc;
+        margin-right:2px;
+    }
+    span{
+        border:1px solid #ccc;
+        margin-right:2px;
     }
 }
 span.placeholder-100{
@@ -147,6 +193,15 @@ span.placeholder-60{
     display:inline-block;
     @include retina-bg('/images/default_user_60', 'png', 100px, 100px);
 }
+span.placeholder-30{
+    background-position:top left;
+    background-color:transparent;
+    width:30px;
+    height:30px;
+    display:inline-block;
+    @include retina-bg('/images/default_user_30', 'png', 100px, 100px);
+}
+
 span.placeholder-20{
     background-position:top left;
     background-color:transparent;
@@ -172,11 +227,11 @@ p.sorry{
     text-align:center;
     span.sorry-squrre{
         display:inline-block;
-        height:200px;
-        width:163px;
+        width:200px;
+        height:163px;
         background-image:url(/images/sorry_squrre.png);
         background-repeat:no-repeat;
-        background-size:163px 200px;
+        background-size:200px 163px;
     }
 }
 
@@ -194,13 +249,12 @@ div#material-container.scribd{
     padding-left:0px;
 }
 li#material{
-
     padding-left:15px;
     p.ui-li-desc{
         display:inline;
     }
-    li.nopadding{
-        padding:0px !important;
+    img{
+        max-width:100%;
     }
 }
 // Comments
@@ -249,7 +303,7 @@ ul#materials{
             background-color:transparent;
         }
         span.material-text{
-            @include retina-bg('/images/m_textj', 'png', 46px, 46px);
+            @include retina-bg('/images/m_text', 'png', 46px, 46px);
             background-position:top left;
             background-color:transparent;
         }
@@ -343,6 +397,7 @@ div.ui-footer{
 
 
 
+// Loader styles
 div.loader {
     text-align:center;
     img.loader{
@@ -350,12 +405,23 @@ div.loader {
         width:40px;
         padding:5px 0 0 20px;;
     }
+    span.loader{
+        display:inline-block;
+        height:40px;
+        width:40px;
+        background-image:url("/images/ajaxloader.gif");
+        background-repeat:no-repeat;
+        background-size:40px 40px;
+    }
+
 }
+// Should be soon deprectaed
 li img.loader{
     height:40px;
     width:40px;
     padding:5px 0 0 0px;;
 }
+// Also deprecated
 li span.loader{
     display:inline-block;
     height:40px;
@@ -388,8 +454,9 @@ div.bar-container .bar{
 }
 div.bar-container .text{
     position:absolute;
+    text-align:center;
     top:5px;
-    left:40%;
+    left:0px;
     z-index: 2;
     width: 100%;
     height: 18px;
@@ -513,7 +580,7 @@ h3.past {
     background-color:transparent;
     left:10px !important;
     top:50% !important;
-    background-color:transparent;
+    background-ui-icon-mtngs-extcolor:transparent;
     box-shadow:none;
 }
 .ui-icon-mtngs-ext {
@@ -538,7 +605,7 @@ p.mtngs-location{
     background-position:0px 50%;
     background-repeat:no-repeat;
     padding:5px 0 0 34px;
-    height:20px;
+    min-height:20px;
 }
 p.mtngs-email{
     @include retina-bg('/images/icon_mail' , 'png', 20px, 20px);
@@ -605,6 +672,8 @@ div#comment-box{
             border-radius: 5px;
             overflow:hidden;
             textarea#comment-input{
+                display:block;
+                font-size:16px;
                 height:18px;
                 width:100%;
                 padding:10px;

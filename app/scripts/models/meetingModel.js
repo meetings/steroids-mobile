@@ -2,13 +2,11 @@ app.meetingModel = Backbone.Model.extend({
     idAttribute: "id",
     defaults: {
         "id" : 0,
-        "title": "Example meeting",
-        "date_string" : "Monday, August 6",
-        "time_string": "4 - 5pm",
-        "location": "Fredrikinkatu 61 A, 8th floor, Helsinki, Finland",
-        "participants": [{image:'/images/dot_green.png'},{image:'/images/dot_red.png'}],
-        "ongoing" : false,
-        "timeleft" : 50,
+        "title": "",
+        "date_string" : "",
+        "time_string": "",
+        "location": "",
+        "participants": [],
         "skype_address" : false
     },
     initialize : function(){

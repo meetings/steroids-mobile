@@ -1,11 +1,5 @@
 app.router = Backbone.Router.extend({
     initialize : function(){
-        // Check login for all but login page
-        this.bind('all:before', function (trigger, args) {
-            var routeData = trigger.split(":");
-            if (routeData[0] === "route" && routeData[1] !== "login") {
-            }
-        });
     },
     routes: {
         "" : "meetings",
@@ -26,21 +20,27 @@ app.router = Backbone.Router.extend({
 
         // Get times
         // var future_begin = Math.floor ( moment().utc().add('days',-7).sod() / 1000 );
-        var today = Math.floor ( moment().utc().sod() / 1000 );
+        var today = Math.floor( moment().sod() / 1000 );
 
         // Function to set scroll after both are rendered or show message
         var afterRender = _.after(2, function(){
             if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0){
-                document.getElementById('future').scrollIntoView();
-                window.scrollBy(0,-50);
+                var offset = $('#future').offset();
+                window.scrollTo(0, offset.top - 50);
             }
             else{
-                $('.main-div').html('<h2>Sorry</h2><p>Our mobile application doesn\'t yet support adding meetings.</p><p>You can create new meetings from the desktop!</p><p class="sorry"><span class="sorry-squrre"></span></p>');
+                $('.main-div').html('<h2>Sorry</h2><p>Our mobile app doesn\'t yet support creating meetings.</p><p>Open the login link in your email with a desktop browser to get started!</p><p class="sorry"><span class="sorry-squrre"></span></p>');
             }
         });
 
         app.collections.future_meetings = new app.meetingCollection();
-        app.collections.future_meetings.fetch({ success : function(){
+        app.collections.future_meetings.fetch({ success : function(col,res){
+            // If problems with auth
+            if( res && res.error && res.error.message == "invalid auth" ){
+                window.location = '/login.html?clear=true';
+                return;
+            }
+
             app.views.future = new app.upcomingMeetingsView({
                 collection : app.collections.future_meetings,
                 childViewConstructor : app.meetingInListView,
@@ -57,7 +57,12 @@ app.router = Backbone.Router.extend({
         },  data : { start_min : today, limit : 10, sort : "asc"} } );
 
         app.collections.past_meetings = new app.meetingCollection();
-        app.collections.past_meetings.fetch({ success : function(){
+        app.collections.past_meetings.fetch({ success : function(col,res){
+            // If problems with auth
+            if( res && res.error && res.error.message == "invalid auth" ){
+                window.location = '/login.html?clear=true';
+                return;
+            }
             app.views.past = new app.genericCollectionView({
                 collection : app.collections.past_meetings,
                 childViewConstructor : app.meetingInListView,

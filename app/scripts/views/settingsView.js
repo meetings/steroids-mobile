@@ -2,7 +2,7 @@ app.settingsView = Backbone.View.extend({
     initialize: function(options) {
     },
     render: function() {
-        this.$el.html( templatizer.settingsView() ); // Render template
+        this.$el.html( templatizer.settingsView({ desktop_link : app.defaults.desktop_link }) ); // Render template
         this.$el.trigger('create');
         return this;
     },

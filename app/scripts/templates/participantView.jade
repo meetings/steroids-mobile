@@ -1,7 +1,7 @@
 .ui-grid-a
     .ui-block-a
         - if( image )
-            img(src=image,style="width:100px;").mtngs-profile-image
+            img(src=image).mtngs-profile-image
         - else
             span.placeholder-100.mtngs-profile-image
     .ui-block-b
@@ -29,4 +29,5 @@ ul(data-role="listview",data-inset="true",data-theme="a")
             p.mtngs-skype=skype
         - if (linkedin)
             p.mtngs-linkedin
+                - if( linkedin.indexOf('http') === -1) linkedin = 'http://' + linkedin;
                 a(style="font-weight:normal;color:#555;",href=linkedin)="LinkedIn Profile"

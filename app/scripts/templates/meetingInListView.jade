@@ -7,6 +7,8 @@ a(href='meeting.html?id='+id)
     - if ( participants.length)
         div.participants
             - participants.forEach(function(participant){
-                - if( ! participant.image ) participant.image = app.defaults.user_image
-                img(src=participant.image, width='20', height='20')
+                - if( participant.image !== '' )
+                    img(src=participant.image, width='20', height='20')
+                - else
+                    span.placeholder-20
             - })

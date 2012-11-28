@@ -47,7 +47,7 @@ exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, m
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</p>\n<p>");
         var __val__ = content;
-        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push(null == __val__ ? "" : __val__);
         buf.push("</p>");
     }
     return buf.join("");
@@ -63,7 +63,7 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<h1 class="meetings-logo"></h1>\n<div id="login-form" data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/><a data-theme="b" type="button" class="login">Request login link</a>\n  <p style="text-align:center;">OR</p><a data-theme="b" type="button" class="register">Register new account</a>\n</div>');
+        buf.push('\n<div class="logo">\n  <h1 class="meetings-logo"></h1>\n</div>\n<div id="login-form" data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/><a data-theme="b" type="button" class="login">Request login link</a>\n  <p style="text-align:center;">OR</p><a data-theme="b" type="button" class="register">Register new account</a>\n</div>\n<div class="no-mobile-link"><a id="no-mobile" href="#">Switch to normal website</a></div>');
     }
     return buf.join("");
 };
@@ -85,10 +85,10 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
             href: true
         }));
         buf.push(">");
-        if (fetch_type === "image") {
-            buf.push('<span class="material-imag ui-li-thumb ui-corner-tle"></span>');
-        } else if (fetch_type === "text") {
-            buf.push('<span class="material-tex ui-li-thumb ui-corner-tlt"></span>');
+        if (fetch_type === "media") {
+            buf.push('<span class="material-image ui-li-thumb ui-corner-tl"></span>');
+        } else if (fetch_type === "page") {
+            buf.push('<span class="material-text ui-li-thumb ui-corner-tl"></span>');
         } else {
             buf.push('<span class="material-other ui-li-thumb ui-corner-tl"></span>');
         }
@@ -182,18 +182,21 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
             buf.push('\n  <div class="participants">');
             participants.forEach(function(participant) {
                 {
-                    if (!participant.image) participant.image = app.defaults.user_image;
-                    buf.push("<img");
-                    buf.push(attrs({
-                        src: participant.image,
-                        width: "20",
-                        height: "20"
-                    }, {
-                        src: true,
-                        width: true,
-                        height: true
-                    }));
-                    buf.push("/>");
+                    if (participant.image !== "") {
+                        buf.push("<img");
+                        buf.push(attrs({
+                            src: participant.image,
+                            width: "20",
+                            height: "20"
+                        }, {
+                            src: true,
+                            width: true,
+                            height: true
+                        }));
+                        buf.push("/>");
+                    } else {
+                        buf.push('<span class="placeholder-20"></span>');
+                    }
                 }
             });
             buf.push("\n  </div>");
@@ -232,8 +235,10 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             } else {
                 buf.push('\n<p class="mtngs-location"><a');
                 buf.push(attrs({
+                    target: "_blank",
                     href: "https://maps.google.com/maps?daddr=" + location
                 }, {
+                    target: true,
                     href: true
                 }));
                 buf.push(">");
@@ -250,18 +255,21 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push('\n      <div class="participants">');
             participants.forEach(function(participant) {
                 {
-                    if (!participant.image) participant.image = app.defaults.user_image;
-                    buf.push("<img");
-                    buf.push(attrs({
-                        src: participant.image,
-                        width: "30",
-                        height: "30"
-                    }, {
-                        src: true,
-                        width: true,
-                        height: true
-                    }));
-                    buf.push("/>");
+                    if (participant.image !== "") {
+                        buf.push("<img");
+                        buf.push(attrs({
+                            src: participant.image,
+                            width: "30",
+                            height: "30"
+                        }, {
+                            src: true,
+                            width: true,
+                            height: true
+                        }));
+                        buf.push("/>");
+                    } else {
+                        buf.push('<span class="placeholder-30"></span>');
+                    }
                 }
             });
             buf.push("\n      </div>");
@@ -367,11 +375,9 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push("<img");
             buf.push(attrs({
                 src: image,
-                style: "width:100px;",
                 "class": "mtngs-profile-image"
             }, {
-                src: true,
-                style: true
+                src: true
             }));
             buf.push("/>");
         } else {
@@ -476,7 +482,9 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push("</p>");
         }
         if (linkedin) {
-            buf.push('\n    <p class="mtngs-linkedin"><a');
+            buf.push('\n    <p class="mtngs-linkedin">');
+            if (linkedin.indexOf("http") === -1) linkedin = "http://" + linkedin;
+            buf.push("<a");
             buf.push(attrs({
                 style: "font-weight:normal;color:#555;",
                 href: linkedin
@@ -487,9 +495,34 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push(">");
             var __val__ = "LinkedIn Profile";
             buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</a></p>");
+            buf.push("</a>\n    </p>");
         }
         buf.push("\n  </li>\n</ul>");
+    }
+    return buf.join("");
+};
+
+// progressBar.jade compiled template
+exports.progressBar = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('\n<!-- Progress bar-->\n<div class="bar wrapper">\n  <div class="bar-container">\n    <div class="text">');
+        var __val__ = timeleft;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push("</div>\n    <div");
+        buf.push(attrs({
+            style: "width:" + progress + "%",
+            "class": "bar"
+        }, {
+            style: true
+        }));
+        buf.push("></div>\n  </div>\n</div>");
     }
     return buf.join("");
 };
@@ -504,7 +537,7 @@ exports.rsvpBarView = function anonymous(locals, attrs, escape, rethrow, merge) 
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<div class="rsvp-answer"><span class="text">RSVP Status</span><a href="#" class="attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
+        buf.push('\n<div class="rsvp-answer"><span class="text">Set your RSVP status:</span><a href="#" class="attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
     }
     return buf.join("");
 };
@@ -519,7 +552,13 @@ exports.settingsView = function anonymous(locals, attrs, escape, rethrow, merge)
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<h3>About</h3>\n<p>\n   Meetin.gs is a web and mobile meeting organizer for making the exchange around online\n  and face-to-face meetings more effective and productive. To setup new meetings,\n  use our desktop browser version.\n</p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
+        buf.push("\n<h3>About</h3>\n<p>\n   Meetin.gs is the smartest way to meet, online or face-to-face.\n  We put meetings on the cloud, accessible from any device.\n  To setup new meetings, go to www.meetin.gs on a desktop browser.\n</p>\n<p><a");
+        buf.push(attrs({
+            href: desktop_link
+        }, {
+            href: true
+        }));
+        buf.push('>Switch to desktop version</a></p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
     }
     return buf.join("");
 };
