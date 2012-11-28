@@ -85,10 +85,10 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
             href: true
         }));
         buf.push(">");
-        if (fetch_type === "image") {
-            buf.push('<span class="material-imag ui-li-thumb ui-corner-tle"></span>');
-        } else if (fetch_type === "text") {
-            buf.push('<span class="material-tex ui-li-thumb ui-corner-tlt"></span>');
+        if (fetch_type === "media") {
+            buf.push('<span class="material-image ui-li-thumb ui-corner-tl"></span>');
+        } else if (fetch_type === "page") {
+            buf.push('<span class="material-text ui-li-thumb ui-corner-tl"></span>');
         } else {
             buf.push('<span class="material-other ui-li-thumb ui-corner-tl"></span>');
         }
@@ -482,7 +482,9 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push("</p>");
         }
         if (linkedin) {
-            buf.push('\n    <p class="mtngs-linkedin"><a');
+            buf.push('\n    <p class="mtngs-linkedin">');
+            if (linkedin.indexOf("http") === -1) linkedin = "http://" + linkedin;
+            buf.push("<a");
             buf.push(attrs({
                 style: "font-weight:normal;color:#555;",
                 href: linkedin
@@ -493,7 +495,7 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push(">");
             var __val__ = "LinkedIn Profile";
             buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</a></p>");
+            buf.push("</a>\n    </p>");
         }
         buf.push("\n  </li>\n</ul>");
     }

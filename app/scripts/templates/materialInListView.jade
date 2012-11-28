@@ -1,8 +1,8 @@
 a(href=show_url)
-    - if ( fetch_type === 'image' )
-        span.material-imag.ui-li-thumb.ui-corner-tle
-    - else if ( fetch_type === 'text' )
-        span.material-tex.ui-li-thumb.ui-corner-tlt
+    - if ( fetch_type === 'media' )
+        span.material-image.ui-li-thumb.ui-corner-tl
+    - else if ( fetch_type === 'page' )
+        span.material-text.ui-li-thumb.ui-corner-tl
     - else
         span.material-other.ui-li-thumb.ui-corner-tl
     h3=title

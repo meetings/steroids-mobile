@@ -26,6 +26,13 @@ div.ui-page{
     background-repeat:repeat
 }
 
+// Shadow to header
+div.ui-header{
+    -webkit-box-shadow: 0px 0px 4px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px 0px 4px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px 0px 4px rgba(50, 50, 50, 0.75);
+}
+
 // Fix headr button
 .ui-header .ui-btn{
     top:5px;
@@ -296,7 +303,7 @@ ul#materials{
             background-color:transparent;
         }
         span.material-text{
-            @include retina-bg('/images/m_textj', 'png', 46px, 46px);
+            @include retina-bg('/images/m_text', 'png', 46px, 46px);
             background-position:top left;
             background-color:transparent;
         }

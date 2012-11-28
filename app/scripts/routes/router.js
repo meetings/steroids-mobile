@@ -1,11 +1,5 @@
 app.router = Backbone.Router.extend({
     initialize : function(){
-        // Check login for all but login page
-        this.bind('all:before', function (trigger, args) {
-            var routeData = trigger.split(":");
-            if (routeData[0] === "route" && routeData[1] !== "login") {
-            }
-        });
     },
     routes: {
         "" : "meetings",

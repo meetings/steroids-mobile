@@ -3,6 +3,7 @@ $(document).bind("mobileinit", function(){
     $.mobile.buttonMarkup.hoverDelay = 10;
     $.mobile.defaultPageTransition = 'none';
     $.mobile.touchOverflowEnabled = true;
+    $.mobile.hashListeningEnabled = false;
     $.mobile.ajaxLinksEnabled = false;
 });
 

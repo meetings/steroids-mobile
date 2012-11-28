@@ -29,4 +29,5 @@ ul(data-role="listview",data-inset="true",data-theme="a")
             p.mtngs-skype=skype
         - if (linkedin)
             p.mtngs-linkedin
+                - if( linkedin.indexOf('http') === -1) linkedin = 'http://' + linkedin;
                 a(style="font-weight:normal;color:#555;",href=linkedin)="LinkedIn Profile"
