@@ -7,13 +7,17 @@ app.meetingInListView = Backbone.View.extend({
         return this;
     },
     events: {
-        'click .material-view' : 'openMaterialView',
-        'click .participant-view' : 'openParticipantView'
+        'click' : 'openMeeting'
     },
-    openMaterialView : function(e){
-        // app.router.navigate('materials.html');
-    },
-    openParticipantView : function(e){
-        // app.router.navigate('participants.html');
+    openMeeting : function(e){
+        e.preventDefault();
+        alert('clicked that meeting man');
+        AGPerformTransition("slideFromLeft", 0.4, function(){
+            alert('woot');
+        },
+        function(){
+            alert('nowork');
+        });
+        window.location.href = '/meeting.html?id=' + this.model.id;
     }
 });
