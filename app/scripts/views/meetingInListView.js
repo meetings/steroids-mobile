@@ -11,13 +11,8 @@ app.meetingInListView = Backbone.View.extend({
     },
     openMeeting : function(e){
         e.preventDefault();
-        alert('clicked that meeting man');
-        AGPerformTransition("slideFromLeft", 0.4, function(){
-            alert('woot');
-        },
-        function(){
-            alert('nowork');
-        });
-        window.location.href = '/meeting.html?id=' + this.model.id;
+
+        AGOpenLayerWithoutTopBar("/meeting.html?id="+ this.model.id);
+
     }
 });

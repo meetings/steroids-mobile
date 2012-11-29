@@ -15,10 +15,12 @@ app.meetingView = Backbone.View.extend({
         'click .open-participant-view' : 'openParticipantView'
     },
     openMaterialView : function(e){
-        window.location.href = 'materials.html?id='+this.model.get('id');
+        AGOpenLayerWithoutTopBar('/materials.html?id='+this.model.get('id'));
+//        window.location.href = 'materials.html?id='+this.model.get('id');
     },
     openParticipantView : function(e){
-        window.location.href = 'participants.html?id='+this.model.get('id');
+        AGOpenLayerWithoutTopBar('/participants.html?id='+this.model.get('id'));
+//        window.location.href = 'participants.html?id='+this.model.get('id');
     },
     initProgressBar : function(){
         if( this.model.get('begin_epoch')){

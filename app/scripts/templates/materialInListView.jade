@@ -1,4 +1,4 @@
-a(href=show_url)
+a(onclick="AGOpenModal(/"+show_url+"); return false;")
     - if ( fetch_type === 'media' )
         span.material-image.ui-li-thumb.ui-corner-tl
     - else if ( fetch_type === 'page' )

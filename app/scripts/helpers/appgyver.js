@@ -34,3 +34,62 @@ function AGPerformTransition(transition, duration, success, error) {
         failure: error
     });
 }
+
+
+function AGOpenModal(url) {
+  sendAPImessage("openModal", {
+      url: "http://localhost:13101"+url,
+      screen: AG_SCREEN_ID,
+      layer: AG_LAYER_ID,
+      view: AG_VIEW_ID
+    },{
+      success: "closemodalsuccess",
+      failure: "closemodalfailure"
+    }
+  );
+}
+
+
+
+function AGCloseModal() {
+  sendAPImessage("closeModal", {
+      screen: AG_SCREEN_ID,
+      layer: AG_LAYER_ID,
+      view: AG_VIEW_ID
+    },{
+      success: "closemodalsuccess",
+      failure: "closemodalfailure"
+    }
+  );
+}
+
+
+function AGPopLayer() {
+  sendAPImessage("popLayer", {
+    screen: AG_SCREEN_ID,
+    layer: AG_LAYER_ID,
+    view: AG_VIEW_ID
+    },{
+      failure: "popLayerFailure"
+    }
+  );
+
+}
+
+
+
+function AGOpenLayerWithoutTopBar(url) {
+  sendAPImessage("openLayer", {
+      url: "http://localhost:13101"+url,
+      hidesNavigationBar: true,
+      screen: AG_SCREEN_ID,
+      layer: AG_LAYER_ID,
+      view: AG_VIEW_ID
+    },{
+    }
+  );
+}
+
+
+
+

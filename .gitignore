@@ -5,3 +5,4 @@ dist
 live
 .DS_Store
 agapp/views
+/npm-debug.log
