@@ -255,6 +255,10 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push('\n      <div class="participants">');
             participants.forEach(function(participant) {
                 {
+                    buf.push('\n        <div class="participant">');
+                    if (participant.rsvp_required === 1 && participant.rsvp === "") {
+                        buf.push('<span class="rsvp-not-known"></span>');
+                    }
                     if (participant.image !== "") {
                         buf.push("<img");
                         buf.push(attrs({
@@ -270,6 +274,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                     } else {
                         buf.push('<span class="placeholder-30"></span>');
                     }
+                    buf.push("\n        </div>");
                 }
             });
             buf.push("\n      </div>");
@@ -291,6 +296,21 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             }));
             buf.push("></a>");
         }
+    }
+    return buf.join("");
+};
+
+// noticeBar.jade compiled template
+exports.noticeBar = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('\n<div class="notice">\n  <p>Problems with the internets...</p>\n</div>');
     }
     return buf.join("");
 };

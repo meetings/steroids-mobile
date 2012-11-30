@@ -26,6 +26,7 @@ window.app = {
     collections : {},
     views : {},
     router : null,
+    mixins : {},
     init : function() {
 
         // Check login
