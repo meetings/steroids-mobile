@@ -50,6 +50,10 @@ window.app = {
             return originalSync(method, model, new_options);
         });
 
+        // Use fast clicks
+        alert('enabling faster clicks maybe')
+        new FastClick(document.body);
+
         // Start router
         window.router = new app.router();
         Backbone.history.start({pushState: true});

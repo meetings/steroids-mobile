@@ -7,5 +7,9 @@ app.materialInListView = Backbone.View.extend({
         return this;
     },
     events: {
+        "click" : "openMaterial"
+    },
+    openMaterial : function(e){
+        AGOpenModal(this.model.show_url);
     }
 });
