@@ -170,6 +170,10 @@ div#participant{
 div.participants{
     max-width:92%;
     overflow:hidden;
+    div.participant{
+        display:inline-block;
+        position:relative;
+    }
     img{
         border:1px solid #ccc;
         margin-right:2px;
@@ -177,6 +181,15 @@ div.participants{
     span{
         border:1px solid #ccc;
         margin-right:2px;
+    }
+    span.rsvp-not-known{
+        position:absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+        background:#ccc;
+        opacity:0.5;
     }
 }
 span.placeholder-100{
@@ -487,6 +500,7 @@ div.bar-container .text{
 .meeting-navbar li .ui-btn .ui-btn-inner{
     padding-bottom:0.2em;
 }
+
 
 
 /* Rsvp statuses */

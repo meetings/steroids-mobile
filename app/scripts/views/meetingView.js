@@ -2,7 +2,8 @@ app.meetingView = Backbone.View.extend({
     errors : 0,
     progressBarStarted : false,
     initialize: function(options) {
-        // options.model.bind('error', this.errorHandler, this);
+         options.model.bind('error', this.errorHandler, this);
+         options.model.bind('success', this.successHandler, this)
     },
     render: function() {
         this.$el.html( templatizer.meetingView( this.model.toJSON() ) ); // Render template
@@ -30,15 +31,14 @@ app.meetingView = Backbone.View.extend({
             var elapsed = now - begin;
             var timeleft = 'Meeting ends ' + moment.duration((duration - elapsed)*1000).humanize(true);
 
-            // Check if we it's on
+            // Check if it's on
             if( begin <= now && end >= now ){
 
                 // Calculate progress
                 var progress = Math.floor( elapsed / duration * 100);
 
-
                 // Render template
-                $('#progress-bar').html( templatizer.progressBar({ progress : progress, timeleft : timeleft }))
+                $('#progress-bar').html( templatizer.progressBar({ progress : progress, timeleft : timeleft }));
 
                 // Set timeout to render
                 if( ! this.progressBarStarted ){
@@ -47,20 +47,6 @@ app.meetingView = Backbone.View.extend({
                 }
             }
         }
-    },
-    errorHandler : function(mod, error, options){
-        // Retry
-        console.log(this.errors);
-        if( this.errors === 0 ){
-            this.errors++;
-            var view = this;
-            this.model.fetch({ success : function(a, b){
-                view.render();
-            }, timeout : 2000 });
-        }
-        else{
-            alert('There\'s something really wrong. Try refreshing the page please!');
-            this.errors = 0;
-        }
     }
 });
+_.extend(app.meetingView.prototype, app.mixins.connectivity);
