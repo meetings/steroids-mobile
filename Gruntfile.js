@@ -175,11 +175,26 @@ module.exports = function( grunt ) {
       optimize: 'none',
       baseUrl: './scripts',
       wrap: true
-    },
+    }
   });
 
   // Alias the `test` task to run the `mocha` task instead
   grunt.registerTask('test', 'mocha');
+
+  // Custom task for building the app version
+  grunt.registerTask('buildmobile','build mv_files');
+
+
+  grunt.registerTask('mv_files', 'Moves the dist folder to agapp/views', function() {
+      var exec = require('child_process').exec;
+      exec('mv -f ' + __dirname +'/dist ' + __dirname + '/agapp/views');
+  });
+
+  // Do the nesessary modifications
+  grunt.registerTask('templatizer', 'Builds the templates', function() {
+      var templatizer = require('templatizer');
+      templatizer(__dirname + '/app/scripts/templates', __dirname + '/app/scripts/templates/all.js');
+  });
   grunt.registerTask('templatizer', 'Builds the templates', function() {
       var templatizer = require('templatizer');
       templatizer(__dirname + '/app/scripts/templates', __dirname + '/app/scripts/templates/all.js');

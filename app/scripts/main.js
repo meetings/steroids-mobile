@@ -20,7 +20,7 @@ window.app = {
         return_host : 'http://' + location.host
     },
     options: {
-        appmode : true
+        appmode : window.normal_app_version ? false : true
     },
     models : {},
     collections : {},
@@ -28,6 +28,7 @@ window.app = {
     router : null,
     mixins : {},
     init : function() {
+        console.log(app.options.appmode);
 
         // Check login
         /*if( this._requireLogin() ){
