@@ -92,4 +92,33 @@ function AGOpenLayerWithoutTopBar(url) {
 
 
 
+function AGPreloadLayer(url, layerId) {
+  sendAPImessage("preloadLayer", {
+      screen: AG_SCREEN_ID,
+      layer: AG_LAYER_ID,
+      view: AG_VIEW_ID,
+      id: layerId,
+      url: url
+    },{
+      success: "preloadlayersuccess",
+      failure: "preloadlayerfailure"
+    }
+  );
+}
+
+function AGOpenPreloadedLayer(layerId) {
+  sendAPImessage("openLayer", {
+      screen: AG_SCREEN_ID,
+      layer: AG_LAYER_ID,
+      view: AG_VIEW_ID,
+      id: layerId,
+      eval_js: "preloadeval.innerHTML = 'Evaluated successfully from previous view, this was evaluated on open';"
+    },{
+      success: "openpreloadedsuccess",
+      failure: "openpreloadedfailure"
+    }
+  );
+}
+
+
 
