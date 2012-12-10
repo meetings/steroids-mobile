@@ -1,6 +1,8 @@
 app.materialView = Backbone.View.extend({
+
     initialize: function(options) {
     },
+
     render: function() {
         this.$el.html( templatizer.materialView( this.model.toJSON() ) ); // Render template
         //this.$el.html('');
@@ -9,6 +11,16 @@ app.materialView = Backbone.View.extend({
         this.initScribd();
         return this;
     },
+
+    events : {
+        'click .back-button' : 'navigateBack'
+    },
+
+    navigateBack : function(e){
+        if( app.options.appmode ) AGPopLayer();
+        else document.location = 'index.html';
+    },
+
     initDownloadLink: function(){
         if( this.model.get('download_url')){
             $('#download-link').attr('href', this.model.get('download_url'));
@@ -17,6 +29,7 @@ app.materialView = Backbone.View.extend({
             $('#download-link').hide();
         }
     },
+
     initScribd: function(){
 
         $('.js_dicole_scribd_file').each(function(i){

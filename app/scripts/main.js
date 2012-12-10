@@ -9,8 +9,8 @@ $(document).bind("mobileinit", function(){
 
 window.app = {
     auth : {
-        user : 3028,
-        token : 'v1_e_3028_0_0_IGsCa471H9O2lj4RQLGyIoD_ya4',
+        user : null,
+        token : null,
         cookiename : 'mtngs_mobile_auth',
         cookievalid : 14 // in days
     },
@@ -20,6 +20,7 @@ window.app = {
         return_host : 'http://' + location.host
     },
     options: {
+        // Appmode will be true if we are building as an app
         appmode : window.normal_app_version ? false : true
     },
     models : {},
@@ -28,13 +29,12 @@ window.app = {
     router : null,
     mixins : {},
     init : function() {
-        console.log(app.options.appmode);
 
         // Check login
-        /*if( this._requireLogin() ){
+        if( this._requireLogin() ){
             // Check meeting redirect
             this._doRedirects();
-        }*/
+        }
 
         // Remove navigation bar on IOS
         //this._removeIosNav();
@@ -53,7 +53,6 @@ window.app = {
         });
 
         // Use fast clicks
-        alert('enabling faster clicks maybe')
         new FastClick(document.body);
 
         // Start router

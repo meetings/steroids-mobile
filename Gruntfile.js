@@ -1,6 +1,7 @@
 module.exports = function( grunt ) {
   'use strict';
   //
+  //
   // Grunt configuration:
   //
   // https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
@@ -182,7 +183,20 @@ module.exports = function( grunt ) {
   grunt.registerTask('test', 'mocha');
 
   // Custom task for building the app version
-  grunt.registerTask('buildmobile','build mv_files');
+  grunt.registerTask('mobile','build mobile_build mv_files');
+  grunt.registerTask('normal','build normal_build');
+
+
+
+  grunt.registerTask('mobile_build', 'Processes html build comments', function() {
+      var exec = require('child_process').exec;
+      exec('sh -c "' + __dirname +'/bin/process_build_includes.pl mobile ' + __dirname + '/dist/*.html"');
+  });
+
+  grunt.registerTask('normal_build', 'Processes html build comments', function() {
+      var exec = require('child_process').exec;
+      exec('sh -c "' + __dirname +'/bin/process_build_includes.pl normal ' + __dirname + '/dist/*.html"');
+  });
 
 
   grunt.registerTask('mv_files', 'Moves the dist folder to agapp/views', function() {
@@ -199,5 +213,4 @@ module.exports = function( grunt ) {
       var templatizer = require('templatizer');
       templatizer(__dirname + '/app/scripts/templates', __dirname + '/app/scripts/templates/all.js');
   });
-
 };

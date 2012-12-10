@@ -1,7 +1,7 @@
 app.router = Backbone.Router.extend({
     initialize : function(){
     },
-    routes: {
+    routes : {
         "" : "meetings",
         "login.html" : "login",
         "index.html" : "meetings",
@@ -12,14 +12,14 @@ app.router = Backbone.Router.extend({
         "participant.html" : "participant",
         "material.html" : "material"
     },
-    meetings: function() {
+    meetings : function() {
 
-        // Set nav active
-        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
-        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+        // Render footer & setup header
+        app.views.footer = new app.footerView({ active : "meetings", el : '#meetings' });
+        app.views.header = new app.headerView({ el : '#meetings' });
+        app.views.footer.render();
 
         // Get times
-        // var future_begin = Math.floor ( moment().utc().add('days',-7).sod() / 1000 );
         var today = Math.floor( moment().sod() / 1000 );
 
         // Function to set scroll after both are rendered or show message
@@ -33,6 +33,7 @@ app.router = Backbone.Router.extend({
             }
         });
 
+        // Fetch upcoming meetings
         app.collections.future_meetings = new app.meetingCollection();
         app.collections.future_meetings.fetch({ success : function(col,res){
             // If problems with auth
@@ -56,6 +57,7 @@ app.router = Backbone.Router.extend({
             afterRender();
         },  data : { start_min : today, limit : 10, sort : "asc"} } );
 
+        // Fetch past meetings
         app.collections.past_meetings = new app.meetingCollection();
         app.collections.past_meetings.fetch({ success : function(col,res){
             // If problems with auth
@@ -79,34 +81,43 @@ app.router = Backbone.Router.extend({
             afterRender();
         },  data : { start_max : today, limit : 10, sort : "desc" } } );
     },
+
+
     login : function() {
-        app.views.login = new app.loginView({
-            el : $('#login-page')
-        });
+
+        // Show login view
+        app.views.login = new app.loginView({ el : $('#login-page') });
         app.views.login.render();
     },
-    settings: function() {
-        // Set nav active
-        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
-        $('#nav-settings').addClass('ui-btn-active ui-state-persist');
+    settings : function() {
 
-        app.views.settings = new app.settingsView({
-            el : $('#settings')
-        });
+        // Show settings view
+        app.views.settings = new app.settingsView({ el : $('#settings') });
         app.views.settings.render();
-    },
-    meeting: function(params) {
-        // Set nav active
-        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
-        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
 
+        // Render footer
+        app.views.footer = new app.footerView({ active : "settings", el : $('#settings') });
+        app.views.header = new app.headerView({ el : '#settings' });
+        app.views.footer.render();
+    },
+    meeting : function(params) {
+
+        // Render footer
+        app.views.footer = new app.footerView({ active : "meetings", el : $('#meetings') });
+        app.views.header = new app.headerView({ el : '#meetings' });
+        app.views.footer.render();
+
+        // Get url params
         var id = params.id || 0;
+
+        // Fetch and show meeting
         app.models.meeting = new app.meetingModel({ id : id });
         app.views.meeting = new app.meetingView({
             el : $('#meeting'),
             model : app.models.meeting
         });
         app.models.meeting.fetch({ success : function(){
+
             app.views.meeting.render();
 
             // Init current meeting user
@@ -119,17 +130,19 @@ app.router = Backbone.Router.extend({
 
         }, timeout : 5000 });
     },
-    participants: function(params) {
-        // Set nav active
-        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
-        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+    participants : function(params) {
+
+        // Render footer
+        app.views.footer = new app.footerView({ active : "meetings", el : '#participants' });
+        app.views.header = new app.headerView({ el : '#participants' });
+        app.views.footer.render();
 
         var id = params.id || 0;
 
         app.collections.participants = new app.participantCollection( [], { meeting_id : id } );
         app.collections.participants.fetch({ success : function(){
             app.views.materials = new app.genericCollectionView({
-                el : $('#participants'),
+                el : $('#participants_list'),
                 collection : app.collections.participants,
                 childViewTagName : 'li',
                 childViewConstructor : app.participantInListView
@@ -138,10 +151,11 @@ app.router = Backbone.Router.extend({
         }
         });
     },
-    materials: function(params) {
-        // Set nav active
-        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
-        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+    materials : function(params) {
+        // Render footer
+        app.views.footer = new app.footerView({ active : "meetings", el : '#materials' });
+        app.views.header = new app.headerView({ el : '#materials' });
+        app.views.footer.render();
 
         var id = params.id || 0;
 
@@ -149,7 +163,7 @@ app.router = Backbone.Router.extend({
         app.collections.materials.url = app.defaults.api_host + '/v1/meetings/' + id + '/materials';
         app.collections.materials.fetch({ success : function(){
             app.views.materials = new app.genericCollectionView({
-                el : $('#materials'),
+                el : $('#materials_list'),
                 collection : app.collections.materials,
                 childViewTagName : 'li',
                 childViewConstructor : app.materialInListView
@@ -157,10 +171,11 @@ app.router = Backbone.Router.extend({
             app.views.materials.render();
         }});
     },
-    participant: function(params) {
-        // Set nav active
-        $('ul.meeting-navbar li a').removeClass('ui-btn-active ui-state-persist');
-        $('#nav-meetings').addClass('ui-btn-active ui-state-persist');
+    participant : function(params) {
+        // Render footer
+        app.views.footer = new app.footerView({ active : "meetings", el : '#participant' });
+        app.views.header = new app.headerView({ el : '#participant' });
+        app.views.footer.render();
 
         var mid = params.mid || 0;
         var id = params.id || 0;
@@ -169,19 +184,22 @@ app.router = Backbone.Router.extend({
         app.models.participant.fetch({ success : function(){
             app.views.user = new app.participantView({
                 model : app.models.participant,
-                el : $('#participant')
+                el : $('#participant_info')
             });
             app.views.user.render();
         }});
     },
-    material: function(params) {
+    material : function(params) {
+        // Setup header
+        app.views.header = new app.headerView({ el : '#material' });
+
         var id = params.id || 0;
         app.models.material = new app.materialModel();
         app.models.material.url = app.defaults.api_host + '/v1/materials/' + id;
         app.models.material.fetch({ success : function(){
             app.views.material = new app.materialView({
                 model : app.models.material,
-                el : $('#material')
+                el : $('#material_content')
             });
             app.views.material.render();
         }});

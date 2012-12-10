@@ -13,6 +13,12 @@
         <script src="/appgyver/appgyver.js?view=index"></script>
         <!-- stop build include -->
 
+        <!-- start build include: normal -->
+        <script type="text/javascript" charset="utf-8">
+            window.normal_app_version = true;
+        </script>
+        <!-- stop build include -->
+
         <!-- build:js scripts/scripts.js -->
         <script src="scripts/vendor/jquery.min.js"></script>
         <script src="scripts/main.js"></script>
@@ -21,12 +27,15 @@
         <script src="scripts/vendor/lodash.min.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/backbone-query-params.js"></script>
+        <script src="scripts/vendor/fastclick.js"></script>
+        <script src="scripts/views/footerView.js"></script>
         <script src="scripts/views/meetingInListView.js"></script>
         <script src="scripts/views/meetingView.js"></script>
         <script src="scripts/views/participantInListView.js"></script>
         <script src="scripts/views/materialInListView.js"></script>
         <script src="scripts/views/participantView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/headerView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
         <script src="scripts/models/participantModel.js"></script>
@@ -37,14 +46,14 @@
         <!-- endbuild -->
     </head>
 <body>
-    <!-- Meetings listing -->
-    <div data-role="page" id="meetings" data-theme="a">
+    <!-- Participant listing -->
+    <div data-role="page" id="participants" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
-            <a href="#" data-rel="back" data-icon="mtngs-back" data-theme="b" onclick="AGPopLayer(); return false;">Back</a>
+            <a class="back-button" href="#" data-icon="mtngs-back" data-theme="b">Back</a>
             <h1>Participants</h1>
         </div>
         <div data-role="content">
-            <ul id="participants" data-role="listview" data-inset="true" data-theme="a">
+            <ul id="participants_list" data-role="listview" data-inset="true" data-theme="a">
                 <div class="loader">
                     <span class="loader"></span>
                 </div>

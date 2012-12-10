@@ -1,30 +1,51 @@
 app.meetingView = Backbone.View.extend({
-    errors : 0,
+    errors : 0, // Track connection errors for this view
     progressBarStarted : false,
     initialize: function(options) {
+
+        // Bind error and success handlers
          options.model.bind('error', this.errorHandler, this);
-         options.model.bind('success', this.successHandler, this)
+         options.model.bind('success', this.successHandler, this);
+
     },
+
     render: function() {
+
+        // Render template & trigger jQuery create
         this.$el.html( templatizer.meetingView( this.model.toJSON() ) ); // Render template
         this.$el.trigger("create");
+
+        // Start progressbar
         this.initProgressBar();
+
         return this;
+
     },
+
     events: {
         'click .open-material-view' : 'openMaterialView',
-        'click .open-participant-view' : 'openParticipantView'
+        'click .open-participant-view' : 'openParticipantView',
+        'click .back-button' : 'navigateBack'
     },
+
+    navigateBack : function(e){
+        if( app.options.appmode ) AGPopLayer();
+        else document.location = 'index.html';
+    },
+
     openMaterialView : function(e){
-        AGOpenLayerWithoutTopBar('/materials.html?id='+this.model.get('id'));
-//        window.location.href = 'materials.html?id='+this.model.get('id');
+        if( app.options.appmode ) AGOpenLayerWithoutTopBar('/materials.html?id='+this.model.get('id'));
+        else document.location = '/materials.html?id='+this.model.get('id');
     },
+
     openParticipantView : function(e){
-        AGOpenLayerWithoutTopBar('/participants.html?id='+this.model.get('id'));
-//        window.location.href = 'participants.html?id='+this.model.get('id');
+        if( app.options.appmode ) AGOpenLayerWithoutTopBar('/participants.html?id='+this.model.get('id'));
+        else document.location = '/participants.html?id='+this.model.get('id');
     },
+
     initProgressBar : function(){
-        if( this.model.get('begin_epoch')){
+
+        if( this.model.get('begin_epoch') ){
             // Get values
             var now = Math.floor( moment() / 1000 );
             var begin = this.model.get('begin_epoch');

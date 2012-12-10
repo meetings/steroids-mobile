@@ -53,6 +53,33 @@ exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, m
     return buf.join("");
 };
 
+// footer.jade compiled template
+exports.footer = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('\n<div data-role="footer" data-position="fixed" data-id="meeting-footer" data-theme="c" data-tap-toggle="false">\n  <div data-role="navbar" data-grid="a" class="meeting-navbar">\n    <ul>\n      <li>');
+        if (active === "meetings") {
+            buf.push('<a id="nav-meetings" href="index.html" data-icon="custom" data-transition="fade" class="ui-btn-active ui-state-persist">Meetings</a>');
+        } else {
+            buf.push('<a id="nav-meetings" href="index.html" data-icon="custom" data-transition="fade">Meetings</a>');
+        }
+        buf.push("\n      </li>\n      <li>");
+        if (active === "settings") {
+            buf.push('<a id="nav-settings" href="settings.html" data-icon="custom" data-transition="fade" class="ui-btn-active ui-state-persist">Settings</a>');
+        } else {
+            buf.push('<a id="nav-settings" href="settings.html" data-icon="custom" data-transition="fade">Settings</a>');
+        }
+        buf.push("\n      </li>\n    </ul>\n  </div>\n</div>");
+    }
+    return buf.join("");
+};
+
 // loginView.jade compiled template
 exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;

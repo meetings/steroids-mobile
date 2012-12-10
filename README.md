@@ -14,14 +14,14 @@ Which installs compass
 
 # Building
 
-	yeoman build
+	yeoman normal
 
 ## AppGyver Build
 
-	yeoman build && rm -rf agapp/views && mv dist agapp/views
+	yeoman mobile
 
 ## Developing
 
-	yeoman start
+	yeoman server
 
 
