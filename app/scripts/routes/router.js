@@ -129,6 +129,19 @@ app.router = Backbone.Router.extend({
             app.views.next_action_view.render();
 
         }, timeout : 5000 });
+
+        app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
+        app.collections.materials.url = app.defaults.api_host + '/v1/meetings/' + id + '/materials';
+        app.collections.materials.fetch({ success : function(){
+            app.views.materials = new app.genericCollectionView({
+                el : $('#materials_list'),
+                collection : app.collections.materials,
+                childViewTagName : 'li',
+                childViewConstructor : app.materialInListView
+            });
+            app.views.materials.render();
+        }});
+
     },
     participants : function(params) {
 

@@ -10,9 +10,9 @@ a(href=show_url)
         p=organization
     -if( ! organization && organization_title )
         p=organization_title
-    - if ( rsvp === 'yes' || ! rsvp_required )
+    - if ( rsvp_status === 'yes' )
         p.rsvp.attending Attending
-    - else if( rsvp === 'no' )
+    - else if( rsvp_status === 'no' )
         p.rsvp.noshow Not attending
     - else
         p.rsvp.unknown Not answered

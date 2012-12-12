@@ -13,12 +13,6 @@ app.materialView = Backbone.View.extend({
     },
 
     events : {
-        'click .back-button' : 'navigateBack'
-    },
-
-    navigateBack : function(e){
-        if( app.options.appmode ) AGPopLayer();
-        else document.location = 'index.html';
     },
 
     initDownloadLink: function(){

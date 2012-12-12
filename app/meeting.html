@@ -41,6 +41,7 @@
         <script src="scripts/models/materialModel.js"></script>
         <script src="scripts/models/participantModel.js"></script>
         <script src="scripts/collections/meetingCollection.js"></script>
+        <script src="scripts/collections/materialCollection.js"></script>
         <script src="scripts/routes/router.js"></script>
         <script src="scripts/templates/all.js"></script>
         <!-- endbuild -->
@@ -53,21 +54,29 @@
             <a class="back-button" href="index.html" data-icon="mtngs-back" data-theme="b" >Back</a>
             <h1>Overview</h1>
         </div>
-        <div class="main-div" id="meeting" data-role="content">
-            <div class="loader">
-                <img alt="" class="loader" src="/images/ajaxloader.gif" />
+        <div class="main-div" data-role="content">
+            <div id="meeting">
+                <div class="loader">
+                    <img alt="" class="loader" src="/images/ajaxloader.gif" />
+                </div>
             </div>
+            <ul id="materials_list" data-role="listview" data-inset="true" data-theme="a">
+                <div class="loader">
+                    <span class="loader"></span>
+                </div>
+            </ul>
         </div>
+
     </div><!-- /page -->
     <script type="text/javascript" charset="utf-8">
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount','UA-3314001-23']);
 _gaq.push(['_trackPageview']);
 (function() {
- var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
- ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
- var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
- })();
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
     </script>
 
     </body>

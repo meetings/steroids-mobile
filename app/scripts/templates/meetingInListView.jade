@@ -7,8 +7,15 @@ a(href='meeting.html?id='+id)
     - if ( participants.length)
         div.participants
             - participants.forEach(function(participant){
-                - if( participant.image !== '' )
-                    img(src=participant.image, width='20', height='20')
-                - else
-                    span.placeholder-20
+                div.wrap
+                    - if( participant.image !== '' )
+                        img(src=participant.image, width='20', height='20')
+                    - else
+                        span.placeholder-20
+                    - if( participant.rsvp_status === 'yes' )
+                        span.rsvp.yes
+                    - else if( participant.rsvp_status === 'no' )
+                        span.rsvp.no
+                    - else
+                        span.rsvp.unknown
             - })

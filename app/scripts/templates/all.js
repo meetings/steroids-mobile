@@ -209,6 +209,7 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
             buf.push('\n  <div class="participants">');
             participants.forEach(function(participant) {
                 {
+                    buf.push('\n    <div class="wrap">');
                     if (participant.image !== "") {
                         buf.push("<img");
                         buf.push(attrs({
@@ -224,6 +225,14 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
                     } else {
                         buf.push('<span class="placeholder-20"></span>');
                     }
+                    if (participant.rsvp_status === "yes") {
+                        buf.push('<span class="rsvp yes"></span>');
+                    } else if (participant.rsvp_status === "no") {
+                        buf.push('<span class="rsvp no"></span>');
+                    } else {
+                        buf.push('<span class="rsvp unknown"></span>');
+                    }
+                    buf.push("\n    </div>");
                 }
             });
             buf.push("\n  </div>");
@@ -274,7 +283,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                 buf.push("</a></p>");
             }
         }
-        buf.push('\n<div id="next-action-bar"></div>\n<div id="progress-bar"></div>\n<!-- Links-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-material-view">\n      <h3>Materials</h3>\n      <p>Agenda &amp; materials</p></a></li>\n  <li><a href="#" class="open-participant-view">\n      <h3>');
+        buf.push('\n<div id="next-action-bar"></div>\n<div id="progress-bar"></div>\n<!-- Participants-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-participant-view">\n      <h3>');
         var __val__ = "Participants";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</h3>\n      <div class="participant-list"></div>');
@@ -282,10 +291,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push('\n      <div class="participants">');
             participants.forEach(function(participant) {
                 {
-                    buf.push('\n        <div class="participant">');
-                    if (participant.rsvp_required === 1 && participant.rsvp === "") {
-                        buf.push('<span class="rsvp-not-known"></span>');
-                    }
+                    buf.push('\n        <div class="wrap">');
                     if (participant.image !== "") {
                         buf.push("<img");
                         buf.push(attrs({
@@ -300,6 +306,13 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                         buf.push("/>");
                     } else {
                         buf.push('<span class="placeholder-30"></span>');
+                    }
+                    if (participant.rsvp_status === "yes") {
+                        buf.push('<span class="rsvp yes"></span>');
+                    } else if (participant.rsvp_status === "no") {
+                        buf.push('<span class="rsvp no"></span>');
+                    } else {
+                        buf.push('<span class="rsvp unknown"></span>');
                     }
                     buf.push("\n        </div>");
                 }
@@ -395,9 +408,9 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
-        if (rsvp === "yes" || !rsvp_required) {
+        if (rsvp_status === "yes") {
             buf.push('\n  <p class="rsvp attending">Attending</p>');
-        } else if (rsvp === "no") {
+        } else if (rsvp_status === "no") {
             buf.push('\n  <p class="rsvp noshow">Not attending</p>');
         } else {
             buf.push('\n  <p class="rsvp unknown">Not answered</p>');

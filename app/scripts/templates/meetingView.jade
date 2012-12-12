@@ -12,12 +12,8 @@ div#next-action-bar
 
 div#progress-bar
 
-// Links
+// Participants
 ul(data-role='listview',data-inset='true')
-    li
-        a(href="#").open-material-view
-            h3 Materials
-            p Agenda &amp; materials
     li
         a(href="#").open-participant-view
             h3='Participants'
@@ -25,14 +21,19 @@ ul(data-role='listview',data-inset='true')
             - if ( participants.length)
                 .participants
                     - participants.forEach(function(participant){
-                        div.participant
-                            - if( participant.rsvp_required === 1 && participant.rsvp === "" )
-                                span.rsvp-not-known
+                        div.wrap
                             - if( participant.image !== '' )
                                 img(src=participant.image, width='30', height='30')
                             - else
                                 span.placeholder-30
+                            - if( participant.rsvp_status === 'yes' )
+                                span.rsvp.yes
+                            - else if( participant.rsvp_status === 'no' )
+                                span.rsvp.no
+                            - else
+                                span.rsvp.unknown
                     - })
+
 
 // Skype button
 - if (skype_address)
