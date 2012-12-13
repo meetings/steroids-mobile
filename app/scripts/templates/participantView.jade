@@ -5,7 +5,8 @@
         - else
             span.placeholder-100.mtngs-profile-image
     .ui-block-b
-        - if (phone)
+        - var ipad = navigator.userAgent.match(/iPad/i) != null;
+        - if (phone && ! ipad )
             a(href="tel:"+phone,data-role="button",data-theme="b")='Call'
         - if (phone)
             a(href="sms:"+phone,data-role="button",data-theme="b")='SMS'

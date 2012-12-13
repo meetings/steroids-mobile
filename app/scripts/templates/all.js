@@ -450,7 +450,8 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push('<span class="placeholder-100 mtngs-profile-image"></span>');
         }
         buf.push('\n  </div>\n  <div class="ui-block-b">');
-        if (phone) {
+        var ipad = navigator.userAgent.match(/iPad/i) != null;
+        if (phone && !ipad) {
             buf.push("<a");
             buf.push(attrs({
                 href: "tel:" + phone,
