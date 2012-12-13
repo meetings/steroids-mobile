@@ -207,6 +207,9 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
         buf.push("</span></div>");
         if (participants.length) {
             buf.push('\n  <div class="participants">');
+            participants = _.sortBy(participants, function(p) {
+                if (p.is_creator) return 0; else if (p.rsvp_status === "yes") return 1; else if (p.rsvp_status === "no") return 3; else return 2;
+            });
             participants.forEach(function(participant) {
                 {
                     buf.push('\n    <div class="wrap">');
@@ -263,7 +266,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push("</p>");
         }
         if (location) {
-            if (location === "Skype" || location === "Online" || location === "Location not known") {
+            if (location === "On Skype" || location === "Online" || location === "Location not known") {
                 buf.push('\n<p class="mtngs-location">');
                 var __val__ = location;
                 buf.push(escape(null == __val__ ? "" : __val__));
@@ -283,12 +286,32 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                 buf.push("</a></p>");
             }
         }
-        buf.push('\n<div id="next-action-bar"></div>\n<div id="progress-bar"></div>\n<!-- Participants-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-participant-view">\n      <h3>');
+        buf.push('\n<div id="next-action-bar"></div>\n<!-- Skype button-->');
+        if (skype_address) {
+            buf.push("<a");
+            buf.push(attrs({
+                id: "skype_button",
+                href: skype_address,
+                "data-role": "button",
+                "data-icon": "mtngs-skype",
+                "data-them": "b"
+            }, {
+                href: true,
+                "data-role": true,
+                "data-icon": true,
+                "data-them": true
+            }));
+            buf.push("></a>");
+        }
+        buf.push('\n<div id="progress-bar"></div>\n<!-- Participants-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-participant-view">\n      <h3>');
         var __val__ = "Participants";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</h3>\n      <div class="participant-list"></div>');
         if (participants.length) {
             buf.push('\n      <div class="participants">');
+            participants = _.sortBy(participants, function(p) {
+                if (p.is_creator) return 0; else if (p.rsvp_status === "yes") return 1; else if (p.rsvp_status === "no") return 3; else return 2;
+            });
             participants.forEach(function(participant) {
                 {
                     buf.push('\n        <div class="wrap">');
@@ -319,23 +342,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             });
             buf.push("\n      </div>");
         }
-        buf.push("</a></li>\n</ul>\n<!-- Skype button-->");
-        if (skype_address) {
-            buf.push("<a");
-            buf.push(attrs({
-                id: "skype_button",
-                href: skype_address,
-                "data-role": "button",
-                "data-icon": "mtngs-skype",
-                "data-them": "b"
-            }, {
-                href: true,
-                "data-role": true,
-                "data-icon": true,
-                "data-them": true
-            }));
-            buf.push("></a>");
-        }
+        buf.push("</a></li>\n</ul>");
     }
     return buf.join("");
 };
@@ -371,22 +378,28 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
         }, {
             href: true
         }));
-        buf.push(">");
+        buf.push('>\n  <div class="wrap ui-li-thumb">');
         if (image) {
             buf.push("<img");
             buf.push(attrs({
                 src: image,
-                width: "60",
-                "class": "mtngs-profile-image"
+                width: "60"
             }, {
                 src: true,
                 width: true
             }));
             buf.push("/>");
         } else {
-            buf.push('<span class="placeholder-60 mtngs-profile-image ui-li-thumb"></span>');
+            buf.push('<span class="placeholder-60"></span>');
         }
-        buf.push("\n  <h3>");
+        if (rsvp_status === "yes") {
+            buf.push('<span class="rsvp yes"></span>');
+        } else if (rsvp_status === "no") {
+            buf.push('<span class="rsvp no"></span>');
+        } else {
+            buf.push('<span class="rsvp unknown"></span>');
+        }
+        buf.push("\n  </div>\n  <h3>");
         var __val__ = name;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</h3>");
@@ -407,13 +420,6 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
             var __val__ = organization_title;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
-        }
-        if (rsvp_status === "yes") {
-            buf.push('\n  <p class="rsvp attending">Attending</p>');
-        } else if (rsvp_status === "no") {
-            buf.push('\n  <p class="rsvp noshow">Not attending</p>');
-        } else {
-            buf.push('\n  <p class="rsvp unknown">Not answered</p>');
         }
         buf.push("</a>");
     }

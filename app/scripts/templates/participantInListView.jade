@@ -1,8 +1,15 @@
 a(href=show_url)
-    - if( image )
-        img(src=image,width='60').mtngs-profile-image
-    - else
-        span.placeholder-60.mtngs-profile-image.ui-li-thumb
+    div.wrap.ui-li-thumb
+        - if( image )
+            img(src=image,width='60')
+        - else
+            span.placeholder-60
+        - if ( rsvp_status === 'yes' )
+            span.rsvp.yes
+        - else if( rsvp_status === 'no' )
+            span.rsvp.no
+        - else
+            span.rsvp.unknown
     h3=name
     -if( organization && organization_title )
         p=organization + ', '+organization_title
@@ -10,9 +17,4 @@ a(href=show_url)
         p=organization
     -if( ! organization && organization_title )
         p=organization_title
-    - if ( rsvp_status === 'yes' )
-        p.rsvp.attending Attending
-    - else if( rsvp_status === 'no' )
-        p.rsvp.noshow Not attending
-    - else
-        p.rsvp.unknown Not answered
+    
