@@ -287,21 +287,21 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             }
         }
         buf.push('\n<div id="next-action-bar"></div>\n<!-- Skype button-->');
-        if (skype_address) {
+        if (skype_url) {
             buf.push("<a");
             buf.push(attrs({
                 id: "skype_button",
-                href: skype_address,
+                href: skype_url,
                 "data-role": "button",
                 "data-icon": "mtngs-skype",
-                "data-them": "b"
+                "data-theme": "b"
             }, {
                 href: true,
                 "data-role": true,
                 "data-icon": true,
-                "data-them": true
+                "data-theme": true
             }));
-            buf.push("></a>");
+            buf.push(">Join Skype conference</a>");
         }
         buf.push('\n<div id="progress-bar"></div>\n<!-- Participants-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-participant-view">\n      <h3>');
         var __val__ = "Participants";

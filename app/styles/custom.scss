@@ -395,9 +395,13 @@ ul#materials_list{
             top:10px;
         }
         span.ui-li-count{
-            background:#63BFDB;
-            border:1px solid #dedede;
-
+            background:transparent;
+            padding:1px 0px 0px 0px;
+            text-align:center;
+            @include retina-bg('/images/comment', 'png', 17px, 16px);
+            width:17px;
+            height:15px;
+            border:none;
         }
         span.material-image{
             @include retina-bg('/images/m_image', 'png', 46px, 46px);
