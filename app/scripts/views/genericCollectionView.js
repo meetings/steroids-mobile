@@ -89,7 +89,6 @@ app.genericCollectionView = Backbone.View.extend({
             model : model
         });
 
-
         if( options.index === 0 || this.options.mode === 'addtotop' ) this._childViews.unshift(childView);
         else this._childViews.push(childView);
 
@@ -100,20 +99,24 @@ app.genericCollectionView = Backbone.View.extend({
                 this.delayedAdd();
             }
             else this.el.append(childView.render().el);
+
+
+
             this.el.listview("refresh");
 
             if( this.options.mode === 'addtotop' ){
                 this.keepScrollPos();
             }
-
         }
     },
 
     // We want to add content to dom all at once, so underscores debounce is used to achieve this
     delayedAdd : _.debounce( function(){
+
         this.el.prepend(this.addHtmlBuffer);
         this.addHtmlBuffer = '';
         this.el.listview("refresh");
+
     },20),
 
     // Remove model from the collection

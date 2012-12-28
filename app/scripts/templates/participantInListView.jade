@@ -4,7 +4,9 @@ a(href=show_url)
             img(src=image,width='60')
         - else
             span.placeholder-60
-        - if ( rsvp_status === 'yes' )
+        - if ( proposal_answers && _.size(proposal_answers) > 0 )
+            // Scheduling
+        - else if ( rsvp_status === 'yes' )
             span.rsvp.yes
         - else if( rsvp_status === 'no' )
             span.rsvp.no
@@ -17,4 +19,3 @@ a(href=show_url)
         p=organization
     -if( ! organization && organization_title )
         p=organization_title
-    

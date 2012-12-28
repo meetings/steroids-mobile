@@ -26,6 +26,7 @@
         <script src="scripts/helpers/appgyver.js"></script>
         <script src="scripts/vendor/jqm.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
+        <script src="scripts/vendor/modernizr.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/infiniscroll.js"></script>
         <script src="scripts/vendor/fastclick.js"></script>
@@ -41,6 +42,9 @@
         <script src="scripts/views/participantView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
         <script src="scripts/views/upcomingMeetingsView.js"></script>
+        <script src="scripts/views/unscheduledMeetingsView.js"></script>
+        <script src="scripts/views/schedulingView.js"></script>
+        <script src="scripts/views/todayMeetingsView.js"></script>
         <script src="scripts/views/settingsView.js"></script>
         <script src="scripts/views/footerView.js"></script>
         <script src="scripts/views/commentListView.js"></script>
@@ -69,6 +73,10 @@
                 <img alt="" class="loader" src="/images/ajaxloader.gif" />
             </div>
             <ul id="past" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+            </ul>
+            <ul id="today" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+            </ul>
+            <ul id="unscheduled" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
             </ul>
             <ul id="future" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
             </ul>

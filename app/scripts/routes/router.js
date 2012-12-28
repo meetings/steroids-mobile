@@ -10,7 +10,8 @@ app.router = Backbone.Router.extend({
         "participants.html" : "participants",
         "materials.html" : "materials",
         "participant.html" : "participant",
-        "material.html" : "material"
+        "material.html" : "material",
+        "scheduling.html" : "scheduling"
     },
     meetings : function() {
 
@@ -23,17 +24,23 @@ app.router = Backbone.Router.extend({
         var today = Math.floor( moment().sod() / 1000 );
 
         // Function to set scroll after both are rendered or show message
-        var afterRender = _.after(2, function(){
+        var afterRender = _.after(3, function(){
             if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0){
-                var offset = $('#future').offset();
-                window.scrollTo(0, offset.top - 50);
+                if( $('today') ){
+                    var offset = $('#today').offset();
+                    window.scrollTo(0, offset.top - 50);
+                }
+                else{
+                    var offset = $('#future').offset();
+                    window.scrollTo(0, offset.top - 50);
+                }
             }
             else{
                 $('.main-div').html('<h2>Sorry</h2><p>Our mobile app doesn\'t yet support creating meetings.</p><p>Open the login link in your email with a desktop browser to get started!</p><p class="sorry"><span class="sorry-squrre"></span></p>');
             }
         });
 
-        // Fetch upcoming meetings
+        // Fetch all future meetings
         app.collections.future_meetings = new app.meetingCollection();
         app.collections.future_meetings.fetch({ success : function(col,res){
             // If problems with auth
@@ -42,8 +49,29 @@ app.router = Backbone.Router.extend({
                 return;
             }
 
+            $('.loader').hide();
+
+            // Get times
+            var today = Math.floor ( moment().utc().sod() / 1000 );
+            var today_end = Math.floor ( moment().utc().eod() / 1000 );
+
+            // Create a new collection of todays meetings
+            var today_meetings = app.collections.future_meetings.filter(function(model) {
+                if( model.get('begin_epoch') >= today && model.get('begin_epoch') <= today_end ) return true;
+                else return false;
+            });
+            app.collections.today = new app.meetingCollection( today_meetings );
+
+            // Create new collection of upcoming meetings
+            var upcoming_meetings = app.collections.future_meetings.filter(function(model) {
+                if( model.get('begin_epoch') > today_end) return true;
+                else return false;
+            });
+            app.collections.upcoming = new app.meetingCollection( upcoming_meetings );
+
+            // Create view for upcoming meetings and render or remove if empty
             app.views.future = new app.upcomingMeetingsView({
-                collection : app.collections.future_meetings,
+                collection : app.collections.upcoming,
                 childViewConstructor : app.meetingInListView,
                 childViewTagName : 'li',
                 el : $('#future'),
@@ -52,10 +80,46 @@ app.router = Backbone.Router.extend({
                 infiniScrollDirection : 'down',
                 infiniScrollExtraParams : { start_min : today, sort : "asc" }
             });
-            $('.loader').hide();
-            app.views.future.render();
+            if( app.collections.future_meetings.length === 0 ) app.views.future.remove();
+            else app.views.future.render();
+
+            // Create a view for todays meetings and render or remove if empty
+            app.views.today = new app.todayMeetingsView({
+                collection : app.collections.today,
+                childViewConstructor : app.meetingInListView,
+                childViewTagName : 'li',
+                el : $('#today'),
+                infiniScroll : false
+            });
+            if( app.collections.today.length === 0 ) app.views.today.remove();
+            else app.views.today.render();
+
             afterRender();
+
         },  data : { start_min : today, limit : 10, sort : "asc"} } );
+
+        // Get the unscheduled meetings
+        app.collections.unscheduled_meetings = new app.meetingCollection({},{ override_endpoint : 'unscheduled_meetings' });
+        app.collections.unscheduled_meetings.fetch({ success : function(col,res){
+            // If problems with auth
+            if( res && res.error && res.error.message == "invalid auth" ){
+                window.location = '/login.html?clear=true';
+                return;
+            }
+            app.views.unscheduled = new app.unscheduledMeetingsView({
+                collection : app.collections.unscheduled_meetings,
+                childViewConstructor : app.meetingInListView,
+                childViewTagName : 'li',
+                el : $('#unscheduled'),
+                infiniScroll : false
+            });
+            $('.loader').hide();
+
+            if( app.collections.unscheduled_meetings.length == 0 ) app.views.unscheduled.remove();
+            else app.views.unscheduled.render();
+
+            afterRender();
+        }, data : { scheduling_on : 1 }});
 
         // Fetch past meetings
         app.collections.past_meetings = new app.meetingCollection();
@@ -89,6 +153,7 @@ app.router = Backbone.Router.extend({
         app.views.login = new app.loginView({ el : $('#login-page') });
         app.views.login.render();
     },
+
     settings : function() {
 
         // Show settings view
@@ -100,6 +165,7 @@ app.router = Backbone.Router.extend({
         app.views.header = new app.headerView({ el : '#settings' });
         app.views.footer.render();
     },
+
     meeting : function(params) {
 
         // Render footer
@@ -143,6 +209,35 @@ app.router = Backbone.Router.extend({
         }});
 
     },
+
+    scheduling : function(params) {
+
+        // Get url params
+        var id = params.id || 0;
+        var mode = params.mode || 'answer';
+
+        // Start header
+        app.views.header = new app.headerView({ el : '#meetings' });
+
+        // Get meeting
+        app.models.meeting = new app.meetingModel({ id : id });
+        app.views.scheduling = new app.schedulingView({
+            el : $('#scheduling'),
+            model : app.models.meeting,
+            mode : mode
+        } );
+        app.models.meeting.fetch({ success : function(){
+
+            // Init current meeting user
+            var data = app.models.meeting.getMeetingUserByID( app.auth.user );
+            app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
+
+            app.views.scheduling.render();
+
+        }, timeout : 5000 });
+
+    },
+
     participants : function(params) {
 
         // Render footer
@@ -164,6 +259,7 @@ app.router = Backbone.Router.extend({
         }
         });
     },
+
     materials : function(params) {
         // Render footer
         app.views.footer = new app.footerView({ active : "meetings", el : '#materials' });
@@ -184,6 +280,7 @@ app.router = Backbone.Router.extend({
             app.views.materials.render();
         }});
     },
+
     participant : function(params) {
         // Render footer
         app.views.footer = new app.footerView({ active : "meetings", el : '#participant' });
@@ -202,6 +299,7 @@ app.router = Backbone.Router.extend({
             app.views.user.render();
         }});
     },
+
     material : function(params) {
         // Setup header
         app.views.header = new app.headerView({ el : '#material' });

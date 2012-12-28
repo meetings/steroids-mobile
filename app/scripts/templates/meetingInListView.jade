@@ -2,7 +2,7 @@ a(href='meeting.html?id='+id)
     h3=title
     p=location
     div.top-bar
-        span.left=date_string
+        span.left=date_string || 'Being Scheduled'
         span.right=time_string
     - if ( participants.length)
         div.participants
@@ -13,7 +13,9 @@ a(href='meeting.html?id='+id)
                         img(src=participant.image, width='20', height='20')
                     - else
                         span.placeholder-20
-                    - if( participant.rsvp_status === 'yes' )
+                    - if( date_string == "" )
+                        // Time not set
+                    - else if( participant.rsvp_status === 'yes' )
                         span.rsvp.yes
                     - else if( participant.rsvp_status === 'no' )
                         span.rsvp.no

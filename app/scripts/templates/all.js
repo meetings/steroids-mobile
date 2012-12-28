@@ -53,6 +53,24 @@ exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, m
     return buf.join("");
 };
 
+// confirmSchedulingChoose.jade compiled template
+exports.confirmSchedulingChoose = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push("\n<h3>Are you sure?</h3>\n<p>");
+        var __val__ = "Choose " + time + " for the meeting. We will immediately notify all participants.";
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push('</p><a id="confirm-option" data-theme="b" type="button">Save and notify</a><a data-theme="a" type="button" class="reset">Cancel</a>');
+    }
+    return buf.join("");
+};
+
 // footer.jade compiled template
 exports.footer = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
@@ -199,7 +217,7 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
         var __val__ = location;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</p>\n  <div class="top-bar"><span class="left">');
-        var __val__ = date_string;
+        var __val__ = date_string || "Being Scheduled";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</span><span class="right">');
         var __val__ = time_string;
@@ -228,7 +246,9 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
                     } else {
                         buf.push('<span class="placeholder-20"></span>');
                     }
-                    if (participant.rsvp_status === "yes") {
+                    if (date_string == "") {
+                        buf.push("\n      <!-- Time not set-->");
+                    } else if (participant.rsvp_status === "yes") {
                         buf.push('<span class="rsvp yes"></span>');
                     } else if (participant.rsvp_status === "no") {
                         buf.push('<span class="rsvp no"></span>');
@@ -330,7 +350,9 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                     } else {
                         buf.push('<span class="placeholder-30"></span>');
                     }
-                    if (participant.rsvp_status === "yes") {
+                    if (date_string == "") {
+                        buf.push("\n          <!-- Time not set-->");
+                    } else if (participant.rsvp_status === "yes") {
                         buf.push('<span class="rsvp yes"></span>');
                     } else if (participant.rsvp_status === "no") {
                         buf.push('<span class="rsvp no"></span>');
@@ -358,6 +380,78 @@ exports.noticeBar = function anonymous(locals, attrs, escape, rethrow, merge) {
         var interp;
         var __indent = [];
         buf.push('\n<div class="notice">\n  <p>Problems with the internets...</p>\n</div>');
+    }
+    return buf.join("");
+};
+
+// optionInListView.jade compiled template
+exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push("\n<li>");
+        var c = user.proposal_answers[proposal.id] ? user.proposal_answers[proposal.id] : "no";
+        if (mode === "choose") c = "choose";
+        buf.push("<a");
+        buf.push(attrs({
+            href: "#",
+            "data-option-id": proposal.id,
+            "data-time": proposal.date_string + " " + proposal.time_string,
+            "class": "option-" + c
+        }, {
+            href: true,
+            "data-option-id": true,
+            "class": true,
+            "data-time": true
+        }));
+        buf.push('>\n    <div class="top-bar"><span class="left">');
+        var __val__ = proposal.date_string;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push('</span><span class="right">');
+        var __val__ = proposal.time_string;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push("</span></div>\n    <!--span.right=time_string-->");
+        if (participants.length) {
+            buf.push('\n    <div class="participants">');
+            participants = _.sortBy(participants, function(p) {
+                if (p.proposal_answers[proposal.id] === "yes") return 1; else if (p.proposal_answers[proposal.id] === "no") return 3; else return 2;
+            });
+            participants.forEach(function(p) {
+                {
+                    buf.push('\n      <div class="wrap">');
+                    if (p.image !== "") {
+                        buf.push("<img");
+                        buf.push(attrs({
+                            src: p.image,
+                            width: "20",
+                            height: "20"
+                        }, {
+                            src: true,
+                            width: true,
+                            height: true
+                        }));
+                        buf.push("/>");
+                    } else {
+                        buf.push('<span class="placeholder-20"></span>');
+                    }
+                    if (p.proposal_answers[proposal.id] === "yes") {
+                        buf.push('<span class="rsvp yes"></span>');
+                    } else if (p.proposal_answers[proposal.id] === "no") {
+                        buf.push('<span class="rsvp no"></span>');
+                    } else {
+                        buf.push('<span class="rsvp unknown"></span>');
+                    }
+                    buf.push("\n      </div>");
+                }
+            });
+            buf.push("\n    </div>");
+        }
+        buf.push("</a>\n</li>");
     }
     return buf.join("");
 };
@@ -392,7 +486,9 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
         } else {
             buf.push('<span class="placeholder-60"></span>');
         }
-        if (rsvp_status === "yes") {
+        if (proposal_answers && _.size(proposal_answers) > 0) {
+            buf.push("\n    <!-- Scheduling-->");
+        } else if (rsvp_status === "yes") {
             buf.push('<span class="rsvp yes"></span>');
         } else if (rsvp_status === "no") {
             buf.push('<span class="rsvp no"></span>');
@@ -609,6 +705,34 @@ exports.rsvpBarView = function anonymous(locals, attrs, escape, rethrow, merge) 
     return buf.join("");
 };
 
+// schedulingBarView.jade compiled template
+exports.schedulingBarView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('\n<div class="scheduling-answer">');
+        if (user_answered) {
+            buf.push('\n  <p><a data-theme="b" href="#" class="answer-scheduling">Change scheduling answers</a></p>');
+        } else {
+            buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="answer-scheduling">Tap to answer scheduling</a></p>');
+        }
+        if (creator == 1) {
+            if (all_answered) {
+                buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
+            } else {
+                buf.push('\n  <p><a data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
+            }
+        }
+        buf.push("\n</div>");
+    }
+    return buf.join("");
+};
+
 // settingsView.jade compiled template
 exports.settingsView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
@@ -626,6 +750,27 @@ exports.settingsView = function anonymous(locals, attrs, escape, rethrow, merge)
             href: true
         }));
         buf.push('>Switch to desktop version</a></p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
+    }
+    return buf.join("");
+};
+
+// updateBrowser.jade compiled template
+exports.updateBrowser = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        var __indent = [];
+        buf.push('<div class="main-div ui-content" data-role="content" role="main">\n<div data-role="content" role="main" class="main-div ui-content">\n  <h3>Sorry</h3>\n  <p>The mobile site is designed to work with modern browsers. Please update to Chrome, Firefox, Safari or Opera.</p>\n  <p><a');
+        buf.push(attrs({
+            href: app.defaults.desktop_link
+        }, {
+            href: true
+        }));
+        buf.push(">Switch to desktop version</a></p>\n</div>");
     }
     return buf.join("");
 };

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache">
     <head>
-        <title>Participants | Meetin.gs</title>
+        <title>Scheduling | Meetin.gs</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -23,56 +23,58 @@
         <script src="scripts/vendor/jquery.min.js"></script>
         <script src="scripts/main.js"></script>
         <script src="scripts/vendor/jqm.js"></script>
-        <script src="scripts/templates/all.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
-        <script src="scripts/vendor/modernizr.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/backbone-query-params.js"></script>
+        <script src="scripts/vendor/moment.js"></script>
+        <script src="scripts/vendor/modernizr.js"></script>
         <script src="scripts/vendor/fastclick.js"></script>
-        <script src="scripts/views/footerView.js"></script>
         <script src="scripts/views/meetingInListView.js"></script>
+        <script src="scripts/views/footerView.js"></script>
         <script src="scripts/views/meetingView.js"></script>
         <script src="scripts/views/participantInListView.js"></script>
         <script src="scripts/views/materialInListView.js"></script>
         <script src="scripts/views/participantView.js"></script>
+        <script src="scripts/views/schedulingView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/nextActionView.js"></script>
         <script src="scripts/views/headerView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
         <script src="scripts/models/participantModel.js"></script>
         <script src="scripts/collections/meetingCollection.js"></script>
         <script src="scripts/collections/materialCollection.js"></script>
-        <script src="scripts/collections/participantCollection.js"></script>
         <script src="scripts/routes/router.js"></script>
+        <script src="scripts/templates/all.js"></script>
         <!-- endbuild -->
+
     </head>
 <body>
-    <!-- Participant listing -->
-    <div data-role="page" id="participants" data-theme="a">
+    <!-- Meetings listing -->
+    <div data-role="page" id="meetings" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
-            <a class="back-button" href="#" data-icon="mtngs-back" data-theme="b">Back</a>
-            <h1>Participants</h1>
+            <a class="back-button" href="#" data-icon="mtngs-back" data-theme="b" >Back</a>
+            <h1>Scheduling</h1>
         </div>
-        <div data-role="content">
-            <ul id="participants_list" data-role="listview" data-inset="true" data-theme="a">
+        <div class="main-div" data-role="content">
+            <div id="scheduling">
                 <div class="loader">
-                    <span class="loader"></span>
+                    <img alt="" class="loader" src="/images/ajaxloader.gif" />
                 </div>
-            </ul>
+            </div>
         </div>
+
     </div><!-- /page -->
     <script type="text/javascript" charset="utf-8">
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount','UA-3314001-23']);
 _gaq.push(['_trackPageview']);
 (function() {
- var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
- ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
- var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
- })();
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
     </script>
-</body>
+
+    </body>
 </html>
-
-
-

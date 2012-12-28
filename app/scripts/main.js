@@ -30,6 +30,12 @@ window.app = {
     mixins : {},
     init : function() {
 
+        // Check that history is supported
+        if( ! Modernizr.history ){
+            $('body').html( templatizer.updateBrowser() );
+            return;
+        }
+
         // Check login
         if( this._requireLogin() ){
             // Check meeting redirect
@@ -89,14 +95,22 @@ window.app = {
         }
     },
     _doRedirects : function(){
+        // TODO: opening of the page stacks
         var redirect_meeting = this._getUrlParamByName( 'redirect_to_meeting' );
+        var proposals = this._getUrlParamByName( 'proposals' );
         var clear = this._getUrlParamByName( 'clear' );
         if ( clear == 'true'){
             app.auth.user = '';
             app.auth.token = '';
             return;
         }
-        if( redirect_meeting && redirect_meeting !== 0 && redirect_meeting !== '0' ){
+        else if( proposals === 'answer' && redirect_meeting ){
+            window.location = '/scheduling.html?mode=answer&id=' + redirect_meeting;
+        }
+        else if( proposals === 'choose' && redirect_meeting ){
+            window.location = '/scheduling.html?mode=choose&id=' + redirect_meeting;
+        }
+        else if( redirect_meeting && redirect_meeting !== 0 && redirect_meeting !== '0' ){
             window.location = '/meeting.html?id=' + redirect_meeting;
         }
         else if( window.location.toString().indexOf( 'login.html') !== -1 ){

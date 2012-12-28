@@ -1,6 +1,6 @@
 app.headerView = Backbone.View.extend({
 
-    initialize: function() {
+    initialize: function( options ) {
     },
 
     render: function() {

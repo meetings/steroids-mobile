@@ -90,6 +90,19 @@ div.rsvp-answer{
     }
 }
 
+// Scheduling answers on meeting page
+div.scheduling-answer{
+}
+
+// Scheduling page
+div#scheduling{
+    h3{
+        margin-bottom:5px;
+    }
+    p.mtngs-location{
+        margin: 5px 0px;
+    }
+}
 // Login page stuff
 div#login-page{
     position:absolute;
@@ -131,6 +144,67 @@ div#login-page{
         width:268px;
     }
 }
+// Meetings in list view
+ul#proposals{
+    li{
+        margin-bottom:10px;
+        span.ui-icon-arrow-r{
+            display:none;
+        }
+        a{
+            padding-top:25px !important;
+            padding-bottom:4px;
+            div.top-bar{
+                position:absolute;
+                top:0px;
+                left:0px;
+                width:100%;
+                background-color:#eee;
+                font-size:11px;
+                color:#777;
+                font-weight:500;
+                height:24px;
+                @include retina-bg('/images/checkbox_green', 'png', 17px, 17px);
+                background-repeat:no-repeat;
+                background-position: 5px 4px;
+                span.left{
+                    height:24px;
+                    line-height:20px;
+                    border-left:1px solid #fff;
+                    float:left;
+                    padding:3px 0 3px 30px;
+                }
+                span.right{
+                    height:24px;
+                    line-height:20px;
+                    border-right:1px solid #fff;
+                    float:right;
+                    padding:3px 15px 3px 0;
+                }
+            }
+            div.participants{
+                padding-top:5px;
+            }
+        }
+        a.option-no{
+            div.top-bar{
+                @include retina-bg('/images/checkbox', 'png', 17px, 17px);
+            }
+        }
+        a.option-choose{
+            div.top-bar{
+                background-image:none;
+                span.left{
+                    padding-left:15px;
+                }
+            }
+        }
+    }
+}
+ul#proposals li a.option-yes div.top-bar{
+    background-color:#d8e6be;
+}
+
 // Meetings in list view
 ul.meeting-list{
     li{
@@ -623,7 +697,12 @@ h3.past {
     padding-top:4px;
     background-repeat:no-repeat;
 }
-
+h3.schedule {
+    @include retina-bg('/images/schedule' , 'png', 20px, 20px);
+    padding-left:25px;
+    padding-top:4px;
+    background-repeat:no-repeat;
+}
 .ui-icon-mtngs-cog {
     @include retina-bg('/images/icon_manage', 'png', 18px, 18px);
     background-color:transparent;

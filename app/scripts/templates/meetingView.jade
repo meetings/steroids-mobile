@@ -31,7 +31,9 @@ ul(data-role='listview',data-inset='true')
                                 img(src=participant.image, width='30', height='30')
                             - else
                                 span.placeholder-30
-                            - if( participant.rsvp_status === 'yes' )
+                            - if( date_string == "" )
+                                // Time not set
+                            - else if( participant.rsvp_status === 'yes' )
                                 span.rsvp.yes
                             - else if( participant.rsvp_status === 'no' )
                                 span.rsvp.no
