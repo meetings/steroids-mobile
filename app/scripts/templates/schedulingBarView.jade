@@ -1,7 +1,7 @@
 div.scheduling-answer
     - if( user_answered )
         p
-            a.answer-scheduling(data-theme="b",href="#") Change scheduling answers
+            a.answer-scheduling(data-role="button",data-theme="b",href="#") Change your responses
     - else
         p
             a.answer-scheduling(data-role="button",data-theme="b",href="#") Tap to answer scheduling
@@ -11,4 +11,4 @@ div.scheduling-answer
                 a.choose-date(data-role="button",data-theme="b",href="#") Choose the time
         - else
             p
-                a.choose-date(data-theme="b",href="#") Choose the time
+                a.choose-date(data-role="button",data-theme="b",href="#") Choose the time

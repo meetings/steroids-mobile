@@ -27,6 +27,7 @@
             scrollOffset: 100,
             scrollOn: true,
             add: true,
+            update: true,
             strict: false,
             includePage: true,
             extraParams : {},
@@ -104,6 +105,8 @@
                     success: self.fetchSuccess,
                     error: self.fetchError,
                     add: self.options.add,
+                    update: self.options.update,
+                    remove: false,
                     data: buildQueryParams(lastModel)
                     //silent: true
                 });

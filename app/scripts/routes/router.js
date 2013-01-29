@@ -67,7 +67,7 @@ app.router = Backbone.Router.extend({
                 if( model.get('begin_epoch') > today_end) return true;
                 else return false;
             });
-            app.collections.upcoming = new app.meetingCollection( upcoming_meetings );
+            app.collections.upcoming = new app.meetingCollection( today_meetings );
 
             // Create view for upcoming meetings and render or remove if empty
             app.views.future = new app.upcomingMeetingsView({

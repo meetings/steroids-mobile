@@ -8,5 +8,4 @@ app.meetingCollection = Backbone.Collection.extend({
             this.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/meetings';
         }
     }
-
 });

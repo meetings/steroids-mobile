@@ -217,7 +217,7 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
         var __val__ = location;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</p>\n  <div class="top-bar"><span class="left">');
-        var __val__ = date_string || "Being Scheduled";
+        var __val__ = date_string || "Scheduling in progress";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</span><span class="right">');
         var __val__ = time_string;
@@ -284,6 +284,8 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             var __val__ = date_string + ", " + time_string + " " + timezone_string;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
+        } else {
+            buf.push('\n<p class="mtngs-calendar">Scheduling in progress</p>');
         }
         if (location) {
             if (location === "On Skype" || location === "Online" || location === "Location not known") {
@@ -717,7 +719,7 @@ exports.schedulingBarView = function anonymous(locals, attrs, escape, rethrow, m
         var __indent = [];
         buf.push('\n<div class="scheduling-answer">');
         if (user_answered) {
-            buf.push('\n  <p><a data-theme="b" href="#" class="answer-scheduling">Change scheduling answers</a></p>');
+            buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="answer-scheduling">Change your responses</a></p>');
         } else {
             buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="answer-scheduling">Tap to answer scheduling</a></p>');
         }
@@ -725,7 +727,7 @@ exports.schedulingBarView = function anonymous(locals, attrs, escape, rethrow, m
             if (all_answered) {
                 buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
             } else {
-                buf.push('\n  <p><a data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
+                buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
             }
         }
         buf.push("\n</div>");

@@ -1,6 +1,8 @@
 h3=title
 - if (date_string)
     p.mtngs-calendar=date_string + ', ' + time_string + ' ' + timezone_string
+- else
+    p.mtngs-calendar Scheduling in progress
 - if ( location )
     - if( location === 'On Skype' || location === 'Online' || location === 'Location not known' )
         p.mtngs-location=location
