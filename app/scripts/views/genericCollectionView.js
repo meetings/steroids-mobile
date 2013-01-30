@@ -136,7 +136,6 @@ app.genericCollectionView = Backbone.View.extend({
 
     // Render the whole view
     render : function() {
-        this._rendered = true;
 
         this.el.html('');
 
@@ -155,12 +154,14 @@ app.genericCollectionView = Backbone.View.extend({
             this.renderExtras();
         }
 
-        // Call onEmpty if no results
-        if( ! s && typeof this.emptyString === 'string' ){
+        // Call onEmpty if no results && not first render
+        if( ! s && this._rendered && typeof this.emptyString === 'string' ){
             this.el.html( this.emptyString );
         }
 
         this.el.listview("refresh");
+
+        this._rendered = true;
 
         return this;
     },
