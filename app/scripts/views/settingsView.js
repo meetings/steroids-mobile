@@ -7,7 +7,12 @@ app.settingsView = Backbone.View.extend({
         return this;
     },
     events: {
-        'click .logout' : 'logout'
+        'click .logout' : 'logout',
+        'click .open-native' : 'openNative'
+    },
+    openNative : function(e){
+        e.preventDefault();
+        window.location = 'meetings://?dic=' + app.auth.token + '&user_id=' + app.auth.user;
     },
     logout : function(e){
         e.preventDefault();

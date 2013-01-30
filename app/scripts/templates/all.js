@@ -751,7 +751,11 @@ exports.settingsView = function anonymous(locals, attrs, escape, rethrow, merge)
         }, {
             href: true
         }));
-        buf.push('>Switch to desktop version</a></p><a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
+        buf.push(">Switch to desktop version</a></p>");
+        if (location.host.indexOf("dev") !== -1) {
+            buf.push('<a data-theme="b" data-role="button" href="#" class="open-native">Launch native app</a>');
+        }
+        buf.push('<a data-theme="b" data-role="button" href="#" class="logout">Log Out</a>');
     }
     return buf.join("");
 };
