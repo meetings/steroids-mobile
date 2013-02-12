@@ -1,0 +1,11 @@
+ul#side-bar(data-role="listview",data-theme="c")
+    li
+        - if( active === 'meetings' )
+            a#nav-meetings.ui-btn-active.ui-state-persist(href="index.html",data-icon="custom",data-transition="fade") Meetings
+        - else
+            a#nav-meetings(href="index.html",data-icon="custom",data-transition="fade") Meetings
+    li
+        - if( active === 'settings' )
+            a#nav-settings.ui-btn-active.ui-state-persist(href="settings.html",data-icon="custom",data-transition="fade") Settings
+        - else
+            a#nav-settings(href="settings.html",data-icon="custom",data-transition="fade") Settings

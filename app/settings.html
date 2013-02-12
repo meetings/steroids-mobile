@@ -43,7 +43,7 @@
         <script src="scripts/views/upcomingMeetingsView.js"></script>
         <script src="scripts/views/settingsView.js"></script>
         <script src="scripts/views/commentListView.js"></script>
-        <script src="scripts/views/footerView.js"></script>
+        <script src="scripts/views/panelView.js"></script>
         <script src="scripts/views/headerView.js"></script>
         <script src="scripts/views/nextActionView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
@@ -62,6 +62,7 @@
     <!-- Settings -->
     <div data-role="page" id="meetings" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d">
+            <a id="open-left-panel" href="#left-panel" data-icon="mtngs-panel" data-iconpos="notext" data-theme="b"></a>
             <h1>Settings</h1>
         </div>
 
@@ -70,6 +71,9 @@
                 <span class="loader"></span>
             </div>
         </div>
+        <div data-role="panel" data-position-fixed="true" id="left-panel">
+            <!-- panel content goes here -->
+        </div><!-- /panel -->
 
     </div><!-- /page -->
     <script type="text/javascript" charset="utf-8">

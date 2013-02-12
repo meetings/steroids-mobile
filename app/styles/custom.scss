@@ -132,7 +132,6 @@ div#login-page{
         }
     }
     input#email{
-        margin-bottom:15px;
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
         border-radius: 4px;
@@ -703,6 +702,16 @@ h3.schedule {
     padding-top:4px;
     background-repeat:no-repeat;
 }
+.ui-icon-mtngs-panel {
+    @include retina-bg('/images/259-list', 'png', 18px, 18px);
+    background-color:transparent;
+    box-shadow:none;
+    left:5px;
+    margin-left:6px !important;
+    margin-top:5px !important;
+    border-radius:0px !important;
+}
+
 .ui-icon-mtngs-cog {
     @include retina-bg('/images/icon_manage', 'png', 18px, 18px);
     background-color:transparent;
@@ -856,4 +865,9 @@ div#comment-box{
     }
 }
 
-
+// Sidebar styles
+ul#side-bar{
+    li div span.ui-icon{
+        display:none;
+    }
+}

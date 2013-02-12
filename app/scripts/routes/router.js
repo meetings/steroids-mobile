@@ -15,10 +15,10 @@ app.router = Backbone.Router.extend({
     },
     meetings : function() {
 
-        // Render footer & setup header
-        app.views.footer = new app.footerView({ active : "meetings", el : '#meetings' });
+        // Render panel & setup header
+        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
         app.views.header = new app.headerView({ el : '#meetings' });
-        app.views.footer.render();
+        app.views.panel.render();
 
         // Get times
         var today = Math.floor( moment().sod() / 1000 );
@@ -160,18 +160,18 @@ app.router = Backbone.Router.extend({
         app.views.settings = new app.settingsView({ el : $('#settings') });
         app.views.settings.render();
 
-        // Render footer
-        app.views.footer = new app.footerView({ active : "settings", el : $('#settings') });
+        // Render panel
+        app.views.panel = new app.panelView({ active : "settings", el : $('#left-panel') });
         app.views.header = new app.headerView({ el : '#settings' });
-        app.views.footer.render();
+        app.views.panel.render();
     },
 
     meeting : function(params) {
 
-        // Render footer
-        app.views.footer = new app.footerView({ active : "meetings", el : $('#meetings') });
+        // Render panel
+        app.views.panel = new app.panelView({ active : "meetings", el : $('#left-panel') });
         app.views.header = new app.headerView({ el : '#meetings' });
-        app.views.footer.render();
+        app.views.panel.render();
 
         // Get url params
         var id = params.id || 0;
@@ -240,10 +240,10 @@ app.router = Backbone.Router.extend({
 
     participants : function(params) {
 
-        // Render footer
-        app.views.footer = new app.footerView({ active : "meetings", el : '#participants' });
+        // Render panel
+        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
         app.views.header = new app.headerView({ el : '#participants' });
-        app.views.footer.render();
+        app.views.panel.render();
 
         var id = params.id || 0;
 
@@ -261,10 +261,10 @@ app.router = Backbone.Router.extend({
     },
 
     materials : function(params) {
-        // Render footer
-        app.views.footer = new app.footerView({ active : "meetings", el : '#materials' });
+        // Render panel
+        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
         app.views.header = new app.headerView({ el : '#materials' });
-        app.views.footer.render();
+        app.views.panel.render();
 
         var id = params.id || 0;
 
@@ -282,10 +282,10 @@ app.router = Backbone.Router.extend({
     },
 
     participant : function(params) {
-        // Render footer
-        app.views.footer = new app.footerView({ active : "meetings", el : '#participant' });
+        // Render panel
+        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
         app.views.header = new app.headerView({ el : '#participant' });
-        app.views.footer.render();
+        app.views.panel.render();
 
         var mid = params.mid || 0;
         var id = params.id || 0;
