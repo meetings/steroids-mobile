@@ -1,11 +1,31 @@
+- var a = ''; if( active === 'meetings' ) a = 'ui-btn-active';
+- console.log(a)
 ul#side-bar(data-role="listview",data-theme="c")
+    li(data-theme="c",class=a)
+        a#nav-meetings(href="index.html",data-transition="fade")
+            span.ui-icon.menu-icon-meetings
+            | Meetings
+    li(data-role="list-divider",data-theme="c") GET TIPS FOR BETTER MEETINGS
     li
-        - if( active === 'meetings' )
-            a#nav-meetings.ui-btn-active.ui-state-persist(href="index.html",data-icon="custom",data-transition="fade") Meetings
-        - else
-            a#nav-meetings(href="index.html",data-icon="custom",data-transition="fade") Meetings
+        a#nav-facebook(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-facebook
+            | Like us on Facebook
     li
-        - if( active === 'settings' )
-            a#nav-settings.ui-btn-active.ui-state-persist(href="settings.html",data-icon="custom",data-transition="fade") Settings
-        - else
-            a#nav-settings(href="settings.html",data-icon="custom",data-transition="fade") Settings
+        a#nav-twitter(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-twitter
+            | Follow us on Twitter
+    li(data-role="list-divider",data-theme="c") OTHER
+    li
+        a#nav-support(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-support
+            | Support
+    li
+        a#nav-tos(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-tos
+            | Terms of Service
+
+    li
+        a#nav-logout(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-logout
+            | Logout
+a.no-mobile(href="#") Switch to desktop version

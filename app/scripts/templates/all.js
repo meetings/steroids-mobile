@@ -441,19 +441,18 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<ul id="side-bar" data-role="listview" data-theme="c">\n  <li>');
-        if (active === "meetings") {
-            buf.push('<a id="nav-meetings" href="index.html" data-icon="custom" data-transition="fade" class="ui-btn-active ui-state-persist">Meetings</a>');
-        } else {
-            buf.push('<a id="nav-meetings" href="index.html" data-icon="custom" data-transition="fade">Meetings</a>');
-        }
-        buf.push("\n  </li>\n  <li>");
-        if (active === "settings") {
-            buf.push('<a id="nav-settings" href="settings.html" data-icon="custom" data-transition="fade" class="ui-btn-active ui-state-persist">Settings</a>');
-        } else {
-            buf.push('<a id="nav-settings" href="settings.html" data-icon="custom" data-transition="fade">Settings</a>');
-        }
-        buf.push("\n  </li>\n</ul>");
+        var a = "";
+        if (active === "meetings") a = "ui-btn-active";
+        console.log(a);
+        buf.push('\n<ul id="side-bar" data-role="listview" data-theme="c">\n  <li');
+        buf.push(attrs({
+            "data-theme": "c",
+            "class": a
+        }, {
+            "data-theme": true,
+            "class": true
+        }));
+        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li>\n  <li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li>\n  <li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li>\n  <li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Share us on Twitter</a></li>\n  <li data-role="list-divider" data-theme="c">OTHER</li>\n  <li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li>\n  <li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li>\n  <li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li>\n</ul><a href="#" class="no-mobile">Switch to normal website</a>');
     }
     return buf.join("");
 };

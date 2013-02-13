@@ -503,13 +503,13 @@ ul#material{
     }
 }
 
-/* Fix material list icon positions */
+// Fix material list icon positions
 .ui-li-thumb, .ui-listview .ui-li-icon{
     top:13px;
     left:10px;
 }
 
-/* Remove borders from body & set body bg */
+// Remove borders from body & set body bg color
 body{
     max-width:720px;
     background-color:#e6e6e6 !important;
@@ -518,57 +518,19 @@ body{
     border:none;
 }
 
-/* Bottom bar icons */
-#nav-meetings .ui-icon {
-    @include retina-bg('/images/meetings', 'png', 20px, 20px);
-    background-position:50% 50%;
-    background-color:transparent;
-    background-repeat:no-repeat;
-}
-#nav-settings .ui-icon {
-    @include retina-bg('/images/settings', 'png', 20px, 20px);
-    background-position:50% 50%;
-    background-color:transparent;
-    background-repeat:no-repeat;
-}
-
-/* Remove some extra borders */
+// Remove some unwanted borders
 .ui-header{ border:none !important; }
 .ui-footer{ border-bottom:none !important; border-left:none !important; border-right:none !important;}
 .ui-listview-filter-inset{border:none !important; background:none !important}
-ul li.ui-li{
+
+// Hack some border colors only inside content so as not to affect panel
+div.ui-content ul li.ui-li{
     border-bottom:1px solid #ccc;
     border-top:none;
 }
-ul li.ui-corner-top{
+div.ui-content ul li.ui-corner-top{
     border-top:1px solid #ccc;
 }
-/* Fix footer active color */
-div.ui-footer{
-    .ui-btn-active {
-        border: 1px solid #ccc;
-        background: #27282a;
-        font-weight: bold;
-        color: #fff;
-        cursor: pointer;
-        text-shadow: 0 0 0  #eeeeee;
-        text-decoration: none;
-        background-image: -webkit-gradient(linear, left top, left bottom, from( #27282a ), to( #27282a ));
-        background-image: -webkit-linear-gradient( #27282a );
-        background-image:    -moz-linear-gradient( #27282a );
-        background-image:     -ms-linear-gradient( #27282a );
-        background-image:      -o-linear-gradient( #27282a );
-        background-image:         linear-gradient( #27282a, #27282a);
-        font-family: Helvetica, Arial, sans-serif;
-    }
-    .ui-btn-active:visited,
-    .ui-btn-active:hover,
-    .ui-btn-active a.ui-link-inherit {
-        color:#fff;
-    }
-}
-
-
 
 // Loader styles
 div.loader {
@@ -703,7 +665,7 @@ h3.schedule {
     background-repeat:no-repeat;
 }
 .ui-icon-mtngs-panel {
-    @include retina-bg('/images/259-list', 'png', 18px, 18px);
+    @include retina-bg('/images/icon_panel', 'png', 18px, 18px);
     background-color:transparent;
     box-shadow:none;
     left:5px;
@@ -792,6 +754,100 @@ p.mtngs-linkedin{
     height:20px;
 }
 
+
+// Panel styles
+.ui-panel-inner{
+    // Fix texts & borders & active
+    .ui-btn{
+        font-weight:300 !important;
+        font-size:14px !important;
+        border-bottom:none;
+    }
+    .ui-li-divider{
+        font-weight:300 !important;
+        font-size:12px !important;
+        border-bottom:none;
+        letter-spacing:0.1em;
+    }
+    .ui-btn-inner{
+        font-size:14px !important;
+        border-color:rgba(255, 255, 255, 0.1);
+    }
+    .ui-btn-active{
+        border: 1px solid #181818 /*{c-bhover-border}*/;
+        border-bottom:none;
+        background-image: -webkit-gradient(linear, left top, left bottom, from( #3e3e3e /*{c-bhover-background-start}*/), to( #3e3e3e /*{c-bhover-background-end}*/)); /* Saf4+, Chrome */
+        background-image: -webkit-linear-gradient( #3e3e3e /*{c-bhover-background-start}*/, #3e3e3e /*{c-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+        background-image:    -moz-linear-gradient( #3e3e3e /*{c-bhover-background-start}*/, #3e3e3e /*{c-bhover-background-end}*/); /* FF3.6 */
+        background-image:     -ms-linear-gradient( #3e3e3e /*{c-bhover-background-start}*/, #3e3e3e /*{c-bhover-background-end}*/); /* IE10 */
+        background-image:      -o-linear-gradient( #3e3e3e /*{c-bhover-background-start}*/, #3e3e3e /*{c-bhover-background-end}*/); /* Opera 11.10+ */
+        background-image:         linear-gradient( #3e3e3e /*{c-bhover-background-start}*/, #3e3e3e /*{c-bhover-background-end}*/);
+    }
+}
+div#left-panel{
+    a.no-mobile{
+        display:block;
+        text-align:center;
+        margin-top:25px;
+        font-weight:300 !important;
+        font-size:14px !important;
+    }
+    span.ui-icon-arrow-r{
+        display:none;
+    }
+    span.menu-icon-meetings{
+        @include retina-bg('/images/icon_meetings' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+    span.menu-icon-facebook{
+        @include retina-bg('/images/icon_facebook' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+    span.menu-icon-twitter{
+        @include retina-bg('/images/icon_twitter' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+    span.menu-icon-logout{
+        @include retina-bg('/images/icon_logout' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+    span.menu-icon-support{
+        @include retina-bg('/images/icon_support' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+    span.menu-icon-tos{
+        @include retina-bg('/images/icon_tos' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+
+
+
+}
+
 h3.mtngs-firsth3{
     margin-top:0px;
 }
@@ -862,12 +918,5 @@ div#comment-box{
             background-image:      -o-linear-gradient( #6cdaf6 , #63c1db );
             background-image:linear-gradient( #6cdaf6 , #63c1db );
         }
-    }
-}
-
-// Sidebar styles
-ul#side-bar{
-    li div span.ui-icon{
-        display:none;
     }
 }
