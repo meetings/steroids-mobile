@@ -199,9 +199,12 @@ module.exports = function( grunt ) {
   });
 
 
-  grunt.registerTask('mv_files', 'Moves the dist folder to agapp/views', function() {
+  grunt.registerTask('mv_files', 'Moves the dist folder to agapp/www', function() {
       var exec = require('child_process').exec;
-      exec('mv -f ' + __dirname +'/dist ' + __dirname + '/agapp/views');
+      // use copy, because mv wil not overwrite subdirs
+      exec('cp -rf ' + __dirname +'/dist/* ' + __dirname + '/agapp/www/', function(){
+        exec('rm -rf ' + __dirname +'/dist');
+      });
   });
 
   // Do the nesessary modifications
