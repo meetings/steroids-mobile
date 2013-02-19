@@ -1,0 +1,46 @@
+h3=title
+- if (date_string)
+    p.mtngs-calendar=date_string + ', ' + time_string + ' ' + timezone_string
+- else
+    p.mtngs-calendar Scheduling in progress
+- if ( location )
+    - if( location === 'On Skype' || location === 'Online' || location === 'Location not known' )
+        p.mtngs-location=location
+    - else
+        p.mtngs-location
+            a(target="_blank",href="https://maps.google.com/maps?daddr="+location)=location
+
+div#next-action-bar
+    
+// Skype button
+- if (skype_url)
+    a#skype_button(href=skype_url,data-role='button',data-icon='mtngs-skype',data-theme='b') Join Skype conference
+
+div#progress-bar
+
+// Participants
+ul(data-role='listview',data-inset='true')
+    li
+        a(href="#").open-participant-view
+            h3='Participants'
+            .participant-list
+            - if ( participants.length)
+                .participants
+                    - participants = _.sortBy( participants, function(p){ if( p.is_creator ) return 0;  else if( p.rsvp_status === 'yes' ) return 1; else if( p.rsvp_status === 'no' ) return 3; else return 2; });
+                    - participants.forEach(function(participant){
+                        div.wrap
+                            - if( participant.image !== '' )
+                                img(src=participant.image, width='30', height='30')
+                            - else
+                                span.placeholder-30
+                            - if( date_string == "" )
+                                // Time not set
+                            - else if( participant.rsvp_status === 'yes' )
+                                span.rsvp.yes
+                            - else if( participant.rsvp_status === 'no' )
+                                span.rsvp.no
+                            - else
+                                span.rsvp.unknown
+                    - })
+
+

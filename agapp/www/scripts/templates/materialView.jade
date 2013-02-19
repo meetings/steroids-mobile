@@ -1,0 +1,12 @@
+- if ( fetch_type !== '' )
+    if( fetch_type === 'media')
+        h3=title
+        !=content
+    else
+        h3=title
+        - if( title == "Agenda" && content == "")
+            p.notruncation Agenda is empty.
+        - else if( title == "Action Points" && content == "")
+            p.notruncation Action points are empty.
+        - else
+            p.notruncation!=content

@@ -1,0 +1,14 @@
+div.scheduling-answer
+    - if( user_answered )
+        p
+            a.answer-scheduling(data-role="button",data-theme="b",href="#") Change your responses
+    - else
+        p
+            a.answer-scheduling(data-role="button",data-theme="b",href="#") Tap to answer scheduling
+    - if( creator == 1)
+        - if( all_answered )
+            p
+                a.choose-date(data-role="button",data-theme="b",href="#") Choose the time
+        - else
+            p
+                a.choose-date(data-role="button",data-theme="b",href="#") Choose the time

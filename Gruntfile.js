@@ -187,23 +187,100 @@ module.exports = function( grunt ) {
   grunt.registerTask('normal','build normal_build');
 
 
+  /* previous perl script was failing at random, use this instead */
+  var buildifyHTML = function(buildType, html){
+
+    var startExp      = new RegExp("<!-- start build include: \\S* -->"),
+        endExp        = new RegExp("<!-- stop build include -->"),
+        buildTypeExp  = new RegExp("<!-- start build include: (\\S*) -->"),
+        lines         = html.split(/\r?\n/),
+        withinTag     = false,
+        tagType       = undefined,
+        tempContent   = [],
+        content       = [];
+
+    // loop each html document line
+    lines.forEach(function(line){
+      // new tag start
+      if (startExp.test(line) && !withinTag) {
+        tagType = line.match(buildTypeExp)[1];
+        withinTag = true;
+
+      // tag end
+      } else if (endExp.test(line) && withinTag) {
+        // when we have build we want, use that content
+        if (tagType === buildType) {
+          content = content.concat(tempContent);
+
+        }
+        // reset for next iteration
+        tempContent = [];
+        tagType = undefined;
+        withinTag = false;
+
+      // inside tag, collect line to tempContent
+      } else if (withinTag) {
+        tempContent.push(line);
+
+      // normal content, just add it
+      } else {
+        content.push(line);
+      }
+    });
+    // return merged string with line breaks
+    return content.join("\n");
+  }
+
 
   grunt.registerTask('mobile_build', 'Processes html build comments', function() {
-      var exec = require('child_process').exec;
-      exec('sh -c "' + __dirname +'/bin/process_build_includes.pl mobile ' + __dirname + '/dist/*.html"');
+
+      grunt.file.expand('dist/*.html').forEach(function(path){
+        var fullPath = __dirname + '/' + path,
+            preBuildContent = grunt.file.read(fullPath);
+
+        grunt.file.write(fullPath, buildifyHTML("mobile", preBuildContent));
+
+      });
+
   });
 
   grunt.registerTask('normal_build', 'Processes html build comments', function() {
-      var exec = require('child_process').exec;
-      exec('sh -c "' + __dirname +'/bin/process_build_includes.pl normal ' + __dirname + '/dist/*.html"');
+    grunt.file.expand('dist/*.html').forEach(function(path){
+      var fullPath = __dirname + '/' + path,
+          preBuildContent = grunt.file.read(fullPath);
+
+      grunt.file.write(fullPath, buildifyHTML("normal", preBuildContent));
+
+    });
   });
 
 
   grunt.registerTask('mv_files', 'Moves the dist folder to agapp/www', function() {
       var exec = require('child_process').exec;
-      // use copy, because mv wil not overwrite subdirs
+      var done = this.async();
+      var fs = require('fs');
+
+      // empty scripts dir that yeoman pollutes
+      grunt.file.expand('agapp/www/scripts/**/*.js').forEach(function(path){
+        fs.unlinkSync(__dirname + '/' + path)
+      });
+
+
+      console.log("Copying dist to agapp/www");
+      // use copy, because mv will not overwrite subdirs
       exec('cp -rf ' + __dirname +'/dist/* ' + __dirname + '/agapp/www/', function(){
-        exec('rm -rf ' + __dirname +'/dist');
+        console.log("Copied dist to agapp/www");
+        // remove dist
+        exec('rm -rf ' + __dirname +'/dist', function(){
+          console.log("Removed dist/");
+          // cleanup scss files because sass compilation in steroids fails for some rules in them
+          // and they are useless files for build anyways
+          grunt.file.expand('agapp/www/**/*.scss').forEach(function(path){
+            console.log("Removed SCSS: " + __dirname + '/' + path)
+            fs.unlinkSync(__dirname + '/' + path)
+          });
+          done(); // just ensure async operations above get run
+        });
       });
   });
 
