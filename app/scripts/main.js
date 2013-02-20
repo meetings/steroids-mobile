@@ -174,25 +174,62 @@ window.app = {
 };
 
 $(document).ready(function(){
-  app.init();
-  // when preload is fixed:
-  //if (app.options.appmode) {
-  //  // index file does app.init(), meeting.html is preloaded so do not app.init that
-  //  if (window.location.href === "http://localhost:13101/meeting.html") {
-  //    // do nothing, preloaded view inits when preload view is opened using AppGyver.replaceIdInURL
-  //
-  //  } else {
-  //    if (/index\.html/.test(window.location.href)) {
-  //      AppGyver.preload("http://localhost:13101/meeting.html", "meetingPage");
-  //    }
-  //
-  //    app.init();
-  //
-  //  }
-  //} else {
-  //
-  //  app.init();
-  //
-  //}
+  //app.init();
+
+  // mobile app, do preloads & app inits etc.
+  if (app.options.appmode) {
+
+    // open target blank links, material contents and profile linkedn  in safari
+    $(document).on("click", "a[target='_blank'], li#material_content > a, p.mtngs-linkedin > a", function(e){
+      e.preventDefault();
+      steroids.openURL(encodeURI($(this).attr("href")));
+    });
+
+    // initialization & preloading:
+    if (window.location.href === "http://localhost:13101/meeting.html") {
+
+      AppGyver.onFocus(function(){
+        $("div.main-div").hide();
+        $.mobile.showPageLoadingMsg();
+        // this is undone in meetingViews backbone render function
+      });
+
+      /*
+      visibilitychange behaves oddly..
+      document.addEventListener("visibilitychange", function(){
+        // when meeting page goes back to hidden state
+        if (!document.hidden) {
+          $("div.main-div").hide();
+          $.mobile.showPageLoadingMsg();
+          //alert("SHOW SPIN "+window.location.href)
+        } else {
+          $("div.main-div").show();
+          $.mobile.hidePageLoadingMsg();
+          //alert("HIDE SPIN "+window.location.href)
+        }
+      }, false);
+      */
+
+    // app.initting views
+    } else {
+
+      // handle preload views
+      if (/index\.html/.test(window.location.href)) {
+        // wait for steroids to be ready (api bridge)
+        steroids.on("ready", function(){
+          AppGyver.preload("http://localhost:13101/meeting.html", "meetingPage");
+          // more preloads cause crash now :(
+          //AppGyver.preload("http://localhost:13101/participants.html", "participantsPage");
+          //AppGyver.preload("http://localhost:13101/participant.html", "participantPage");
+        });
+
+      }
+
+      app.init(); // init
+    }
+  // web based app, no preloads or such magick required
+  } else {
+    app.init();
+  }
 });
 

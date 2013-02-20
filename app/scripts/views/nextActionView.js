@@ -36,11 +36,19 @@ app.nextActionView = Backbone.View.extend({
     },
     answerScheduling : function(e){
         e.preventDefault();
-        window.location = '/scheduling.html?id=' + app.models.meeting.get('id');
+        if ( app.options.appmode ) {
+          AppGyver.open("http://localhost:13101" + '/scheduling.html?id=' + app.models.meeting.get('id'));
+        } else {
+          window.location = '/scheduling.html?id=' + app.models.meeting.get('id');
+        }
     },
     openChooseDate : function(e){
         e.preventDefault();
-        window.location = '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id');
+        if ( app.options.appmode ) {
+          AppGyver.open("http://localhost:13101" + '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id'));
+        } else {
+          window.location = '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id');
+        }
     },
     getSchedulingStatus : function(){
         var status = {

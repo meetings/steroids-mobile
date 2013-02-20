@@ -17,8 +17,8 @@ app.meetingInListView = Backbone.View.extend({
 
         if ( app.options.appmode ) {
           e.preventDefault();
-          AppGyver.open("http://localhost:13101/meeting.html?id="+this.model.id);
-          //AppGyver.openPreload("meetingPage", "AppGyver.replaceIdinURL("+this.model.id+");");
+          //AppGyver.open("http://localhost:13101/meeting.html?id="+this.model.id);
+          AppGyver.openPreload("meetingPage", "AppGyver.replaceIdinURL("+this.model.id+");"); // when preload is fixed
         }
 
 

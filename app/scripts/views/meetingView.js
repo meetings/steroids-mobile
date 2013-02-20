@@ -18,6 +18,12 @@ app.meetingView = Backbone.View.extend({
         // Start progressbar
         this.initProgressBar();
 
+        if ($("div.main-div").is(":hidden")) {
+
+          $("div.main-div").show();
+          $.mobile.hidePageLoadingMsg();
+        }
+
         return this;
 
     },
@@ -56,6 +62,7 @@ app.meetingView = Backbone.View.extend({
       if ( app.options.appmode ) {
         e.preventDefault();
         AppGyver.open("http://localhost:13101/participants.html?id="+this.model.get('id'));
+        //AppGyver.openPreload("participantsPage", "AppGyver.replaceIdinURL("+this.model.get('id')+");"); // when preload is fixed
       } else {
         document.location = '/participants.html?id='+this.model.get('id');
       }

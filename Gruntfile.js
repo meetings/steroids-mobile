@@ -261,27 +261,37 @@ module.exports = function( grunt ) {
       var fs = require('fs');
 
       // empty scripts dir that yeoman pollutes
-      grunt.file.expand('agapp/www/scripts/**/*.js').forEach(function(path){
-        fs.unlinkSync(__dirname + '/' + path)
-      });
+      //grunt.file.expand('agapp/www/scripts/**/*.js').forEach(function(path){
+      //  fs.unlinkSync(__dirname + '/' + path)
+      //});
+      exec('rm -rf '+ __dirname +'/agapp/www/*', function(){
+        console.log("/agapp/www cleared");
 
+        exec('cp -rf ' + __dirname +'/steroids_skeleton/* ' + __dirname + '/agapp', function(){
+          console.log("Copied /steroids_skeleton/* to agapp/");
 
-      console.log("Copying dist to agapp/www");
-      // use copy, because mv will not overwrite subdirs
-      exec('cp -rf ' + __dirname +'/dist/* ' + __dirname + '/agapp/www/', function(){
-        console.log("Copied dist to agapp/www");
-        // remove dist
-        exec('rm -rf ' + __dirname +'/dist', function(){
-          console.log("Removed dist/");
-          // cleanup scss files because sass compilation in steroids fails for some rules in them
-          // and they are useless files for build anyways
-          grunt.file.expand('agapp/www/**/*.scss').forEach(function(path){
-            console.log("Removed SCSS: " + __dirname + '/' + path)
-            fs.unlinkSync(__dirname + '/' + path)
+          // use copy, because mv will not overwrite subdirs
+          exec('cp -rf ' + __dirname +'/dist/* ' + __dirname + '/agapp/www/', function(){
+            console.log("Copied dist to agapp/www");
+            // remove dist
+            exec('rm -rf ' + __dirname +'/dist', function(){
+              console.log("Removed dist/");
+              // cleanup scss files because sass compilation in steroids fails for some rules in them
+              // and they are useless files for build anyways
+              grunt.file.expand('agapp/www/**/*.scss').forEach(function(path){
+                console.log("Removed SCSS: " + __dirname + '/' + path)
+                fs.unlinkSync(__dirname + '/' + path)
+              });
+              done(); // just ensure async operations above get run
+            });
           });
-          done(); // just ensure async operations above get run
+
+
         });
+
       });
+
+
   });
 
   // Do the nesessary modifications

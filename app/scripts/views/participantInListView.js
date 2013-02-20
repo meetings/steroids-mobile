@@ -13,7 +13,7 @@ app.participantInListView = Backbone.View.extend({
       if( app.options.appmode ) {
         e.preventDefault();
         AppGyver.open("http://localhost:13101"+this.model.show_url);
-        AppGyver.open();
+        //AppGyver.openPreload("participantPage", "AppGyver.replaceURL(encodeURI("+this.model.show_url+"));"); // when preload is fixed
       } else {
         document.location = this.model.show_url;
       }

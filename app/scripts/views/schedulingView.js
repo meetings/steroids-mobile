@@ -115,8 +115,13 @@ app.schedulingView = Backbone.View.extend({
         // Save stuff to server
         $('#confirm-option span span').html('Saving...');
         this.model.save({ chosen_proposal_id : this.chosen_option }, {success : function(res){
-        $('#confirm-option span span').html('Done.');
+          $('#confirm-option span span').html('Done.');
+          if ( app.options.appmode ) {
+            AppGyver.back();
+          } else {
             window.location = '/meeting.html?id=' + app.models.meeting.get('id');
+          }
+
         }});
     },
 
@@ -138,7 +143,11 @@ app.schedulingView = Backbone.View.extend({
         app.models.meeting_user.save({},{ success : function(res){
             $('#save-options span span').html('Done.');
             // TODO: navigation inside app?
-            window.location = '/meeting.html?id=' + app.models.meeting.get('id');
+            if ( app.options.appmode ) {
+              AppGyver.back();
+            } else {
+              window.location = '/meeting.html?id=' + app.models.meeting.get('id');
+            }
         } });
     }
 });

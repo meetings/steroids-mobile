@@ -86,6 +86,19 @@
       });
     },
 
+    replaceURL: function(url){
+      history.replaceState({}, document.title, url);
+
+      if (typeof window.router === "undefined") {
+
+        app.init();
+
+      } else {
+
+        Backbone.history.checkUrl();
+      }
+    },
+
     replaceIdinURL: function(id){
       if (typeof window.router === "undefined") {
         var url = window.location.href+"?id="+id;
