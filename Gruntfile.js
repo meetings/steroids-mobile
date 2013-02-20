@@ -267,7 +267,7 @@ module.exports = function( grunt ) {
       exec('rm -rf '+ __dirname +'/agapp/www/*', function(){
         console.log("/agapp/www cleared");
 
-        exec('cp -rf ' + __dirname +'/steroids_skeleton/* ' + __dirname + '/agapp', function(){
+        exec('mkdir -p agapp;cp -rf ' + __dirname +'/steroids_skeleton/* ' + __dirname + '/agapp', function(){
           console.log("Copied /steroids_skeleton/* to agapp/");
 
           // use copy, because mv will not overwrite subdirs
