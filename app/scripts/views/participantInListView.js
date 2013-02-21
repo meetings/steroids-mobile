@@ -3,6 +3,10 @@ app.participantInListView = Backbone.View.extend({
     },
     render: function() {
         this.$el.html( templatizer.participantInListView( _.extend(this.model.toJSON(), { show_url : this.model.show_url }) ) ); // Render template
+
+        // when coming back from parent view, remove spinner and show content
+        if (app.options.appmode) AppGyver.showContent();
+
         return this;
     },
     events: {
@@ -12,8 +16,7 @@ app.participantInListView = Backbone.View.extend({
     openParticipant: function(e){
       if( app.options.appmode ) {
         e.preventDefault();
-        AppGyver.open("http://localhost:13101"+this.model.show_url);
-        //AppGyver.openPreload("participantPage", "AppGyver.replaceURL(encodeURI("+this.model.show_url+"));"); // when preload is fixed
+        AppGyver.openPreload("participantPage", {path: this.model.show_url});
       } else {
         document.location = this.model.show_url;
       }

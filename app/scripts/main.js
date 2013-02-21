@@ -185,48 +185,61 @@ $(document).ready(function(){
       steroids.openURL(encodeURI($(this).attr("href")));
     });
 
-    // initialization & preloading:
-    if (window.location.href === "http://localhost:13101/meeting.html") {
-
-      AppGyver.onFocus(function(){
-        $("div.main-div").hide();
-        $.mobile.showPageLoadingMsg();
-        // this is undone in meetingViews backbone render function
-      });
-
-      /*
-      visibilitychange behaves oddly..
-      document.addEventListener("visibilitychange", function(){
-        // when meeting page goes back to hidden state
-        if (!document.hidden) {
-          $("div.main-div").hide();
-          $.mobile.showPageLoadingMsg();
-          //alert("SHOW SPIN "+window.location.href)
-        } else {
-          $("div.main-div").show();
-          $.mobile.hidePageLoadingMsg();
-          //alert("HIDE SPIN "+window.location.href)
-        }
-      }, false);
-      */
 
     // app.initting views
-    } else {
 
       // handle preload views
       if (/index\.html/.test(window.location.href)) {
         // wait for steroids to be ready (api bridge)
         steroids.on("ready", function(){
           AppGyver.preload("http://localhost:13101/meeting.html", "meetingPage");
-          // more preloads cause crash now :(
-          //AppGyver.preload("http://localhost:13101/participants.html", "participantsPage");
-          //AppGyver.preload("http://localhost:13101/participant.html", "participantPage");
+          AppGyver.preload("http://localhost:13101/participants.html", "participantsPage");
+          AppGyver.preload("http://localhost:13101/participant.html", "participantPage");
+          AppGyver.preload("http://localhost:13101/materials.html", "materialsPage");
+          AppGyver.preload("http://localhost:13101/material.html", "materialPage");
+          AppGyver.preload("http://localhost:13101/scheduling.html", "schedulingPage");
         });
 
-      }
+        app.init(); // only init index.html, preloads are initted when used the first time by AppGyver.refreshPreload function
+      } else {
 
-      app.init(); // init
-    }
+        // add listeners for triggering updates to preloaded views
+        switch (window.location.href)
+        {
+          case "http://localhost:13101/meeting.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
+            });
+            break;
+          case "http://localhost:13101/participants.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "participantsPage") AppGyver.refreshPreload(event.data.urlParams.id);
+            });
+            break;
+          case "http://localhost:13101/participant.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "participantPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+            });
+            break;
+          case "http://localhost:13101/materials.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "materialsPage") AppGyver.refreshPreload(event.data.urlParams.id);
+            });
+            break;
+          case "http://localhost:13101/material.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+            });
+            break;
+          case "http://localhost:13101/scheduling.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "schedulingPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+            });
+            break;
+        }
+
+
+      }
   // web based app, no preloads or such magick required
   } else {
     app.init();

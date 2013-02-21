@@ -16,9 +16,9 @@ app.headerView = Backbone.View.extend({
 
       if ( app.options.appmode ) {
 
-        AppGyver.back();
+        setTimeout(function(){ AppGyver.hideContent() }, 100)
 
-        return false;
+        steroids.layers.pop();
 
       } else if ( $('.back-button').attr('href') !== '#' ){
         window.location = $('.back-button').attr('href');

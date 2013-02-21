@@ -5,6 +5,10 @@ app.materialInListView = Backbone.View.extend({
     render: function() {
         this.$el.html( templatizer.materialInListView( _.extend(this.model.toJSON(), { show_url : this.model.show_url }) ) ); // Render template
         this.$el.attr('data-theme','a');
+
+        // when coming back from parent view, remove spinner and show content
+        if (app.options.appmode) AppGyver.showContent();
+
         return this;
     },
     events: {
@@ -14,7 +18,7 @@ app.materialInListView = Backbone.View.extend({
     openMaterial : function(e){
       if( app.options.appmode ) {
         e.preventDefault();
-        AppGyver.open("http://localhost:13101"+this.model.show_url);
+        AppGyver.openPreload("materialPage", {path: this.model.show_url});
       } else {
         document.location = this.model.show_url;
       }

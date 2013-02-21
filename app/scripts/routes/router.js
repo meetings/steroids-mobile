@@ -167,6 +167,9 @@ app.router = Backbone.Router.extend({
     },
 
     meeting : function(params) {
+        // Cleanup zombie events
+        if (app.options.appmode) AppGyver.cleanBackboneZombieEvents();
+
 
         // Render footer
         app.views.footer = new app.footerView({ active : "meetings", el : $('#meetings') });
@@ -211,6 +214,8 @@ app.router = Backbone.Router.extend({
     },
 
     scheduling : function(params) {
+        // Cleanup zombie events
+        if (app.options.appmode) AppGyver.cleanBackboneZombieEvents();
 
         // Get url params
         var id = params.id || 0;
@@ -239,6 +244,8 @@ app.router = Backbone.Router.extend({
     },
 
     participants : function(params) {
+        // clean zombies
+        if (app.options.appmode) AppGyver.cleanBackboneZombieEvents();
 
         // Render footer
         app.views.footer = new app.footerView({ active : "meetings", el : '#participants' });
@@ -261,6 +268,9 @@ app.router = Backbone.Router.extend({
     },
 
     materials : function(params) {
+        // clean zombies
+        if (app.options.appmode) AppGyver.cleanBackboneZombieEvents();
+
         // Render footer
         app.views.footer = new app.footerView({ active : "meetings", el : '#materials' });
         app.views.header = new app.headerView({ el : '#materials' });
@@ -282,6 +292,9 @@ app.router = Backbone.Router.extend({
     },
 
     participant : function(params) {
+        // Cleanup zombie events
+        if (app.options.appmode) AppGyver.cleanBackboneZombieEvents();
+
         // Render footer
         app.views.footer = new app.footerView({ active : "meetings", el : '#participant' });
         app.views.header = new app.headerView({ el : '#participant' });
@@ -301,6 +314,10 @@ app.router = Backbone.Router.extend({
     },
 
     material : function(params) {
+        // Cleanup zombie events
+        if (app.options.appmode) AppGyver.cleanBackboneZombieEvents();
+
+
         // Setup header
         app.views.header = new app.headerView({ el : '#material' });
 

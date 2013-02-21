@@ -35,11 +35,12 @@
 
     },
 
-    openPreload: function(preloadId, evaluatedJS){
+    openPreload: function(preloadId, urlParams){
+
+      window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*")
 
       var parameters = {
         id: preloadId,
-        eval_js: evaluatedJS,
         hidesNavigationBar: true
       }
 
@@ -52,69 +53,57 @@
 
     },
 
-    back: function(){
-
-      steroids.nativeBridge.nativeCall({
-        method: "popLayer",
-        successCallbacks: [],
-        failureCallbacks: []
-      });
-
-    },
-
-    onFocus: function(recurringCallback){
-      steroids.nativeBridge.nativeCall({
-        method: "addEventListener",
-        parameters: {
-          event: "focus"
-        },
-        successCallbacks: [],
-        recurringCallbacks: [recurringCallback],
-        failureCallbacks: []
-      });
-    },
-
-    onLostFocus: function(recurringCallback){
-      steroids.nativeBridge.nativeCall({
-        method: "addEventListener",
-        parameters: {
-          event: "lostFocus"
-        },
-        successCallbacks: [],
-        recurringCallbacks: [recurringCallback],
-        failureCallbacks: []
-      });
-    },
-
-    replaceURL: function(url){
-      history.replaceState({}, document.title, url);
-
-      if (typeof window.router === "undefined") {
-
-        app.init();
-
+    // this could actually be implemented using backbone model changing etc.
+    refreshPreload: function(id, isPath){
+      if (isPath) {
+        var url = window.location.origin + id;
       } else {
-
-        Backbone.history.checkUrl();
+        var url = window.location.origin + window.location.pathname + "?id="+id;
       }
-    },
+      console.log("change to url: ", url)
 
-    replaceIdinURL: function(id){
       if (typeof window.router === "undefined") {
-        var url = window.location.href+"?id="+id;
 
         history.replaceState({}, document.title, url);
 
         app.init();
 
       } else {
-        var url = window.location.href.replace(/id=\d*/, "id="+id);
 
-        history.replaceState({}, document.title, url);
+        if (window.location.href === url) {
 
-        Backbone.history.checkUrl();
+          AppGyver.showContent();
+
+        } else {
+
+          history.replaceState({}, document.title, url);
+
+          Backbone.history.checkUrl();
+
+        }
+
+        /*Backbone.history.navigate(pathname+"?id="+id, {trigger: true, replace: true});*/
+        // not working as expected, pollutes window.location.search with duplicate parameters
       }
+    },
+
+    hideContent: function(){
+      $("div.ui-content").hide();
+      $.mobile.showPageLoadingMsg();
+    },
+
+    showContent: function(){
+      if ($("div.ui-content").is(":hidden")) $("div.ui-content").show();
+      $.mobile.hidePageLoadingMsg();
+    },
+
+    // clear events from preloaded views to prevent previous render events triggering
+    cleanBackboneZombieEvents: function(){
+      Object.keys(app.views).forEach(function(viewName){
+        app.views[viewName].undelegateEvents();
+      });
     }
+
 
   }
 

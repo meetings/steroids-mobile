@@ -13,6 +13,9 @@ app.nextActionView = Backbone.View.extend({
             this.$el.html( templatizer.schedulingBarView( this.getSchedulingStatus() ) );
             this.$el.trigger('create');
         }
+
+        if (app.options.appmode) AppGyver.showContent();
+
     },
     events: {
         'click .attending' : 'setRsvpYes',
@@ -37,7 +40,9 @@ app.nextActionView = Backbone.View.extend({
     answerScheduling : function(e){
         e.preventDefault();
         if ( app.options.appmode ) {
-          AppGyver.open("http://localhost:13101" + '/scheduling.html?id=' + app.models.meeting.get('id'));
+
+          AppGyver.openPreload("schedulingPage", {path: '/scheduling.html?id=' + app.models.meeting.get('id')});
+
         } else {
           window.location = '/scheduling.html?id=' + app.models.meeting.get('id');
         }
@@ -45,7 +50,9 @@ app.nextActionView = Backbone.View.extend({
     openChooseDate : function(e){
         e.preventDefault();
         if ( app.options.appmode ) {
-          AppGyver.open("http://localhost:13101" + '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id'));
+
+          AppGyver.openPreload("schedulingPage", {path: '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id')});
+
         } else {
           window.location = '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id');
         }

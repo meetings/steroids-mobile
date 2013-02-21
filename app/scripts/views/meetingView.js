@@ -18,11 +18,8 @@ app.meetingView = Backbone.View.extend({
         // Start progressbar
         this.initProgressBar();
 
-        if ($("div.main-div").is(":hidden")) {
-
-          $("div.main-div").show();
-          $.mobile.hidePageLoadingMsg();
-        }
+        // when coming back from parent view, remove spinner and show content
+        if (app.options.appmode) AppGyver.showContent();
 
         return this;
 
@@ -52,7 +49,7 @@ app.meetingView = Backbone.View.extend({
     openMaterialView : function(e){
       if ( app.options.appmode ) {
         e.preventDefault();
-        AppGyver.open("http://localhost:13101/materials.html?id="+this.model.get('id'));
+        AppGyver.openPreload("materialsPage", {id: this.model.get('id')});
       } else {
         document.location = '/materials.html?id='+this.model.get('id');
       }
@@ -61,8 +58,7 @@ app.meetingView = Backbone.View.extend({
     openParticipantView : function(e){
       if ( app.options.appmode ) {
         e.preventDefault();
-        AppGyver.open("http://localhost:13101/participants.html?id="+this.model.get('id'));
-        //AppGyver.openPreload("participantsPage", "AppGyver.replaceIdinURL("+this.model.get('id')+");"); // when preload is fixed
+        AppGyver.openPreload("participantsPage", {id: this.model.get('id')});
       } else {
         document.location = '/participants.html?id='+this.model.get('id');
       }
