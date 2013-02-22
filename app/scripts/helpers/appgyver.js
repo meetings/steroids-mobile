@@ -84,6 +84,11 @@
             });
             break;
           case "http://localhost:13101/material.html":
+            // override 'close' to close modal, not go back popping layer
+            $(".back-button ").off().on("click", function(e){
+              e.preventDefault();
+              steroids.modal.hide();
+            })
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
             });
@@ -101,46 +106,30 @@
 
     preload: function(url, id){
 
-      var parameters = {
-        id: id,
-        url: url
-      }
+      (new steroids.views.WebView(url)).preload({id: id});
 
-      steroids.nativeBridge.nativeCall({
-        method: "preloadLayer",
-        parameters: parameters,
-        successCallbacks: [],
-        failureCallbacks: []
-      });
-
-
-      //(new steroids.views.WebView(url)).preload({id: id});
     },
 
-    openPreload: function(preloadId, urlParams){
+    openPreload: function(preloadId, urlParams, openInModal){
 
       window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*")
 
-      var parameters = {
-        id: preloadId,
-        hidesNavigationBar: true
+      var options = {
+        view: {
+          id: preloadId
+        },
+        navigationBar: false
       }
 
-      steroids.nativeBridge.nativeCall({
-        method: "openLayer",
-        parameters: parameters,
-        successCallbacks: [],
-        failureCallbacks: []
-      });
+      if (openInModal) {
+        var modal = new steroids.views.WebView("");
+        modal.id = preloadId;
+        steroids.modal.show(modal);
+      } else {
+        steroids.layers.push(options);
+      }
 
-      //var options = {
-      //  view: {
-      //    id: preloadId
-      //  },
-      //  navigationBar: false
-      //}
-      //
-      //steroids.layers.push(options);
+
 
     },
 

@@ -1,6 +1,6 @@
 (function(window){
 /*! steroids-js - v0.3.6 - 2013-02-22 */
-/* custom build by Jesse */
+/* Custom Build by Jesse */
 ;var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -553,7 +553,7 @@ Modal = (function() {
   function Modal() {}
 
   Modal.prototype.show = function(options, callbacks) {
-    var view;
+    var parameters, view;
     if (options == null) {
       options = {};
     }
@@ -572,11 +572,14 @@ Modal = (function() {
           failureCallbacks: [callbacks.onFailure]
         });
       case "WebView":
+        parameters = view.id != null ? {
+          id: view.id
+        } : {
+          url: view.location
+        };
         return steroids.nativeBridge.nativeCall({
           method: "openModal",
-          parameters: {
-            url: view.location
-          },
+          parameters: parameters,
           successCallbacks: [callbacks.onSuccess],
           failureCallbacks: [callbacks.onFailure]
         });
@@ -791,7 +794,7 @@ WebView = (function() {
       callbacks = {};
     }
     steroids.debug("preload called for WebView " + (JSON.stringify(this)));
-    proposedId = this.location || options.id;
+    proposedId = options.id || this.location;
     setIdOnSuccess = function() {
       steroids.debug("preload success: setting id");
       return _this.id = proposedId;
@@ -800,7 +803,7 @@ WebView = (function() {
       method: "preloadLayer",
       parameters: {
         id: proposedId,
-        url: this.location || options.location
+        url: options.location || this.location
       },
       successCallbacks: [setIdOnSuccess, callbacks.onSuccess],
       failureCallbacks: [callbacks.onFailure]

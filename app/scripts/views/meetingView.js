@@ -33,8 +33,6 @@ app.meetingView = Backbone.View.extend({
       // when does this even happen?
       if ( app.options.appmode ) {
 
-        AppGyver.back();
-
         return false;
 
       } else {

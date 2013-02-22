@@ -15,7 +15,7 @@ app.materialInListView = Backbone.View.extend({
     openMaterial : function(e){
       if( app.options.appmode ) {
         e.preventDefault();
-        AppGyver.openPreload("materialPage", {path: this.model.show_url});
+        AppGyver.openPreload("materialPage", {path: this.model.show_url}, true);
       } else {
         document.location = this.model.show_url;
       }
