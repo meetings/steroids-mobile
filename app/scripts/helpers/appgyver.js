@@ -3,20 +3,100 @@
 
   window.AppGyver = {
 
-    open: function(url){
-
-      var parameters = {
-        hidesNavigationBar: true,
-        url: url
-      }
-
-      steroids.nativeBridge.nativeCall({
-        method: "openLayer",
-        parameters: parameters,
-        successCallbacks: [],
-        failureCallbacks: []
+    init: function(){
+      // open target blank links, material contents and profile linkedn  in safari
+      $(document).on("click", "a[target='_blank'], li#material_content > a, p.mtngs-linkedin > a", function(e){
+        e.preventDefault();
+        steroids.openURL(encodeURI($(this).attr("href")));
       });
 
+      // hijack panel links
+      $(document).on("click", "ul#side-bar a", function(e){
+        e.preventDefault();
+        // should these open to browser or to modal or what?
+        var view = new steroids.views.WebView(window.location.origin+"/"+$(this).attr("href"))
+        // for now open modal
+        steroids.modal.show(view);
+      });
+
+      // handle preload views
+      // and init index.html,
+      // preloads are initted when used the first time by AppGyver.refreshPreload function
+      if (/index\.html/.test(window.location.href)) {
+
+        $( document ).on( "swipeleft swiperight", function( e ) {
+            // We check if there is no open panel on the page because otherwise
+            // a swipe to close the left panel would also open the right panel (and v.v.).
+            // We do this by checking the data that the framework stores on the page element (panel: open).
+            if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
+                if ( e.type === "swipeleft"  ) {
+                    $( "#right-panel" ).panel( "open" );
+                } else if ( e.type === "swiperight" ) {
+                    $( "#left-panel" ).panel( "open" );
+                }
+            }
+        });
+
+        // wait for steroids to be ready (api bridge)
+        steroids.on("ready", function(){
+          AppGyver.preload("http://localhost:13101/meeting.html", "meetingPage");
+          AppGyver.preload("http://localhost:13101/participants.html", "participantsPage");
+          AppGyver.preload("http://localhost:13101/participant.html", "participantPage");
+          AppGyver.preload("http://localhost:13101/materials.html", "materialsPage");
+          AppGyver.preload("http://localhost:13101/material.html", "materialPage");
+          AppGyver.preload("http://localhost:13101/scheduling.html", "schedulingPage");
+        });
+
+        app.init();
+
+      } else if (/settings\.html/.test(window.location.href)) {
+        app.init();
+
+        $("#open-left-panel").on("click", function(e){
+          e.preventDefault();
+          e.stopPropagation();
+          steroids.modal.hide();
+        });
+
+      } else {
+
+        // add listeners for triggering updates to preloaded views
+        switch (window.location.href)
+        {
+          case "http://localhost:13101/meeting.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
+            });
+            break;
+          case "http://localhost:13101/participants.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "participantsPage") AppGyver.refreshPreload(event.data.urlParams.id);
+            });
+            break;
+          case "http://localhost:13101/participant.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "participantPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+            });
+            break;
+          case "http://localhost:13101/materials.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "materialsPage") AppGyver.refreshPreload(event.data.urlParams.id);
+            });
+            break;
+          case "http://localhost:13101/material.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+            });
+            break;
+          case "http://localhost:13101/scheduling.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "schedulingPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+            });
+            break;
+        }
+
+
+      }
     },
 
     preload: function(url, id){
@@ -33,6 +113,8 @@
         failureCallbacks: []
       });
 
+
+      //(new steroids.views.WebView(url)).preload({id: id});
     },
 
     openPreload: function(preloadId, urlParams){
@@ -50,6 +132,15 @@
         successCallbacks: [],
         failureCallbacks: []
       });
+
+      //var options = {
+      //  view: {
+      //    id: preloadId
+      //  },
+      //  navigationBar: false
+      //}
+      //
+      //steroids.layers.push(options);
 
     },
 

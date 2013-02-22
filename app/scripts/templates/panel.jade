@@ -1,0 +1,31 @@
+- var a = ''; if( active === 'meetings' ) a = 'ui-btn-active';
+- console.log(a)
+ul#side-bar(data-role="listview",data-theme="c")
+    li(data-theme="c",class=a)
+        a#nav-meetings(href="index.html",data-transition="fade")
+            span.ui-icon.menu-icon-meetings
+            | Meetings
+    li(data-role="list-divider",data-theme="c") GET TIPS FOR BETTER MEETINGS
+    li
+        a#nav-facebook(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-facebook
+            | Like us on Facebook
+    li
+        a#nav-twitter(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-twitter
+            | Follow us on Twitter
+    li(data-role="list-divider",data-theme="c") OTHER
+    li
+        a#nav-support(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-support
+            | Support
+    li
+        a#nav-tos(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-tos
+            | Terms of Service
+
+    li
+        a#nav-logout(href="settings.html",data-transition="fade")
+            span.ui-icon.menu-icon-logout
+            | Logout
+a.no-mobile(href="#") Switch to desktop version

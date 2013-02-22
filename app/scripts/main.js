@@ -179,70 +179,24 @@ $(document).ready(function(){
   // mobile app, do preloads & app inits etc.
   if (app.options.appmode) {
 
-    // open target blank links, material contents and profile linkedn  in safari
-    $(document).on("click", "a[target='_blank'], li#material_content > a, p.mtngs-linkedin > a", function(e){
-      e.preventDefault();
-      steroids.openURL(encodeURI($(this).attr("href")));
-    });
+    AppGyver.init();
 
-
-    // app.initting views
-
-      // handle preload views
-      if (/index\.html/.test(window.location.href)) {
-        // wait for steroids to be ready (api bridge)
-        steroids.on("ready", function(){
-          AppGyver.preload("http://localhost:13101/meeting.html", "meetingPage");
-          AppGyver.preload("http://localhost:13101/participants.html", "participantsPage");
-          AppGyver.preload("http://localhost:13101/participant.html", "participantPage");
-          AppGyver.preload("http://localhost:13101/materials.html", "materialsPage");
-          AppGyver.preload("http://localhost:13101/material.html", "materialPage");
-          AppGyver.preload("http://localhost:13101/scheduling.html", "schedulingPage");
-        });
-
-        app.init(); // only init index.html, preloads are initted when used the first time by AppGyver.refreshPreload function
-      } else {
-
-        // add listeners for triggering updates to preloaded views
-        switch (window.location.href)
-        {
-          case "http://localhost:13101/meeting.html":
-            window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
-            });
-            break;
-          case "http://localhost:13101/participants.html":
-            window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "participantsPage") AppGyver.refreshPreload(event.data.urlParams.id);
-            });
-            break;
-          case "http://localhost:13101/participant.html":
-            window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "participantPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
-            });
-            break;
-          case "http://localhost:13101/materials.html":
-            window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "materialsPage") AppGyver.refreshPreload(event.data.urlParams.id);
-            });
-            break;
-          case "http://localhost:13101/material.html":
-            window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
-            });
-            break;
-          case "http://localhost:13101/scheduling.html":
-            window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "schedulingPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
-            });
-            break;
-        }
-
-
-      }
   // web based app, no preloads or such magick required
   } else {
     app.init();
+
+    $( document ).on( "swipeleft swiperight", function( e ) {
+        // We check if there is no open panel on the page because otherwise
+        // a swipe to close the left panel would also open the right panel (and v.v.).
+        // We do this by checking the data that the framework stores on the page element (panel: open).
+        if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
+            if ( e.type === "swipeleft"  ) {
+                $( "#right-panel" ).panel( "open" );
+            } else if ( e.type === "swiperight" ) {
+                $( "#left-panel" ).panel( "open" );
+            }
+        }
+    });
   }
 });
 
