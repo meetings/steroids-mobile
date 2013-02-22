@@ -1,8 +1,7 @@
 (function(window){
-/*! steroids-js - v0.3.1337 - 2013-02-21 */
-/* Custom build by Jesse */
-
-var Bridge,
+/*! steroids-js - v0.3.6 - 2013-02-22 */
+/* custom build by Jesse */
+;var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 Bridge = (function() {
@@ -113,6 +112,7 @@ Bridge = (function() {
     request.parameters["view"] = window.top.AG_VIEW_ID;
     request.parameters["screen"] = window.top.AG_SCREEN_ID;
     request.parameters["layer"] = window.top.AG_LAYER_ID;
+    request.parameters["udid"] = window.top.AG_WEBVIEW_UDID;
     return this.sendMessageToNative(JSON.stringify(request));
   };
 
@@ -152,8 +152,7 @@ Bridge = (function() {
   return Bridge;
 
 })();
-
-var AndroidBridge,
+;var AndroidBridge,
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
@@ -180,8 +179,7 @@ AndroidBridge = (function(_super) {
   return AndroidBridge;
 
 })(Bridge);
-
-var WebsocketBridge,
+;var WebsocketBridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __hasProp = {}.hasOwnProperty,
   __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
@@ -237,8 +235,7 @@ WebsocketBridge = (function(_super) {
   return WebsocketBridge;
 
 })(Bridge);
-
-var Events;
+;var Events;
 
 Events = (function() {
 
@@ -265,11 +262,32 @@ Events = (function() {
       msg: "set document.visibilityState to unloaded"
     });
     document.visibilityState = "unloaded";
+    document.hidden = "true";
     return document.addEventListener("DOMContentLoaded", function() {
       steroids.debug({
         msg: "got DOMContentLoaded, setting document.visibilityState to prerender"
       });
       return document.visibilityState = "prerender";
+    });
+  };
+
+  Events.checkInitialVisibility = function(options, callbacks) {
+    var setVisibilityStatus;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    setVisibilityStatus = function(event) {
+      document.hidden = event.currentVisibility === "hidden";
+      document.visibilityState = event.currentVisibility;
+      return steroids.markComponentReady("Events.initialVisibility");
+    };
+    return steroids.nativeBridge.nativeCall({
+      method: "getCurrentVisibility",
+      successCallbacks: [setVisibilityStatus, callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
     });
   };
 
@@ -283,6 +301,7 @@ Events = (function() {
       callbacks = {};
     }
     this.initializeVisibilityState();
+    this.checkInitialVisibility();
     focusAdded = function() {
       steroids.debug({
         msg: "focus added"
@@ -300,7 +319,7 @@ Events = (function() {
       steroids.debug({
         msg: "lostfocus added"
       });
-      return steroids.markComponentReady("Events");
+      return steroids.markComponentReady("Events.focuslisteners");
     };
     becomeVisibleEvent = function() {
       steroids.debug({
@@ -331,8 +350,7 @@ Events = (function() {
   return Events;
 
 }).call(this);
-
-var Torch;
+;var Torch;
 
 Torch = (function() {
 
@@ -386,8 +404,7 @@ Torch = (function() {
   return Torch;
 
 })();
-
-var Device,
+;var Device,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 Device = (function() {
@@ -438,8 +455,7 @@ Device = (function() {
   return Device;
 
 })();
-
-var Animation,
+;var Animation,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
 Animation = (function() {
@@ -497,8 +513,7 @@ Animation = (function() {
   return Animation;
 
 })();
-
-var App;
+;var App;
 
 App = (function() {
 
@@ -531,8 +546,303 @@ App = (function() {
   return App;
 
 })();
+;var Modal;
 
-var Audio;
+Modal = (function() {
+
+  function Modal() {}
+
+  Modal.prototype.show = function(options, callbacks) {
+    var view;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    view = options.constructor.name === "Object" ? options.view : options;
+    switch (view.constructor.name) {
+      case "PreviewFileView":
+        return steroids.nativeBridge.nativeCall({
+          method: "previewFile",
+          parameters: {
+            filenameWithPath: view.getNativeFilePath()
+          },
+          successCallbacks: [callbacks.onSuccess],
+          failureCallbacks: [callbacks.onFailure]
+        });
+      case "WebView":
+        return steroids.nativeBridge.nativeCall({
+          method: "openModal",
+          parameters: {
+            url: view.location
+          },
+          successCallbacks: [callbacks.onSuccess],
+          failureCallbacks: [callbacks.onFailure]
+        });
+      default:
+        throw "Unsupported view sent to steroids.modal.show - " + view.constructor.name;
+    }
+  };
+
+  Modal.prototype.hide = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "closeModal",
+      parameters: options,
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  return Modal;
+
+})();
+;var LayerCollection;
+
+LayerCollection = (function() {
+
+  function LayerCollection() {
+    this.array = [];
+  }
+
+  LayerCollection.prototype.pop = function(options, callbacks) {
+    var defaultOnSuccess,
+      _this = this;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    defaultOnSuccess = function() {
+      return _this.array.pop();
+    };
+    return steroids.nativeBridge.nativeCall({
+      method: "popLayer",
+      successCallbacks: [defaultOnSuccess, callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  LayerCollection.prototype.push = function(options, callbacks) {
+    var defaultOnSuccess, parameters, view,
+      _this = this;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    defaultOnSuccess = function() {
+      return _this.array.push(view);
+    };
+    view = options.constructor.name === "WebView" ? options : options.view;
+    parameters = view.id != null ? {
+      id: view.id
+    } : {
+      url: view.location
+    };
+    if (options.navigationBar === false) {
+      parameters.hidesNavigationBar = true;
+    }
+    if (options.animation != null) {
+      parameters.pushAnimation = options.animation.transition;
+      parameters.pushAnimationDuration = options.animation.duration;
+      parameters.popAnimation = options.animation.reversedTransition;
+      parameters.popAnimationDuration = options.animation.reversedDuration;
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "openLayer",
+      parameters: parameters,
+      successCallbacks: [defaultOnSuccess, callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  return LayerCollection;
+
+})();
+;var NavigationBarButton;
+
+NavigationBarButton = (function() {
+
+  function NavigationBarButton(options) {
+    if (options == null) {
+      options = {};
+    }
+    this.title = options.title;
+    this.onTap = options.onTap;
+  }
+
+  return NavigationBarButton;
+
+})();
+;var NavigationBar;
+
+NavigationBar = (function() {
+
+  function NavigationBar() {}
+
+  NavigationBar.prototype.hide = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "hideNavigationBar",
+      parameters: {},
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  NavigationBar.prototype.show = function(options, callbacks) {
+    var title;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    title = options.constructor.name === "String" ? options : options.title;
+    return steroids.nativeBridge.nativeCall({
+      method: "showNavigationBar",
+      parameters: {
+        title: title
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  NavigationBar.prototype.setButtons = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    steroids.debug("steroids.navigationBar.setButtons options: " + (JSON.stringify(options)) + " callbacks: " + (JSON.stringify(callbacks)));
+    if ((options.right != null) && options.right !== []) {
+      steroids.debug("steroids.navigationBar.setButtons showing right button title: " + options.right[0].title + " callback: " + options.right[0].onTap);
+      return steroids.nativeBridge.nativeCall({
+        method: "showNavigationBarRightButton",
+        parameters: {
+          title: options.right[0].title
+        },
+        successCallbacks: [callbacks.onSuccess],
+        recurringCallbacks: [options.right[0].onTap],
+        failureCallbacks: [callbacks.onFailure]
+      });
+    } else {
+      steroids.debug("steroids.navigationBar.setButtons hiding right button");
+      return steroids.nativeBridge.nativeCall({
+        method: "hideNavigationBarRightButton",
+        parameters: {},
+        successCallbacks: [callbacks.onSuccess],
+        failureCallbacks: [callbacks.onFailure]
+      });
+    }
+  };
+
+  return NavigationBar;
+
+})();
+;var WebView;
+
+WebView = (function() {
+
+  WebView.prototype.params = {};
+
+  WebView.prototype.id = null;
+
+  WebView.prototype.location = null;
+
+  WebView.prototype.navigationBar = new NavigationBar;
+
+  function WebView(options) {
+    if (options == null) {
+      options = {};
+    }
+    this.location = options.constructor.name === "String" ? options : options.location;
+    if (this.location.indexOf("://") === -1) {
+      if (window.location.href.indexOf("file://") === -1) {
+        this.location = "" + window.location.protocol + "//" + window.location.host + "/" + this.location;
+      }
+    }
+    this.params = this.getParams();
+  }
+
+  WebView.prototype.preload = function(options, callbacks) {
+    var proposedId, setIdOnSuccess,
+      _this = this;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    steroids.debug("preload called for WebView " + (JSON.stringify(this)));
+    proposedId = this.location || options.id;
+    setIdOnSuccess = function() {
+      steroids.debug("preload success: setting id");
+      return _this.id = proposedId;
+    };
+    return steroids.nativeBridge.nativeCall({
+      method: "preloadLayer",
+      parameters: {
+        id: proposedId,
+        url: this.location || options.location
+      },
+      successCallbacks: [setIdOnSuccess, callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  WebView.prototype.getParams = function() {
+    var pair, pairString, pairStrings, params, _i, _len;
+    params = {};
+    pairStrings = this.location.slice(this.location.indexOf('?') + 1).split('&');
+    for (_i = 0, _len = pairStrings.length; _i < _len; _i++) {
+      pairString = pairStrings[_i];
+      pair = pairString.split('=');
+      params[pair[0]] = pair[1];
+    }
+    return params;
+  };
+
+  return WebView;
+
+})();
+;var PreviewFileView;
+
+PreviewFileView = (function() {
+
+  function PreviewFileView(options) {
+    var _ref;
+    if (options == null) {
+      options = {};
+    }
+    this.filePath = options.constructor.name === "String" ? options : options.filePath;
+    this.relativeTo = (_ref = options.relativeTo) != null ? _ref : steroids.app.path;
+  }
+
+  PreviewFileView.prototype.getNativeFilePath = function() {
+    return "" + this.relativeTo + "/" + this.filePath;
+  };
+
+  return PreviewFileView;
+
+})();
+;var Audio;
 
 Audio = (function() {
 
@@ -576,24 +886,204 @@ Audio = (function() {
   return Audio;
 
 })();
+;var OAuth2Flow;
 
-var NavigationBarButton;
+OAuth2Flow = (function() {
 
-NavigationBarButton = (function() {
-
-  function NavigationBarButton(options) {
-    if (options == null) {
-      options = {};
-    }
-    this.title = options.title;
-    this.onTap = options.onTap;
+  function OAuth2Flow(options) {
+    this.options = options;
+    this.options.callbackUrl = "http://localhost:13101/" + this.options.callbackPath;
   }
 
-  return NavigationBarButton;
+  OAuth2Flow.prototype.authenticate = function() {
+    throw "ERROR: " + this.name + " has not overridden authenticate method";
+  };
+
+  OAuth2Flow.prototype.concatenateUrlParams = function(params) {
+    var first, key, result, value;
+    first = true;
+    result = "";
+    for (key in params) {
+      value = params[key];
+      if (first) {
+        result = result.concat("?");
+        first = false;
+      } else {
+        result = result.concat("&");
+      }
+      result = result.concat("" + key + "=" + (encodeURIComponent(value)));
+    }
+    return result;
+  };
+
+  OAuth2Flow.prototype.urlEncode = function(string) {
+    var c, hex, i, reserved_chars, str_len, string_arr;
+    hex = function(code) {
+      var result;
+      result = code.toString(16).toUpperCase();
+      if (result.length < 2) {
+        result = 0 + result;
+      }
+      return "%" + result;
+    };
+    if (!string) {
+      return "";
+    }
+    string = string + "";
+    reserved_chars = /[ \r\n!*"'();:@&=+$,\/?%#\[\]<>{}|`^\\\u0080-\uffff]/;
+    str_len = string.length;
+    i = void 0;
+    string_arr = string.split("");
+    c = void 0;
+    i = 0;
+    while (i < str_len) {
+      if (c = string_arr[i].match(reserved_chars)) {
+        c = c[0].charCodeAt(0);
+        if (c < 128) {
+          string_arr[i] = hex(c);
+        } else if (c < 2048) {
+          string_arr[i] = hex(192 + (c >> 6)) + hex(128 + (c & 63));
+        } else if (c < 65536) {
+          string_arr[i] = hex(224 + (c >> 12)) + hex(128 + ((c >> 6) & 63)) + hex(128 + (c & 63));
+        } else {
+          if (c < 2097152) {
+            string_arr[i] = hex(240 + (c >> 18)) + hex(128 + ((c >> 12) & 63)) + hex(128 + ((c >> 6) & 63)) + hex(128 + (c & 63));
+          }
+        }
+      }
+      i++;
+    }
+    return string_arr.join("");
+  };
+
+  return OAuth2Flow;
 
 })();
+;var AuthorizationCodeFlow,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-var TouchDB;
+AuthorizationCodeFlow = (function(_super) {
+
+  __extends(AuthorizationCodeFlow, _super);
+
+  function AuthorizationCodeFlow() {
+    this.finish = __bind(this.finish, this);
+
+    this.authenticate = __bind(this.authenticate, this);
+    return AuthorizationCodeFlow.__super__.constructor.apply(this, arguments);
+  }
+
+  AuthorizationCodeFlow.prototype.authenticate = function() {
+    var authenticationLayer, authorizationUrl;
+    this.xhrAuthorizationParams = {
+      response_type: "code",
+      client_id: this.options.clientID,
+      redirect_uri: this.options.callbackUrl,
+      scope: this.options.scope || ""
+    };
+    authorizationUrl = this.options.authorizationUrl.concat(this.concatenateUrlParams(this.xhrAuthorizationParams));
+    authenticationLayer = new steroids.views.WebView({
+      location: authorizationUrl
+    });
+    return steroids.modal.show({
+      layer: authenticationLayer
+    });
+  };
+
+  AuthorizationCodeFlow.prototype.finish = function(callback) {
+    var body, key, request, value, _ref,
+      _this = this;
+    this.xhrAccessTokenParams = {
+      client_id: this.options.clientID,
+      client_secret: this.options.clientSecret,
+      redirect_uri: this.callbackUrl,
+      grant_type: "authorization_code"
+    };
+    request = new XMLHttpRequest();
+    request.open("POST", this.options.accessTokenUrl);
+    body = [];
+    _ref = this.xhrAccessTokenParams;
+    for (key in _ref) {
+      value = _ref[key];
+      body.push("" + key + "=" + (this.urlEncode(value)));
+    }
+    body.push("code=" + steroids.view.params['code']);
+    body = body.sort().join('&');
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    request.onreadystatechange = function() {
+      var responseJSON;
+      if (request.readyState === 4) {
+        responseJSON = JSON.parse(request.responseText);
+        callback(responseJSON.access_token);
+        return steroids.modal.hide();
+      }
+    };
+    return request.send(body);
+  };
+
+  return AuthorizationCodeFlow;
+
+})(OAuth2Flow);
+;var ClientCredentialsFlow,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+ClientCredentialsFlow = (function(_super) {
+
+  __extends(ClientCredentialsFlow, _super);
+
+  function ClientCredentialsFlow() {
+    return ClientCredentialsFlow.__super__.constructor.apply(this, arguments);
+  }
+
+  ClientCredentialsFlow.prototype.authenticate = function(callback) {
+    var body, key, request, value, _ref,
+      _this = this;
+    this.xhrAccessTokenParams = {
+      client_id: this.options.clientID,
+      client_secret: this.options.clientSecret,
+      scope: this.options.scope || "",
+      grant_type: "client_credentials"
+    };
+    request = new XMLHttpRequest();
+    request.open("POST", this.options.accessTokenUrl);
+    body = [];
+    _ref = this.xhrAccessTokenParams;
+    for (key in _ref) {
+      value = _ref[key];
+      body.push("" + key + "=" + (this.urlEncode(value)));
+    }
+    body = body.sort().join('&');
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    request.onreadystatechange = function() {
+      var responseJSON;
+      if (request.readyState === 4) {
+        responseJSON = JSON.parse(request.responseText);
+        return callback(responseJSON.access_token);
+      }
+    };
+    return request.send(body);
+  };
+
+  return ClientCredentialsFlow;
+
+})(OAuth2Flow);
+;var OAuth2;
+
+OAuth2 = (function() {
+
+  function OAuth2() {}
+
+  OAuth2.AuthorizationCodeFlow = AuthorizationCodeFlow;
+
+  OAuth2.ClientCredentialFlow = ClientCredentialsFlow;
+
+  return OAuth2;
+
+})();
+;var TouchDB;
 
 TouchDB = (function() {
 
@@ -738,74 +1228,158 @@ TouchDB = (function() {
   return TouchDB;
 
 })();
+;var XHR,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-var LayerCollection;
+XHR = (function() {
 
-LayerCollection = (function() {
+  XHR.prototype.headers = [];
 
-  function LayerCollection() {
-    this.array = [];
+  function XHR() {
+    this.setRequestHeader = __bind(this.setRequestHeader, this);
+
+    this.send = __bind(this.send, this);
+    this.method = void 0;
+    this.url = void 0;
+    this.async = void 0;
+    this.status = 0;
+    this.readyState = 0;
+    this.headers = {};
   }
 
-  LayerCollection.prototype.pop = function(options, callbacks) {
-    var defaultOnSuccess,
-      _this = this;
+  XHR.prototype.open = function(methodString, urlString, isAsync) {
+    if (isAsync == null) {
+      isAsync = true;
+    }
+    this.method = methodString;
+    this.url = urlString;
+    return this.async = isAsync;
+  };
+
+  XHR.prototype.send = function(data) {
+    if (!(this.method && this.url)) {
+      throw "Error: INVALID_STATE_ERR: DOM Exception 11";
+    }
+    if (this.method !== "GET") {
+      throw "Method not implemented";
+    }
+    return this.fetch({
+      url: this.url,
+      filenameWithPath: "temp",
+      headers: this.headers
+    });
+  };
+
+  XHR.prototype.setRequestHeader = function(name, value) {
+    return this.headers[name] = value;
+  };
+
+  XHR.prototype.fetch = function(options, callbacks) {
+    var destinationPath;
     if (options == null) {
       options = {};
     }
     if (callbacks == null) {
       callbacks = {};
     }
-    defaultOnSuccess = function() {
-      return _this.array.pop();
-    };
+    destinationPath = options.constructor.name === "String" ? options : options.absoluteDestinationPath;
     return steroids.nativeBridge.nativeCall({
-      method: "popLayer",
-      successCallbacks: [defaultOnSuccess, callbacks.onSuccess],
+      method: "downloadFile",
+      parameters: {
+        url: options.url || this.url,
+        headers: options.headers || this.headers,
+        filenameWithPath: destinationPath
+      },
+      successCallbacks: [callbacks.onSuccess],
       failureCallbacks: [callbacks.onFailure]
     });
   };
 
-  LayerCollection.prototype.push = function(options, callbacks) {
-    var defaultOnSuccess, parameters, view,
-      _this = this;
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    defaultOnSuccess = function() {
-      return _this.array.push(view);
-    };
-    view = options.constructor.name === "WebView" ? options : options.view;
-    parameters = view.id != null ? {
-      id: view.id
-    } : {
-      url: view.location
-    };
-    if (options.navigationBar === false) {
-      parameters.hidesNavigationBar = true;
-    }
-    if (options.animation != null) {
-      parameters.pushAnimation = options.animation.transition;
-      parameters.pushAnimationDuration = options.animation.duration;
-      parameters.popAnimation = options.animation.reversedTransition;
-      parameters.popAnimationDuration = options.animation.reversedDuration;
-    }
-    return steroids.nativeBridge.nativeCall({
-      method: "openLayer",
-      parameters: parameters,
-      successCallbacks: [defaultOnSuccess, callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  return LayerCollection;
+  return XHR;
 
 })();
+;var Analytics;
 
-var File;
+Analytics = (function() {
+
+  function Analytics() {}
+
+  Analytics.prototype.recordEvent = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "recordEvent",
+      parameters: {
+        type: "custom",
+        attributes: options.event
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  return Analytics;
+
+})();
+;var Screen;
+
+Screen = (function() {
+
+  function Screen() {}
+
+  Screen.prototype.freeze = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "freeze",
+      parameters: options,
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  Screen.prototype.unfreeze = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "unfreeze",
+      parameters: options,
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  Screen.prototype.capture = function(options, callbacks) {
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    return steroids.nativeBridge.nativeCall({
+      method: "takeScreenshot",
+      parameters: options,
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  return Screen;
+
+})();
+;var File;
 
 File = (function() {
 
@@ -884,583 +1458,7 @@ File = (function() {
   return File;
 
 })();
-
-var Modal;
-
-Modal = (function() {
-
-  function Modal() {}
-
-  Modal.prototype.show = function(options, callbacks) {
-    var view;
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    view = options.constructor.name === "String" ? options : options.view;
-    switch (view.constructor.name) {
-      case "PreviewFileView":
-        return steroids.nativeBridge.nativeCall({
-          method: "previewFile",
-          parameters: {
-            filenameWithPath: view.getNativeFilePath()
-          },
-          successCallbacks: [callbacks.onSuccess],
-          failureCallbacks: [callbacks.onFailure]
-        });
-      case "WebView":
-        return steroids.nativeBridge.nativeCall({
-          method: "openModal",
-          parameters: {
-            url: view.location
-          },
-          successCallbacks: [callbacks.onSuccess],
-          failureCallbacks: [callbacks.onFailure]
-        });
-      default:
-        throw "Unsupported view sent to steroids.modal.show";
-    }
-  };
-
-  Modal.prototype.hide = function(options, callbacks) {
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    return steroids.nativeBridge.nativeCall({
-      method: "closeModal",
-      parameters: options,
-      successCallbacks: [callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  return Modal;
-
-})();
-
-var NavigationBar;
-
-NavigationBar = (function() {
-
-  function NavigationBar() {}
-
-  NavigationBar.prototype.hide = function(options, callbacks) {
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    return steroids.nativeBridge.nativeCall({
-      method: "hideNavigationBar",
-      parameters: {},
-      successCallbacks: [callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  NavigationBar.prototype.show = function(options, callbacks) {
-    var title;
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    title = options.constructor.name === "String" ? options : options.title;
-    return steroids.nativeBridge.nativeCall({
-      method: "showNavigationBar",
-      parameters: {
-        title: title
-      },
-      successCallbacks: [callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  NavigationBar.prototype.setButtons = function(options, callbacks) {
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    steroids.debug("steroids.navigationBar.setButtons options: " + (JSON.stringify(options)) + " callbacks: " + (JSON.stringify(callbacks)));
-    if ((options.right != null) && options.right !== []) {
-      steroids.debug("steroids.navigationBar.setButtons showing right button title: " + options.right[0].title + " callback: " + options.right[0].onTap);
-      return steroids.nativeBridge.nativeCall({
-        method: "showNavigationBarRightButton",
-        parameters: {
-          title: options.right[0].title
-        },
-        successCallbacks: [callbacks.onSuccess],
-        recurringCallbacks: [options.right[0].onTap],
-        failureCallbacks: [callbacks.onFailure]
-      });
-    } else {
-      steroids.debug("steroids.navigationBar.setButtons hiding right button");
-      return steroids.nativeBridge.nativeCall({
-        method: "hideNavigationBarRightButton",
-        parameters: {},
-        successCallbacks: [callbacks.onSuccess],
-        failureCallbacks: [callbacks.onFailure]
-      });
-    }
-  };
-
-  return NavigationBar;
-
-})();
-
-var OAuth2Flow;
-
-OAuth2Flow = (function() {
-
-  function OAuth2Flow(options) {
-    this.options = options;
-    this.options.callbackUrl = "http://localhost:13101/" + this.options.callbackPath;
-  }
-
-  OAuth2Flow.prototype.authenticate = function() {
-    throw "ERROR: " + this.name + " has not overridden authenticate method";
-  };
-
-  OAuth2Flow.prototype.concatenateUrlParams = function(params) {
-    var first, key, result, value;
-    first = true;
-    result = "";
-    for (key in params) {
-      value = params[key];
-      if (first) {
-        result = result.concat("?");
-        first = false;
-      } else {
-        result = result.concat("&");
-      }
-      result = result.concat("" + key + "=" + (encodeURIComponent(value)));
-    }
-    return result;
-  };
-
-  OAuth2Flow.prototype.urlEncode = function(string) {
-    var c, hex, i, reserved_chars, str_len, string_arr;
-    hex = function(code) {
-      var result;
-      result = code.toString(16).toUpperCase();
-      if (result.length < 2) {
-        result = 0 + result;
-      }
-      return "%" + result;
-    };
-    if (!string) {
-      return "";
-    }
-    string = string + "";
-    reserved_chars = /[ \r\n!*"'();:@&=+$,\/?%#\[\]<>{}|`^\\\u0080-\uffff]/;
-    str_len = string.length;
-    i = void 0;
-    string_arr = string.split("");
-    c = void 0;
-    i = 0;
-    while (i < str_len) {
-      if (c = string_arr[i].match(reserved_chars)) {
-        c = c[0].charCodeAt(0);
-        if (c < 128) {
-          string_arr[i] = hex(c);
-        } else if (c < 2048) {
-          string_arr[i] = hex(192 + (c >> 6)) + hex(128 + (c & 63));
-        } else if (c < 65536) {
-          string_arr[i] = hex(224 + (c >> 12)) + hex(128 + ((c >> 6) & 63)) + hex(128 + (c & 63));
-        } else {
-          if (c < 2097152) {
-            string_arr[i] = hex(240 + (c >> 18)) + hex(128 + ((c >> 12) & 63)) + hex(128 + ((c >> 6) & 63)) + hex(128 + (c & 63));
-          }
-        }
-      }
-      i++;
-    }
-    return string_arr.join("");
-  };
-
-  return OAuth2Flow;
-
-})();
-
-var AuthorizationCodeFlow,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-AuthorizationCodeFlow = (function(_super) {
-
-  __extends(AuthorizationCodeFlow, _super);
-
-  function AuthorizationCodeFlow() {
-    this.finish = __bind(this.finish, this);
-
-    this.authenticate = __bind(this.authenticate, this);
-    return AuthorizationCodeFlow.__super__.constructor.apply(this, arguments);
-  }
-
-  AuthorizationCodeFlow.prototype.authenticate = function() {
-    var authenticationLayer, authorizationUrl;
-    this.xhrAuthorizationParams = {
-      response_type: "code",
-      client_id: this.options.clientID,
-      redirect_uri: this.options.callbackUrl,
-      scope: this.options.scope || ""
-    };
-    authorizationUrl = this.options.authorizationUrl.concat(this.concatenateUrlParams(this.xhrAuthorizationParams));
-    authenticationLayer = new steroids.views.WebView({
-      location: authorizationUrl
-    });
-    return steroids.modal.show({
-      layer: authenticationLayer
-    });
-  };
-
-  AuthorizationCodeFlow.prototype.finish = function(callback) {
-    var body, key, request, value, _ref,
-      _this = this;
-    this.xhrAccessTokenParams = {
-      client_id: this.options.clientID,
-      client_secret: this.options.clientSecret,
-      redirect_uri: this.callbackUrl,
-      grant_type: "authorization_code"
-    };
-    request = new XMLHttpRequest();
-    request.open("POST", this.options.accessTokenUrl);
-    body = [];
-    _ref = this.xhrAccessTokenParams;
-    for (key in _ref) {
-      value = _ref[key];
-      body.push("" + key + "=" + (this.urlEncode(value)));
-    }
-    body.push("code=" + steroids.view.params['code']);
-    body = body.sort().join('&');
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.onreadystatechange = function() {
-      var responseJSON;
-      if (request.readyState === 4) {
-        responseJSON = JSON.parse(request.responseText);
-        callback(responseJSON.access_token);
-        return steroids.modal.hide();
-      }
-    };
-    return request.send(body);
-  };
-
-  return AuthorizationCodeFlow;
-
-})(OAuth2Flow);
-
-var ClientCredentialsFlow,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
-
-ClientCredentialsFlow = (function(_super) {
-
-  __extends(ClientCredentialsFlow, _super);
-
-  function ClientCredentialsFlow() {
-    return ClientCredentialsFlow.__super__.constructor.apply(this, arguments);
-  }
-
-  ClientCredentialsFlow.prototype.authenticate = function(callback) {
-    var body, key, request, value, _ref,
-      _this = this;
-    this.xhrAccessTokenParams = {
-      client_id: this.options.clientID,
-      client_secret: this.options.clientSecret,
-      scope: this.options.scope || "",
-      grant_type: "client_credentials"
-    };
-    request = new XMLHttpRequest();
-    request.open("POST", this.options.accessTokenUrl);
-    body = [];
-    _ref = this.xhrAccessTokenParams;
-    for (key in _ref) {
-      value = _ref[key];
-      body.push("" + key + "=" + (this.urlEncode(value)));
-    }
-    body = body.sort().join('&');
-    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    request.onreadystatechange = function() {
-      var responseJSON;
-      if (request.readyState === 4) {
-        responseJSON = JSON.parse(request.responseText);
-        return callback(responseJSON.access_token);
-      }
-    };
-    return request.send(body);
-  };
-
-  return ClientCredentialsFlow;
-
-})(OAuth2Flow);
-
-var OAuth2;
-
-OAuth2 = (function() {
-
-  function OAuth2() {}
-
-  OAuth2.AuthorizationCodeFlow = AuthorizationCodeFlow;
-
-  OAuth2.ClientCredentialFlow = ClientCredentialsFlow;
-
-  return OAuth2;
-
-})();
-
-var Screen;
-
-Screen = (function() {
-
-  function Screen() {}
-
-  Screen.prototype.freeze = function(options, callbacks) {
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    return steroids.nativeBridge.nativeCall({
-      method: "freeze",
-      parameters: options,
-      successCallbacks: [callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  Screen.prototype.unfreeze = function(options, callbacks) {
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    return steroids.nativeBridge.nativeCall({
-      method: "unfreeze",
-      parameters: options,
-      successCallbacks: [callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  Screen.prototype.capture = function(options, callbacks) {
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    return steroids.nativeBridge.nativeCall({
-      method: "takeScreenshot",
-      parameters: options,
-      successCallbacks: [callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  return Screen;
-
-})();
-
-var PreviewFileView;
-
-PreviewFileView = (function() {
-
-  function PreviewFileView(options) {
-    var _ref;
-    if (options == null) {
-      options = {};
-    }
-    this.filePath = options.constructor.name === "String" ? options : options.filePath;
-    this.relativeTo = (_ref = options.relativeTo) != null ? _ref : steroids.app.path;
-  }
-
-  PreviewFileView.prototype.getNativeFilePath = function() {
-    return "" + this.relativeTo + "/" + this.filePath;
-  };
-
-  return PreviewFileView;
-
-})();
-
-var WebView;
-
-WebView = (function() {
-
-  WebView.prototype.params = {};
-
-  WebView.prototype.id = null;
-
-  WebView.prototype.location = null;
-
-  WebView.prototype.navigationBar = new NavigationBar;
-
-  function WebView(options) {
-    if (options == null) {
-      options = {};
-    }
-    this.location = options.constructor.name === "String" ? options : options.location;
-    if (this.location.indexOf("://") === -1) {
-      if (window.location.href.indexOf("file://") === -1) {
-        this.location = "" + window.location.protocol + "//" + window.location.host + "/" + this.location;
-      }
-    }
-    this.params = this.getParams();
-  }
-
-  WebView.prototype.preload = function(options, callbacks) {
-    var proposedId, setIdOnSuccess,
-      _this = this;
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    steroids.debug("preload called for WebView " + (JSON.stringify(this)));
-    proposedId = this.location || options.id;
-    setIdOnSuccess = function() {
-      steroids.debug("preload success: setting id");
-      return _this.id = proposedId;
-    };
-    return steroids.nativeBridge.nativeCall({
-      method: "preloadLayer",
-      parameters: {
-        id: proposedId,
-        url: this.location || options.location
-      },
-      successCallbacks: [setIdOnSuccess, callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  WebView.prototype.getParams = function() {
-    var pair, pairString, pairStrings, params, _i, _len;
-    params = {};
-    pairStrings = this.location.slice(this.location.indexOf('?') + 1).split('&');
-    for (_i = 0, _len = pairStrings.length; _i < _len; _i++) {
-      pairString = pairStrings[_i];
-      pair = pairString.split('=');
-      params[pair[0]] = pair[1];
-    }
-    return params;
-  };
-
-  return WebView;
-
-})();
-
-var XHR,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-XHR = (function() {
-
-  XHR.prototype.headers = [];
-
-  function XHR() {
-    this.setRequestHeader = __bind(this.setRequestHeader, this);
-
-    this.send = __bind(this.send, this);
-    this.method = void 0;
-    this.url = void 0;
-    this.async = void 0;
-    this.status = 0;
-    this.readyState = 0;
-    this.headers = {};
-  }
-
-  XHR.prototype.open = function(methodString, urlString, isAsync) {
-    if (isAsync == null) {
-      isAsync = true;
-    }
-    this.method = methodString;
-    this.url = urlString;
-    return this.async = isAsync;
-  };
-
-  XHR.prototype.send = function(data) {
-    if (!(this.method && this.url)) {
-      throw "Error: INVALID_STATE_ERR: DOM Exception 11";
-    }
-    if (this.method !== "GET") {
-      throw "Method not implemented";
-    }
-    return this.fetch({
-      url: this.url,
-      filenameWithPath: "temp",
-      headers: this.headers
-    });
-  };
-
-  XHR.prototype.setRequestHeader = function(name, value) {
-    return this.headers[name] = value;
-  };
-
-  XHR.prototype.fetch = function(options, callbacks) {
-    var destinationPath;
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    destinationPath = options.constructor.name === "String" ? options : options.absoluteDestinationPath;
-    return steroids.nativeBridge.nativeCall({
-      method: "downloadFile",
-      parameters: {
-        url: options.url || this.url,
-        headers: options.headers || this.headers,
-        filenameWithPath: destinationPath
-      },
-      successCallbacks: [callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  return XHR;
-
-})();
-
-var Analytics;
-
-Analytics = (function() {
-
-  function Analytics() {}
-
-  Analytics.prototype.recordEvent = function(options, callbacks) {
-    if (options == null) {
-      options = {};
-    }
-    if (callbacks == null) {
-      callbacks = {};
-    }
-    return steroids.nativeBridge.nativeCall({
-      method: "recordEvent",
-      parameters: {
-        type: "custom",
-        attributes: options.event
-      },
-      successCallbacks: [callbacks.onSuccess],
-      failureCallbacks: [callbacks.onFailure]
-    });
-  };
-
-  return Analytics;
-
-})();
-
-var OpenURL;
+;var OpenURL;
 
 OpenURL = (function() {
 
@@ -1488,30 +1486,57 @@ OpenURL = (function() {
   return OpenURL;
 
 })();
+;var Notifications;
 
-var PostMessage;
+Notifications = (function() {
+
+  function Notifications() {}
+
+  Notifications.prototype.post = function(options, callbacks) {
+    var message;
+    if (options == null) {
+      options = {};
+    }
+    if (callbacks == null) {
+      callbacks = {};
+    }
+    message = options.constructor.name === "String" ? options : options.message;
+    return steroids.nativeBridge.nativeCall({
+      method: "postNotification",
+      parameters: {
+        body: message
+      },
+      successCallbacks: [callbacks.onSuccess],
+      failureCallbacks: [callbacks.onFailure]
+    });
+  };
+
+  return Notifications;
+
+})();
+;var PostMessage;
 
 PostMessage = (function() {
 
   function PostMessage() {}
 
   PostMessage.postMessage = function(message, targetOrigin) {
-    var callbacks, jsonMessage;
+    var callbacks, escapedJSONMessage;
     callbacks = {};
-    jsonMessage = JSON.stringify(message);
+    escapedJSONMessage = escape(JSON.stringify(message));
     return steroids.nativeBridge.nativeCall({
       method: "broadcastJavascript",
       parameters: {
-        javascript: "steroids.PostMessage.dispatchMessageEvent('" + jsonMessage + "', '*');"
+        javascript: "steroids.PostMessage.dispatchMessageEvent('" + escapedJSONMessage + "', '*');"
       },
       successCallbacks: [callbacks.onSuccess],
       recurringCallbacks: [callbacks.onFailure]
     });
   };
 
-  PostMessage.dispatchMessageEvent = function(jsonMessage, targetOrigin) {
+  PostMessage.dispatchMessageEvent = function(escapedJSONMessage, targetOrigin) {
     var e, message;
-    message = JSON.parse(jsonMessage);
+    message = JSON.parse(unescape(escapedJSONMessage));
     e = document.createEvent("MessageEvent");
     e.initMessageEvent("message", false, false, message, "", "", window, null);
     return window.dispatchEvent(e);
@@ -1520,8 +1545,7 @@ PostMessage = (function() {
   return PostMessage;
 
 }).call(this);
-
-
+;
 window.steroids = {
   version: "0.3.6",
   Animation: Animation,
@@ -1589,7 +1613,9 @@ window.steroids.waitingForComponents.push("App");
 
 window.steroids.app = new App;
 
-window.steroids.waitingForComponents.push("Events");
+window.steroids.waitingForComponents.push("Events.focuslisteners");
+
+window.steroids.waitingForComponents.push("Events.initialVisibility");
 
 Events.extend();
 
@@ -1612,6 +1638,8 @@ window.steroids.device = new Device;
 window.steroids.analytics = new Analytics;
 
 window.steroids.screen = new Screen;
+
+window.steroids.notifications = new Notifications;
 
 window.steroids.PostMessage = PostMessage;
 

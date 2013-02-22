@@ -10,8 +10,6 @@ app.materialView = Backbone.View.extend({
         this.initDownloadLink();
         this.initScribd();
 
-        if (app.options.appmode) AppGyver.showContent();
-
         return this;
     },
 

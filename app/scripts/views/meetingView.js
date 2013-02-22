@@ -18,9 +18,6 @@ app.meetingView = Backbone.View.extend({
         // Start progressbar
         this.initProgressBar();
 
-        // when coming back from parent view, remove spinner and show content
-        if (app.options.appmode) AppGyver.showContent();
-
         return this;
 
     },

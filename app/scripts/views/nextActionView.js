@@ -14,8 +14,6 @@ app.nextActionView = Backbone.View.extend({
             this.$el.trigger('create');
         }
 
-        if (app.options.appmode) AppGyver.showContent();
-
     },
     events: {
         'click .attending' : 'setRsvpYes',

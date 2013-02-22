@@ -6,9 +6,6 @@ app.materialInListView = Backbone.View.extend({
         this.$el.html( templatizer.materialInListView( _.extend(this.model.toJSON(), { show_url : this.model.show_url }) ) ); // Render template
         this.$el.attr('data-theme','a');
 
-        // when coming back from parent view, remove spinner and show content
-        if (app.options.appmode) AppGyver.showContent();
-
         return this;
     },
     events: {
