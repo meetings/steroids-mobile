@@ -114,6 +114,10 @@
 
       window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*")
 
+      var removeActive = function() {
+        $(".ui-btn-active").removeClass("ui-btn-active");
+      };
+
       var options = {
         view: {
           id: preloadId
@@ -124,9 +128,9 @@
       if (openInModal) {
         var modal = new steroids.views.WebView("");
         modal.id = preloadId;
-        steroids.modal.show(modal);
+        steroids.modal.show({ view: modal}, {onSuccess: removeActive});
       } else {
-        steroids.layers.push(options);
+        steroids.layers.push(options, {onSuccess: removeActive});
       }
 
 
