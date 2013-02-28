@@ -120,7 +120,8 @@
 
       var options = {
         view: {
-          id: preloadId
+          id: preloadId,
+          keepLoading: true
         },
         navigationBar: false
       }
@@ -128,7 +129,12 @@
       if (openInModal) {
         var modal = new steroids.views.WebView("");
         modal.id = preloadId;
-        steroids.modal.show({ view: modal}, {onSuccess: removeActive});
+        steroids.modal.show({
+          view: modal,
+          keepLoading: true
+          },{
+            onSuccess: removeActive
+        });
       } else {
         steroids.layers.push(options, {onSuccess: removeActive});
       }
