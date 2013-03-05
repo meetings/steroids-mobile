@@ -9,6 +9,7 @@ app.materialView = Backbone.View.extend({
         //this.$el.listview("refresh");
         this.initDownloadLink();
         this.initScribd();
+
         return this;
     },
 
@@ -17,7 +18,16 @@ app.materialView = Backbone.View.extend({
 
     initDownloadLink: function(){
         if( this.model.get('download_url')){
-            $('#download-link').attr('href', this.model.get('download_url'));
+
+          $('#download-link').attr('href', this.model.get('download_url'));
+
+          if( app.options.appmode ) {
+            $('#download-link').on("click", function(e){
+              e.preventDefault()
+              steroids.openURL(encodeURI($(this).attr("href")));
+            });
+          }
+
         }
         else{
             $('#download-link').hide();

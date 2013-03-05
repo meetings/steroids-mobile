@@ -12,11 +12,20 @@ app.headerView = Backbone.View.extend({
     },
 
     navigateBack : function(e){
-        e.preventDefault();
-        if( app.options.appmode ) AGPopLayer();
-        else if( $('.back-button').attr('href') !== '#' ){
-            window.location = $('.back-button').attr('href');
-        }
-        else history.go(-1);
+      e.preventDefault();
+
+      if ( app.options.appmode ) {
+
+        setTimeout(function(){ AppGyver.hideContent() }, 100)
+
+        steroids.layers.pop();
+
+      } else if ( $('.back-button').attr('href') !== '#' ){
+        window.location = $('.back-button').attr('href');
+
+      } else {
+        history.go(-1);
+
+      }
     }
 });

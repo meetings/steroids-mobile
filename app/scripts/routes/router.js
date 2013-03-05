@@ -168,8 +168,20 @@ app.router = Backbone.Router.extend({
 
     meeting : function(params) {
 
-        // Render panel
-        app.views.panel = new app.panelView({ active : "meetings", el : $('#left-panel') });
+        if (app.options.appmode) {
+          // Cleanup zombie events
+          AppGyver.cleanBackboneZombieEvents();
+          var meetingFetch = $.Deferred(),
+              materialsFetch = $.Deferred();
+          // wait for ajax requests to succeed, defer show content until that
+          $.when(meetingFetch, materialsFetch).then(function(){
+            // when coming back from parent view, remove spinner and show content
+            AppGyver.showContent();
+          });
+
+        }
+
+        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
         app.views.header = new app.headerView({ el : '#meetings' });
         app.views.panel.render();
 
@@ -194,6 +206,8 @@ app.router = Backbone.Router.extend({
             app.views.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : app.models.meeting_user });
             app.views.next_action_view.render();
 
+            if (app.options.appmode) meetingFetch.resolve();
+
         }, timeout : 5000 });
 
         app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
@@ -206,12 +220,24 @@ app.router = Backbone.Router.extend({
                 childViewConstructor : app.materialInListView
             });
             app.views.materials.render();
+
+            if (app.options.appmode) materialsFetch.resolve();
         }});
 
     },
 
     scheduling : function(params) {
+        if (app.options.appmode) {
+          // Cleanup zombie events
+          AppGyver.cleanBackboneZombieEvents();
+          var meetingFetch = $.Deferred();
+          // wait for ajax requests to succeed, defer show content until that
+          $.when(meetingFetch).then(function(){
+            // when coming back from parent view, remove spinner and show content
+            AppGyver.showContent();
+          });
 
+        }
         // Get url params
         var id = params.id || 0;
         var mode = params.mode || 'answer';
@@ -234,11 +260,24 @@ app.router = Backbone.Router.extend({
 
             app.views.scheduling.render();
 
+            if (app.options.appmode) meetingFetch.resolve();
+
         }, timeout : 5000 });
 
     },
 
     participants : function(params) {
+        if (app.options.appmode) {
+          // Cleanup zombie events
+          AppGyver.cleanBackboneZombieEvents();
+          var participantsFetch = $.Deferred();
+          // wait for ajax requests to succeed, defer show content until that
+          $.when(participantsFetch).then(function(){
+            // when coming back from parent view, remove spinner and show content
+            AppGyver.showContent();
+          });
+
+        }
 
         // Render panel
         app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
@@ -256,12 +295,25 @@ app.router = Backbone.Router.extend({
                 childViewConstructor : app.participantInListView
             });
             app.views.materials.render();
+
+            if (app.options.appmode) participantsFetch.resolve();
         }
         });
     },
 
     materials : function(params) {
-        // Render panel
+        if (app.options.appmode) {
+          // Cleanup zombie events
+          AppGyver.cleanBackboneZombieEvents();
+          var materialsFetch = $.Deferred();
+          // wait for ajax requests to succeed, defer show content until that
+          $.when(materialsFetch).then(function(){
+            // when coming back from parent view, remove spinner and show content
+            AppGyver.showContent();
+          });
+
+        }
+
         app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
         app.views.header = new app.headerView({ el : '#materials' });
         app.views.panel.render();
@@ -278,11 +330,25 @@ app.router = Backbone.Router.extend({
                 childViewConstructor : app.materialInListView
             });
             app.views.materials.render();
+
+            if (app.options.appmode) materialsFetch.resolve();
+
         }});
     },
 
     participant : function(params) {
-        // Render panel
+        if (app.options.appmode) {
+          // Cleanup zombie events
+          AppGyver.cleanBackboneZombieEvents();
+          var participantFetch = $.Deferred();
+          // wait for ajax requests to succeed, defer show content until that
+          $.when(participantFetch).then(function(){
+            // when coming back from parent view, remove spinner and show content
+            AppGyver.showContent();
+          });
+
+        }
+        // Render footer
         app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
         app.views.header = new app.headerView({ el : '#participant' });
         app.views.panel.render();
@@ -297,10 +363,26 @@ app.router = Backbone.Router.extend({
                 el : $('#participant_info')
             });
             app.views.user.render();
+
+            if (app.options.appmode) participantFetch.resolve();
+
         }});
     },
 
     material : function(params) {
+        if (app.options.appmode) {
+          // Cleanup zombie events
+          AppGyver.cleanBackboneZombieEvents();
+          var commentsFetch = $.Deferred(),
+              materialFetch = $.Deferred();
+          // wait for ajax requests to succeed, defer show content until that
+          $.when(commentsFetch, materialFetch).then(function(){
+            // when coming back from parent view, remove spinner and show content
+            AppGyver.showContent();
+          });
+
+        }
+
         // Setup header
         app.views.header = new app.headerView({ el : '#material' });
 
@@ -313,6 +395,9 @@ app.router = Backbone.Router.extend({
                 el : $('#material_content')
             });
             app.views.material.render();
+
+            if (app.options.appmode) materialFetch.resolve();
+
         }});
         app.collections.comments = new app.commentCollection();
         app.collections.comments.url = app.defaults.api_host + '/v1/materials/' + id + '/comments';
@@ -324,6 +409,9 @@ app.router = Backbone.Router.extend({
                 childViewConstructor : app.commentInListView
             });
             app.views.comments.render();
+
+            if (app.options.appmode) commentsFetch.resolve();
+
         }});
     }
 });

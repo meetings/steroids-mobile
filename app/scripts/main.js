@@ -174,6 +174,15 @@ window.app = {
 };
 
 $(document).ready(function(){
+  //app.init();
+
+  // mobile app, do preloads & app inits etc.
+  if (app.options.appmode) {
+
+    AppGyver.init();
+
+  // web based app, no preloads or such magick required
+  } else {
     app.init();
 
     $( document ).on( "swipeleft swiperight", function( e ) {
@@ -188,5 +197,6 @@ $(document).ready(function(){
             }
         }
     });
+  }
 });
 

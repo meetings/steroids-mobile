@@ -15,7 +15,11 @@ app.meetingInListView = Backbone.View.extend({
 
     openMeeting : function(e){
 
-        if( app.options.appmode ) AGOpenLayerWithoutTopBar("/meeting.html?id="+ this.model.id);
+        if ( app.options.appmode ) {
+          e.preventDefault();
+          AppGyver.openPreload("meetingPage", {id: this.model.id});
+        }
+
 
     }
 });

@@ -6,6 +6,7 @@ app.participantView = Backbone.View.extend({
     render: function() {
         this.$el.html( templatizer.participantView( this.model.toJSON() ) ); // Render template
         this.$el.trigger('create'); // Call JQM
+
         return this;
     },
 

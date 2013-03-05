@@ -1,8 +1,8 @@
 node_modules
 \.sass\-cache
+agapp
 temp
 dist
 live
 .DS_Store
-agapp/views
 /npm-debug.log

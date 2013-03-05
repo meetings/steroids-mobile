@@ -29,18 +29,34 @@ app.meetingView = Backbone.View.extend({
     },
 
     navigateBack : function(e){
-        if( app.options.appmode ) AGPopLayer();
-        else document.location = 'index.html';
+      e.preventDefault();
+      // when does this even happen?
+      if ( app.options.appmode ) {
+
+        return false;
+
+      } else {
+        document.location = 'index.html';
+      }
+
     },
 
     openMaterialView : function(e){
-        if( app.options.appmode ) AGOpenLayerWithoutTopBar('/materials.html?id='+this.model.get('id'));
-        else document.location = '/materials.html?id='+this.model.get('id');
+      if ( app.options.appmode ) {
+        e.preventDefault();
+        AppGyver.openPreload("materialsPage", {id: this.model.get('id')});
+      } else {
+        document.location = '/materials.html?id='+this.model.get('id');
+      }
     },
 
     openParticipantView : function(e){
-        if( app.options.appmode ) AGOpenLayerWithoutTopBar('/participants.html?id='+this.model.get('id'));
-        else document.location = '/participants.html?id='+this.model.get('id');
+      if ( app.options.appmode ) {
+        e.preventDefault();
+        AppGyver.openPreload("participantsPage", {id: this.model.get('id')});
+      } else {
+        document.location = '/participants.html?id='+this.model.get('id');
+      }
     },
 
     initProgressBar : function(){
