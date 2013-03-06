@@ -1,6 +1,7 @@
 app.participantView = Backbone.View.extend({
 
     initialize: function(options) {
+         options.model.bind('change', this.render, this);
     },
 
     render: function() {

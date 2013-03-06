@@ -95,12 +95,10 @@ app.genericCollectionView = Backbone.View.extend({
         if (this._rendered) {
 
             if( options.index === 0 || this.options.mode === 'addtotop' ) {
-                this.addHtmlBuffer += $(childView.render().el).outerHTML();
+                this.addHtmlBuffer = $(childView.render().el).outerHTML() + this.addHtmlBuffer;
                 this.delayedAdd();
             }
             else this.el.append(childView.render().el);
-
-
 
             this.el.listview("refresh");
 
@@ -121,6 +119,12 @@ app.genericCollectionView = Backbone.View.extend({
 
     // Remove model from the collection
     remove : function(model) {
+        // In case no model passed, remove the whole thing
+        if( ! model ){
+            this.$el.remove();
+            return;
+        }
+
         var viewToRemove = _(this._childViews).select(function(cv) { return cv.model === model; })[0];
         this._childViews = _(this._childViews).without(viewToRemove);
 

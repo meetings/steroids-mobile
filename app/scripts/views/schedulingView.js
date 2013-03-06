@@ -7,14 +7,12 @@ app.schedulingView = Backbone.View.extend({
     },
 
     render: function() {
-
         if( this.mode === 'answer' ){
             this.renderAnswer();
         }
         else{
             this.renderChoose();
         }
-
         return this;
     },
 
@@ -149,7 +147,7 @@ app.schedulingView = Backbone.View.extend({
             // TODO: navigation inside app?
             if ( app.options.appmode ) {
 
-              setTimeout(function(){ AppGyver.hideContent() }, 100)
+              setTimeout(function(){ AppGyver.hideContent(); }, 100);
 
               steroids.layers.pop();
 

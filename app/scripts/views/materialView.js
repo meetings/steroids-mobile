@@ -1,15 +1,13 @@
 app.materialView = Backbone.View.extend({
 
     initialize: function(options) {
+         options.model.bind('change', this.render, this);
     },
 
     render: function() {
         this.$el.html( templatizer.materialView( this.model.toJSON() ) ); // Render template
-        //this.$el.html('');
-        //this.$el.listview("refresh");
         this.initDownloadLink();
         this.initScribd();
-
         return this;
     },
 
@@ -23,11 +21,10 @@ app.materialView = Backbone.View.extend({
 
           if( app.options.appmode ) {
             $('#download-link').on("click", function(e){
-              e.preventDefault()
+              e.preventDefault();
               steroids.openURL(encodeURI($(this).attr("href")));
             });
           }
-
         }
         else{
             $('#download-link').hide();
@@ -64,7 +61,6 @@ app.materialView = Backbone.View.extend({
             scribd_doc.addParam("default_embed_format","html5");
 
             scribd_doc.write( divnode.attr('id') );
-
         });
     }
 });

@@ -23,15 +23,22 @@ app.router = Backbone.Router.extend({
         // Get times
         var today = Math.floor( moment().sod() / 1000 );
 
-        // Function to set scroll after both are rendered or show message
-        var afterRender = _.after(3, function(){
+        // Deferreds for fetches
+        var futureFetch = $.Deferred(),
+        pastFetch = $.Deferred(),
+        unscheduledFetch = $.Deferred();
+
+        // wait for ajax requests to succeed, defer show content until that
+        $.when(futureFetch, unscheduledFetch, pastFetch).then(function(){
+            app.showContent();
             if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0){
-                if( $('today') ){
-                    var offset = $('#today').offset();
+                var offset;
+                if( $('#today').length > 0 ){
+                    offset = $('#today').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
                 else{
-                    var offset = $('#future').offset();
+                    offset = $('#future').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
             }
@@ -40,41 +47,31 @@ app.router = Backbone.Router.extend({
             }
         });
 
-        // Fetch all future meetings
+        // Fetch all future meetings & split them to collections
         app.collections.future_meetings = new app.meetingCollection();
         app.collections.future_meetings.fetch({ success : function(col,res){
-            // If problems with auth
-            if( res && res.error && res.error.message == "invalid auth" ){
-                window.location = '/login.html?clear=true';
-                return;
-            }
-
-            $('.loader').hide();
-
             // Get times
             var today = Math.floor ( moment().utc().sod() / 1000 );
             var today_end = Math.floor ( moment().utc().eod() / 1000 );
 
             // Create a new collection of todays meetings
-            var today_meetings = app.collections.future_meetings.filter(function(model) {
-                if( model.get('begin_epoch') >= today && model.get('begin_epoch') <= today_end ) return true;
-                else return false;
+            var today_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
+                return ( o['begin_epoch'] >= today && o['begin_epoch'] <= today_end );
             });
             app.collections.today = new app.meetingCollection( today_meetings );
 
             // Create new collection of upcoming meetings
-            var upcoming_meetings = app.collections.future_meetings.filter(function(model) {
-                if( model.get('begin_epoch') > today_end) return true;
-                else return false;
+            var upcoming_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
+                return ( o['begin_epoch'] > today_end );
             });
-            app.collections.upcoming = new app.meetingCollection( today_meetings );
+            app.collections.upcoming = new app.meetingCollection( upcoming_meetings );
 
             // Create view for upcoming meetings and render or remove if empty
             app.views.future = new app.upcomingMeetingsView({
                 collection : app.collections.upcoming,
                 childViewConstructor : app.meetingInListView,
                 childViewTagName : 'li',
-                el : $('#future'),
+                el : '#future',
                 emptyString : '<li class="end">No more upcoming meetings.</li>',
                 infiniScroll : true,
                 infiniScrollDirection : 'down',
@@ -94,91 +91,64 @@ app.router = Backbone.Router.extend({
             if( app.collections.today.length === 0 ) app.views.today.remove();
             else app.views.today.render();
 
-            afterRender();
+            futureFetch.resolve(); // Resolve the deferred
 
         },  data : { start_min : today, limit : 10, sort : "asc"} } );
 
         // Get the unscheduled meetings
         app.collections.unscheduled_meetings = new app.meetingCollection({},{ override_endpoint : 'unscheduled_meetings' });
+        app.views.unscheduled = new app.unscheduledMeetingsView({
+            collection : app.collections.unscheduled_meetings,
+            childViewConstructor : app.meetingInListView,
+            childViewTagName : 'li',
+            el : '#unscheduled',
+            infiniScroll : false
+        });
         app.collections.unscheduled_meetings.fetch({ success : function(col,res){
-            // If problems with auth
-            if( res && res.error && res.error.message == "invalid auth" ){
-                window.location = '/login.html?clear=true';
-                return;
-            }
-            app.views.unscheduled = new app.unscheduledMeetingsView({
-                collection : app.collections.unscheduled_meetings,
-                childViewConstructor : app.meetingInListView,
-                childViewTagName : 'li',
-                el : $('#unscheduled'),
-                infiniScroll : false
-            });
-            $('.loader').hide();
-
-            if( app.collections.unscheduled_meetings.length == 0 ) app.views.unscheduled.remove();
-            else app.views.unscheduled.render();
-
-            afterRender();
+            if( app.collections.unscheduled_meetings.length === 0 ) app.views.unscheduled.remove();
+            unscheduledFetch.resolve();
         }, data : { scheduling_on : 1 }});
 
         // Fetch past meetings
         app.collections.past_meetings = new app.meetingCollection();
+        app.collections.past_meetings.comparator = function(meeting){
+            return meeting.get('begin_epoch');
+        };
+        app.views.past = new app.genericCollectionView({
+            collection : app.collections.past_meetings,
+            childViewConstructor : app.meetingInListView,
+            childViewTagName : 'li',
+            el : '#past',
+            emptyString : '<li class="end">No more past meetings.</li>',
+            infiniScroll : true,
+            infiniScrollDirection : 'up',
+            infiniScrollExtraParams : { start_max : today, sort : "desc" },
+            mode : "addtotop"
+        });
         app.collections.past_meetings.fetch({ success : function(col,res){
-            // If problems with auth
-            if( res && res.error && res.error.message == "invalid auth" ){
-                window.location = '/login.html?clear=true';
-                return;
-            }
-            app.views.past = new app.genericCollectionView({
-                collection : app.collections.past_meetings,
-                childViewConstructor : app.meetingInListView,
-                childViewTagName : 'li',
-                el : $('#past'),
-                emptyString : '<li class="end">No more past meetings.</li>',
-                infiniScroll : true,
-                infiniScrollDirection : 'up',
-                infiniScrollExtraParams : { start_max : today, sort : "desc" },
-                mode : "addtotop"
-            });
-            $('.loader').hide();
-            app.views.past.render();
-            afterRender();
+            if( app.collections.past_meetings.length === 0 ) app.views.past.remove();
+            pastFetch.resolve();
         },  data : { start_max : today, limit : 10, sort : "desc" } } );
     },
 
 
     login : function() {
-
-        // Show login view
         app.views.login = new app.loginView({ el : $('#login-page') });
         app.views.login.render();
     },
 
-    settings : function() {
-
-        // Show settings view
-        app.views.settings = new app.settingsView({ el : $('#settings') });
-        app.views.settings.render();
-
-        // Render panel
-        app.views.panel = new app.panelView({ active : "settings", el : $('#left-panel') });
-        app.views.header = new app.headerView({ el : '#settings' });
-        app.views.panel.render();
-    },
-
     meeting : function(params) {
+        var meetingFetch = $.Deferred(),
+        materialsFetch = $.Deferred();
+
+        // wait for ajax requests to succeed, defer show content until that
+        $.when(meetingFetch, materialsFetch).then(function(){
+            app.showContent();
+        });
 
         if (app.options.appmode) {
-          // Cleanup zombie events
-          AppGyver.cleanBackboneZombieEvents();
-          var meetingFetch = $.Deferred(),
-              materialsFetch = $.Deferred();
-          // wait for ajax requests to succeed, defer show content until that
-          $.when(meetingFetch, materialsFetch).then(function(){
-            // when coming back from parent view, remove spinner and show content
-            AppGyver.showContent();
-          });
-
+            // Cleanup zombie events
+            AppGyver.cleanBackboneZombieEvents();
         }
 
         app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
@@ -196,8 +166,6 @@ app.router = Backbone.Router.extend({
         });
         app.models.meeting.fetch({ success : function(){
 
-            app.views.meeting.render();
-
             // Init current meeting user
             var data = app.models.meeting.getMeetingUserByID( app.auth.user );
             app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
@@ -206,38 +174,32 @@ app.router = Backbone.Router.extend({
             app.views.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : app.models.meeting_user });
             app.views.next_action_view.render();
 
-            if (app.options.appmode) meetingFetch.resolve();
+            // Resolve deferred
+            meetingFetch.resolve();
 
         }, timeout : 5000 });
 
+        // Setup materials col & view
         app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
         app.collections.materials.url = app.defaults.api_host + '/v1/meetings/' + id + '/materials';
+        app.views.materials = new app.genericCollectionView({
+            el : $('#materials_list'),
+            collection : app.collections.materials,
+            childViewTagName : 'li',
+            childViewConstructor : app.materialInListView
+        });
+
         app.collections.materials.fetch({ success : function(){
-            app.views.materials = new app.genericCollectionView({
-                el : $('#materials_list'),
-                collection : app.collections.materials,
-                childViewTagName : 'li',
-                childViewConstructor : app.materialInListView
-            });
-            app.views.materials.render();
-
-            if (app.options.appmode) materialsFetch.resolve();
+            materialsFetch.resolve(); // Resolve deferred
         }});
-
     },
 
     scheduling : function(params) {
         if (app.options.appmode) {
           // Cleanup zombie events
           AppGyver.cleanBackboneZombieEvents();
-          var meetingFetch = $.Deferred();
-          // wait for ajax requests to succeed, defer show content until that
-          $.when(meetingFetch).then(function(){
-            // when coming back from parent view, remove spinner and show content
-            AppGyver.showContent();
-          });
-
         }
+
         // Get url params
         var id = params.id || 0;
         var mode = params.mode || 'answer';
@@ -253,15 +215,13 @@ app.router = Backbone.Router.extend({
             mode : mode
         } );
         app.models.meeting.fetch({ success : function(){
-
             // Init current meeting user
             var data = app.models.meeting.getMeetingUserByID( app.auth.user );
             app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
 
             app.views.scheduling.render();
 
-            if (app.options.appmode) meetingFetch.resolve();
-
+            app.showContent();
         }, timeout : 5000 });
 
     },
@@ -270,13 +230,6 @@ app.router = Backbone.Router.extend({
         if (app.options.appmode) {
           // Cleanup zombie events
           AppGyver.cleanBackboneZombieEvents();
-          var participantsFetch = $.Deferred();
-          // wait for ajax requests to succeed, defer show content until that
-          $.when(participantsFetch).then(function(){
-            // when coming back from parent view, remove spinner and show content
-            AppGyver.showContent();
-          });
-
         }
 
         // Render panel
@@ -287,67 +240,24 @@ app.router = Backbone.Router.extend({
         var id = params.id || 0;
 
         app.collections.participants = new app.participantCollection( [], { meeting_id : id } );
-        app.collections.participants.fetch({ success : function(){
-            app.views.materials = new app.genericCollectionView({
-                el : $('#participants_list'),
-                collection : app.collections.participants,
-                childViewTagName : 'li',
-                childViewConstructor : app.participantInListView
-            });
-            app.views.materials.render();
-
-            if (app.options.appmode) participantsFetch.resolve();
-        }
+        app.views.materials = new app.genericCollectionView({
+            el : $('#participants_list'),
+            collection : app.collections.participants,
+            childViewTagName : 'li',
+            childViewConstructor : app.participantInListView
         });
-    },
-
-    materials : function(params) {
-        if (app.options.appmode) {
-          // Cleanup zombie events
-          AppGyver.cleanBackboneZombieEvents();
-          var materialsFetch = $.Deferred();
-          // wait for ajax requests to succeed, defer show content until that
-          $.when(materialsFetch).then(function(){
-            // when coming back from parent view, remove spinner and show content
-            AppGyver.showContent();
-          });
-
-        }
-
-        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-        app.views.header = new app.headerView({ el : '#materials' });
-        app.views.panel.render();
-
-        var id = params.id || 0;
-
-        app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
-        app.collections.materials.url = app.defaults.api_host + '/v1/meetings/' + id + '/materials';
-        app.collections.materials.fetch({ success : function(){
-            app.views.materials = new app.genericCollectionView({
-                el : $('#materials_list'),
-                collection : app.collections.materials,
-                childViewTagName : 'li',
-                childViewConstructor : app.materialInListView
-            });
-            app.views.materials.render();
-
-            if (app.options.appmode) materialsFetch.resolve();
-
+        app.collections.participants.fetch({ success : function(){
+            app.showContent();
         }});
     },
 
     participant : function(params) {
+
         if (app.options.appmode) {
           // Cleanup zombie events
           AppGyver.cleanBackboneZombieEvents();
-          var participantFetch = $.Deferred();
-          // wait for ajax requests to succeed, defer show content until that
-          $.when(participantFetch).then(function(){
-            // when coming back from parent view, remove spinner and show content
-            AppGyver.showContent();
-          });
-
         }
+
         // Render footer
         app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
         app.views.header = new app.headerView({ el : '#participant' });
@@ -357,30 +267,27 @@ app.router = Backbone.Router.extend({
         var id = params.id || 0;
         app.models.participant = new app.participantModel();
         app.models.participant.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/'+id;
+        app.views.user = new app.participantView({
+            model : app.models.participant,
+            el : $('#participant_info')
+        });
+
         app.models.participant.fetch({ success : function(){
-            app.views.user = new app.participantView({
-                model : app.models.participant,
-                el : $('#participant_info')
-            });
-            app.views.user.render();
-
-            if (app.options.appmode) participantFetch.resolve();
-
+            app.showContent();
         }});
     },
 
     material : function(params) {
-        if (app.options.appmode) {
-          // Cleanup zombie events
-          AppGyver.cleanBackboneZombieEvents();
-          var commentsFetch = $.Deferred(),
-              materialFetch = $.Deferred();
-          // wait for ajax requests to succeed, defer show content until that
-          $.when(commentsFetch, materialFetch).then(function(){
-            // when coming back from parent view, remove spinner and show content
-            AppGyver.showContent();
-          });
+        var commentsFetch = $.Deferred(),
+        materialFetch = $.Deferred();
 
+        $.when(commentsFetch, materialFetch).then(function(){
+            app.showContent();
+        });
+
+        if (app.options.appmode) {
+            // Cleanup zombie events
+            AppGyver.cleanBackboneZombieEvents();
         }
 
         // Setup header
@@ -389,29 +296,26 @@ app.router = Backbone.Router.extend({
         var id = params.id || 0;
         app.models.material = new app.materialModel();
         app.models.material.url = app.defaults.api_host + '/v1/materials/' + id;
+        app.views.material = new app.materialView({
+            model : app.models.material,
+            el : $('#material_content')
+        });
+
         app.models.material.fetch({ success : function(){
-            app.views.material = new app.materialView({
-                model : app.models.material,
-                el : $('#material_content')
-            });
-            app.views.material.render();
-
-            if (app.options.appmode) materialFetch.resolve();
-
+            materialFetch.resolve();
         }});
+
         app.collections.comments = new app.commentCollection();
         app.collections.comments.url = app.defaults.api_host + '/v1/materials/' + id + '/comments';
+        app.views.comments = new app.commentListView({
+            el : $('#comments'),
+            collection : app.collections.comments,
+            childViewTagName : 'li',
+            childViewConstructor : app.commentInListView
+        });
+
         app.collections.comments.fetch({ success : function(){
-            app.views.comments = new app.commentListView({
-                el : $('#comments'),
-                collection : app.collections.comments,
-                childViewTagName : 'li',
-                childViewConstructor : app.commentInListView
-            });
-            app.views.comments.render();
-
-            if (app.options.appmode) commentsFetch.resolve();
-
+            commentsFetch.resolve();
         }});
     }
 });

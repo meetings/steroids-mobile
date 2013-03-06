@@ -16,7 +16,7 @@ app.headerView = Backbone.View.extend({
 
       if ( app.options.appmode ) {
 
-        setTimeout(function(){ AppGyver.hideContent() }, 100)
+        setTimeout(function(){ AppGyver.hideContent(); }, 100);
 
         steroids.layers.pop();
 

@@ -11,13 +11,13 @@
       });
 
       // hijack panel links
-      $(document).on("click", "ul#side-bar a", function(e){
+      /*$(document).on("click", "ul#side-bar a", function(e){
         e.preventDefault();
         // should these open to browser or to modal or what?
-        var view = new steroids.views.WebView(window.location.origin+"/"+$(this).attr("href"))
+        var view = new steroids.views.WebView(window.location.origin+"/"+$(this).attr("href"));
         // for now open modal
         steroids.modal.show(view);
-      });
+      });*/
 
       // handle preload views
       // and init index.html,
@@ -88,7 +88,7 @@
             $(".back-button ").off().on("click", function(e){
               e.preventDefault();
               steroids.modal.hide();
-            })
+            });
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
             });
@@ -112,7 +112,7 @@
 
     openPreload: function(preloadId, urlParams, openInModal){
 
-      window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*")
+      window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*");
 
       var removeActive = function() {
         $(".ui-btn-active").removeClass("ui-btn-active");
@@ -124,7 +124,7 @@
           keepLoading: true
         },
         navigationBar: false
-      }
+      };
 
       if (openInModal) {
         var modal = new steroids.views.WebView("");
@@ -162,7 +162,7 @@
 
         if (window.location.href === url) {
 
-          AppGyver.showContent();
+          app.showContent();
 
         } else {
 
@@ -177,14 +177,11 @@
       }
     },
 
+    // Changed the implementation everywhere so that all the views have .content and .loader divs
+    // .content is hidden by default and .loader is shown. Also moved show content to app.helpers
     hideContent: function(){
-      $("div.ui-content").hide();
-      $.mobile.showPageLoadingMsg();
-    },
-
-    showContent: function(){
-      if ($("div.ui-content").is(":hidden")) $("div.ui-content").show();
-      $.mobile.hidePageLoadingMsg();
+        $('.content').hide();
+        $('.loader').show();
     },
 
     // clear events from preloaded views to prevent previous render events triggering

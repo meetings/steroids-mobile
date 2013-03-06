@@ -1,14 +1,14 @@
 a(href=show_url)
     div.wrap.ui-li-thumb
-        - if( image )
+        - if( locals.image )
             img(src=image,width='60')
         - else
             span.placeholder-60
-        - if ( proposal_answers && _.size(proposal_answers) > 0 )
+        - if ( locals.proposal_answers && _.size(proposal_answers) > 0 )
             // Scheduling
-        - else if ( rsvp_status === 'yes' )
+        - else if ( locals.rsvp_status && rsvp_status === 'yes' )
             span.rsvp.yes
-        - else if( rsvp_status === 'no' )
+        - else if( locals.rsvp_status && rsvp_status === 'no' )
             span.rsvp.no
         - else
             span.rsvp.unknown

@@ -443,7 +443,6 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
         var __indent = [];
         var a = "";
         if (active === "meetings") a = "ui-btn-active";
-        console.log(a);
         buf.push('\n<ul id="side-bar" data-role="listview" data-theme="c">\n  <li');
         buf.push(attrs({
             "data-theme": "c",
@@ -452,7 +451,7 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
             "data-theme": true,
             "class": true
         }));
-        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li>\n  <li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li>\n  <li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li>\n  <li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Share us on Twitter</a></li>\n  <li data-role="list-divider" data-theme="c">OTHER</li>\n  <li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li>\n  <li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li>\n  <li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li>\n</ul><a href="#" class="no-mobile">Switch to normal website</a>');
+        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li>\n  <li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li>\n  <li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li>\n  <li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li>\n  <li data-role="list-divider" data-theme="c">OTHER</li>\n  <li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li>\n  <li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li>\n  <li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li>\n</ul><a href="#" class="no-mobile">Switch to normal website</a>');
     }
     return buf.join("");
 };
@@ -474,7 +473,7 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
             href: true
         }));
         buf.push('>\n  <div class="wrap ui-li-thumb">');
-        if (image) {
+        if (locals.image) {
             buf.push("<img");
             buf.push(attrs({
                 src: image,
@@ -487,11 +486,11 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
         } else {
             buf.push('<span class="placeholder-60"></span>');
         }
-        if (proposal_answers && _.size(proposal_answers) > 0) {
+        if (locals.proposal_answers && _.size(proposal_answers) > 0) {
             buf.push("\n    <!-- Scheduling-->");
-        } else if (rsvp_status === "yes") {
+        } else if (locals.rsvp_status && rsvp_status === "yes") {
             buf.push('<span class="rsvp yes"></span>');
-        } else if (rsvp_status === "no") {
+        } else if (locals.rsvp_status && rsvp_status === "no") {
             buf.push('<span class="rsvp no"></span>');
         } else {
             buf.push('<span class="rsvp unknown"></span>');

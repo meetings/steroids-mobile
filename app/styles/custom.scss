@@ -33,9 +33,14 @@ div.ui-header{
     box-shadow:         0px 0px 4px rgba(50, 50, 50, 0.75);
 }
 
-// Fix headr button
+// Fix header button
 .ui-header .ui-btn{
     top:5px;
+}
+
+// Content hidden by default
+div.content{
+    display:none;
 }
 
 // Disable webkit select on the pages where class is set
@@ -534,14 +539,21 @@ div.ui-content ul li.ui-corner-top{
 
 // Loader styles
 div.loader {
-    text-align:center;
     img.loader{
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin-top:-20px;
+        margin-left:-20px;
         height:40px;
         width:40px;
-        padding:55px 0 0 0px;;
     }
     span.loader{
-        display:inline-block;
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin-top:-20px;
+        margin-left:-20px;
         height:40px;
         width:40px;
         background-image:url("/images/ajaxloader.gif");

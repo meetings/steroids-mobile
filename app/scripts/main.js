@@ -66,13 +66,6 @@ window.app = {
         Backbone.history.start({pushState: true});
     },
     _requireLogin : function(){
-        // Local storage available
-        /*var storage = this._getLocalStorage();
-        if ( storage && storage.auth && storage.auth.user && storage.auth.cookie ){
-            app.auth.user = storage.auth.user;
-            app.auth.token = storage.auth.token;
-        }*/
-
         // Cookie available
         var auth_cookie = this._readAuthCookie();
 
@@ -169,12 +162,15 @@ window.app = {
     },
     _removeIosNav : function(){
         /mobile/i.test(navigator.userAgent) && !location.hash &&
-            setTimeout(function () { window.scrollBy(0, 1); console.log('fix ios ') }, 3000);
+            setTimeout(function () { window.scrollBy(0, 1); }, 3000);
+    },
+    showContent: function(){
+        $('.content').show();
+        $('.loader').hide();
     }
 };
 
 $(document).ready(function(){
-  //app.init();
 
   // mobile app, do preloads & app inits etc.
   if (app.options.appmode) {
@@ -185,6 +181,7 @@ $(document).ready(function(){
   } else {
     app.init();
 
+    // TODO: Fix swipes
     $( document ).on( "swipeleft swiperight", function( e ) {
         // We check if there is no open panel on the page because otherwise
         // a swipe to close the left panel would also open the right panel (and v.v.).

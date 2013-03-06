@@ -6,7 +6,9 @@ app.meetingView = Backbone.View.extend({
         // Bind error and success handlers
          options.model.bind('error', this.errorHandler, this);
          options.model.bind('success', this.successHandler, this);
+         options.model.bind('change', this.render, this);
 
+        _(this).bindAll('openMaterialView', 'openParticipantView');
     },
 
     render: function() {
@@ -19,26 +21,11 @@ app.meetingView = Backbone.View.extend({
         this.initProgressBar();
 
         return this;
-
     },
 
     events: {
         'click .open-material-view' : 'openMaterialView',
-        'click .open-participant-view' : 'openParticipantView',
-        'click .back-button' : 'navigateBack'
-    },
-
-    navigateBack : function(e){
-      e.preventDefault();
-      // when does this even happen?
-      if ( app.options.appmode ) {
-
-        return false;
-
-      } else {
-        document.location = 'index.html';
-      }
-
+        'click .open-participant-view' : 'openParticipantView'
     },
 
     openMaterialView : function(e){
