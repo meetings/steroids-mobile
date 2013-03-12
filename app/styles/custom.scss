@@ -22,8 +22,9 @@
 
 // Add grid background
 div.ui-page{
+    background-color:transparent;
     @include retina-bg('/images/mobile_bg', 'png', 3px, 3px);
-    background-repeat:repeat
+    background-repeat:repeat;
 }
 
 // Shadow to header
@@ -109,19 +110,75 @@ div#scheduling{
     }
 }
 // Login page stuff
+div#login-page.app-mode{
+    background-repeat:repeat-y;
+    background-size:100% auto;
+    @include retina-bg('/images/login_bg_large', 'png', 640px, 45px);
+    div.no-mobile-link{
+        display:none;
+    }
+}
 div#login-page{
     position:absolute;
     top:0px;
     bottom:0px;
     width:100%;
     padding:0px;
+    background-repeat:repeat;
+    background-image:url(/images/login_bg_tile.png);
     .ui-br{
         border:none;
     }
     div.ui-field-contain{
-        margin:0 auto;
-        margin-top:30px;
+        margin:0 auto 0;
         width:268px;
+    }
+    div.ui-input-text{
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box; 
+        /*padding-left:0px;*/
+        /*padding-right:0px;*/
+    }
+    p.login-message{
+        margin:0 auto 0 auto;
+        width:268px;
+        color:#fff;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+        padding:25px 0px 15px 0px;
+    }
+    p.error{
+        color:#F55457;
+        font-size:13px;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+    }
+    label{
+        color:#fff;
+        font-size:28px;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+        margin-bottom:0px;
+        padding-bottom:0px;
+    }
+    div.ui-input-text{
+        width:100%;
+        border: 1px solid silver;
+        border-radius:4px;
+        -webkit-border-radius:4px;
+        -moz-border-radius:4px;
+        padding:0 0.8em;
+    }
+    div#login-form{
+        margin-top:50px;
+    }
+    a#facebook-login{
+        display:block;
+        background-position:top center;
+        background-color:transparent;
+        background-repeat:no-repeat;
+        @include retina-bg('/images/fb_button', 'png', 268px, 41px);
+        width:268px;
+        height:41px;
     }
     div.logo{
         text-align:center;
@@ -130,22 +187,36 @@ div#login-page{
             background-position:top center;
             background-color:transparent;
             background-repeat:no-repeat;
-            width:268px;
-            height:62px;
+            width:240px;
+            height:101px;
+            @include retina-bg('/images/logo', 'png', 240px, 101px);
             margin:40px auto;
-            @include retina-bg('/images/mlogo', 'png', 268px, 62px);
         }
     }
-    input#email{
+    input{
         -webkit-border-radius: 4px;
         -moz-border-radius: 4px;
         border-radius: 4px;
+        font-weight:300;
     }
     div.no-mobile-link{
-        margin:0 auto;
+        position:absolute;
+        bottom:15px;
         text-align:center;
-        margin-top:15px;
-        width:268px;
+        width:100%;
+        a#no-mobile{
+            color:#fff;
+            text-shadow:none;
+        }
+    }
+    p.separator{
+        text-align:center;
+        color:#fff;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+        font-size:13px;
+    }
+    div#pin-form,div#profile-form, div.controls{
+        display:none;
     }
 }
 // Meetings in list view
@@ -329,8 +400,16 @@ ul#past,ul#future{
         }
     }
     li.end{
+        min-height:30px;
         height:30px;
         text-align:center;
+    }
+    li.loader{
+        text-align:center;
+        display:inline-block;
+        width:100%;
+        min-height:auto;
+        height:94px;
     }
 }
 p.sorry{

@@ -47,7 +47,9 @@
         };
 
         self.enableFetch = function() {
-            fetchOn = true;
+            setTimeout(function(){
+                fetchOn = true;
+            },50);
         };
 
         self.disableFetch = function() {
@@ -70,7 +72,6 @@
 
         self.fetchError = function(collection, response) {
             self.enableFetch();
-
             self.options.error(collection, response);
         };
 

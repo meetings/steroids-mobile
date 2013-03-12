@@ -1,5 +1,6 @@
 // Progress bar
 div.bar.wrapper
     div.bar-container
-        div.text=timeleft
+        - if( progress_text )
+            div.text=progress_text
         div.bar(style='width:'+progress+'%')

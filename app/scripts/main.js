@@ -15,7 +15,8 @@ window.app = {
         cookievalid : 14 // in days
     },
     defaults : {
-        api_host : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://api-dev.meetin.gs' : 'https://api.meetin.gs',
+        api_host : 'https://api.meetin.gs',
+        //api_host : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://api-dev.meetin.gs' : 'https://api.meetin.gs',
         desktop_link : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://dev.meetin.gs/meetings_global/detect' : 'https://meetin.gs/meetings_global/detect',
         return_host : 'http://' + location.host
     },
@@ -57,6 +58,33 @@ window.app = {
             }, options);
             return originalSync(method, model, new_options);
         });
+
+        // Add click tracking to backbone
+        /*Backbone.View.prototype.delegateEvents = function(events) {
+            var delegateEventSplitter = /^(\S+)\s*(.*)$/;
+            if (!(events || (events = _.result(this, 'events')))) return;
+            this.undelegateEvents();
+            for (var key in events) {
+                var method = events[key];
+                if (!_.isFunction(method)) method = this[events[key]];
+                if (!method) throw new Error('Method "' + events[key] + '" does not exist');
+                var match = key.match(delegateEventSplitter);
+                var eventName = match[1], selector = match[2];
+                // Wrap method to add tracking
+                if( eventName == 'click'){
+                    method = _.wrap( method, function(method, e){
+                        meetings_tracker.track(e.currentTarget);
+                        method(e);
+                    });
+                }
+                eventName += '.delegateEvents' + this.cid;
+                if (selector === '') {
+                    this.$el.on(eventName, method);
+                } else {
+                    this.$el.on(eventName, selector, method );
+                }
+            }
+        };*/
 
         // Use fast clicks
         new FastClick(document.body);
@@ -117,12 +145,17 @@ window.app = {
             app.auth.user = user;
             app.auth.token = token;
             this._createAuthCookie();
-            /*var storage = this._getLocalStorage();
-            if ( storage ){
-                storage.setItem( "auth", { user : user, token : token } );
-                storage.auth.user = user;
-                storage.auth.token = token;
-            }*/
+            return true;
+        }
+        else{
+            return false;
+        }
+    },
+    _loginWithParams : function( user, token ){
+        if( user && token ){
+            app.auth.user = user;
+            app.auth.token = token;
+            this._createAuthCookie();
             return true;
         }
         else{
@@ -165,8 +198,8 @@ window.app = {
             setTimeout(function () { window.scrollBy(0, 1); }, 3000);
     },
     showContent: function(){
-        $('.content').show();
-        $('.loader').hide();
+        $('div.content').show();
+        $('div.loader').hide();
     }
 };
 

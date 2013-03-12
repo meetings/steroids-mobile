@@ -26,11 +26,8 @@ app.genericCollectionView = Backbone.View.extend({
         // Save options
         this.options = $.merge( options, this.defaults );
 
-        // Cache jQuery selector for parent element
-        this.el = $(this.el);
-
         // Initiate add buffer
-        this.addHtmlBuffer = '';
+        this.addHtmlBuffer = [];
 
         // Setup infinite scrolling
         if (this.options.infiniScroll){
@@ -40,7 +37,6 @@ app.genericCollectionView = Backbone.View.extend({
             this.infiniScroll = new Backbone.InfiniScroll(this.collection, {
                 success: function(col, res){ that.scrolledMore(col, res); },
                 onFetch: function(){
-                    this.view.showLoader();
                 },
                 direction: direction,
                 extraParams: extraParams,
@@ -95,26 +91,35 @@ app.genericCollectionView = Backbone.View.extend({
         if (this._rendered) {
 
             if( options.index === 0 || this.options.mode === 'addtotop' ) {
-                this.addHtmlBuffer = $(childView.render().el).outerHTML() + this.addHtmlBuffer;
+                //this.addHtmlBuffer = $(childView.render().el).outerHTML() + this.addHtmlBuffer;
+                this.addHtmlBuffer.push( childView.render().el );
                 this.delayedAdd();
             }
-            else this.el.append(childView.render().el);
+            else this.$el.append(childView.render().el);
 
-            this.el.listview("refresh");
-
-            if( this.options.mode === 'addtotop' ){
-                this.keepScrollPos();
-            }
+            this.$el.listview("refresh");
         }
     },
 
     // We want to add content to dom all at once, so underscores debounce is used to achieve this
     delayedAdd : _.debounce( function(){
+        // Make space for the incoming stuff
+        var $loader = $('li.loader',this.el);
+        if( this.options.mode === 'addtotop'){
+            var incoming_h = 102 * this.addHtmlBuffer.length;
+            var cur_h = this.$el.height();
+            this.$el.css('height', cur_h + incoming_h );
+            window.scrollBy(0, incoming_h );
+            $loader.after($(this.addHtmlBuffer));
+        }
+        else{
+            $loader.before($(this.addHtmlBuffer));
+        }
 
-        this.el.prepend(this.addHtmlBuffer);
-        this.addHtmlBuffer = '';
-        this.el.listview("refresh");
-
+        this.addHtmlBuffer = [];
+        this.$el.listview("refresh");
+        $loader.removeClass().addClass('loader'); // Clean jqm stuff
+        $('p',$loader).removeClass();
     },20),
 
     // Remove model from the collection
@@ -141,11 +146,11 @@ app.genericCollectionView = Backbone.View.extend({
     // Render the whole view
     render : function() {
 
-        this.el.html('');
+        this.$el.html('');
 
-        var s = this._childViews.length;
-        for (var i = 0; i < s ; i++ ){
-            this.el.append(this._childViews[i].render().el);
+        var l = this._childViews.length;
+        for (var i = 0; i < l ; i++ ){
+            this.$el.append(this._childViews[i].render().el);
         }
 
         // Call on render function
@@ -159,11 +164,22 @@ app.genericCollectionView = Backbone.View.extend({
         }
 
         // Call onEmpty if no results && not first render
-        if( ! s && this._rendered && typeof this.emptyString === 'string' ){
-            this.el.html( this.emptyString );
+        if( ! l && this._rendered && typeof this.emptyString === 'string' ){
+            this.$el.html( this.emptyString );
         }
 
-        this.el.listview("refresh");
+        this.$el.listview("refresh");
+
+        // Show loader if there was 10 meeitngs returned
+        if( this.options.infiniScroll && l == 10 ){
+            var loader = '<li class="loader"><span class="loader" ></span><p>Loading more...</p></li>';
+            if( this.options.mode === 'addtotop'){
+                this.$el.prepend( loader );
+            }
+            else{
+                this.$el.append( loader );
+            }
+        }
 
         this._rendered = true;
 
@@ -171,18 +187,16 @@ app.genericCollectionView = Backbone.View.extend({
     },
 
     scrolledMore : function(col, res) {
-        this.loader.remove();
-        if( this.options.mode === 'addtotop'){
-            window.scrollBy(0, 102 * res.length  );
-        }
         if( res.length < 10 ){
+            this.hideLoader();
             var msg = this.emptyString;
             var mode = this.options.mode;
-            var el = this.el;
+            var el = this.$el;
 
             // Allow time for the delayed render function to complete
             setTimeout(function(){
                 if( mode === 'addtotop'){
+                    window.scrollBy(0, 30);
                     el.prepend(msg);
                 }
                 else{
@@ -191,16 +205,11 @@ app.genericCollectionView = Backbone.View.extend({
             },500);
         }
     },
-    keepScrollPos : function(){
-        //window.scrollBy(0,102);
-    },
-    showLoader : function(){
-        this.loader = $('<li style="text-align:center;"><span class="loader" ></span><p>Loading more...</p></li>');
+    hideLoader : function(){
+        $('li.loader', this.el).hide();
         if( this.options.mode === 'addtotop'){
-            this.el.prepend(this.loader);
-        }
-        else{
-            this.el.append(this.loader);
+            window.scrollBy(0, -94);
+            this.$el.css('height', this.$el.height() - 94);
         }
     }
 });

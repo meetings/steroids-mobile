@@ -81,7 +81,7 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<div class="logo">\n  <h1 class="meetings-logo"></h1>\n</div>\n<div id="login-form" data-role="fieldcontain" class="ui-hide-label">\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Email"/><a data-theme="b" type="button" class="login">Request login link</a>\n  <p style="text-align:center;">OR</p><a data-theme="b" type="button" class="register">Register new account</a>\n</div>\n<div class="no-mobile-link"><a id="no-mobile" href="#">Switch to normal website</a></div>');
+        buf.push('\n<div class="logo">\n  <h1 class="meetings-logo"></h1>\n</div>\n<div id="login-form" data-role="fieldcontain"><a id="facebook-login" style="display:none;"></a>\n  <p style="display:none;" class="separator">OR</p>\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Enter your email address..."/>\n  <div class="controls"><a data-theme="b" type="button" class="login_or_register">Send</a></div>\n</div>\n<div id="pin-form" data-role="fieldcontain" class="pin-entry">\n  <div data-role="field-contain">\n    <table style="width:100%;">\n      <tr>\n        <td style="width:20%;">\n          <label for="pin">PIN:</label>\n        </td>\n        <td style="width:60%;">\n          <input id="pin" data-theme="b" type="text" name="pin" value="" placeholder="PIN..."/>\n        </td>\n      </tr>\n    </table><a data-theme="b" type="button" class="check-pin">Continue</a>\n  </div>\n</div>\n<div id="profile-form" data-role="field-contain">\n  <p>Profile form here</p>\n</div>\n<div class="no-mobile-link"><a id="no-mobile" href="#">Switch to normal website</a></div>');
     }
     return buf.join("");
 };
@@ -339,7 +339,10 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             });
             buf.push("\n      </div>");
         }
-        buf.push("</a></li>\n</ul>");
+        buf.push('</a></li>\n</ul>\n<!-- Materials-->\n<ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul>');
+        if (app.options.appmode) {
+            buf.push('<a href="#" data-role="button" class="add-photo-material">Add photo</a><img id="myImage"/>\n<div id="upload_progress"></div>\n<div style="display:none;" class="file-save-form">\n  <input id="file-upload-name" type="text" placeholder="Type filename here..."/>\n  <input id="file-upload-id" type="hidden"/><a href="#" data-role="button" style="display:none;" class="save-photo-material">Add to meeting</a>\n</div>\n<div style="display:none;" class="save-text">\n  <p>Saving material...</p>\n</div>');
+        }
     }
     return buf.join("");
 };
@@ -675,10 +678,14 @@ exports.progressBar = function anonymous(locals, attrs, escape, rethrow, merge) 
     with (locals || {}) {
         var interp;
         var __indent = [];
-        buf.push('\n<!-- Progress bar-->\n<div class="bar wrapper">\n  <div class="bar-container">\n    <div class="text">');
-        var __val__ = timeleft;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</div>\n    <div");
+        buf.push('\n<!-- Progress bar-->\n<div class="bar wrapper">\n  <div class="bar-container">');
+        if (progress_text) {
+            buf.push('\n    <div class="text">');
+            var __val__ = progress_text;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</div>");
+        }
+        buf.push("\n    <div");
         buf.push(attrs({
             style: "width:" + progress + "%",
             "class": "bar"

@@ -37,9 +37,17 @@ app.router = Backbone.Router.extend({
                     offset = $('#today').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
-                else{
+                else if( $('#future').length > 0 ){
                     offset = $('#future').offset();
                     window.scrollTo(0, offset.top - 50);
+                }
+                else if( $('#unscheduled').length > 0 ){
+                    offset = $('#unscheduled').offset();
+                    window.scrollTo(0, offset.top - 50);
+                }
+                else{
+                    offset = $('#past').offset();
+                    window.scrollTo(0, offset.bottom);
                 }
             }
             else{

@@ -24,8 +24,13 @@ app.panelView = Backbone.View.extend({
     },
     redirectFacebook : function(e){
         e.preventDefault();
-        var win=window.open('https://www.facebook.com/www.meetin.gs', '_blank');
-        win.focus();
+        if( app.options.appmode ) {
+            steroids.openURL("fb://profile/182909251746386");
+        }
+        else{
+            var win=window.open('https://www.facebook.com/www.meetin.gs', '_blank');
+            win.focus();
+        }
     },
     redirectTwitter : function(e){
         e.preventDefault();

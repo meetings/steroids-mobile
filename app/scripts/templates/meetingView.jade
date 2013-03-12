@@ -43,4 +43,16 @@ ul(data-role='listview',data-inset='true')
                                 span.rsvp.unknown
                     - })
 
+// Materials
+ul#materials_list(data-role="listview",data-inset="true",data-theme="a")
 
+- if( app.options.appmode )
+    a.add-photo-material(href='#',data-role="button") Add photo
+    img#myImage
+    div#upload_progress
+    div.file-save-form(style="display:none;")
+        input#file-upload-name(type="text",placeholder="Type filename here...")
+        input#file-upload-id(type="hidden")
+        a.save-photo-material(href='#',data-role="button",style="display:none;") Add to meeting
+    div.save-text(style="display:none;")
+        p Saving material...

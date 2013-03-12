@@ -58,11 +58,18 @@
           steroids.modal.hide();
         });
 
+      } else if (/login\.html/.test(window.location.href)) {
+        app.init();
       } else {
 
         // add listeners for triggering updates to preloaded views
         switch (window.location.href)
         {
+          case "http://localhost:13101/meeting.html":
+            window.addEventListener("message", function(event) {
+              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
+            });
+            break;
           case "http://localhost:13101/meeting.html":
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
@@ -180,8 +187,8 @@
     // Changed the implementation everywhere so that all the views have .content and .loader divs
     // .content is hidden by default and .loader is shown. Also moved show content to app.helpers
     hideContent: function(){
-        $('.content').hide();
-        $('.loader').show();
+        $('div.content').hide();
+        $('div.loader').show();
     },
 
     // clear events from preloaded views to prevent previous render events triggering

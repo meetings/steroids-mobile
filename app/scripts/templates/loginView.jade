@@ -1,9 +1,22 @@
 div.logo
     h1.meetings-logo
-div#login-form.ui-hide-label(data-role="fieldcontain")
-    input#email(data-theme="b",type="text",name="email",value="",placeholder="Email")
-    a.login(data-theme="b", type="button") Request login link
-    p(style="text-align:center;") OR
-    a.register(data-theme="b", type="button") Register new account
+div#login-form(data-role="fieldcontain")
+    a#facebook-login(style="display:none;")
+    p.separator(style="display:none;") OR
+    input#email(data-theme="b",type="text",name="email",value="",placeholder="Enter your email address...")
+    div.controls
+        a.login_or_register(data-theme="b", type="button") Send
+div#pin-form.pin-entry(data-role="fieldcontain")
+    div(data-role="field-contain")
+        table(style="width:100%;")
+            tr
+                td(style="width:20%;")
+                    label(for="pin") PIN:
+                td(style="width:60%;")
+                    input#pin(data-theme="b",type="text",name="pin",value="",placeholder="PIN...")
+        a.check-pin(data-theme="b", type="button") Continue
+
+div#profile-form(data-role="field-contain")
+    p Profile form here
 div.no-mobile-link
     a#no-mobile(href="#") Switch to normal website
