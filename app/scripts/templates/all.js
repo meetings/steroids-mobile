@@ -267,15 +267,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                 buf.push(escape(null == __val__ ? "" : __val__));
                 buf.push("</p>");
             } else {
-                buf.push('\n<p class="mtngs-location"><a');
-                buf.push(attrs({
-                    target: "_blank",
-                    href: "https://maps.google.com/maps?daddr=" + location
-                }, {
-                    target: true,
-                    href: true
-                }));
-                buf.push(">");
+                buf.push('\n<p class="mtngs-location"><a href="#" class="open-map-link">');
                 var __val__ = location;
                 buf.push(escape(null == __val__ ? "" : __val__));
                 buf.push("</a></p>");
@@ -454,7 +446,10 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
             "data-theme": true,
             "class": true
         }));
-        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li>\n  <li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li>\n  <li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li>\n  <li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li>\n  <li data-role="list-divider" data-theme="c">OTHER</li>\n  <li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li>\n  <li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li>\n  <li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li>\n</ul><a href="#" class="no-mobile">Switch to normal website</a>');
+        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li>\n  <li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li>\n  <li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li>\n  <li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li>\n  <li data-role="list-divider" data-theme="c">OTHER</li>\n  <li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li>\n  <li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li>\n  <li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li>\n</ul>');
+        if (!app.options.appmode) {
+            buf.push('<a href="#" class="no-mobile">Switch to normal website</a>');
+        }
     }
     return buf.join("");
 };

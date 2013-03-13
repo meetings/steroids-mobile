@@ -6,6 +6,7 @@ app.panelView = Backbone.View.extend({
 
     render : function() {
         this.$el.append( templatizer.panel( { active : this.menu_active } ) );
+        //this.$el.trigger('create');
     },
 
     events : {
@@ -20,12 +21,19 @@ app.panelView = Backbone.View.extend({
 
     openMeetings : function(e){
         e.preventDefault();
-        window.location = '/index.html';
+        if( app.options.appmode ){
+            //  Return to root window
+        }
+        else{
+            window.location = '/index.html';
+        }
     },
     redirectFacebook : function(e){
         e.preventDefault();
         if( app.options.appmode ) {
-            steroids.openURL("fb://profile/182909251746386");
+            //steroids.openURL("fb://profile/182909251746386");
+            app.openUrlSchemeLink('fb://profile/182909251746386','https://www.facebook.com/www.meetin.gs', 'Facebook' );
+            //openUrlSchemeLink : function(appurl,normurl,appname){
         }
         else{
             var win=window.open('https://www.facebook.com/www.meetin.gs', '_blank');

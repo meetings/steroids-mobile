@@ -197,6 +197,21 @@ window.app = {
         /mobile/i.test(navigator.userAgent) && !location.hash &&
             setTimeout(function () { window.scrollBy(0, 1); }, 3000);
     },
+    openUrlSchemeLink : function(appurl,normurl){
+        if( ! app.options.appmode ) {
+            var win=window.open(normurl, '_blank');
+            win.focus();
+            return;
+        }
+        document.location = appurl;
+        var time = (new Date()).getTime();
+        setTimeout(function(){
+            var now = (new Date()).getTime();
+            if((now-time) < 400) {
+                document.location = normurl;
+            }
+        }, 300);
+    },
     showContent: function(){
         $('div.content').show();
         $('div.loader').hide();
@@ -204,29 +219,38 @@ window.app = {
 };
 
 $(document).ready(function(){
+    // Open panel
+    $('div.main-div').swiperight(function(){
+        $( "#left-panel" ).panel( "open" );
+    });
 
-  // mobile app, do preloads & app inits etc.
-  if (app.options.appmode) {
+    // Close panel with click
+    $('div.ui-panel-content-wrap,div.ui-panel-dismiss').live('click', function(){
+        $( "#left-panel" ).panel( "close" );
+    });
 
-    AppGyver.init();
+    // Make swiping a bit harder
+    $.event.special.swipe.horizontalDistanceThreshold = 75;
 
-  // web based app, no preloads or such magick required
-  } else {
-    app.init();
 
-    // TODO: Fix swipes
-    $( document ).on( "swipeleft swiperight", function( e ) {
+    // mobile app, do preloads & app inits etc.
+    if (app.options.appmode) {
+        AppGyver.init();
+    } else {
+        app.init();
+        // TODO: Fix swipes
+        /*$( document ).on( "swipeleft swiperight", function( e ) {
         // We check if there is no open panel on the page because otherwise
         // a swipe to close the left panel would also open the right panel (and v.v.).
         // We do this by checking the data that the framework stores on the page element (panel: open).
         if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
-            if ( e.type === "swipeleft"  ) {
-                $( "#right-panel" ).panel( "open" );
-            } else if ( e.type === "swiperight" ) {
-                $( "#left-panel" ).panel( "open" );
-            }
-        }
-    });
-  }
+        if ( e.type === "swipeleft"  ) {
+        $( "#right-panel" ).panel( "open" );
+        } else if ( e.type === "swiperight" ) {
+        $( "#left-panel" ).panel( "open" );
+    }
+    }
+    });*/
+}
 });
 

@@ -93,7 +93,10 @@ app.loginView = Backbone.View.extend({
                 $form.fadeOut( function(){
                     $('#login-page').prepend('<p class="login-message">We\'ve sent you a PIN code to this address: ' + $mail_field.val() + '</p>').fadeIn();
                     $('#pin-form').fadeIn(function(){
-                        $('#pin').focus();
+                        setTimeout(function(){
+                            document.getElementById("pin").focus();
+                        },100);
+                        //$('#pin').focus();
                     });
                 });
             }

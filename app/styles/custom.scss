@@ -722,7 +722,7 @@ ul li h3.ui-li-heading{
 }
 
 /* Custom icons */
-.ui-btn-icon-notext{height:30px; width:30px; top:3px!important;}
+.ui-btn-icon-notext{height:30px; width:50px;}
 .ui-icon-mtngs-plus {
     @include retina-bg('/images/icon_plus', 'png', 18px, 18px);
     background-color:transparent;
@@ -760,7 +760,7 @@ h3.schedule {
     background-color:transparent;
     box-shadow:none;
     left:5px;
-    margin-left:6px !important;
+    margin-left:16px !important;
     margin-top:5px !important;
     border-radius:0px !important;
 }
@@ -770,7 +770,7 @@ h3.schedule {
     background-color:transparent;
     box-shadow:none;
     left:5px;
-    margin-left:6px !important;
+    margin-left:16px !important;
     margin-top:5px !important;
 }
 
@@ -793,7 +793,7 @@ h3.schedule {
     background-color:transparent;
     box-shadow:none;
     left:5px;
-    margin-left:6px !important;
+    margin-left:16px !important;
     margin-top:5px !important;
 }
 p.mtngs-calendar{

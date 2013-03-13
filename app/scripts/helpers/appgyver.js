@@ -10,32 +10,10 @@
         steroids.openURL(encodeURI($(this).attr("href")));
       });
 
-      // hijack panel links
-      /*$(document).on("click", "ul#side-bar a", function(e){
-        e.preventDefault();
-        // should these open to browser or to modal or what?
-        var view = new steroids.views.WebView(window.location.origin+"/"+$(this).attr("href"));
-        // for now open modal
-        steroids.modal.show(view);
-      });*/
-
       // handle preload views
       // and init index.html,
       // preloads are initted when used the first time by AppGyver.refreshPreload function
       if (/index\.html/.test(window.location.href)) {
-
-        $( document ).on( "swipeleft swiperight", function( e ) {
-            // We check if there is no open panel on the page because otherwise
-            // a swipe to close the left panel would also open the right panel (and v.v.).
-            // We do this by checking the data that the framework stores on the page element (panel: open).
-            if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
-                if ( e.type === "swipeleft"  ) {
-                    $( "#right-panel" ).panel( "open" );
-                } else if ( e.type === "swiperight" ) {
-                    $( "#left-panel" ).panel( "open" );
-                }
-            }
-        });
 
         // wait for steroids to be ready (api bridge)
         steroids.on("ready", function(){
@@ -145,9 +123,6 @@
       } else {
         steroids.layers.push(options, {onSuccess: removeActive});
       }
-
-
-
     },
 
     // this could actually be implemented using backbone model changing etc.

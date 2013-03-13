@@ -36,7 +36,16 @@ app.meetingView = Backbone.View.extend({
         'click .open-material-view' : 'openMaterialView',
         'click .open-participant-view' : 'openParticipantView',
         'click .add-photo-material' : 'addPhotoMaterial',
-        'click .save-photo-material' : 'savePhotoMaterial'
+        'click .save-photo-material' : 'savePhotoMaterial',
+        'click .open-map-link' : 'openMapLink'
+    },
+
+    openMapLink : function(e){
+        e.preventDefault();
+        var location = this.model.get('location');
+        var appurl = "maps:q="+location;
+        var normurl = "https://maps.google.com/maps?daddr="+location;
+        app.openUrlSchemeLink( appurl, normurl );
     },
 
     savePhotoMaterial : function(e){
