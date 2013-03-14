@@ -84,8 +84,6 @@
             });
             break;
         }
-
-
       }
     },
 
@@ -116,7 +114,7 @@
         modal.id = preloadId;
         steroids.modal.show({
           view: modal,
-          keepLoading: true
+          keepLoading: false
           },{
             onSuccess: removeActive
         });
@@ -142,6 +140,7 @@
 
       } else {
 
+          //router.navigate( url, { trigger : true, replace : true } );
         if (window.location.href === url) {
 
           app.showContent();

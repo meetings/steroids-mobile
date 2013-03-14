@@ -847,7 +847,7 @@ p.mtngs-linkedin{
 
 
 // Panel styles
-.ui-panel-inner{
+#side-bar{
     // Fix texts & borders & active
     .ui-btn{
         font-weight:300 !important;
@@ -877,9 +877,11 @@ p.mtngs-linkedin{
 }
 div#left-panel{
     a.no-mobile{
+        position:absolute;
+        width:90%;
+        bottom:15px;
         display:block;
         text-align:center;
-        margin-top:25px;
         font-weight:300 !important;
         font-size:14px !important;
     }

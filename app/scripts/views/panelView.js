@@ -5,8 +5,14 @@ app.panelView = Backbone.View.extend({
     },
 
     render : function() {
-        this.$el.append( templatizer.panel( { active : this.menu_active } ) );
-        //this.$el.trigger('create');
+        if( this.$el.hasClass('rendered') ) return;
+        this.$el.html( templatizer.panel( { active : this.menu_active } ) );
+        this.$el.addClass('rendered');
+
+        // Hack to get panel working in subviews on the mobile side
+        this.$el.page();
+        this.$el.removeClass('ui-page');
+        $('.ui-btn-active',this.el).removeClass('ui-btn-active');
     },
 
     events : {
@@ -22,7 +28,8 @@ app.panelView = Backbone.View.extend({
     openMeetings : function(e){
         e.preventDefault();
         if( app.options.appmode ){
-            //  Return to root window
+            $('#left-panel').panel('close');
+            steroids.layers.popAll();
         }
         else{
             window.location = '/index.html';
@@ -31,9 +38,7 @@ app.panelView = Backbone.View.extend({
     redirectFacebook : function(e){
         e.preventDefault();
         if( app.options.appmode ) {
-            //steroids.openURL("fb://profile/182909251746386");
             app.openUrlSchemeLink('fb://profile/182909251746386','https://www.facebook.com/www.meetin.gs', 'Facebook' );
-            //openUrlSchemeLink : function(appurl,normurl,appname){
         }
         else{
             var win=window.open('https://www.facebook.com/www.meetin.gs', '_blank');
