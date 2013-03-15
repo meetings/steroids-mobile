@@ -154,8 +154,7 @@ app.router = Backbone.Router.extend({
             app.showContent();
         });
 
-        if (app.options.appmode) {
-            // Cleanup zombie events
+        if (app.options.build !== 'web') {
             AppGyver.cleanBackboneZombieEvents();
         }
 
@@ -203,9 +202,8 @@ app.router = Backbone.Router.extend({
     },
 
     scheduling : function(params) {
-        if (app.options.appmode) {
-          // Cleanup zombie events
-          AppGyver.cleanBackboneZombieEvents();
+        if (app.options.build !== 'web') {
+            AppGyver.cleanBackboneZombieEvents();
         }
 
         // Get url params
@@ -235,9 +233,8 @@ app.router = Backbone.Router.extend({
     },
 
     participants : function(params) {
-        if (app.options.appmode) {
-          // Cleanup zombie events
-          AppGyver.cleanBackboneZombieEvents();
+        if (app.options.build !== 'web') {
+            AppGyver.cleanBackboneZombieEvents();
         }
 
         // Render panel
@@ -261,7 +258,7 @@ app.router = Backbone.Router.extend({
 
     participant : function(params) {
 
-        if (app.options.appmode) {
+        if (app.options.build !== 'web') {
           // Cleanup zombie events
           AppGyver.cleanBackboneZombieEvents();
         }
@@ -293,7 +290,7 @@ app.router = Backbone.Router.extend({
             app.showContent();
         });
 
-        if (app.options.appmode) {
+        if (app.options.build !== 'web') {
             // Cleanup zombie events
             AppGyver.cleanBackboneZombieEvents();
         }

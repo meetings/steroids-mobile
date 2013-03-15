@@ -21,8 +21,8 @@ window.app = {
         return_host : 'http://' + location.host
     },
     options: {
-        // Appmode will be true if we are building as an app
-        appmode : window.normal_app_version ? false : true
+        // Appmode will be web, ios or android
+        build : window.build_mode
     },
     models : {},
     collections : {},
@@ -198,7 +198,7 @@ window.app = {
             setTimeout(function () { window.scrollBy(0, 1); }, 3000);
     },
     openUrlSchemeLink : function(appurl,normurl){
-        if( ! app.options.appmode ) {
+        if( app.options.build === 'web' ) {
             var win=window.open(normurl, '_blank');
             win.focus();
             return;
@@ -232,25 +232,11 @@ $(document).ready(function(){
     // Make swiping a bit harder
     $.event.special.swipe.horizontalDistanceThreshold = 75;
 
-
     // mobile app, do preloads & app inits etc.
-    if (app.options.appmode) {
-        AppGyver.init();
-    } else {
+    if (app.options.build === 'web') {
         app.init();
-        // TODO: Fix swipes
-        /*$( document ).on( "swipeleft swiperight", function( e ) {
-        // We check if there is no open panel on the page because otherwise
-        // a swipe to close the left panel would also open the right panel (and v.v.).
-        // We do this by checking the data that the framework stores on the page element (panel: open).
-        if ( $.mobile.activePage.jqmData( "panel" ) !== "open" ) {
-        if ( e.type === "swipeleft"  ) {
-        $( "#right-panel" ).panel( "open" );
-        } else if ( e.type === "swiperight" ) {
-        $( "#left-panel" ).panel( "open" );
+    } else {
+        AppGyver.init();
     }
-    }
-    });*/
-}
 });
 

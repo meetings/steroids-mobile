@@ -114,7 +114,7 @@ app.schedulingView = Backbone.View.extend({
         $('#confirm-option span span').html('Saving...');
         this.model.save({ chosen_proposal_id : this.chosen_option }, {success : function(res){
           $('#confirm-option span span').html('Done.');
-          if ( app.options.appmode ) {
+          if ( app.options.build !== 'web' ) {
 
             //setTimeout(function(){ AppGyver.hideContent() }, 100)
 
@@ -145,7 +145,7 @@ app.schedulingView = Backbone.View.extend({
         app.models.meeting_user.save({},{ success : function(res){
             $('#save-options span span').html('Done.');
             // TODO: navigation inside app?
-            if ( app.options.appmode ) {
+            if ( app.options.build !== 'web' ) {
 
               setTimeout(function(){ AppGyver.hideContent(); }, 100);
 

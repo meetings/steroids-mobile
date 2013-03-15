@@ -14,12 +14,9 @@ app.meetingInListView = Backbone.View.extend({
     },
 
     openMeeting : function(e){
-
-        if ( app.options.appmode ) {
+        if ( app.options.build !== 'web' ) {
           e.preventDefault();
           AppGyver.openPreload("meetingPage", {id: this.model.id});
         }
-
-
     }
 });

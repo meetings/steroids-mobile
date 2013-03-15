@@ -10,7 +10,7 @@ app.loginView = Backbone.View.extend({
     },
     render: function() {
         this.$el.html( templatizer.loginView() );
-        if( app.options.appmode ) this.$el.addClass('app-mode');
+        if( app.options.build !== 'web' ) this.$el.addClass('app-mode');
     },
     events: {
         'click .login_or_register' : 'loginOrRegister',

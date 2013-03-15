@@ -121,7 +121,7 @@ app.meetingView = Backbone.View.extend({
     },
 
     openMaterialView : function(e){
-        if ( app.options.appmode ) {
+        if ( app.options.build !== 'web' ) {
             e.preventDefault();
             AppGyver.openPreload("materialsPage", {id: this.model.get('id')});
         } else {
@@ -130,7 +130,7 @@ app.meetingView = Backbone.View.extend({
     },
 
     openParticipantView : function(e){
-        if ( app.options.appmode ) {
+        if ( app.options.build !== 'web' ) {
             e.preventDefault();
             AppGyver.openPreload("participantsPage", {id: this.model.get('id')});
         } else {

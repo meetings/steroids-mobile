@@ -12,15 +12,16 @@ Installs yeoman
 Which installs compass
 
 
-# Building
+# Building for the web
 
-	yeoman normal
+	yeoman web
 
-## AppGyver Build
+## AppGyver builds
 
-	yeoman mobile
+	yeoman ios
+    yeoman android
 
-Creates build to agapp directory
+Creates build desired build to agapp directory
 
 ## Developing
 
@@ -28,13 +29,13 @@ Creates build to agapp directory
 
 ## Mobile app developing
 
-  yeoman mobile
+  yeoman ios || android
 
   cd agapp
 
   steroids connect
 
-When you want to push new build to steroids scanner, run 'yeoman mobile' again and trigger steroids connects update (press enter in terminal that runs steroids connect)
+When you want to push new build to steroids scanner, run 'yeoman ios || android' again and trigger steroids connects update (press enter in terminal that runs steroids connect)
 
 
 

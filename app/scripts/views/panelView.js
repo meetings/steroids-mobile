@@ -27,7 +27,7 @@ app.panelView = Backbone.View.extend({
 
     openMeetings : function(e){
         e.preventDefault();
-        if( app.options.appmode ){
+        if( app.options.build !== 'web' ){
             $('#left-panel').panel('close');
             steroids.layers.popAll();
         }
@@ -37,7 +37,7 @@ app.panelView = Backbone.View.extend({
     },
     redirectFacebook : function(e){
         e.preventDefault();
-        if( app.options.appmode ) {
+        if( app.options.build !== 'web' ) {
             app.openUrlSchemeLink('fb://profile/182909251746386','https://www.facebook.com/www.meetin.gs', 'Facebook' );
         }
         else{

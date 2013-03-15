@@ -37,7 +37,7 @@ app.nextActionView = Backbone.View.extend({
     },
     answerScheduling : function(e){
         e.preventDefault();
-        if ( app.options.appmode ) {
+        if ( app.options.build !== 'web' ) {
 
           AppGyver.openPreload("schedulingPage", {path: '/scheduling.html?id=' + app.models.meeting.get('id')});
 
@@ -47,7 +47,7 @@ app.nextActionView = Backbone.View.extend({
     },
     openChooseDate : function(e){
         e.preventDefault();
-        if ( app.options.appmode ) {
+        if ( app.options.build !== 'web' ) {
 
           AppGyver.openPreload("schedulingPage", {path: '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id')});
 

@@ -43,7 +43,12 @@ steroids.config.name = "New Application"
 #   - http://www.google.com (directly from internet)
 
 #steroids.config.location = "http://localhost/index.html?redirect_to_meeting=0&dic=v1_e_3028_0_0_IGsCa471H9O2lj4RQLGyIoD_ya4&user_id=3028"
+<!-- start build include: ios -->
 steroids.config.location = "http://localhost/login.html"
+<!-- stop build include -->
+<!-- start build include: android -->
+steroids.config.location = "login.html"
+<!-- stop build include -->
 
 # -- Tabs --
 #

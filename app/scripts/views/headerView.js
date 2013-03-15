@@ -4,7 +4,6 @@ app.headerView = Backbone.View.extend({
     },
 
     render: function() {
-        console.log(this.$el);
     },
 
     events: {
@@ -14,18 +13,13 @@ app.headerView = Backbone.View.extend({
     navigateBack : function(e){
       e.preventDefault();
 
-      if ( app.options.appmode ) {
-
-        setTimeout(function(){ AppGyver.hideContent(); }, 100);
-
-        steroids.layers.pop();
-
+      if ( app.options.build !== 'web' ) {
+          setTimeout(function(){ AppGyver.hideContent(); }, 100);
+          steroids.layers.pop();
       } else if ( $('.back-button').attr('href') !== '#' ){
-        window.location = $('.back-button').attr('href');
-
+          window.location = $('.back-button').attr('href');
       } else {
-        history.go(-1);
-
+          history.go(-1);
       }
     }
 });

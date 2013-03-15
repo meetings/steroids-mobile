@@ -19,7 +19,7 @@ app.materialView = Backbone.View.extend({
 
           $('#download-link').attr('href', this.model.get('download_url'));
 
-          if( app.options.appmode ) {
+          if( app.options.build !== 'web' ) {
             $('#download-link').on("click", function(e){
               e.preventDefault();
               steroids.openURL(encodeURI($(this).attr("href")));

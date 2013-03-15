@@ -27,5 +27,5 @@ ul#side-bar(data-role="listview",data-theme="c")
         a#nav-logout(href="settings.html",data-transition="fade")
             span.ui-icon.menu-icon-logout
             | Logout
-- if( ! app.options.appmode )
+- if( app.options.build === 'web' )
     a.no-mobile(href="#") Switch to normal website

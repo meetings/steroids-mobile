@@ -332,7 +332,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push("\n      </div>");
         }
         buf.push('</a></li>\n</ul>\n<!-- Materials-->\n<ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul>');
-        if (app.options.appmode) {
+        if (app.options.build !== "web") {
             buf.push('<a href="#" data-role="button" class="add-photo-material">Add photo</a><img id="myImage"/>\n<div id="upload_progress"></div>\n<div style="display:none;" class="file-save-form">\n  <input id="file-upload-name" type="text" placeholder="Type filename here..."/>\n  <input id="file-upload-id" type="hidden"/><a href="#" data-role="button" style="display:none;" class="save-photo-material">Add to meeting</a>\n</div>\n<div style="display:none;" class="save-text">\n  <p>Saving material...</p>\n</div>');
         }
     }
@@ -447,7 +447,7 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
             "class": true
         }));
         buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li>\n  <li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li>\n  <li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li>\n  <li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li>\n  <li data-role="list-divider" data-theme="c">OTHER</li>\n  <li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li>\n  <li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li>\n  <li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li>\n</ul>');
-        if (!app.options.appmode) {
+        if (app.options.build === "web") {
             buf.push('<a href="#" class="no-mobile">Switch to normal website</a>');
         }
     }

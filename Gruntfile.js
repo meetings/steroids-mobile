@@ -183,12 +183,13 @@ module.exports = function( grunt ) {
   grunt.registerTask('test', 'mocha');
 
   // Custom task for building the app version
-  grunt.registerTask('mobile','build mobile_build mv_files');
-  grunt.registerTask('normal','build normal_build');
+  grunt.registerTask('ios','templatizer build ios_build');
+  grunt.registerTask('android','templatizer build android_build');
+  grunt.registerTask('web','templatizer build web_build');
 
 
   /* previous perl script was failing at random, use this instead */
-  var buildifyHTML = function(buildType, html){
+  var buildifyFile = function(buildType, html){
 
     var startExp      = new RegExp("<!-- start build include: \\S* -->"),
         endExp        = new RegExp("<!-- stop build include -->"),
@@ -229,35 +230,10 @@ module.exports = function( grunt ) {
     });
     // return merged string with line breaks
     return content.join("\n");
-  }
+  };
 
-
-  grunt.registerTask('mobile_build', 'Processes html build comments', function() {
-
-      grunt.file.expand('dist/*.html').forEach(function(path){
-        var fullPath = __dirname + '/' + path,
-            preBuildContent = grunt.file.read(fullPath);
-
-        grunt.file.write(fullPath, buildifyHTML("mobile", preBuildContent));
-
-      });
-
-  });
-
-  grunt.registerTask('normal_build', 'Processes html build comments', function() {
-    grunt.file.expand('dist/*.html').forEach(function(path){
-      var fullPath = __dirname + '/' + path,
-          preBuildContent = grunt.file.read(fullPath);
-
-      grunt.file.write(fullPath, buildifyHTML("normal", preBuildContent));
-
-    });
-  });
-
-
-  grunt.registerTask('mv_files', 'Moves the dist folder to agapp/www', function() {
+   var mvFiles = function( cb ) {
       var exec = require('child_process').exec;
-      var done = this.async();
       var fs = require('fs');
 
       // empty scripts dir that yeoman pollutes
@@ -279,19 +255,52 @@ module.exports = function( grunt ) {
               // cleanup scss files because sass compilation in steroids fails for some rules in them
               // and they are useless files for build anyways
               grunt.file.expand('agapp/www/**/*.scss').forEach(function(path){
-                console.log("Removed SCSS: " + __dirname + '/' + path)
-                fs.unlinkSync(__dirname + '/' + path)
+                console.log("Removed SCSS: " + __dirname + '/' + path);
+                fs.unlinkSync(__dirname + '/' + path);
               });
-              done(); // just ensure async operations above get run
+              cb();
             });
           });
-
-
         });
-
       });
+  };
 
+  grunt.registerTask('ios_build', 'Processes html build comments', function() {
+      var done = this.async();
+      grunt.file.expand('dist/*.html').forEach(function(path){
+          var fullPath = __dirname + '/' + path;
+          var preBuildContent = grunt.file.read(fullPath);
+          grunt.file.write(fullPath, buildifyFile("ios", preBuildContent));
+      });
+      mvFiles(function(){
+          var fullPath = __dirname + '/' +'agapp/config/application.coffee';
+          var preBuildContent = grunt.file.read(fullPath);
+          grunt.file.write(fullPath, buildifyFile("ios", preBuildContent));
+          done();
+      });
+  });
 
+  grunt.registerTask('android_build', 'Processes html build comments', function() {
+      var done = this.async();
+      grunt.file.expand('dist/*.html').forEach(function(path){
+          var fullPath = __dirname + '/' + path;
+          var preBuildContent = grunt.file.read(fullPath);
+          grunt.file.write(fullPath, buildifyFile("android", preBuildContent));
+      });
+      mvFiles(function(){
+          var fullPath = __dirname + '/' +'agapp/config/application.coffee';
+          var preBuildContent = grunt.file.read(fullPath);
+          grunt.file.write(fullPath, buildifyFile("android", preBuildContent));
+          done();
+      });
+  });
+
+  grunt.registerTask('web_build', 'Processes html build comments', function() {
+      grunt.file.expand('dist/*.html').forEach(function(path){
+          var fullPath = __dirname + '/' + path;
+          var preBuildContent = grunt.file.read(fullPath);
+          grunt.file.write(fullPath, buildifyFile("web", preBuildContent));
+    });
   });
 
   // Do the nesessary modifications

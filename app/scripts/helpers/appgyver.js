@@ -4,6 +4,8 @@
   window.AppGyver = {
 
     init: function(){
+        var path = app.options.build === 'ios' ? 'http://localhost:13101' : '';
+
       // open target blank links, material contents and profile linkedn  in safari
       $(document).on("click", "a[target='_blank'], li#material_content > a, p.mtngs-linkedin > a", function(e){
         e.preventDefault();
@@ -17,12 +19,12 @@
 
         // wait for steroids to be ready (api bridge)
         steroids.on("ready", function(){
-          AppGyver.preload("http://localhost:13101/meeting.html", "meetingPage");
-          AppGyver.preload("http://localhost:13101/participants.html", "participantsPage");
-          AppGyver.preload("http://localhost:13101/participant.html", "participantPage");
-          AppGyver.preload("http://localhost:13101/materials.html", "materialsPage");
-          AppGyver.preload("http://localhost:13101/material.html", "materialPage");
-          AppGyver.preload("http://localhost:13101/scheduling.html", "schedulingPage");
+          AppGyver.preload(path + "/meeting.html", "meetingPage");
+          AppGyver.preload(path + "/participants.html", "participantsPage");
+          AppGyver.preload(path + "/participant.html", "participantPage");
+          AppGyver.preload(path + "/materials.html", "materialsPage");
+          AppGyver.preload(path + "/material.html", "materialPage");
+          AppGyver.preload(path + "/scheduling.html", "schedulingPage");
         });
 
         app.init();
@@ -43,32 +45,32 @@
         // add listeners for triggering updates to preloaded views
         switch (window.location.href)
         {
-          case "http://localhost:13101/meeting.html":
+          case path + "/meeting.html":
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
             });
             break;
-          case "http://localhost:13101/meeting.html":
+          case path + "/meeting.html":
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
             });
             break;
-          case "http://localhost:13101/participants.html":
+          case path + "/participants.html":
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "participantsPage") AppGyver.refreshPreload(event.data.urlParams.id);
             });
             break;
-          case "http://localhost:13101/participant.html":
+          case path + "/participant.html":
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "participantPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
             });
             break;
-          case "http://localhost:13101/materials.html":
+          case path + "/materials.html":
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "materialsPage") AppGyver.refreshPreload(event.data.urlParams.id);
             });
             break;
-          case "http://localhost:13101/material.html":
+          case path + "/material.html":
             // override 'close' to close modal, not go back popping layer
             $(".back-button ").off().on("click", function(e){
               e.preventDefault();
@@ -78,7 +80,7 @@
               if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
             });
             break;
-          case "http://localhost:13101/scheduling.html":
+          case path + "/scheduling.html":
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "schedulingPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
             });

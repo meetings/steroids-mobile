@@ -13,7 +13,7 @@ app.materialInListView = Backbone.View.extend({
     },
 
     openMaterial : function(e){
-      if( app.options.appmode ) {
+      if( app.options.build !== 'web' ) {
         e.preventDefault();
         AppGyver.openPreload("materialPage", {path: this.model.show_url}, true);
       } else {

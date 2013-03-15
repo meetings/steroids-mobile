@@ -11,7 +11,7 @@ app.participantInListView = Backbone.View.extend({
     },
 
     openParticipant: function(e){
-      if( app.options.appmode ) {
+      if( app.options.build !== 'web' ) {
         e.preventDefault();
         AppGyver.openPreload("participantPage", {path: this.model.show_url});
       } else {

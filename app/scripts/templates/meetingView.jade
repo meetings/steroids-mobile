@@ -46,7 +46,7 @@ ul(data-role='listview',data-inset='true')
 // Materials
 ul#materials_list(data-role="listview",data-inset="true",data-theme="a")
 
-- if( app.options.appmode )
+- if( app.options.build !== 'web' )
     a.add-photo-material(href='#',data-role="button") Add photo
     img#myImage
     div#upload_progress
