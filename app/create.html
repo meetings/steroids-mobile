@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html class="disable-touch-select" lang="en" manifest="manifest.appcache">
+<html lang="en" manifest="manifest.appcache">
     <head>
-        <title>Meetings | Meetin.gs</title>
+        <title>Create a meeting | Meetin.gs</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,77 +31,55 @@
         </script>
         <!-- stop build include -->
 
-
         <!-- build:js scripts/scripts.js -->
         <script src="scripts/vendor/jquery.min.js"></script>
         <script src="scripts/main.js"></script>
         <script src="scripts/helpers/appgyver.js"></script>
         <script src="scripts/vendor/jqm.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
-        <script src="scripts/vendor/modernizr.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
-        <script src="scripts/vendor/infiniscroll.js"></script>
-        <script src="scripts/vendor/fastclick.js"></script>
         <script src="scripts/vendor/backbone-query-params.js"></script>
         <script src="scripts/vendor/moment.js"></script>
-        <script src="scripts/views/commentInListView.js"></script>
+        <script src="scripts/vendor/modernizr.js"></script>
+        <script src="scripts/vendor/fastclick.js"></script>
         <script src="scripts/views/meetingInListView.js"></script>
+        <script src="scripts/views/panelView.js"></script>
         <script src="scripts/views/meetingView.js"></script>
         <script src="scripts/views/participantInListView.js"></script>
         <script src="scripts/views/materialInListView.js"></script>
-        <script src="scripts/views/materialView.js"></script>
-        <script src="scripts/views/loginView.js"></script>
         <script src="scripts/views/participantView.js"></script>
-        <script src="scripts/views/genericCollectionView.js"></script>
-        <script src="scripts/views/upcomingMeetingsView.js"></script>
-        <script src="scripts/views/unscheduledMeetingsView.js"></script>
-        <script src="scripts/views/schedulingView.js"></script>
         <script src="scripts/views/createView.js"></script>
-        <script src="scripts/views/todayMeetingsView.js"></script>
-        <script src="scripts/views/settingsView.js"></script>
-        <script src="scripts/views/panelView.js"></script>
-        <script src="scripts/views/commentListView.js"></script>
+        <script src="scripts/views/genericCollectionView.js"></script>
         <script src="scripts/views/nextActionView.js"></script>
         <script src="scripts/views/headerView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
         <script src="scripts/models/participantModel.js"></script>
-        <script src="scripts/models/commentModel.js"></script>
         <script src="scripts/collections/meetingCollection.js"></script>
-        <script src="scripts/collections/commentCollection.js"></script>
         <script src="scripts/collections/materialCollection.js"></script>
-        <script src="scripts/collections/participantCollection.js"></script>
         <script src="scripts/routes/router.js"></script>
         <script src="scripts/templates/all.js"></script>
         <!-- endbuild -->
+
     </head>
 <body>
     <!-- Meetings listing -->
     <div data-role="page" id="meetings" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
-            <a id="open-left-panel" href="#left-panel" data-icon="mtngs-panel" data-iconpos="notext" data-theme="b"></a>
-            <h1>Meetin.gs</h1>
-            <a id="create-meeting" href="create.html" data-icon="mtngs-meeting" data-iconpos="notext" data-theme="b"></a>
+            <a class="back-button" href="#" data-icon="mtngs-back" data-theme="b" >Back</a>
+            <h1>Meeting title</h1>
         </div>
-        <div class="main-div" data-role="content" >
+        <div class="main-div" data-role="content">
             <div class="loader">
                 <span class="loader"></span>
             </div>
             <div class="content">
-                <ul id="past" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="today" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="unscheduled" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="future" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
+                <div id="create">
+                </div>
             </div>
-        </div><!-- /content -->
-        <div data-role="panel" data-position-fixed="true" id="left-panel" data-theme="c">
-            <!-- panel content goes here -->
+        </div>
+        <div data-role="panel" data-position-fixed="true" id="left-panel">
         </div><!-- /panel -->
-
     </div><!-- /page -->
     <script type="text/javascript" charset="utf-8">
 var _gaq = _gaq || [];
@@ -113,5 +91,6 @@ _gaq.push(['_trackPageview']);
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
     </script>
-</body>
+
+    </body>
 </html>

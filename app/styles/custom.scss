@@ -774,6 +774,15 @@ h3.schedule {
     margin-top:5px !important;
 }
 
+.ui-icon-mtngs-meeting {
+    @include retina-bg('/images/icon_plus', 'png', 18px, 18px);
+    background-color:transparent;
+    box-shadow:none;
+    left:5px;
+    margin-left:16px !important;
+    margin-top:5px !important;
+}
+
 .ui-icon-mtngs-back {
     @include retina-bg('/images/icon_back', 'png', 18px, 18px);
     background-color:transparent;
@@ -1011,5 +1020,29 @@ div#comment-box{
             background-image:      -o-linear-gradient( #6cdaf6 , #63c1db );
             background-image:linear-gradient( #6cdaf6 , #63c1db );
         }
+    }
+}
+
+// Create meeting page
+div#create{
+    div.ui-field-contain{
+        margin:0 auto 0;
+        width:268px;
+    }
+    div.ui-input-text{
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+        box-sizing: border-box; 
+        /*padding-left:0px;*/
+        /*padding-right:0px;*/
+    }
+    div.ui-input-text{
+        width:100%;
+        border: 1px solid silver;
+        border-radius:4px;
+        -webkit-border-radius:4px;
+        -moz-border-radius:4px;
+        padding:0 0.8em;
     }
 }

@@ -11,7 +11,8 @@ app.router = Backbone.Router.extend({
         "materials.html" : "materials",
         "participant.html" : "participant",
         "material.html" : "material",
-        "scheduling.html" : "scheduling"
+        "scheduling.html" : "scheduling",
+        "create.html" : "create"
     },
     meetings : function() {
 
@@ -322,5 +323,22 @@ app.router = Backbone.Router.extend({
         app.collections.comments.fetch({ success : function(){
             commentsFetch.resolve();
         }});
-    }
+    },
+
+    create : function(params) {
+        if (app.options.build !== 'web') {
+            AppGyver.cleanBackboneZombieEvents();
+        }
+
+        // Render panel
+        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+        app.views.header = new app.headerView({ el : '#meetings' });
+        app.views.panel.render();
+
+        app.views.create = new app.createView({
+            el : $('#create')
+        });
+        app.views.create.render();
+        app.showContent();
+    },
 });
