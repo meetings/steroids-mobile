@@ -1025,10 +1025,6 @@ div#comment-box{
 
 // Create meeting page
 div#create{
-    div.ui-field-contain{
-        margin:0 auto 0;
-        width:268px;
-    }
     div.ui-input-text{
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -1044,5 +1040,10 @@ div#create{
         -webkit-border-radius:4px;
         -moz-border-radius:4px;
         padding:0 0.8em;
+    }
+    p.separator{
+        text-align:center;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.3);
+        font-size:13px;
     }
 }

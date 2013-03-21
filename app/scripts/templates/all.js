@@ -68,8 +68,8 @@ exports.confirmSchedulingChoose = function anonymous(locals, attrs, escape, reth
     return buf.join("");
 };
 
-// createView.jade compiled template
-exports.createView = function anonymous(locals, attrs, escape, rethrow, merge) {
+// createStep1View.jade compiled template
+exports.createStep1View = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
     escape = escape || jade.escape;
     rethrow = rethrow || jade.rethrow;
@@ -77,7 +77,51 @@ exports.createView = function anonymous(locals, attrs, escape, rethrow, merge) {
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="create-form" data-role="fieldcontain"><input id="meeting-title" data-theme="b" type="text" name="meeting-title" value="" placeholder="Meeting title"/><div class="controls"><a data-theme="b" type="button" class="continue">Continue</a></div></div>');
+        buf.push('<ul id="errors"></ul><div id="create-form" data-role="fieldcontain"><input');
+        buf.push(attrs({
+            id: "meeting-title",
+            "data-theme": "b",
+            type: "text",
+            name: "meeting-title",
+            value: title,
+            placeholder: "Meeting title"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/><div class="controls"><a id="submitStep1" data-theme="b" type="button" class="continue">Continue</a></div></div>');
+    }
+    return buf.join("");
+};
+
+// createStep2View.jade compiled template
+exports.createStep2View = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<ul id="errors"></ul><div id="create-form" data-role="fieldcontain"><input');
+        buf.push(attrs({
+            id: "meeting-location",
+            "data-theme": "b",
+            type: "text",
+            name: "meeting-location",
+            value: location,
+            placeholder: "Meeting location"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/><div class="controls"><a id="submitStep2" data-theme="b" type="button" class="continue">Continue</a></div><p class="separator">OR</p><div class="controls"><a id="submitStep2" data-theme="b" type="button" class="continue">Meeting is online</a></div></div>');
     }
     return buf.join("");
 };
