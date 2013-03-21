@@ -1,7 +1,9 @@
 {
   "author": "",
-  "name": "",
+  "name": "meetings",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+	"templatizer": "x"
+  },
   "devDependencies": {}
 }
