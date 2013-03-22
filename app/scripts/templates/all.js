@@ -68,8 +68,8 @@ exports.confirmSchedulingChoose = function anonymous(locals, attrs, escape, reth
     return buf.join("");
 };
 
-// createStep1View.jade compiled template
-exports.createStep1View = function anonymous(locals, attrs, escape, rethrow, merge) {
+// createStepCommunicationsView.jade compiled template
+exports.createStepCommunicationsView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
     escape = escape || jade.escape;
     rethrow = rethrow || jade.rethrow;
@@ -77,14 +77,28 @@ exports.createStep1View = function anonymous(locals, attrs, escape, rethrow, mer
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="errors"></ul><div id="create-form" data-role="fieldcontain"><input');
+        buf.push('<div id="create-form"><p>Choose live communication tool:</p><div class="controls ui-grid-a"><div class="ui-block-a"><a id="submitStepCommunicationsSkype" data-theme="b" data-role="button" data-icon="mtngs-skype">Skype</a></div><div class="ui-block-b"><a id="submitStepCommunications" data-theme="b" data-role="button" data-icon="delete">None</a></div></div></div>');
+    }
+    return buf.join("");
+};
+
+// createStepDateAndTimeSetupView.jade compiled template
+exports.createStepDateAndTimeSetupView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div id="create-form" data-role="fieldcontain"><input');
         buf.push(attrs({
-            id: "meeting-title",
+            id: "meeting-date",
             "data-theme": "b",
-            type: "text",
-            name: "meeting-title",
-            value: title,
-            placeholder: "Meeting title"
+            type: "date",
+            name: "meeting-data",
+            value: date_string,
+            placeholder: "Starts"
         }, {
             "data-theme": true,
             type: true,
@@ -92,13 +106,13 @@ exports.createStep1View = function anonymous(locals, attrs, escape, rethrow, mer
             value: true,
             placeholder: true
         }));
-        buf.push('/><div class="controls"><a id="submitStep1" data-theme="b" type="button" class="continue">Continue</a></div></div>');
+        buf.push('/><div class="controls"><a id="submitStepDateAndTimeFinish" data-theme="b" type="button">Continue</a></div></div>');
     }
     return buf.join("");
 };
 
-// createStep2View.jade compiled template
-exports.createStep2View = function anonymous(locals, attrs, escape, rethrow, merge) {
+// createStepDateAndTimeView.jade compiled template
+exports.createStepDateAndTimeView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
     escape = escape || jade.escape;
     rethrow = rethrow || jade.rethrow;
@@ -106,7 +120,21 @@ exports.createStep2View = function anonymous(locals, attrs, escape, rethrow, mer
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="errors"></ul><div id="create-form" data-role="fieldcontain"><input');
+        buf.push('<div id="create-form" data-role="fieldcontain"><div class="controls"><a id="submitStepDateAndTimeSetup" data-theme="b" type="button">Set date & time</a></div><p class="separator">OR</p><div class="controls"><a id="submitStepDateAndTime" data-theme="b" type="button">Time not known</a></div></div>');
+    }
+    return buf.join("");
+};
+
+// createStepLocationView.jade compiled template
+exports.createStepLocationView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div id="create-form" data-role="fieldcontain"><input');
         buf.push(attrs({
             id: "meeting-location",
             "data-theme": "b",
@@ -121,7 +149,65 @@ exports.createStep2View = function anonymous(locals, attrs, escape, rethrow, mer
             value: true,
             placeholder: true
         }));
-        buf.push('/><div class="controls"><a id="submitStep2" data-theme="b" type="button" class="continue">Continue</a></div><p class="separator">OR</p><div class="controls"><a id="submitStep2" data-theme="b" type="button" class="continue">Meeting is online</a></div></div>');
+        buf.push('/><div class="controls"><a id="submitStepLocation" data-theme="b" type="button">Continue</a></div><p class="separator">OR</p><div class="controls"><a id="submitStepLocationOnline" data-theme="b" type="button">Meeting is online</a></div></div>');
+    }
+    return buf.join("");
+};
+
+// createStepSkypeNameView.jade compiled template
+exports.createStepSkypeNameView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div id="create-form" data-role="fieldcontain"><input');
+        buf.push(attrs({
+            id: "meeting-skype-address",
+            "data-theme": "b",
+            type: "text",
+            name: "skype-address",
+            value: skype_address,
+            placeholder: "Skype name"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/><div class="controls"><a id="submitStepSkypeName" data-theme="b" type="button">Continue</a></div></div>');
+    }
+    return buf.join("");
+};
+
+// createStepTitleView.jade compiled template
+exports.createStepTitleView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div id="create-form" data-role="fieldcontain"><input');
+        buf.push(attrs({
+            id: "meeting-title",
+            "data-theme": "b",
+            type: "text",
+            name: "meeting-title",
+            value: title,
+            placeholder: "Meeting title"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/><div class="controls"><a id="submitStepTitle" data-theme="b" type="button">Continue</a></div></div>');
     }
     return buf.join("");
 };
