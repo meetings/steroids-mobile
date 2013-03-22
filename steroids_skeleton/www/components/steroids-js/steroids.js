@@ -1,5 +1,5 @@
 (function(window){
-/*! steroids-js - v0.3.6 - 2013-03-13 */
+/*! steroids-js - v0.4.0 - 2013-03-21 */
 ;var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -172,7 +172,7 @@ AndroidBridge = (function(_super) {
   __extends(AndroidBridge, _super);
 
   function AndroidBridge() {
-    AndroidAPIBridge.registerHandler("Steroids.nativeBridge.message_handler");
+    AndroidAPIBridge.registerHandler("steroids.nativeBridge.message_handler");
     window.AG_SCREEN_ID = AndroidAPIBridge.getAGScreenId();
     window.AG_LAYER_ID = AndroidAPIBridge.getAGLayerId();
     window.AG_VIEW_ID = AndroidAPIBridge.getAGViewId();
@@ -213,12 +213,40 @@ WebsocketBridge = (function(_super) {
   };
 
   WebsocketBridge.prototype.reopen = function() {
-    this.websocket = new WebSocket("ws://localhost:31337");
-    this.websocket.onmessage = this.message_handler;
-    this.websocket.onclose = this.reopen;
-    this.websocket.addEventListener("open", this.map_context);
-    this.map_context();
-    return false;
+    var _this = this;
+    window.steroids.debug("websocket reopen");
+    this.websocket = null;
+    return this.requestWebSocketPort(function(port) {
+      _this.websocket = new WebSocket("ws://localhost:" + port);
+      _this.websocket.onmessage = _this.message_handler;
+      _this.websocket.onclose = _this.reopen;
+      _this.websocket.onopen = function() {
+        window.steroids.debug("websocket websocket opened");
+        _this.map_context();
+        return _this.markWebsocketUsable();
+      };
+      return window.steroids.debug("websocket websocket connecting");
+    });
+  };
+
+  WebsocketBridge.prototype.requestWebSocketPort = function(callback) {
+    var xmlhttp,
+      _this = this;
+    window.steroids.debug("websocket request port");
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState === 4) {
+        window.steroids.debug("websocket request port success: " + xmlhttp.responseText);
+        return callback(xmlhttp.responseText);
+      }
+    };
+    xmlhttp.open("GET", "http://dolans.inetrnul.do.nut.cunnoct.localhost/");
+    return xmlhttp.send();
+  };
+
+  WebsocketBridge.prototype.markWebsocketUsable = function() {
+    window.steroids.debug("websocket open, marking usable");
+    return window.steroids.fireSteroidsEvent("websocketUsable");
   };
 
   WebsocketBridge.prototype.map_context = function() {
@@ -229,13 +257,14 @@ WebsocketBridge = (function(_super) {
   };
 
   WebsocketBridge.prototype.sendMessageToNative = function(message) {
-    var _this = this;
-    if (this.websocket.readyState === 0) {
-      return this.websocket.addEventListener("open", function() {
+    var _ref,
+      _this = this;
+    if (((_ref = this.websocket) != null ? _ref.readyState : void 0) === 1) {
+      return this.websocket.send(message);
+    } else {
+      return window.steroids.on("websocketUsable", function() {
         return _this.websocket.send(message);
       });
-    } else {
-      return this.websocket.send(message);
     }
   };
 
@@ -944,15 +973,24 @@ Audio = (function() {
   function Audio() {}
 
   Audio.prototype.play = function(options, callbacks) {
-    var _this = this;
+    var readyCapableDevice,
+      _this = this;
     if (options == null) {
       options = {};
     }
     if (callbacks == null) {
       callbacks = {};
     }
+    readyCapableDevice = false;
+    setTimeout(function() {
+      if (readyCapableDevice) {
+        return;
+      }
+      return navigator.notification.alert("Audio playback requires a newer version of Scanner, please update from the App Store.", null, "Update Required");
+    }, 500);
     return steroids.on("ready", function() {
       var mediaPath, relativeTo, _ref;
+      readyCapableDevice = true;
       relativeTo = (_ref = options.relativeTo) != null ? _ref : steroids.app.path;
       mediaPath = options.constructor.name === "String" ? "" + relativeTo + "/" + options : "" + relativeTo + "/" + options.path;
       return steroids.nativeBridge.nativeCall({
@@ -1648,7 +1686,7 @@ PostMessage = (function() {
 }).call(this);
 ;
 window.steroids = {
-  version: "0.3.6",
+  version: "0.4.0",
   Animation: Animation,
   XHR: XHR,
   File: File,
@@ -1682,30 +1720,36 @@ window.steroids = {
   },
   on: function(event, callback) {
     var _base;
+    this.debug("on event " + event);
     if (this["" + event + "_has_fired"] != null) {
+      this.debug("on event " + event + ", alrueady fierd");
       return callback();
     } else {
+      this.debug("on event " + event + ", waiting");
       (_base = this.eventCallbacks)[event] || (_base[event] = []);
       return this.eventCallbacks[event].push(callback);
     }
   },
   fireSteroidsEvent: function(event) {
-    var callback, _i, _len, _ref, _results;
+    var callback, callbacks, _i, _len, _results;
+    this.debug("firign event " + event);
     this["" + event + "_has_fired"] = new Date().getTime();
     if (this.eventCallbacks[event] != null) {
-      _ref = this.eventCallbacks[event];
+      callbacks = this.eventCallbacks[event].splice(0);
       _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        callback = _ref[_i];
-        callback();
-        _results.push(this.eventCallbacks[event].splice(this.eventCallbacks[event].indexOf(callback), 1));
+      for (_i = 0, _len = callbacks.length; _i < _len; _i++) {
+        callback = callbacks[_i];
+        this.debug("firing event callback");
+        _results.push(callback());
       }
       return _results;
     }
   },
   markComponentReady: function(model) {
+    this.debug("" + model + " is ready");
     this.waitingForComponents.splice(this.waitingForComponents.indexOf(model), 1);
     if (this.waitingForComponents.length === 0) {
+      this.debug("steroids is ready");
       return this.fireSteroidsEvent("ready");
     }
   }
@@ -1750,4 +1794,3 @@ window.steroids.PostMessage = PostMessage;
 window.postMessage = PostMessage.postMessage;
 
 })(window)
-
