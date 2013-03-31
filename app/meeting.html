@@ -44,6 +44,7 @@
         <script src="scripts/vendor/fastclick.js"></script>
         <script src="scripts/views/meetingInListView.js"></script>
         <script src="scripts/views/panelView.js"></script>
+        <script src="scripts/views/editMeetingPanelView.js"></script>
         <script src="scripts/views/meetingView.js"></script>
         <script src="scripts/views/participantInListView.js"></script>
         <script src="scripts/views/materialInListView.js"></script>
@@ -67,7 +68,7 @@
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
             <a class="back-button" href="index.html" data-icon="mtngs-back" data-theme="b" >Back</a>
             <h1>Overview</h1>
-            <a id="open-right-panel" href="#right-panel" data-icon="mtngs-panel-edit" data-iconpos="notext" data-theme="b"></a>
+            <a id="open-right-panel" href="#edit-meeting-panel" data-icon="mtngs-panel-edit" data-iconpos="notext" data-theme="b"></a>
         </div>
         <div class="main-div" data-role="content">
             <div class="loader">
@@ -81,6 +82,9 @@
         <div data-role="panel" data-position-fixed="true" id="left-panel" data-theme="c">
             <!-- panel content goes here -->
         </div><!-- /panel -->
+        <div data-role="panel" id="edit-meeting-panel" data-position="right" data-position-fixed="true" data-theme="c">
+            <!-- panel content goes here -->
+        </div>
     </div><!-- /page -->
     <script type="text/javascript" charset="utf-8">
 var _gaq = _gaq || [];

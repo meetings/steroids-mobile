@@ -791,6 +791,15 @@ h3.schedule {
     margin-top:5px !important;
 }
 
+.ui-icon-mtngs-add-participant {
+    @include retina-bg('/images/icon_plus', 'png', 18px, 18px);
+    background-color:transparent;
+    box-shadow:none;
+    left:5px;
+    margin-left:16px !important;
+    margin-top:5px !important;
+}
+
 .ui-icon-mtngs-back {
     @include retina-bg('/images/icon_back', 'png', 18px, 18px);
     background-color:transparent;
@@ -969,9 +978,45 @@ div#left-panel{
         padding:5px 0 0 34px;
         height:20px;
     }
+}
 
-
-
+div#edit-meeting-panel{
+    a.no-mobile{
+        position:absolute;
+        width:90%;
+        bottom:15px;
+        display:block;
+        text-align:center;
+        font-weight:300 !important;
+        font-size:14px !important;
+    }
+    span.ui-icon-arrow-r{
+        display:none;
+    }
+    span.menu-icon-edit{
+        @include retina-bg('/images/icon_meetings' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+    span.menu-icon-rename{
+        @include retina-bg('/images/icon_facebook' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+    span.menu-icon-remove{
+        @include retina-bg('/images/icon_twitter' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
 }
 
 h3.mtngs-firsth3{
@@ -1047,8 +1092,8 @@ div#comment-box{
     }
 }
 
-// Create meeting page
-div#create{
+// Edit meeting page
+div#edit{
     div.ui-input-text{
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;

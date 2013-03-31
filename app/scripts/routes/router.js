@@ -12,7 +12,7 @@ app.router = Backbone.Router.extend({
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
-        "create.html" : "create"
+        "edit.html" : "edit"
     },
     meetings : function() {
 
@@ -165,6 +165,9 @@ app.router = Backbone.Router.extend({
 
         // Get url params
         var id = params.id || 0;
+
+        app.views.editPanel = new app.editMeetingPanelView({ el : '#edit-meeting-panel', meetingId : id });
+        app.views.editPanel.render();
 
         // Fetch and show meeting
         app.models.meeting = new app.meetingModel({ id : id });
@@ -325,7 +328,7 @@ app.router = Backbone.Router.extend({
         }});
     },
 
-    create : function(params) {
+    edit : function(params) {
         if (app.options.build !== 'web') {
             AppGyver.cleanBackboneZombieEvents();
         }
@@ -335,10 +338,25 @@ app.router = Backbone.Router.extend({
         app.views.header = new app.headerView({ el : '#meetings' });
         app.views.panel.render();
 
-        app.views.create = new app.createView({
-            el : $('#create')
+        // Get url params
+        var id = params && params.id || null;
+        var new_meeting = (id == null);
+
+        app.models.meeting = new app.meetingModel({ id : id});
+
+        app.views.editMeeting = new app.editView({
+            model : app.models.meeting,
+            el : $('#edit')
         });
-        app.views.create.render();
-        app.showContent();
+
+        if(new_meeting) {
+            app.views.editMeeting.render();
+            app.showContent();
+        }
+        else {
+            app.models.meeting.fetch({ success : function() {
+                app.showContent();
+            }, timeout : 5000 });
+        }
     },
 });
