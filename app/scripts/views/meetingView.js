@@ -37,7 +37,8 @@ app.meetingView = Backbone.View.extend({
         'click .open-participant-view' : 'openParticipantView',
         'click .add-photo-material' : 'addPhotoMaterial',
         'click .save-photo-material' : 'savePhotoMaterial',
-        'click .open-map-link' : 'openMapLink'
+        'click .open-map-link' : 'openMapLink',
+        'click .open-add-participant-view' : 'openAddParticipantView'
     },
 
     openMapLink : function(e){
@@ -135,6 +136,15 @@ app.meetingView = Backbone.View.extend({
             AppGyver.openPreload("participantsPage", {id: this.model.get('id')});
         } else {
             document.location = '/participants.html?id='+this.model.get('id');
+        }
+    },
+
+    openAddParticipantView : function(e) {
+        if ( app.options.build !== 'web' ) {
+            e.preventDefault();
+            AppGyver.openPreload("addParticipantPage", {id: this.model.get('id')});
+        } else {
+            document.location = '/addParticipant.html?mid='+this.model.get('id');
         }
     },
 

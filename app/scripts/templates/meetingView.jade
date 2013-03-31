@@ -22,9 +22,9 @@ div#progress-bar
 
 - if(is_draft)
     - if(participants.length <= 1)
-        a#addParticipantsButton(data-theme="b", data-role="button") Add participants
+        a.open-add-participant-view(data-theme="b", data-role="button") Add participants
     - else
-        a#sendInvitesButton(data-theme="b", data-role="button") Send invites
+        a.open-send-invites-view(data-theme="b", data-role="button") Send invites
 
 ul(data-role='listview',data-inset='true')
     li

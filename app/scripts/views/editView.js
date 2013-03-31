@@ -1,26 +1,23 @@
 app.editView = Backbone.View.extend({
-    currentStep : 0,
-    //meeting : null,
-    viewStack : null,
-
     initialize: function(options) {
         var me = this;
-        // Add custom handler for back button to return to previous edit state.
-        $(".back-button").click(function(e) {
-            me.navigateBack(e);
-        });
-
-        //this.meeting = new app.meetingModel({}, { override_endpoint : true });            
-        this.viewStack = new Array();
         
         // Bind error and success handlers
         this.model.bind('error', this.errorHandler, this);
         this.model.bind('success', this.successHandler, this);
         this.model.bind('change', this.render, this);
+
+        // Add custom handler for back button to return to previous edit state.
+        $(".back-button").click(function(e) {
+            me.navigateBack(e);
+        });
+
+        this.viewStack = new Array();
     },
 
     render: function() {
-        this.renderEditStepTitle();
+        this.renderEditStepTitle();    
+
         return this;
     },
 

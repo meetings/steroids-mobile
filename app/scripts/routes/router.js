@@ -12,7 +12,8 @@ app.router = Backbone.Router.extend({
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
-        "edit.html" : "edit"
+        "edit.html" : "edit",
+        "addParticipant.html" : "addParticipant"
     },
     meetings : function() {
 
@@ -256,6 +257,12 @@ app.router = Backbone.Router.extend({
             childViewConstructor : app.participantInListView
         });
         app.collections.participants.fetch({ success : function(){
+            // Setup links to add participants
+            $('a.addParticipant').click(function(e) {
+                e.preventDefault();
+                window.location = 'addParticipant.html?mid=' + id;
+            });
+
             app.showContent();
         }});
     },
@@ -340,6 +347,7 @@ app.router = Backbone.Router.extend({
 
         // Get url params
         var id = params && params.id || null;
+
         var new_meeting = (id == null);
 
         app.models.meeting = new app.meetingModel({ id : id});
@@ -359,4 +367,29 @@ app.router = Backbone.Router.extend({
             }, timeout : 5000 });
         }
     },
+
+    addParticipant : function(params) {
+        if (app.options.build !== 'web') {
+            AppGyver.cleanBackboneZombieEvents();
+        }
+
+        // Render panel
+        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+        app.views.header = new app.headerView({ el : '#meetings' });
+        app.views.panel.render();
+
+        // Get url params
+        var mid = params && params.mid || null;
+
+        app.models.participant = new app.participantModel({ id : null, meeting_id : mid});
+        app.models.participant.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/';
+
+        app.views.addParticipant = new app.addParticipantView({
+            model : app.models.participant,
+            el : $('#add-participant')
+        });
+
+        app.views.addParticipant.render();
+        app.showContent();
+    }
 });

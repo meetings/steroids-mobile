@@ -6,6 +6,20 @@ var jade=function(exports){Array.isArray||(Array.isArray=function(arr){return"[o
 
 // create our folder objects
 
+// addParticipantView.jade compiled template
+exports.addParticipantView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div id="edit-form" data-role="fieldcontain"><input id="meeting-participant" data-theme="b" type="text" name="meeting-participant" placeholder="Type a name or email"/><div class="controls"><a id="submitAddParticipant" data-theme="b" type="button">Add participant</a></div></div>');
+    }
+    return buf.join("");
+};
+
 // commentForm.jade compiled template
 exports.commentForm = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
@@ -458,9 +472,9 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
         buf.push('<div id="progress-bar"></div><!-- Participants-->');
         if (is_draft) {
             if (participants.length <= 1) {
-                buf.push('<a id="addParticipantsButton" data-theme="b" data-role="button">Add participants</a>');
+                buf.push('<a data-theme="b" data-role="button" class="open-add-participant-view">Add participants</a>');
             } else {
-                buf.push('<a id="sendInvitesButton" data-theme="b" data-role="button">Send invites</a>');
+                buf.push('<a data-theme="b" data-role="button" class="open-send-invites-view">Send invites</a>');
             }
         }
         buf.push('<ul data-role="listview" data-inset="true"><li><a href="#" class="open-participant-view"><h3>');
