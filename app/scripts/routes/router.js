@@ -116,7 +116,7 @@ app.router = Backbone.Router.extend({
         app.collections.unscheduled_meetings.fetch({ success : function(col,res){
             if( app.collections.unscheduled_meetings.length === 0 ) app.views.unscheduled.remove();
             unscheduledFetch.resolve();
-        }, data : { scheduling_on : 1 }});
+        }, data : { include_draft : 1 }});
 
         // Fetch past meetings
         app.collections.past_meetings = new app.meetingCollection();

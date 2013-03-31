@@ -764,6 +764,14 @@ h3.schedule {
     margin-top:5px !important;
     border-radius:0px !important;
 }
+.ui-icon-mtngs-panel-edit {
+    @include retina-bg('/images/icon_plus', 'png', 18px, 18px);
+    background-color:transparent;
+    box-shadow:none;
+    left:5px;
+    margin-left:16px !important;
+    margin-top:5px !important;
+}
 
 .ui-icon-mtngs-cog {
     @include retina-bg('/images/icon_manage', 'png', 18px, 18px);
@@ -791,6 +799,22 @@ h3.schedule {
 }
 .ui-icon-mtngs-skype {
     @include retina-bg('/images/icon_phone', 'png', 18px, 18px);
+    background-color:transparent;
+    left:10px !important;
+    top:50% !important;
+    background-ui-icon-mtngs-extcolor:transparent;
+    box-shadow:none;
+}
+.ui-icon-mtngs-skype-white {
+    @include retina-bg('/images/icon_skype_white', 'png', 20px, 20px);
+    background-color:transparent;
+    left:10px !important;
+    top:50% !important;
+    background-ui-icon-mtngs-extcolor:transparent;
+    box-shadow:none;
+}
+.ui-icon-mtngs-cross-white {
+    @include retina-bg('/images/icon_cross_white', 'png', 20px, 20px);
     background-color:transparent;
     left:10px !important;
     top:50% !important;

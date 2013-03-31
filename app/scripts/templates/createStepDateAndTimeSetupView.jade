@@ -1,4 +1,15 @@
 div#create-form(data-role="fieldcontain")
-    input#meeting-date(data-theme="b",type="date",name="meeting-data",value=date_string,placeholder="Starts")
+    ul(data-role='listview', data-inset='true')
+        li(data-icon="false")
+            .ui-grid-a
+                .ui-block-a Starts
+                .ui-block-b 
+                    input#meeting-begin-date(data-theme="b",type="datetime-local",name="meeting-begin-date",value=date_string,placeholder="Starts")
+        li(data-icon="false")
+            .ui-grid-a
+                .ui-block-a Ends
+                .ui-block-b 
+                    input#meeting-end-date(data-theme="b",type="datetime-local",name="meeting-end-date",value=date_string,placeholder="Ends")
+
     div.controls
         a#submitStepDateAndTimeFinish(data-theme="b", type="button") Continue

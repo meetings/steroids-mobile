@@ -9,10 +9,15 @@ app.createView = Backbone.View.extend({
         $(".back-button").click(function(e) {
             me.navigateBack(e);
         });
-        
-        this.meeting = new app.meetingModel();    
+
+        this.meeting = new app.meetingModel({}, { override_endpoint : true });    
         this.meeting.set('id', null);
         this.viewStack = new Array();
+        
+        // Bind error and success handlers
+        this.meeting.bind('error', this.errorHandler, this);
+        this.meeting.bind('success', this.successHandler, this);
+        this.meeting.bind('change', this.render, this);
     },
 
     render: function() {
@@ -34,12 +39,8 @@ app.createView = Backbone.View.extend({
 
         var title = $('#meeting-title').val();
 
-        if(title.length > 0) {
-            this.meeting.set('title', title);
-        }
-        else {
-            this.meeting.set('title', 'Untitled meeting');
-        }
+        this.meeting.set('title', title);
+        this.meeting.set('title_value', title);
 
         this.renderCreateStepLocation();
     },
@@ -48,7 +49,7 @@ app.createView = Backbone.View.extend({
         this.viewStack.push("renderCreateStepLocation");
 
         $('#headerTitle').text('Meeting location');
-
+        
         this.$el.html( templatizer.createStepLocationView( this.meeting.toJSON() ) );
         this.$el.trigger("create");
     },
@@ -58,12 +59,8 @@ app.createView = Backbone.View.extend({
 
         var location = $('#meeting-location').val();
 
-        if(location.length > 0) {
-            this.meeting.set('location', location);
-        }
-        else {
-            this.meeting.set('location', 'Location not known');
-        }
+        this.meeting.set('location', location);
+        this.meeting.set('location_value', location);
 
         this.renderCreateStepDateAndTime();
     },
@@ -71,7 +68,8 @@ app.createView = Backbone.View.extend({
     saveCreateStepLocationOnline: function(e) {
         e.preventDefault();
 
-        this.meeting.set('location', 'online');
+        this.meeting.set('location', '');
+        this.meeting.set('location_value', 'Online');
 
         this.renderCreateStepCommunications();
     },
@@ -88,11 +86,17 @@ app.createView = Backbone.View.extend({
     saveCreateStepCommunications: function(e) {
         e.preventDefault();
 
+        this.meeting.set('online_conferencing_option', '');
+        this.meeting.set('skype_account', '');
+
         this.renderCreateStepDateAndTime();
     },
     
     saveCreateStepCommunicationsSkype: function(e) {
         e.preventDefault();
+
+        this.meeting.set('online_conferencing_option', 'skype');
+        this.meeting.set('skype_account', '');
 
         this.renderCreateStepSkypeName();
     },
@@ -109,9 +113,9 @@ app.createView = Backbone.View.extend({
     saveCreateStepSkypeName: function(e) {
         e.preventDefault();
 
-        var skype_address = $('#meeting-skype-address').val();
+        var skype_account = $('#meeting-skype-address').val();
 
-        this.meeting.set('skype_address', skype_address);
+        this.meeting.set('skype_account', skype_account);
 
         this.renderCreateStepDateAndTime();
     },
@@ -127,6 +131,9 @@ app.createView = Backbone.View.extend({
 
     saveCreateStepDateAndTime: function(e) {
         e.preventDefault();
+
+        this.meeting.set('begin_date', '');
+        this.meeting.set('begin_time', '');
 
         this.finalizeMeetingCreation();
     },
@@ -149,6 +156,14 @@ app.createView = Backbone.View.extend({
     saveCreateStepDateAndTimeFinish: function(e) {
         e.preventDefault();
 
+        var begin_date = moment($('#meeting-begin-date').val());
+        var end_date = moment($('#meeting-end-date').val());
+
+        this.meeting.set('begin_date', begin_date.format('YYYY-MM-DD'));
+        this.meeting.set('begin_time', begin_date.format('HH:MM'));
+        this.meeting.set('end_date', end_date.format('YYYY-MM-DD'));
+        this.meeting.set('end_time', end_date.format('HH:MM'));
+
         this.finalizeMeetingCreation();
     },
 
@@ -163,20 +178,23 @@ app.createView = Backbone.View.extend({
         // after saving, move to meeting view to finish the draft
         var me = this;
         
-        me.meeting.save({
-            title : this.meeting.get('title'),
-            date_string : this.meeting.get('date_string'),
-            time_string : this.meeting.get('time_string'),
-            location: this.meeting.get('location'),
-            skype_address : this.meeting.get('skype_address')
-        }, {
+        me.meeting.save({}, {
             success : function() {
-                window.location = 'meeting.html?id=' + me.meeting.id;
+                me.openMeetingView();
             },
             error: function() {
-                console.log('meeting creation failed.');
+                alert('meeting creation failed.');
             }
         });
+    },
+
+    openMeetingView : function(){
+        if ( app.options.build !== 'web' ) {
+            e.preventDefault();
+            AppGyver.openPreload("meetingPage", {id: this.meeting.get('id')});
+        } else {
+            window.location = 'meeting.html?id=' + this.meeting.get('id');
+        }
     },
 
     navigateBack: function(e) {
@@ -209,3 +227,4 @@ app.createView = Backbone.View.extend({
         'click #submitStepDateAndTimeFinish' : 'saveCreateStepDateAndTimeFinish'
     }
 });
+_.extend(app.createView.prototype, app.mixins.connectivity);

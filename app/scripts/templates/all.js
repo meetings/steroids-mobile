@@ -77,7 +77,7 @@ exports.createStepCommunicationsView = function anonymous(locals, attrs, escape,
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="create-form"><p>Choose live communication tool:</p><div class="controls ui-grid-a"><div class="ui-block-a"><a id="submitStepCommunicationsSkype" data-theme="b" data-role="button" data-icon="mtngs-skype">Skype</a></div><div class="ui-block-b"><a id="submitStepCommunications" data-theme="b" data-role="button" data-icon="delete">None</a></div></div></div>');
+        buf.push('<div id="create-form"><p>Choose live communication tool:</p><div class="controls ui-grid-a"><div class="ui-block-a"><a id="submitStepCommunicationsSkype" data-theme="b" data-role="button" data-icon="mtngs-skype-white">Skype</a></div><div class="ui-block-b"><a id="submitStepCommunications" data-theme="b" data-role="button" data-icon="mtngs-cross-white">None</a></div></div></div>');
     }
     return buf.join("");
 };
@@ -91,12 +91,12 @@ exports.createStepDateAndTimeSetupView = function anonymous(locals, attrs, escap
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="create-form" data-role="fieldcontain"><input');
+        buf.push('<div id="create-form" data-role="fieldcontain"><ul data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> <input');
         buf.push(attrs({
-            id: "meeting-date",
+            id: "meeting-begin-date",
             "data-theme": "b",
-            type: "date",
-            name: "meeting-data",
+            type: "datetime-local",
+            name: "meeting-begin-date",
             value: date_string,
             placeholder: "Starts"
         }, {
@@ -106,7 +106,22 @@ exports.createStepDateAndTimeSetupView = function anonymous(locals, attrs, escap
             value: true,
             placeholder: true
         }));
-        buf.push('/><div class="controls"><a id="submitStepDateAndTimeFinish" data-theme="b" type="button">Continue</a></div></div>');
+        buf.push('/></div></div></li><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Ends</div><div class="ui-block-b"> <input');
+        buf.push(attrs({
+            id: "meeting-end-date",
+            "data-theme": "b",
+            type: "datetime-local",
+            name: "meeting-end-date",
+            value: date_string,
+            placeholder: "Ends"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/></div></div></li></ul><div class="controls"><a id="submitStepDateAndTimeFinish" data-theme="b" type="button">Continue</a></div></div>');
     }
     return buf.join("");
 };
@@ -169,7 +184,7 @@ exports.createStepSkypeNameView = function anonymous(locals, attrs, escape, reth
             "data-theme": "b",
             type: "text",
             name: "skype-address",
-            value: skype_address,
+            value: skype_account,
             placeholder: "Skype name"
         }, {
             "data-theme": true,
@@ -426,7 +441,11 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             }));
             buf.push(">Join Skype conference</a>");
         }
-        buf.push('<div id="progress-bar"></div><!-- Participants--><ul data-role="listview" data-inset="true"><li><a href="#" class="open-participant-view"><h3>');
+        buf.push('<div id="progress-bar"></div><!-- Participants-->');
+        if (is_draft && participants.length <= 1) {
+            buf.push('<a id="addParticipantsButton" data-theme="b" data-role="button">Add participants</a>');
+        }
+        buf.push('<ul data-role="listview" data-inset="true"><li><a href="#" class="open-participant-view"><h3>');
         var __val__ = "Participants";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</h3><div class="participant-list"></div>');

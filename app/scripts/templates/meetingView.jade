@@ -19,6 +19,10 @@ div#next-action-bar
 div#progress-bar
 
 // Participants
+
+- if(is_draft && participants.length <= 1)
+    a#addParticipantsButton(data-theme="b", data-role="button") Add participants
+
 ul(data-role='listview',data-inset='true')
     li
         a(href="#").open-participant-view
