@@ -13,7 +13,8 @@ app.router = Backbone.Router.extend({
         "material.html" : "material",
         "scheduling.html" : "scheduling",
         "edit.html" : "edit",
-        "addParticipant.html" : "addParticipant"
+        "addParticipant.html" : "addParticipant",
+        "invite.html" : "sendInvites"
     },
     meetings : function() {
 
@@ -103,7 +104,7 @@ app.router = Backbone.Router.extend({
 
             futureFetch.resolve(); // Resolve the deferred
 
-        },  data : { start_min : today, limit : 10, sort : "asc"} } );
+        },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
 
         // Get the unscheduled meetings
         app.collections.unscheduled_meetings = new app.meetingCollection({},{ override_endpoint : 'unscheduled_meetings' });
@@ -138,7 +139,7 @@ app.router = Backbone.Router.extend({
         app.collections.past_meetings.fetch({ success : function(col,res){
             if( app.collections.past_meetings.length === 0 ) app.views.past.remove();
             pastFetch.resolve();
-        },  data : { start_max : today, limit : 10, sort : "desc" } } );
+        },  data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
     },
 
 
@@ -390,6 +391,27 @@ app.router = Backbone.Router.extend({
         });
 
         app.views.addParticipant.render();
+        app.showContent();
+    },
+
+    sendInvites : function(params) {
+        if (app.options.build !== 'web') {
+            AppGyver.cleanBackboneZombieEvents();
+        }
+
+        // Render panel
+        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+        app.views.header = new app.headerView({ el : '#invite' });
+        app.views.panel.render();
+
+        // Get url params
+        var id = params && params.id || null;
+
+        app.views.sendInvites = new app.sendInvitesView({
+            el : $('#invite_form')
+        });
+
+        app.views.sendInvites.render();
         app.showContent();
     }
 });

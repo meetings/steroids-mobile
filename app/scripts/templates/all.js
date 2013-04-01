@@ -474,7 +474,18 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             if (participants.length <= 1) {
                 buf.push('<a data-theme="b" data-role="button" class="open-add-participant-view">Add participants</a>');
             } else {
-                buf.push('<a data-theme="b" data-role="button" class="open-send-invites-view">Send invites</a>');
+                buf.push("<a");
+                buf.push(attrs({
+                    href: "invite.html?id=" + id,
+                    "data-theme": "b",
+                    "data-role": "button",
+                    "class": "open-send-invites-view"
+                }, {
+                    href: true,
+                    "data-theme": true,
+                    "data-role": true
+                }));
+                buf.push(">Send invites</a>");
             }
         }
         buf.push('<ul data-role="listview" data-inset="true"><li><a href="#" class="open-participant-view"><h3>');
@@ -910,6 +921,20 @@ exports.schedulingBarView = function anonymous(locals, attrs, escape, rethrow, m
             }
         }
         buf.push("</div>");
+    }
+    return buf.join("");
+};
+
+// sendInvitesView.jade compiled template
+exports.sendInvitesView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div id="invite-form" data-role="fieldcontain"><p><input id="invite-title" data-theme="b" type="text" name="invite-title" placeholder="Topic"/></p><p><textarea id="invite-message" data-theme="b" rows="5" cols="40" name="invite-message" placeholder="Message"></textarea></p><p><label><input id="invite-require-rsvp" data-theme="a" type="checkbox" name="invite-require-rsvp"/>Require RSVP</label></p><div class="controls"><a id="submit-send-invite" data-theme="b" type="button">Send</a></div></div>');
     }
     return buf.join("");
 };

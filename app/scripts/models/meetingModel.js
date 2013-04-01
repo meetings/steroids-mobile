@@ -7,7 +7,7 @@ app.meetingModel = Backbone.Model.extend({
         "time_string": "",
         "location": "",
         "participants": [],
-        "skype_address" : false
+        "skype_account" : false
     },
     initialize : function(data){
         this.set(data);

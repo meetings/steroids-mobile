@@ -24,7 +24,7 @@ div#progress-bar
     - if(participants.length <= 1)
         a.open-add-participant-view(data-theme="b", data-role="button") Add participants
     - else
-        a.open-send-invites-view(data-theme="b", data-role="button") Send invites
+        a.open-send-invites-view(href="invite.html?id=" + id, data-theme="b", data-role="button") Send invites
 
 ul(data-role='listview',data-inset='true')
     li

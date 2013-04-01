@@ -8,8 +8,6 @@ app.addParticipantView = Backbone.View.extend({
     },
 
     render : function() {
-        $('#headerTitle').text('Add participant');
-
         this.$el.html( templatizer.addParticipantView( this.model.toJSON() ) ); // Render template
         this.$el.trigger('create'); // Call JQM
 
