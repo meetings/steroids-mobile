@@ -15,7 +15,7 @@ exports.addParticipantView = function anonymous(locals, attrs, escape, rethrow, 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><input id="meeting-participant" data-theme="b" type="text" name="meeting-participant" placeholder="Type a name or email"/><div class="controls"><a id="submitAddParticipant" data-theme="b" type="button">Add participant</a></div></div>');
+        buf.push('<div id="edit-form" data-role="fieldcontain"><div id="participant-name-wrapper"><p>Contact not found, create a new contact by giving a name.</p><input id="participant-name" data-theme="b" type="text" name="participant-name" placeholder="Name"/></div><p><input id="participant-email" data-theme="b" type="text" name="participant-email" placeholder="Type a name or email"/></p><div class="controls"><a id="submitAddParticipant" data-theme="b" type="button">Add participant</a></div></div>');
     }
     return buf.join("");
 };
@@ -529,7 +529,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             });
             buf.push("</div>");
         }
-        buf.push('</a></li></ul><!-- Materials--><ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul>');
+        buf.push('</a></li></ul><!-- Materials--><ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul><a href="#materialsPopup" data-rel="popup" data-theme="b" type="button">Add materials</a><div id="materialsPopup" data-role="popup" data-overlay-theme="a" data-theme="c" class="ui-corner-all"><div data-role="content" data-theme="d" class="ui-corner-bottom ui-content"><h3 class="ui-title">Choose source        </h3><a href="#" data-role="button" data-theme="a" class="add-photo-material">Camera</a><a href="#" data-role="button" data-theme="a">Existing photo</a><a href="#" data-role="button" data-rel="back" data-theme="c">Cancel</a></div></div>');
         if (app.options.build !== "web") {
             buf.push('<a href="#" data-role="button" class="add-photo-material">Add photo</a><img id="myImage"/><div id="upload_progress"></div><div style="display:none;" class="file-save-form"><input id="file-upload-name" type="text" placeholder="Type filename here..."/><input id="file-upload-id" type="hidden"/><a href="#" data-role="button" style="display:none;" class="save-photo-material">Add to meeting</a></div><div style="display:none;" class="save-text"><p>Saving material...</p></div>');
         }

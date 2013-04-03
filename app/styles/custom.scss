@@ -1140,6 +1140,10 @@ div#add-participant {
         text-shadow: 0 1px 0 rgba(0,0,0,0.3);
         font-size:13px;
     }
+
+    #participant-name-wrapper {
+        display: none;
+    }
 }
 
 // Edit meeting page
