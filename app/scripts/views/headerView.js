@@ -7,13 +7,24 @@ app.headerView = Backbone.View.extend({
     },
 
     events: {
-        "click .back-button" : "navigateBack"
+        "click .back-button" : "navigateBack",
+        "click #create-meeting" : "createMeeting"
+    },
+
+    createMeeting : function(e){
+        e.preventDefault();
+        if ( app.options.build !== 'web' ) {
+            AppGyver.openPreload('editPage');
+        }
+        else {
+            window.location = 'edit.html';
+        }
     },
 
     navigateBack : function(e){
-      e.preventDefault();
+        e.preventDefault();
 
-      if ( app.options.build !== 'web' ) {
+        if ( app.options.build !== 'web' ) {
           setTimeout(function(){ AppGyver.hideContent(); }, 100);
           steroids.layers.pop();
       } else if ( $('.back-button').attr('href') !== '#' ){

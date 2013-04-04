@@ -27,7 +27,7 @@ app.addParticipantView = Backbone.View.extend({
         // First case is when only one field is visible, field value could either be a name or an email
         if(!$name.is(':visible')) {
             if(email.length > 0) {
-                validEmail = this._validEmail(email);    
+                validEmail = this._validEmail(email);
 
                 // If value is not a valid email address, show email field and treat the input as the name
                 if(!validEmail) {
@@ -43,13 +43,13 @@ app.addParticipantView = Backbone.View.extend({
         }
         else {
             // Second case is when both fields are visible
-            validEmail = name.length > 0 && this._validEmail(email); 
+            validEmail = name.length > 0 && this._validEmail(email);
 
             if(!validEmail) {
                 $('#participant-email').focus();
             }
         }
-        
+
         if(validEmail) {
             $('#headerTitle').text('Saving...');
 
@@ -60,7 +60,7 @@ app.addParticipantView = Backbone.View.extend({
 
             // after saving, move to meeting view to finish the draft
             var me = this;
-            
+
             me.model.save({}, {
                 success : function() {
                     me.openMeetingView();
@@ -68,7 +68,7 @@ app.addParticipantView = Backbone.View.extend({
                 error: function() {
                     alert('adding participant failed.');
                 }
-            });            
+            });
         }
     },
 
