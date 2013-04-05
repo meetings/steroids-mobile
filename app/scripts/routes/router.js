@@ -9,6 +9,7 @@ app.router = Backbone.Router.extend({
         "meeting.html" : "meeting",
         "participants.html" : "participants",
         "materials.html" : "materials",
+        "edit_material.html" : "edit_material",
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
@@ -338,6 +339,32 @@ app.router = Backbone.Router.extend({
 
         app.collections.comments.fetch({ success : function(){
             commentsFetch.resolve();
+        }});
+    },
+
+        edit_material : function(params) {
+
+        var id = params.id || 0;
+
+
+        if (app.options.build !== 'web') {
+            // Cleanup zombie events
+            AppGyver.cleanBackboneZombieEvents();
+        }
+
+        // Setup header
+        app.views.header = new app.headerView({ el : '#material' });
+
+        app.models.material = new app.materialModel();
+        app.models.material.url = app.defaults.api_host + '/v1/materials/' + id;
+        app.views.material = new app.materialView({
+            model : app.models.material,
+            el : $('#material_content'),
+            mode : 'edit'
+        });
+
+        app.models.material.fetch({ success : function(){
+            app.showContent();
         }});
     },
 

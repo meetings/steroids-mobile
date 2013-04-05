@@ -333,29 +333,36 @@ exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge)
     var buf = [];
     with (locals || {}) {
         var interp;
-        if (fetch_type !== "") {
-            if (fetch_type === "media") {
-                buf.push("<h3>");
-                var __val__ = title;
-                buf.push(escape(null == __val__ ? "" : __val__));
-                buf.push("</h3>");
-                var __val__ = content;
-                buf.push(null == __val__ ? "" : __val__);
-            } else {
-                buf.push("<h3>");
-                var __val__ = title;
-                buf.push(escape(null == __val__ ? "" : __val__));
-                buf.push("</h3>");
-                if (title == "Agenda" && content == "") {
-                    buf.push('<p class="notruncation">Agenda is empty.</p>');
-                } else if (title == "Action Points" && content == "") {
-                    buf.push('<p class="notruncation">Action points are empty.</p>');
-                } else {
-                    buf.push('<p class="notruncation">');
-                    var __val__ = content;
+        if (model.fetch_type !== "") {
+            if (mode !== "edit") {
+                if (model.fetch_type === "media") {
+                    buf.push("<h3>");
+                    var __val__ = model.title;
+                    buf.push(escape(null == __val__ ? "" : __val__));
+                    buf.push("</h3>");
+                    var __val__ = model.content;
                     buf.push(null == __val__ ? "" : __val__);
-                    buf.push("</p>");
+                } else {
+                    buf.push("<h3>");
+                    var __val__ = model.title;
+                    buf.push(escape(null == __val__ ? "" : __val__));
+                    buf.push("</h3>");
+                    if (model.title == "Agenda" && model.content == "") {
+                        buf.push('<p class="notruncation">Agenda is empty.</p>');
+                    } else if (model.title == "Action Points" && model.content == "") {
+                        buf.push('<p class="notruncation">Action points are empty.</p>');
+                    } else {
+                        buf.push('<p class="notruncation">');
+                        var __val__ = model.content;
+                        buf.push(null == __val__ ? "" : __val__);
+                        buf.push("</p>");
+                    }
                 }
+            } else {
+                buf.push("<textarea>");
+                var __val__ = model.content;
+                buf.push(escape(null == __val__ ? "" : __val__));
+                buf.push("</textarea>");
             }
         }
     }

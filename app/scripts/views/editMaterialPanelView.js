@@ -15,12 +15,15 @@ app.editMaterialPanelView = Backbone.View.extend({
     },
 
     editMaterial : function(e){
-        alert('start editing');
+        e.preventDefault();
+        window.location = '/edit_material.html?id=' + this.materialId;
     },
     renameMaterial : function(e){
+        e.preventDefault();
         alert('rename');
     },
     removeMaterial : function(e){
+        e.preventDefault();
         alert('remove');
     }
 });
