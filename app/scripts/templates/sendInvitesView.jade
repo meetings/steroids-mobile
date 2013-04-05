@@ -1,12 +1,13 @@
-div#invite-form(data-role="fieldcontain")
+div#invite-form.form-full-width(data-role="fieldcontain")
     p
-        input#invite-title(data-theme="b", type="text", name="invite-title", placeholder="Topic")
+        input#invite-subject(data-theme="b", type="text", name="invite-subject", value=invite_greetings['subject'], placeholder="Topic")
     p
         textarea#invite-message(data-theme="b", rows="5", cols="40", name="invite-message", placeholder="Message")
+            = invite_greetings['content']
     p
         label
             input#invite-require-rsvp(data-theme="a", type="checkbox", name="invite-require-rsvp") 
             | Require RSVP
     div.controls
-        a#submit-send-invite(data-theme="b", type="button") Send
+        button.save-meeting-invite(data-theme="b", type="button") Send
 

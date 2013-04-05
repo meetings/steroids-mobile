@@ -13,8 +13,7 @@ app.router = Backbone.Router.extend({
         "material.html" : "material",
         "scheduling.html" : "scheduling",
         "edit.html" : "edit",
-        "addParticipant.html" : "addParticipant",
-        "invite.html" : "sendInvites"
+        "addParticipant.html" : "addParticipant"
     },
     meetings : function() {
 
@@ -392,26 +391,6 @@ app.router = Backbone.Router.extend({
 
         app.views.addParticipant.render();
         app.showContent();
-    },
-
-    sendInvites : function(params) {
-        if (app.options.build !== 'web') {
-            AppGyver.cleanBackboneZombieEvents();
-        }
-
-        // Render panel
-        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-        app.views.header = new app.headerView({ el : '#invite' });
-        app.views.panel.render();
-
-        // Get url params
-        var id = params && params.id || null;
-
-        app.views.sendInvites = new app.sendInvitesView({
-            el : $('#invite_form')
-        });
-
-        app.views.sendInvites.render();
-        app.showContent();
     }
+
 });

@@ -22,8 +22,6 @@ app.editView = Backbone.View.extend({
     },
 
     renderEditStepTitle: function() {
-        this.viewStack.push("renderEditStepTitle");
-
         $('#headerTitle').text('Meeting title');
 
         this.$el.html( templatizer.editStepTitleView( this.model.toJSON() ) );
@@ -38,12 +36,11 @@ app.editView = Backbone.View.extend({
         this.model.set('title', title);
         this.model.set('title_value', title);
 
+        this.viewStack.push("renderEditStepTitle");
         this.renderEditStepLocation();
     },
 
     renderEditStepLocation: function() {
-        this.viewStack.push("renderEditStepLocation");
-
         $('#headerTitle').text('Meeting location');
         
         this.$el.html( templatizer.editStepLocationView( this.model.toJSON() ) );
@@ -58,6 +55,7 @@ app.editView = Backbone.View.extend({
         this.model.set('location', location);
         this.model.set('location_value', location);
 
+        this.viewStack.push("renderEditStepLocation");
         this.renderEditStepDateAndTime();
     },
 
@@ -67,12 +65,11 @@ app.editView = Backbone.View.extend({
         this.model.set('location', '');
         this.model.set('location_value', 'Online');
 
+        this.viewStack.push("renderEditStepLocation");
         this.renderEditStepCommunications();
     },
 
     renderEditStepCommunications: function() {
-        this.viewStack.push("renderEditStepCommunications");
-
         $('#headerTitle').text('Meeting communications');
 
         this.$el.html( templatizer.editStepCommunicationsView( this.model.toJSON() ) );
@@ -82,9 +79,12 @@ app.editView = Backbone.View.extend({
     saveEditStepCommunications: function(e) {
         e.preventDefault();
 
-        this.model.set('online_conferencing_option', '');
-        this.model.set('skype_account', '');
+        if(!this.model.get('id')) {
+            this.model.set('online_conferencing_option', '');
+            this.model.set('skype_account', '');
+        }
 
+        this.viewStack.push("renderEditStepCommunications");
         this.renderEditStepDateAndTime();
     },
     
@@ -92,14 +92,12 @@ app.editView = Backbone.View.extend({
         e.preventDefault();
 
         this.model.set('online_conferencing_option', 'skype');
-        this.model.set('skype_account', '');
 
+        this.viewStack.push("renderEditStepCommunications");
         this.renderEditStepSkypeName();
     },
     
     renderEditStepSkypeName: function() {
-        this.viewStack.push("renderEditStepSkypeName");
-
         $('#headerTitle').text('Skype');
 
         this.$el.html( templatizer.editStepSkypeNameView( this.model.toJSON() ) );
@@ -109,16 +107,15 @@ app.editView = Backbone.View.extend({
     saveEditStepSkypeName: function(e) {
         e.preventDefault();
 
-        var skype_account = $('#meeting-skype-address').val();
+        var skype_account = $('#meeting-skype-account').val();
 
         this.model.set('skype_account', skype_account);
 
+        this.viewStack.push("renderEditStepSkypeName");
         this.renderEditStepDateAndTime();
     },
 
     renderEditStepDateAndTime: function() {
-        this.viewStack.push("renderEditStepDateAndTime");
-
         $('#headerTitle').text('Meeting date & time');
 
         this.$el.html( templatizer.editStepDateAndTimeView( this.model.toJSON() ) );
@@ -139,12 +136,11 @@ app.editView = Backbone.View.extend({
     saveEditStepDateAndTimeSetup: function(e) {
         e.preventDefault();
 
+        this.viewStack.push("renderEditStepDateAndTime");
         this.renderEditStepDateAndTimeSetup();
     },
 
     renderEditStepDateAndTimeSetup: function() {
-        this.viewStack.push("renderEditStepDateAndTimeSetup");
-
         $('#headerTitle').text('Set date & time');
 
         if(!this.model.get('id')) {
@@ -211,7 +207,7 @@ app.editView = Backbone.View.extend({
 
     navigateBack: function(e) {
         // remove current view
-        this.viewStack.pop();
+        //this.viewStack.pop();
 
         // If we are past the first creation step, prevent the default action 
         // and call the previous render step.

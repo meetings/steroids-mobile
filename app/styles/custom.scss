@@ -1093,7 +1093,7 @@ div#comment-box{
 }
 
 // Edit meeting page
-div#edit{
+div.form-full-width {
     div.ui-input-text{
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
@@ -1103,60 +1103,6 @@ div#edit{
         /*padding-right:0px;*/
     }
     div.ui-input-text{
-        width:100%;
-        border: 1px solid silver;
-        border-radius:4px;
-        -webkit-border-radius:4px;
-        -moz-border-radius:4px;
-        padding:0 0.8em;
-    }
-    p.separator{
-        text-align:center;
-        text-shadow: 0 1px 0 rgba(0,0,0,0.3);
-        font-size:13px;
-    }
-}
-
-// Edit meeting page
-div#add-participant {
-    div.ui-input-text{
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-        box-sizing: border-box; 
-        /*padding-left:0px;*/
-        /*padding-right:0px;*/
-    }
-    div.ui-input-text{
-        width:100%;
-        border: 1px solid silver;
-        border-radius:4px;
-        -webkit-border-radius:4px;
-        -moz-border-radius:4px;
-        padding:0 0.8em;
-    }
-    p.separator{
-        text-align:center;
-        text-shadow: 0 1px 0 rgba(0,0,0,0.3);
-        font-size:13px;
-    }
-
-    #participant-name-wrapper {
-        display: none;
-    }
-}
-
-// Edit meeting page
-div#invite {
-    div.ui-input-text{
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        -ms-box-sizing: border-box;
-        box-sizing: border-box; 
-        /*padding-left:0px;*/
-        /*padding-right:0px;*/
-    }
-    div.ui-input-text {
         width:100%;
         border: 1px solid silver;
         border-radius:4px;
@@ -1179,4 +1125,13 @@ div#invite {
         font-size:13px;
     }
 }
+
+// Add participant page
+div#add-participant {
+    #participant-name-wrapper {
+        display: none;
+    }
+}
+
+
 

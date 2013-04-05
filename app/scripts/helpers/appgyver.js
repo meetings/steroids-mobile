@@ -25,7 +25,6 @@
           AppGyver.preload(path + "/materials.html", "materialsPage");
           AppGyver.preload(path + "/material.html", "materialPage");
           AppGyver.preload(path + "/scheduling.html", "schedulingPage");
-          AppGyver.preload(path + "/invite.html", "invitePage");
           AppGyver.preload(path + "/addParticipant.html", "addParticipantPage");
           AppGyver.preload(path + "/edit.html", "editPage");
         });
@@ -49,11 +48,6 @@
         switch (window.location.href)
         {
           case path + "/meeting.html":
-            window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
-            });
-            break;
-          case path + "/invite.html":
             window.addEventListener("message", function(event) {
               if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
             });

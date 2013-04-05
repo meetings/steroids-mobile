@@ -1,6 +1,7 @@
 app.meetingView = Backbone.View.extend({
     errors : 0, // Track connection errors for this view
     progressBarStarted : false,
+    inviteView : false,
     initialize: function(options) {
 
         // Bind error and success handlers
@@ -12,6 +13,24 @@ app.meetingView = Backbone.View.extend({
     },
 
     render: function() {
+        this.renderMeeting();
+
+        return this;
+    },
+
+    renderMeeting : function() {
+        // if we are coming back from invite view undo ui changes
+        if(this.inviteView) {
+            $('#headerTitle').text('Overview');
+
+            $(".back-button").unbind().click(function(e) {
+                app.headerView.navigateBack(e);                
+            });
+
+            $('#open-right-panel').show();
+
+            this.inviteView = false;
+        }
 
         // Render template & trigger jQuery create
         this.$el.html( templatizer.meetingView( this.model.toJSON() ) ); // Render template
@@ -32,13 +51,78 @@ app.meetingView = Backbone.View.extend({
         return this;
     },
 
+    renderSendInvites : function() {
+        this.inviteView = true;
+
+        // Render template & trigger jQuery create
+        this.$el.html( templatizer.sendInvitesView( this.model.toJSON() ) ); // Render template
+        this.$el.trigger("create");
+
+        $('#headerTitle').text('Invitation message');
+
+        // hook back button and hide edit meeting button
+        var me = this;
+
+        $(".back-button").unbind().click(function(e) {
+            me.navigateBack(e);
+        });
+
+        $('#open-right-panel').hide();
+
+        // textarea doesn't grow automatically with pre-filled data so help it out a bit
+        $('#invite-message').keyup();
+
+        return this;
+    },
+
+    saveMeetingInvite : function(e) {
+        e.preventDefault();
+
+        $('.save-meeting-invite').button('disable');
+
+        var data = {
+            greeting_subject : $('#invite-subject').val(),
+            greeting_message : $('#invite-message').val(),
+            require_rsvp : $('#invite-require-rsvp').prop('checked') ? '1' : '0'
+        };
+
+        console.log(data);
+
+        $.post(app.defaults.api_host + '/v1/meetings/' + this.model.get('id') + '/send_draft_participant_invites', data, function(res) {
+            console.log(res);
+
+            this.reloadMeeting();
+        }).error(function() {
+            $('.save-meeting-invite').button('enable');
+            alert('error in sending invites');
+        });
+    },
+
+    reloadMeeting : function() {
+        if ( app.options.build !== 'web' ) {
+            e.preventDefault();
+            AppGyver.openPreload("meetingPage", {id: this.model.get('id')});
+        } else {
+            window.location = 'meeting.html?id=' + this.model.get('id');
+        }
+    },
+
+    navigateBack: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.renderMeeting();
+    },
+
     events: {
         'click .open-material-view' : 'openMaterialView',
         'click .open-participant-view' : 'openParticipantView',
         'click .add-photo-material' : 'addPhotoMaterial',
         'click .save-photo-material' : 'savePhotoMaterial',
         'click .open-map-link' : 'openMapLink',
-        'click .open-add-participant-view' : 'openAddParticipantView'
+        'click .open-add-participant-view' : 'openAddParticipantView',
+        'click .open-send-invites-view' : 'openSendInvitesView',
+        'click .save-meeting-invite' : 'saveMeetingInvite'
     },
 
     openMapLink : function(e){
@@ -146,6 +230,10 @@ app.meetingView = Backbone.View.extend({
         } else {
             document.location = '/addParticipant.html?mid='+this.model.get('id');
         }
+    },
+
+    openSendInvitesView : function() {
+        this.renderSendInvites();
     },
 
     initProgressBar : function(){

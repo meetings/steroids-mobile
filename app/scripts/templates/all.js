@@ -105,7 +105,7 @@ exports.editStepCommunicationsView = function anonymous(locals, attrs, escape, r
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form"><p>Choose live communication tool:</p><div class="controls ui-grid-a"><div class="ui-block-a"><a id="submitStepCommunicationsSkype" data-theme="b" data-role="button" data-icon="mtngs-skype-white">Skype</a></div><div class="ui-block-b"><a id="submitStepCommunications" data-theme="b" data-role="button" data-icon="mtngs-cross-white">None</a></div></div></div>');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><p>Choose live communication tool:</p><div class="controls ui-grid-a"><div class="ui-block-a"><a id="submitStepCommunicationsSkype" data-theme="b" data-role="button" data-icon="mtngs-skype-white">Skype</a></div><div class="ui-block-b"><a id="submitStepCommunications" data-theme="b" data-role="button" data-icon="mtngs-cross-white">None</a></div></div></div>');
     }
     return buf.join("");
 };
@@ -119,7 +119,7 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><ul data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> <input');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><ul data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> <input');
         buf.push(attrs({
             id: "meeting-begin-date",
             "data-theme": "b",
@@ -163,7 +163,7 @@ exports.editStepDateAndTimeView = function anonymous(locals, attrs, escape, reth
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><div class="controls"><a id="submitStepDateAndTimeSetup" data-theme="b" type="button">Set date & time</a></div><p class="separator">OR</p><div class="controls"><a id="submitStepDateAndTime" data-theme="b" type="button">Time not known</a></div></div>');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><div class="controls"><a id="submitStepDateAndTimeSetup" data-theme="b" type="button">Set date & time</a></div><p class="separator">OR</p><div class="controls"><a id="submitStepDateAndTime" data-theme="b" type="button">Time not known</a></div></div>');
     }
     return buf.join("");
 };
@@ -177,7 +177,7 @@ exports.editStepLocationView = function anonymous(locals, attrs, escape, rethrow
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><input');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
         buf.push(attrs({
             id: "meeting-location",
             "data-theme": "b",
@@ -206,12 +206,12 @@ exports.editStepSkypeNameView = function anonymous(locals, attrs, escape, rethro
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><input');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
         buf.push(attrs({
-            id: "meeting-skype-address",
+            id: "meeting-skype-account",
             "data-theme": "b",
             type: "text",
-            name: "skype-address",
+            name: "skype-account",
             value: skype_account,
             placeholder: "Skype name"
         }, {
@@ -235,7 +235,7 @@ exports.editStepTitleView = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><input');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
         buf.push(attrs({
             id: "meeting-title",
             "data-theme": "b",
@@ -472,20 +472,9 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
         buf.push('<div id="progress-bar"></div><!-- Participants-->');
         if (is_draft) {
             if (participants.length <= 1) {
-                buf.push('<a data-theme="b" data-role="button" class="open-add-participant-view">Add participants</a>');
+                buf.push('<a href="#" data-theme="b" data-role="button" class="open-add-participant-view">Add participants</a>');
             } else {
-                buf.push("<a");
-                buf.push(attrs({
-                    href: "invite.html?id=" + id,
-                    "data-theme": "b",
-                    "data-role": "button",
-                    "class": "open-send-invites-view"
-                }, {
-                    href: true,
-                    "data-theme": true,
-                    "data-role": true
-                }));
-                buf.push(">Send invites</a>");
+                buf.push('<a href="#" data-theme="b" data-role="button" class="open-send-invites-view">Send invites</a>');
             }
         }
         buf.push('<ul data-role="listview" data-inset="true"><li><a href="#" class="open-participant-view"><h3>');
@@ -934,7 +923,25 @@ exports.sendInvitesView = function anonymous(locals, attrs, escape, rethrow, mer
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="invite-form" data-role="fieldcontain"><p><input id="invite-title" data-theme="b" type="text" name="invite-title" placeholder="Topic"/></p><p><textarea id="invite-message" data-theme="b" rows="5" cols="40" name="invite-message" placeholder="Message"></textarea></p><p><label><input id="invite-require-rsvp" data-theme="a" type="checkbox" name="invite-require-rsvp"/>Require RSVP</label></p><div class="controls"><a id="submit-send-invite" data-theme="b" type="button">Send</a></div></div>');
+        buf.push('<div id="invite-form" data-role="fieldcontain" class="form-full-width"><p><input');
+        buf.push(attrs({
+            id: "invite-subject",
+            "data-theme": "b",
+            type: "text",
+            name: "invite-subject",
+            value: invite_greetings["subject"],
+            placeholder: "Topic"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/></p><p><textarea id="invite-message" data-theme="b" rows="5" cols="40" name="invite-message" placeholder="Message">');
+        var __val__ = invite_greetings["content"];
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push('</textarea></p><p><label><input id="invite-require-rsvp" data-theme="a" type="checkbox" name="invite-require-rsvp"/>Require RSVP</label></p><div class="controls"><button data-theme="b" type="button" class="save-meeting-invite">Send</button></div></div>');
     }
     return buf.join("");
 };
