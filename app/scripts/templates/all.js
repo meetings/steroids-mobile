@@ -82,6 +82,20 @@ exports.confirmSchedulingChoose = function anonymous(locals, attrs, escape, reth
     return buf.join("");
 };
 
+// editMaterialPanel.jade compiled template
+exports.editMaterialPanel = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Rename</a></li><li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Download</a></li><li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li></ul>');
+    }
+    return buf.join("");
+};
+
 // editMeetingPanel.jade compiled template
 exports.editMeetingPanel = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;

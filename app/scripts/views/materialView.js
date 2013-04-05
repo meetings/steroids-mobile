@@ -1,7 +1,18 @@
 app.materialView = Backbone.View.extend({
 
     initialize: function(options) {
-         options.model.bind('change', this.render, this);
+        options.model.bind('change', this.render, this);
+
+        // Open panel
+        $('div.main-div').swipeleft(function(){
+            $( "#edit-material-panel" ).panel( "open" );
+        });
+
+        // Close panel with click
+        $('div.ui-panel-content-wrap,div.ui-panel-dismiss').live('click', function(){
+            $( "#edit-material-panel" ).panel( "close" );
+        });
+
     },
 
     render: function() {

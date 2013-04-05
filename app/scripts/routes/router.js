@@ -298,6 +298,8 @@ app.router = Backbone.Router.extend({
         var commentsFetch = $.Deferred(),
         materialFetch = $.Deferred();
 
+        var id = params.id || 0;
+
         $.when(commentsFetch, materialFetch).then(function(){
             app.showContent();
         });
@@ -310,7 +312,10 @@ app.router = Backbone.Router.extend({
         // Setup header
         app.views.header = new app.headerView({ el : '#material' });
 
-        var id = params.id || 0;
+        // Setup edit panel
+        app.views.editPanel = new app.editMaterialPanelView({ el : '#edit-material-panel', materialId : id });
+        app.views.editPanel.render();
+
         app.models.material = new app.materialModel();
         app.models.material.url = app.defaults.api_host + '/v1/materials/' + id;
         app.views.material = new app.materialView({
