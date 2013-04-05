@@ -142,8 +142,17 @@ app.router = Backbone.Router.extend({
         },  data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
     },
 
-
-    login : function() {
+    login : function(params) {
+        if ( params && params.fb_login ) {
+            var params = { fb_code : params.code, fb_redirect_uri : params.redirect_uri };
+            $.post( app.defaults.api_host + '/v1/login', params, function( response ){
+                if( response.result ){
+                    app._loginWithParams( response.result.user_id, response.result.token );
+                    window.location = '/index.html';
+                    return;
+                }
+            }, 'json' );
+        }
         app.views.login = new app.loginView({ el : $('#login-page') });
         app.views.login.render();
     },

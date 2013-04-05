@@ -6,20 +6,6 @@ var jade=function(exports){Array.isArray||(Array.isArray=function(arr){return"[o
 
 // create our folder objects
 
-// addParticipantView.jade compiled template
-exports.addParticipantView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><div id="participant-name-wrapper"><p>Contact not found, create a new contact by giving a name.</p><input id="participant-name" data-theme="b" type="text" name="participant-name" placeholder="Name"/></div><p><input id="participant-email" data-theme="b" type="text" name="participant-email" placeholder="Type a name or email"/></p><div class="controls"><a id="submitAddParticipant" data-theme="b" type="button">Add participant</a></div></div>');
-    }
-    return buf.join("");
-};
-
 // commentForm.jade compiled template
 exports.commentForm = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
@@ -29,7 +15,8 @@ exports.commentForm = function anonymous(locals, attrs, escape, rethrow, merge) 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="comment-box"><div class="left"><div class="container"><textarea id="comment-input" data-role="none" rows="1" placeholder="Tap to comment"></textarea></div></div><div class="right"><a data-role="none" data-enhance="false" href="#" class="send-comment">Send</a></div></div>');
+        var __indent = [];
+        buf.push('\n<div id="comment-box">\n  <div class="left">\n    <div class="container">\n      <textarea id="comment-input" data-role="none" rows="1" placeholder="Tap to comment"></textarea>\n    </div>\n  </div>\n  <div class="right"><a data-role="none" data-enhance="false" href="#" class="send-comment">Send</a></div>\n</div>');
     }
     return buf.join("");
 };
@@ -43,6 +30,7 @@ exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
+        var __indent = [];
         if (!user_image) var user_image = app.defaults.user_image;
         buf.push("<img");
         buf.push(attrs({
@@ -51,13 +39,13 @@ exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, m
         }, {
             src: true
         }));
-        buf.push("/><h3>");
+        buf.push("/>\n<h3>");
         var __val__ = user_name;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</h3><p class="info">');
+        buf.push('</h3>\n<p class="info">');
         var __val__ = date_ago;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</p><p>");
+        buf.push("</p>\n<p>");
         var __val__ = content;
         buf.push(null == __val__ ? "" : __val__);
         buf.push("</p>");
@@ -74,183 +62,11 @@ exports.confirmSchedulingChoose = function anonymous(locals, attrs, escape, reth
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push("<h3>Are you sure?</h3><p>");
+        var __indent = [];
+        buf.push("\n<h3>Are you sure?</h3>\n<p>");
         var __val__ = "Choose " + time + " for the meeting. We will immediately notify all participants.";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</p><a id="confirm-option" data-theme="b" type="button">Save and notify</a><a data-theme="a" type="button" class="reset">Cancel</a>');
-    }
-    return buf.join("");
-};
-
-// editMeetingPanel.jade compiled template
-exports.editMeetingPanel = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Rename</a></li><li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li></ul>');
-    }
-    return buf.join("");
-};
-
-// editStepCommunicationsView.jade compiled template
-exports.editStepCommunicationsView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="edit-form"><p>Choose live communication tool:</p><div class="controls ui-grid-a"><div class="ui-block-a"><a id="submitStepCommunicationsSkype" data-theme="b" data-role="button" data-icon="mtngs-skype-white">Skype</a></div><div class="ui-block-b"><a id="submitStepCommunications" data-theme="b" data-role="button" data-icon="mtngs-cross-white">None</a></div></div></div>');
-    }
-    return buf.join("");
-};
-
-// editStepDateAndTimeSetupView.jade compiled template
-exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><ul data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> <input');
-        buf.push(attrs({
-            id: "meeting-begin-date",
-            "data-theme": "b",
-            type: "datetime-local",
-            name: "meeting-begin-date",
-            value: begin_date + "T" + begin_time,
-            placeholder: "Starts"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push('/></div></div></li><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Ends</div><div class="ui-block-b"> <input');
-        buf.push(attrs({
-            id: "meeting-end-date",
-            "data-theme": "b",
-            type: "datetime-local",
-            name: "meeting-end-date",
-            value: end_date + "T" + end_time,
-            placeholder: "Ends"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push('/></div></div></li></ul><div class="controls"><a id="submitStepDateAndTimeFinish" data-theme="b" type="button">Continue</a></div></div>');
-    }
-    return buf.join("");
-};
-
-// editStepDateAndTimeView.jade compiled template
-exports.editStepDateAndTimeView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><div class="controls"><a id="submitStepDateAndTimeSetup" data-theme="b" type="button">Set date & time</a></div><p class="separator">OR</p><div class="controls"><a id="submitStepDateAndTime" data-theme="b" type="button">Time not known</a></div></div>');
-    }
-    return buf.join("");
-};
-
-// editStepLocationView.jade compiled template
-exports.editStepLocationView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><input');
-        buf.push(attrs({
-            id: "meeting-location",
-            "data-theme": "b",
-            type: "text",
-            name: "meeting-location",
-            value: location,
-            placeholder: "Meeting location"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push('/><div class="controls"><a id="submitStepLocation" data-theme="b" type="button">Continue</a></div><p class="separator">OR</p><div class="controls"><a id="submitStepLocationOnline" data-theme="b" type="button">Meeting is online</a></div></div>');
-    }
-    return buf.join("");
-};
-
-// editStepSkypeNameView.jade compiled template
-exports.editStepSkypeNameView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><input');
-        buf.push(attrs({
-            id: "meeting-skype-address",
-            "data-theme": "b",
-            type: "text",
-            name: "skype-address",
-            value: skype_account,
-            placeholder: "Skype name"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push('/><div class="controls"><a id="submitStepSkypeName" data-theme="b" type="button">Continue</a></div></div>');
-    }
-    return buf.join("");
-};
-
-// editStepTitleView.jade compiled template
-exports.editStepTitleView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><input');
-        buf.push(attrs({
-            id: "meeting-title",
-            "data-theme": "b",
-            type: "text",
-            name: "meeting-title",
-            value: title,
-            placeholder: "Meeting title"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push('/><div class="controls"><a id="submitStepTitle" data-theme="b" type="button">Continue</a></div></div>');
     }
     return buf.join("");
 };
@@ -264,7 +80,8 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div class="logo"><h1 class="meetings-logo"></h1></div><div id="login-form" data-role="fieldcontain"><a id="facebook-login" style="display:none;"></a><p style="display:none;" class="separator">OR</p><input id="email" data-theme="b" type="text" name="email" value="" placeholder="Enter your email address..."/><div class="controls"><a data-theme="b" type="button" class="login_or_register">Send</a></div></div><div id="pin-form" data-role="fieldcontain" class="pin-entry"><div data-role="field-contain"><table style="width:100%;"><tr><td style="width:20%;"><label for="pin">PIN:</label></td><td style="width:60%;"><input id="pin" data-theme="b" type="text" name="pin" value="" placeholder="PIN..."/></td></tr></table><a data-theme="b" type="button" class="check-pin">Continue</a></div></div><div id="profile-form" data-role="field-contain"><p>Profile form here</p></div><div class="no-mobile-link"><a id="no-mobile" href="#">Switch to normal website</a></div>');
+        var __indent = [];
+        buf.push('\n<div class="logo">\n  <h1 class="meetings-logo"></h1>\n</div>\n<div id="login-form" data-role="fieldcontain"><a id="facebook-login" style="display:none;"></a>\n  <p style="display:none;" class="separator">OR</p>\n  <input id="email" data-theme="b" type="text" name="email" value="" placeholder="Enter your email address..."/>\n  <div class="controls"><a data-theme="b" type="button" class="login_or_register">Send</a></div>\n</div>\n<div id="pin-form" data-role="fieldcontain" class="pin-entry">\n  <div data-role="field-contain">\n    <table style="width:100%;">\n      <tr>\n        <td style="width:20%;">\n          <label for="pin">PIN:</label>\n        </td>\n        <td style="width:60%;">\n          <input id="pin" data-theme="b" type="text" name="pin" value="" placeholder="PIN..."/>\n        </td>\n      </tr>\n    </table><a data-theme="b" type="button" class="check-pin">Continue</a>\n  </div>\n</div>\n<div id="profile-form" data-role="field-contain">\n  <p>Profile form here</p>\n</div>\n<div class="no-mobile-link"><a id="no-mobile" href="#">Switch to normal website</a></div>');
     }
     return buf.join("");
 };
@@ -278,6 +95,7 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
     var buf = [];
     with (locals || {}) {
         var interp;
+        var __indent = [];
         buf.push("<a");
         buf.push(attrs({
             href: show_url
@@ -292,12 +110,12 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
         } else {
             buf.push('<span class="material-other ui-li-thumb ui-corner-tl"></span>');
         }
-        buf.push("<h3>");
+        buf.push("\n  <h3>");
         var __val__ = title;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</h3>");
         if (author_name !== "") {
-            buf.push("<p>");
+            buf.push("\n  <p>");
             var __val__ = "By " + author_name + " " + time_ago;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
@@ -319,25 +137,26 @@ exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge)
     var buf = [];
     with (locals || {}) {
         var interp;
+        var __indent = [];
         if (fetch_type !== "") {
             if (fetch_type === "media") {
-                buf.push("<h3>");
+                buf.push("\n<h3>");
                 var __val__ = title;
                 buf.push(escape(null == __val__ ? "" : __val__));
                 buf.push("</h3>");
                 var __val__ = content;
                 buf.push(null == __val__ ? "" : __val__);
             } else {
-                buf.push("<h3>");
+                buf.push("\n<h3>");
                 var __val__ = title;
                 buf.push(escape(null == __val__ ? "" : __val__));
                 buf.push("</h3>");
                 if (title == "Agenda" && content == "") {
-                    buf.push('<p class="notruncation">Agenda is empty.</p>');
+                    buf.push('\n<p class="notruncation">Agenda is empty.</p>');
                 } else if (title == "Action Points" && content == "") {
-                    buf.push('<p class="notruncation">Action points are empty.</p>');
+                    buf.push('\n<p class="notruncation">Action points are empty.</p>');
                 } else {
-                    buf.push('<p class="notruncation">');
+                    buf.push('\n<p class="notruncation">');
                     var __val__ = content;
                     buf.push(null == __val__ ? "" : __val__);
                     buf.push("</p>");
@@ -357,19 +176,20 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
+        var __indent = [];
         buf.push("<a");
         buf.push(attrs({
             href: "meeting.html?id=" + id
         }, {
             href: true
         }));
-        buf.push("><h3>");
+        buf.push(">\n  <h3>");
         var __val__ = title;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</h3><p>");
+        buf.push("</h3>\n  <p>");
         var __val__ = location;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</p><div class="top-bar"><span class="left">');
+        buf.push('</p>\n  <div class="top-bar"><span class="left">');
         var __val__ = date_string || "Scheduling in progress";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</span><span class="right">');
@@ -377,13 +197,13 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</span></div>");
         if (participants.length) {
-            buf.push('<div class="participants">');
+            buf.push('\n  <div class="participants">');
             participants = _.sortBy(participants, function(p) {
                 if (p.is_creator) return 0; else if (p.rsvp_status === "yes") return 1; else if (p.rsvp_status === "no") return 3; else return 2;
             });
             participants.forEach(function(participant) {
                 {
-                    buf.push('<div class="wrap">');
+                    buf.push('\n    <div class="wrap">');
                     if (participant.image !== "") {
                         buf.push("<img");
                         buf.push(attrs({
@@ -400,7 +220,7 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
                         buf.push('<span class="placeholder-20"></span>');
                     }
                     if (date_string == "") {
-                        buf.push("<!-- Time not set-->");
+                        buf.push("\n      <!-- Time not set-->");
                     } else if (participant.rsvp_status === "yes") {
                         buf.push('<span class="rsvp yes"></span>');
                     } else if (participant.rsvp_status === "no") {
@@ -408,10 +228,10 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
                     } else {
                         buf.push('<span class="rsvp unknown"></span>');
                     }
-                    buf.push("</div>");
+                    buf.push("\n    </div>");
                 }
             });
-            buf.push("</div>");
+            buf.push("\n  </div>");
         }
         buf.push("</a>");
     }
@@ -427,32 +247,33 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push("<h3>");
+        var __indent = [];
+        buf.push("\n<h3>");
         var __val__ = title;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</h3>");
         if (date_string) {
-            buf.push('<p class="mtngs-calendar">');
+            buf.push('\n<p class="mtngs-calendar">');
             var __val__ = date_string + ", " + time_string + " " + timezone_string;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         } else {
-            buf.push('<p class="mtngs-calendar">Scheduling in progress</p>');
+            buf.push('\n<p class="mtngs-calendar">Scheduling in progress</p>');
         }
         if (location) {
             if (location === "On Skype" || location === "Online" || location === "Location not known") {
-                buf.push('<p class="mtngs-location">');
+                buf.push('\n<p class="mtngs-location">');
                 var __val__ = location;
                 buf.push(escape(null == __val__ ? "" : __val__));
                 buf.push("</p>");
             } else {
-                buf.push('<p class="mtngs-location"><a href="#" class="open-map-link">');
+                buf.push('\n<p class="mtngs-location"><a href="#" class="open-map-link">');
                 var __val__ = location;
                 buf.push(escape(null == __val__ ? "" : __val__));
                 buf.push("</a></p>");
             }
         }
-        buf.push('<div id="next-action-bar"></div><!-- Skype button-->');
+        buf.push('\n<div id="next-action-bar"></div>\n<!-- Skype button-->');
         if (skype_url) {
             buf.push("<a");
             buf.push(attrs({
@@ -469,37 +290,18 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             }));
             buf.push(">Join Skype conference</a>");
         }
-        buf.push('<div id="progress-bar"></div><!-- Participants-->');
-        if (is_draft) {
-            if (participants.length <= 1) {
-                buf.push('<a data-theme="b" data-role="button" class="open-add-participant-view">Add participants</a>');
-            } else {
-                buf.push("<a");
-                buf.push(attrs({
-                    href: "invite.html?id=" + id,
-                    "data-theme": "b",
-                    "data-role": "button",
-                    "class": "open-send-invites-view"
-                }, {
-                    href: true,
-                    "data-theme": true,
-                    "data-role": true
-                }));
-                buf.push(">Send invites</a>");
-            }
-        }
-        buf.push('<ul data-role="listview" data-inset="true"><li><a href="#" class="open-participant-view"><h3>');
+        buf.push('\n<div id="progress-bar"></div>\n<!-- Participants-->\n<ul data-role="listview" data-inset="true">\n  <li><a href="#" class="open-participant-view">\n      <h3>');
         var __val__ = "Participants";
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</h3><div class="participant-list"></div>');
+        buf.push('</h3>\n      <div class="participant-list"></div>');
         if (participants.length) {
-            buf.push('<div class="participants">');
+            buf.push('\n      <div class="participants">');
             participants = _.sortBy(participants, function(p) {
                 if (p.is_creator) return 0; else if (p.rsvp_status === "yes") return 1; else if (p.rsvp_status === "no") return 3; else return 2;
             });
             participants.forEach(function(participant) {
                 {
-                    buf.push('<div class="wrap">');
+                    buf.push('\n        <div class="wrap">');
                     if (participant.image !== "") {
                         buf.push("<img");
                         buf.push(attrs({
@@ -516,7 +318,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                         buf.push('<span class="placeholder-30"></span>');
                     }
                     if (date_string == "") {
-                        buf.push("<!-- Time not set-->");
+                        buf.push("\n          <!-- Time not set-->");
                     } else if (participant.rsvp_status === "yes") {
                         buf.push('<span class="rsvp yes"></span>');
                     } else if (participant.rsvp_status === "no") {
@@ -524,14 +326,14 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                     } else {
                         buf.push('<span class="rsvp unknown"></span>');
                     }
-                    buf.push("</div>");
+                    buf.push("\n        </div>");
                 }
             });
-            buf.push("</div>");
+            buf.push("\n      </div>");
         }
-        buf.push('</a></li></ul><!-- Materials--><ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul><a href="#materialsPopup" data-rel="popup" data-theme="b" type="button">Add materials</a><div id="materialsPopup" data-role="popup" data-overlay-theme="a" data-theme="c" class="ui-corner-all"><div data-role="content" data-theme="d" class="ui-corner-bottom ui-content"><h3 class="ui-title">Choose source        </h3><a href="#" data-role="button" data-theme="a" class="add-photo-material">Camera</a><a href="#" data-role="button" data-theme="a">Existing photo</a><a href="#" data-role="button" data-rel="back" data-theme="c">Cancel</a></div></div>');
+        buf.push('</a></li>\n</ul>\n<!-- Materials-->\n<ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul>');
         if (app.options.build !== "web") {
-            buf.push('<a href="#" data-role="button" class="add-photo-material">Add photo</a><img id="myImage"/><div id="upload_progress"></div><div style="display:none;" class="file-save-form"><input id="file-upload-name" type="text" placeholder="Type filename here..."/><input id="file-upload-id" type="hidden"/><a href="#" data-role="button" style="display:none;" class="save-photo-material">Add to meeting</a></div><div style="display:none;" class="save-text"><p>Saving material...</p></div>');
+            buf.push('<a href="#" data-role="button" class="add-photo-material">Add photo</a><img id="myImage"/>\n<div id="upload_progress"></div>\n<div style="display:none;" class="file-save-form">\n  <input id="file-upload-name" type="text" placeholder="Type filename here..."/>\n  <input id="file-upload-id" type="hidden"/><a href="#" data-role="button" style="display:none;" class="save-photo-material">Add to meeting</a>\n</div>\n<div style="display:none;" class="save-text">\n  <p>Saving material...</p>\n</div>');
         }
     }
     return buf.join("");
@@ -546,7 +348,8 @@ exports.noticeBar = function anonymous(locals, attrs, escape, rethrow, merge) {
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div class="notice"><p>Problems with the internets...</p></div>');
+        var __indent = [];
+        buf.push('\n<div class="notice">\n  <p>Problems with the internets...</p>\n</div>');
     }
     return buf.join("");
 };
@@ -560,7 +363,8 @@ exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, me
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push("<li>");
+        var __indent = [];
+        buf.push("\n<li>");
         var c = user.proposal_answers[proposal.id] ? user.proposal_answers[proposal.id] : "no";
         if (mode === "choose") c = "choose";
         buf.push("<a");
@@ -575,21 +379,21 @@ exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, me
             "class": true,
             "data-time": true
         }));
-        buf.push('><div class="top-bar"><span class="left">');
+        buf.push('>\n    <div class="top-bar"><span class="left">');
         var __val__ = proposal.date_string;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</span><span class="right">');
         var __val__ = proposal.time_string;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</span></div><!--span.right=time_string-->");
+        buf.push("</span></div>\n    <!--span.right=time_string-->");
         if (participants.length) {
-            buf.push('<div class="participants">');
+            buf.push('\n    <div class="participants">');
             participants = _.sortBy(participants, function(p) {
                 if (p.proposal_answers[proposal.id] === "yes") return 1; else if (p.proposal_answers[proposal.id] === "no") return 3; else return 2;
             });
             participants.forEach(function(p) {
                 {
-                    buf.push('<div class="wrap">');
+                    buf.push('\n      <div class="wrap">');
                     if (p.image !== "") {
                         buf.push("<img");
                         buf.push(attrs({
@@ -612,12 +416,12 @@ exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, me
                     } else {
                         buf.push('<span class="rsvp unknown"></span>');
                     }
-                    buf.push("</div>");
+                    buf.push("\n      </div>");
                 }
             });
-            buf.push("</div>");
+            buf.push("\n    </div>");
         }
-        buf.push("</a></li>");
+        buf.push("</a>\n</li>");
     }
     return buf.join("");
 };
@@ -631,9 +435,10 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
     var buf = [];
     with (locals || {}) {
         var interp;
+        var __indent = [];
         var a = "";
         if (active === "meetings") a = "ui-btn-active";
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li');
+        buf.push('\n<ul id="side-bar" data-role="listview" data-theme="c">\n  <li');
         buf.push(attrs({
             "data-theme": "c",
             "class": a
@@ -641,7 +446,7 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
             "data-theme": true,
             "class": true
         }));
-        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li><li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li><li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li><li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li><li data-role="list-divider" data-theme="c">OTHER</li><li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li><li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li><li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li></ul>');
+        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li>\n  <li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li>\n  <li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li>\n  <li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li>\n  <li data-role="list-divider" data-theme="c">OTHER</li>\n  <li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li>\n  <li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li>\n  <li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li>\n</ul>');
         if (app.options.build === "web") {
             buf.push('<a href="#" class="no-mobile">Switch to normal website</a>');
         }
@@ -658,13 +463,14 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
     var buf = [];
     with (locals || {}) {
         var interp;
+        var __indent = [];
         buf.push("<a");
         buf.push(attrs({
             href: show_url
         }, {
             href: true
         }));
-        buf.push('><div class="wrap ui-li-thumb">');
+        buf.push('>\n  <div class="wrap ui-li-thumb">');
         if (locals.image) {
             buf.push("<img");
             buf.push(attrs({
@@ -679,7 +485,7 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
             buf.push('<span class="placeholder-60"></span>');
         }
         if (locals.proposal_answers && _.size(proposal_answers) > 0) {
-            buf.push("<!-- Scheduling-->");
+            buf.push("\n    <!-- Scheduling-->");
         } else if (locals.rsvp_status && rsvp_status === "yes") {
             buf.push('<span class="rsvp yes"></span>');
         } else if (locals.rsvp_status && rsvp_status === "no") {
@@ -687,24 +493,24 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
         } else {
             buf.push('<span class="rsvp unknown"></span>');
         }
-        buf.push("</div><h3>");
+        buf.push("\n  </div>\n  <h3>");
         var __val__ = name;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</h3>");
         if (organization && organization_title) {
-            buf.push("<p>");
+            buf.push("\n  <p>");
             var __val__ = organization + ", " + organization_title;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (organization && !organization_title) {
-            buf.push("<p>");
+            buf.push("\n  <p>");
             var __val__ = organization;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (!organization && organization_title) {
-            buf.push("<p>");
+            buf.push("\n  <p>");
             var __val__ = organization_title;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
@@ -723,7 +529,8 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div class="ui-grid-a"><div class="ui-block-a">');
+        var __indent = [];
+        buf.push('\n<div class="ui-grid-a">\n  <div class="ui-block-a">');
         if (image) {
             buf.push("<img");
             buf.push(attrs({
@@ -736,7 +543,7 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
         } else {
             buf.push('<span class="placeholder-100 mtngs-profile-image"></span>');
         }
-        buf.push('</div><div class="ui-block-b">');
+        buf.push('\n  </div>\n  <div class="ui-block-b">');
         var ipad = navigator.userAgent.match(/iPad/i) != null;
         if (phone && !ipad) {
             buf.push("<a");
@@ -786,32 +593,32 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</a>");
         }
-        buf.push("</div></div>");
+        buf.push("\n  </div>\n</div>");
         if (name) {
-            buf.push('<h3 style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;">');
+            buf.push('\n<h3 style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;">');
             var __val__ = name;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</h3>");
         }
         if (organization && organization_title) {
-            buf.push("<p>");
+            buf.push("\n<p>");
             var __val__ = organization + ", " + organization_title;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (organization && !organization_title) {
-            buf.push("<p>");
+            buf.push("\n<p>");
             var __val__ = organization;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (!organization && organization_title) {
-            buf.push("<p>");
+            buf.push("\n<p>");
             var __val__ = organization_title;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
-        buf.push('<ul data-role="listview" data-inset="true" data-theme="a"><li><p class="mtngs-email"><a');
+        buf.push('\n<ul data-role="listview" data-inset="true" data-theme="a">\n  <li>\n    <p class="mtngs-email"><a');
         buf.push(attrs({
             style: "font-weight:normal;color:#555;",
             href: "mailto:" + email
@@ -824,19 +631,19 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</a></p>");
         if (phone) {
-            buf.push('<p class="mtngs-mobile">');
+            buf.push('\n    <p class="mtngs-mobile">');
             var __val__ = phone;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (skype) {
-            buf.push('<p class="mtngs-skype">');
+            buf.push('\n    <p class="mtngs-skype">');
             var __val__ = skype;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (linkedin) {
-            buf.push('<p class="mtngs-linkedin">');
+            buf.push('\n    <p class="mtngs-linkedin">');
             if (linkedin.indexOf("http") === -1) linkedin = "http://" + linkedin;
             buf.push("<a");
             buf.push(attrs({
@@ -849,9 +656,9 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push(">");
             var __val__ = "LinkedIn Profile";
             buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</a></p>");
+            buf.push("</a>\n    </p>");
         }
-        buf.push("</li></ul>");
+        buf.push("\n  </li>\n</ul>");
     }
     return buf.join("");
 };
@@ -865,21 +672,22 @@ exports.progressBar = function anonymous(locals, attrs, escape, rethrow, merge) 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<!-- Progress bar--><div class="bar wrapper"><div class="bar-container">');
+        var __indent = [];
+        buf.push('\n<!-- Progress bar-->\n<div class="bar wrapper">\n  <div class="bar-container">');
         if (progress_text) {
-            buf.push('<div class="text">');
+            buf.push('\n    <div class="text">');
             var __val__ = progress_text;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</div>");
         }
-        buf.push("<div");
+        buf.push("\n    <div");
         buf.push(attrs({
             style: "width:" + progress + "%",
             "class": "bar"
         }, {
             style: true
         }));
-        buf.push("></div></div></div>");
+        buf.push("></div>\n  </div>\n</div>");
     }
     return buf.join("");
 };
@@ -893,7 +701,8 @@ exports.rsvpBarView = function anonymous(locals, attrs, escape, rethrow, merge) 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div class="rsvp-answer"><span class="text">Set your RSVP status:</span><a href="#" class="attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
+        var __indent = [];
+        buf.push('\n<div class="rsvp-answer"><span class="text">Set your RSVP status:</span><a href="#" class="attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
     }
     return buf.join("");
 };
@@ -907,34 +716,21 @@ exports.schedulingBarView = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div class="scheduling-answer">');
+        var __indent = [];
+        buf.push('\n<div class="scheduling-answer">');
         if (user_answered) {
-            buf.push('<p><a data-role="button" data-theme="b" href="#" class="answer-scheduling">Change your responses</a></p>');
+            buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="answer-scheduling">Change your responses</a></p>');
         } else {
-            buf.push('<p><a data-role="button" data-theme="b" href="#" class="answer-scheduling">Tap to answer scheduling</a></p>');
+            buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="answer-scheduling">Tap to answer scheduling</a></p>');
         }
         if (creator == 1) {
             if (all_answered) {
-                buf.push('<p><a data-role="button" data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
+                buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
             } else {
-                buf.push('<p><a data-role="button" data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
+                buf.push('\n  <p><a data-role="button" data-theme="b" href="#" class="choose-date">Choose the time</a></p>');
             }
         }
-        buf.push("</div>");
-    }
-    return buf.join("");
-};
-
-// sendInvitesView.jade compiled template
-exports.sendInvitesView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="invite-form" data-role="fieldcontain"><p><input id="invite-title" data-theme="b" type="text" name="invite-title" placeholder="Topic"/></p><p><textarea id="invite-message" data-theme="b" rows="5" cols="40" name="invite-message" placeholder="Message"></textarea></p><p><label><input id="invite-require-rsvp" data-theme="a" type="checkbox" name="invite-require-rsvp"/>Require RSVP</label></p><div class="controls"><a id="submit-send-invite" data-theme="b" type="button">Send</a></div></div>');
+        buf.push("\n</div>");
     }
     return buf.join("");
 };
@@ -948,7 +744,8 @@ exports.settingsView = function anonymous(locals, attrs, escape, rethrow, merge)
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push("<h3>About</h3><p> Meetin.gs is the smartest way to meet, online or face-to-face.\nWe put meetings on the cloud, accessible from any device.\nTo setup new meetings, go to www.meetin.gs on a desktop browser.</p><p><a");
+        var __indent = [];
+        buf.push("\n<h3>About</h3>\n<p>\n   Meetin.gs is the smartest way to meet, online or face-to-face.\n  We put meetings on the cloud, accessible from any device.\n  To setup new meetings, go to www.meetin.gs on a desktop browser.\n</p>\n<p><a");
         buf.push(attrs({
             href: desktop_link
         }, {
@@ -972,13 +769,14 @@ exports.updateBrowser = function anonymous(locals, attrs, escape, rethrow, merge
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div class="main-div ui-content" data-role="content" role="main"><div data-role="content" role="main" class="main-div ui-content"><h3>Sorry</h3><p>The mobile site is designed to work with modern browsers. Please update to Chrome, Firefox, Safari or Opera.</p><p><a');
+        var __indent = [];
+        buf.push('<div class="main-div ui-content" data-role="content" role="main">\n<div data-role="content" role="main" class="main-div ui-content">\n  <h3>Sorry</h3>\n  <p>The mobile site is designed to work with modern browsers. Please update to Chrome, Firefox, Safari or Opera.</p>\n  <p><a');
         buf.push(attrs({
             href: app.defaults.desktop_link
         }, {
             href: true
         }));
-        buf.push(">Switch to desktop version</a></p></div>");
+        buf.push(">Switch to desktop version</a></p>\n</div>");
     }
     return buf.join("");
 };
@@ -987,8 +785,6 @@ exports.updateBrowser = function anonymous(locals, attrs, escape, rethrow, merge
 // attach to window or export with commonJS
 if (typeof module !== "undefined") {
     module.exports = exports;
-} else if (typeof define === "function" && define.amd) {
-    define(exports);
 } else {
     root.templatizer = exports;
 }

@@ -15,7 +15,7 @@ app.loginView = Backbone.View.extend({
     events: {
         'click .login_or_register' : 'loginOrRegister',
         'click #no-mobile' : 'nomobile',
-        'click #facebook-login' : 'nomobile',
+        'click #facebook-login' : 'facebookLogin',
         'focus #email' : 'focusEmail',
         'click .check-pin' : 'checkPin'
     },
@@ -71,7 +71,7 @@ app.loginView = Backbone.View.extend({
                     $form.append( $('<p class="error">An unknown error has happened. Please go back and try again!</p>').delay(5000).fadeOut() );
                 }
             }
-        });
+        }, 'json');
     },
     tryagain : function(e){
         e.preventDefault();
@@ -105,6 +105,12 @@ app.loginView = Backbone.View.extend({
                $form.append( $('<p class="error">Sorry,there was an error processing your request. Try again!</p>').delay(5000).fadeOut() );
             }
         }, 'json');
+    },
+    facebookLogin : function(e) {
+        e.preventDefault();
+        var redirect_uri = 'https://dev.meetin.gs/meetings_global/facebook_redirect';
+        var url = 'https://www.facebook.com/dialog/oauth?client_id=181390985231333&redirect_uri='+ encodeURIComponent( redirect_uri ) +'&state=' + encodeURIComponent( JSON.stringify( { to : window.location.protocol + '//' + window.location.host + window.location.pathname +'?fb_login=1', redirect_uri : redirect_uri } ) );
+        window.location = url;
     },
     nomobile : function(e){
         e.preventDefault();

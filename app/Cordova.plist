@@ -21,12 +21,12 @@
 	<key>AllowInlineMediaPlayback</key>
 	<false/>
 	<key>OpenAllWhitelistURLsInWebView</key>
-	<false/>
+	<true/>
 	<key>BackupWebStorage</key>
 	<string>local</string>
 	<key>ExternalHosts</key>
 	<array>
-		<string>*</string>
+		<string>www.facebook.com</string>
 	</array>
 	<key>Plugins</key>
 	<dict>
