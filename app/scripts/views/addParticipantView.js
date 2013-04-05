@@ -31,12 +31,12 @@ app.addParticipantView = Backbone.View.extend({
 
                 // If value is not a valid email address, show email field and treat the input as the name
                 if(!validEmail) {
-                    $('#participant-email').attr('placeholder', 'Email');
-                    $('#participant-name').val(email);
-                    $('#participant-email').val(name);
+                    $email.attr('placeholder', 'Email');
+                    $email.val(name);
+                    $name.val(email);
 
                     $('#participant-name-wrapper').fadeIn(function() {
-                        $('#participant-email').focus();
+                        $email.focus();
                     });
                 }
             }
@@ -46,7 +46,7 @@ app.addParticipantView = Backbone.View.extend({
             validEmail = name.length > 0 && this._validEmail(email);
 
             if(!validEmail) {
-                $('#participant-email').focus();
+                $email.focus();
             }
         }
 
