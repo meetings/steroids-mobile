@@ -1,6 +1,11 @@
 app.addParticipantView = Backbone.View.extend({
+    meetingModel : null,
 
     initialize: function(options) {
+        if(options.meetingModel) {
+            this.meetingModel = options.meetingModel;
+        }
+
         // Bind error and success handlers
         this.model.bind('error', this.errorHandler, this);
         this.model.bind('success', this.successHandler, this);
@@ -18,7 +23,6 @@ app.addParticipantView = Backbone.View.extend({
         var $name = $('#participant-name');
         var $email = $('#participant-email')
 
-        // empty views stack and send the meeting to server
         var name = $name.val();
         var email = $email.val();
 
@@ -50,26 +54,63 @@ app.addParticipantView = Backbone.View.extend({
             }
         }
 
+        // If email is ok, check if we need to show invite screen for meetings which are not drafts
         if(validEmail) {
-            $('#headerTitle').text('Saving...');
-
             this.model.set('email', email);
             this.model.set('name', name);
 
-            AppGyver.hideContent();
-
-            // after saving, move to meeting view to finish the draft
-            var me = this;
-
-            me.model.save({}, {
-                success : function() {
-                    me.openMeetingView();
-                },
-                error: function() {
-                    alert('adding participant failed.');
-                }
-            });
+            this.saveParticipantOrBuildInvite();
         }
+    },
+
+    saveParticipantOrBuildInvite : function() {
+        if(this.meetingModel && !this.meetingModel.is_draft) {
+            this.renderInvite();
+        }
+        else {
+            this.finalizeAddParticipant();
+        }
+    },
+
+    renderInvite : function() {
+        // Render template & trigger jQuery create
+        this.$el.html( templatizer.sendInvitesView( this.meetingModel.toJSON() ) ); // Render template
+        this.$el.trigger("create");
+
+        $('#headerTitle').text('Invitation message');
+
+        // textarea doesn't grow automatically with pre-filled data so help it out a bit
+        $('#invite-message').keyup();
+
+        return this;
+    },
+
+    saveInvite : function() {
+        this.model.set({
+            greeting_subject : $('#invite-subject').val(),
+            greeting_message : $('#invite-message').val(),
+            require_rsvp : $('#invite-require-rsvp').prop('checked') ? '1' : '0'
+        });
+
+        this.finalizeAddParticipant();
+    },
+
+    finalizeAddParticipant : function() {
+        $('#headerTitle').text('Saving...');
+
+        AppGyver.hideContent();
+
+        // after saving, move to meeting view to finish the draft
+        var me = this;
+
+        me.model.save({}, {
+            success : function() {
+                me.openMeetingView();
+            },
+            error: function() {
+                alert('adding participant failed.');
+            }
+        });
     },
 
     _validEmail : function(emailAddress) {
@@ -87,7 +128,8 @@ app.addParticipantView = Backbone.View.extend({
     },
 
     events: {
-        'click #submitAddParticipant' : 'saveParticipant'
+        'click #submitAddParticipant' : 'saveParticipant',
+        'click .save-meeting-invite' : 'saveInvite'
     }
 });
 _.extend(app.addParticipantView.prototype, app.mixins.connectivity);

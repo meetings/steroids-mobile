@@ -384,13 +384,20 @@ app.router = Backbone.Router.extend({
         app.models.participant = new app.participantModel({ id : null, meeting_id : mid});
         app.models.participant.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/';
 
+        // Meeting model is needed for the invitation texts
+        app.models.meeting = new app.meetingModel({ id : mid});
+
         app.views.addParticipant = new app.addParticipantView({
             model : app.models.participant,
+            meetingModel : app.models.meeting,
             el : $('#add-participant')
         });
 
-        app.views.addParticipant.render();
-        app.showContent();
+        app.models.meeting.fetch({ success : function() {
+            app.showContent();
+
+            app.views.addParticipant.render();
+        }});
     }
 
 });
