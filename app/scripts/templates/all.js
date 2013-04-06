@@ -15,7 +15,7 @@ exports.addParticipantView = function anonymous(locals, attrs, escape, rethrow, 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain"><div id="participant-name-wrapper"><p>Contact not found, create a new contact by giving a name.</p><input id="participant-name" data-theme="b" type="text" name="participant-name" placeholder="Name"/></div><p><input id="participant-email" data-theme="b" type="text" name="participant-email" placeholder="Type a name or email"/></p><div class="controls"><a id="submitAddParticipant" data-theme="b" type="button">Add participant</a></div></div>');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><div id="participant-name-wrapper"><p>Contact not found, create a new contact by giving a name.</p><input id="participant-name" data-theme="b" type="text" name="participant-name" placeholder="Name"/></div><p><input id="participant-email" data-theme="b" type="text" name="participant-email" placeholder="Type a name or email"/></p><div class="controls"><a id="submitAddParticipant" data-theme="b" type="button">Add participant</a></div></div>');
     }
     return buf.join("");
 };

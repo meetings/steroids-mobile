@@ -83,15 +83,19 @@ app.meetingView = Backbone.View.extend({
         var data = {
             greeting_subject : $('#invite-subject').val(),
             greeting_message : $('#invite-message').val(),
-            require_rsvp : $('#invite-require-rsvp').prop('checked') ? '1' : '0'
+            require_rsvp : $('#invite-require-rsvp').prop('checked') ? '1' : '0',
+            user_id : app.auth.user,
+            dic : app.auth.token            
         };
 
         console.log(data);
 
+        var parent = this;
+
         $.post(app.defaults.api_host + '/v1/meetings/' + this.model.get('id') + '/send_draft_participant_invites', data, function(res) {
             console.log(res);
 
-            this.reloadMeeting();
+            parent.reloadMeeting();
         }).error(function() {
             $('.save-meeting-invite').button('enable');
             alert('error in sending invites');
