@@ -45,6 +45,7 @@
         <script src="scripts/views/commentInListView.js"></script>
         <script src="scripts/views/panelView.js"></script>
         <script src="scripts/views/materialView.js"></script>
+        <script src="scripts/views/materialEditView.js"></script>
         <script src="scripts/views/participantView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
         <script src="scripts/views/headerView.js"></script>
@@ -55,9 +56,11 @@
         <script src="scripts/collections/commentCollection.js"></script>
         <script src="scripts/models/participantModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
+        <script src="scripts/models/materialEditModel.js"></script>
         <script src="scripts/routes/router.js"></script>
         <script src="scripts/templates/all.js"></script>
         <!-- endbuild -->
+        <script src="static/tiny_mce/tiny_mce.js"></script>
     </head>
     <body>
         <!-- Material view -->
@@ -65,16 +68,13 @@
             <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false" data-tap-toggle="false">
                 <a class="back-button" href="#" data-icon="delete" data-theme="b">Cancel</a>
                 <h1>Edit Material</h1>
-                <a id="open-right-panel" href="#edit-material-panel" data-icon="mtngs-panel-edit" data-theme="b">Save</a>
+                <a id="edit-material-save" href="#" data-icon="mtngs-panel-edit" data-theme="b">Save</a>
             </div>
             <div class="main-div" data-role="content" >
                 <div class="loader"><span class="loader"></span></div>
                 <div class="content">
-                    <div id="material-container" >
-                        <ul data-role="listview" data-inset="true" data-theme="d" >
-                            <li id="material_content">
-                            </li>
-                        </ul>
+                    <div id="material_content" >
+
                     </div>
                 </div>
             </div>

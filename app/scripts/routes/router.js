@@ -318,7 +318,7 @@ app.router = Backbone.Router.extend({
         app.views.editPanel.render();
 
         app.models.material = new app.materialModel();
-        app.models.material.url = app.defaults.api_host + '/v1/materials/' + id;
+        app.models.material.url = app.defaults.api_host + '/v1/meeting_materials/' + id;
         app.views.material = new app.materialView({
             model : app.models.material,
             el : $('#material_content')
@@ -329,7 +329,7 @@ app.router = Backbone.Router.extend({
         }});
 
         app.collections.comments = new app.commentCollection();
-        app.collections.comments.url = app.defaults.api_host + '/v1/materials/' + id + '/comments';
+        app.collections.comments.url = app.defaults.api_host + '/v1/meeting_materials/' + id + '/comments';
         app.views.comments = new app.commentListView({
             el : $('#comments'),
             collection : app.collections.comments,
@@ -342,10 +342,8 @@ app.router = Backbone.Router.extend({
         }});
     },
 
-        edit_material : function(params) {
-
+    edit_material : function(params) {
         var id = params.id || 0;
-
 
         if (app.options.build !== 'web') {
             // Cleanup zombie events
@@ -353,19 +351,15 @@ app.router = Backbone.Router.extend({
         }
 
         // Setup header
-        app.views.header = new app.headerView({ el : '#material' });
+        app.models.material_edit = new app.materialEditModel();
 
-        app.models.material = new app.materialModel();
-        app.models.material.url = app.defaults.api_host + '/v1/materials/' + id;
-        app.views.material = new app.materialView({
-            model : app.models.material,
+        app.views.header = new app.headerView({ el : '#material', model : app.models.material_edit });
+        app.views.material = new app.materialEditView({
+            model : app.models.material_edit,
             el : $('#material_content'),
-            mode : 'edit'
+            material_id : params.id,
+            continue_edit : params.continue_edit
         });
-
-        app.models.material.fetch({ success : function(){
-            app.showContent();
-        }});
     },
 
     edit : function(params) {

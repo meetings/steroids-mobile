@@ -1,10 +1,6 @@
 app.materialView = Backbone.View.extend({
 
-    mode : 'normal',
-
     initialize: function(options) {
-        if( options.mode === 'edit') this.mode = 'edit';
-
         options.model.bind('change', this.render, this);
 
         // Open panel
@@ -20,7 +16,7 @@ app.materialView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$el.html( templatizer.materialView( { model : this.model.toJSON(), mode : this.mode }  ) ); // Render template
+        this.$el.html( templatizer.materialView( { model : this.model.toJSON() }  ) ); // Render template
         this.initDownloadLink();
         this.initScribd();
         return this;

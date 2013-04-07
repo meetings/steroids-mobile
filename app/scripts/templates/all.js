@@ -283,6 +283,30 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     return buf.join("");
 };
 
+// materialEditView.jade compiled template
+exports.materialEditView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        if (error_message) {
+            buf.push("<p>");
+            var __val__ = error_message;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        } else {
+            buf.push("<textarea>");
+            var __val__ = model.content;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</textarea>");
+        }
+    }
+    return buf.join("");
+};
+
 // materialInListView.jade compiled template
 exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
@@ -334,35 +358,28 @@ exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge)
     with (locals || {}) {
         var interp;
         if (model.fetch_type !== "") {
-            if (mode !== "edit") {
-                if (model.fetch_type === "media") {
-                    buf.push("<h3>");
-                    var __val__ = model.title;
-                    buf.push(escape(null == __val__ ? "" : __val__));
-                    buf.push("</h3>");
+            if (model.fetch_type === "media") {
+                buf.push("<h3>");
+                var __val__ = model.title;
+                buf.push(escape(null == __val__ ? "" : __val__));
+                buf.push("</h3>");
+                var __val__ = model.content;
+                buf.push(null == __val__ ? "" : __val__);
+            } else {
+                buf.push("<h3>");
+                var __val__ = model.title;
+                buf.push(escape(null == __val__ ? "" : __val__));
+                buf.push("</h3>");
+                if (model.title == "Agenda" && model.content == "") {
+                    buf.push('<p class="notruncation">Agenda is empty.</p>');
+                } else if (model.title == "Action Points" && model.content == "") {
+                    buf.push('<p class="notruncation">Action points are empty.</p>');
+                } else {
+                    buf.push('<p class="notruncation">');
                     var __val__ = model.content;
                     buf.push(null == __val__ ? "" : __val__);
-                } else {
-                    buf.push("<h3>");
-                    var __val__ = model.title;
-                    buf.push(escape(null == __val__ ? "" : __val__));
-                    buf.push("</h3>");
-                    if (model.title == "Agenda" && model.content == "") {
-                        buf.push('<p class="notruncation">Agenda is empty.</p>');
-                    } else if (model.title == "Action Points" && model.content == "") {
-                        buf.push('<p class="notruncation">Action points are empty.</p>');
-                    } else {
-                        buf.push('<p class="notruncation">');
-                        var __val__ = model.content;
-                        buf.push(null == __val__ ? "" : __val__);
-                        buf.push("</p>");
-                    }
+                    buf.push("</p>");
                 }
-            } else {
-                buf.push("<textarea>");
-                var __val__ = model.content;
-                buf.push(escape(null == __val__ ? "" : __val__));
-                buf.push("</textarea>");
             }
         }
     }
