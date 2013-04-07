@@ -9,21 +9,35 @@ app.editMeetingPanelView = Backbone.View.extend({
     },
 
     events : {
-        'click #nav-edit' : 'editMeeting',
-        'click #nav-rename' : 'renameMeeting',
+        'click #nav-edit-title' : 'editMeetingTitle',
+        'click #nav-edit-location' : 'editMeetingLocation',
+        'click #nav-edit-time' : 'editMeetingTime',
         'click #nav-remove' : 'removeMeeting'
     },
 
-    editMeeting : function(e){
+    editMeetingTitle : function(e){
         if ( app.options.build !== 'web' ) {
             e.preventDefault();
-            AppGyver.openPreload("editPage", {id: this.model.get('id')});
+            AppGyver.openPreload("editPage", {id: this.model.get('id'), field : 'title'});
         } else {
-            window.location = 'edit.html?id=' + this.meetingId;
+            window.location = 'edit.html?id=' + this.meetingId + '&field=title';
         }
     },
-    renameMeeting : function(e){
-        alert('renameMeeting');
+    editMeetingLocation : function(e){
+        if ( app.options.build !== 'web' ) {
+            e.preventDefault();
+            AppGyver.openPreload("editPage", {id: this.model.get('id'), field : 'location'});
+        } else {
+            window.location = 'edit.html?id=' + this.meetingId + '&field=location';
+        }
+    },
+    editMeetingTime : function() {
+        if ( app.options.build !== 'web' ) {
+            e.preventDefault();
+            AppGyver.openPreload("editPage", {id: this.model.get('id'), field : 'time'});
+        } else {
+            window.location = 'edit.html?id=' + this.meetingId + '&field=time';
+        }
     },
     removeMeeting : function(e){
         alert('removeMeeting');

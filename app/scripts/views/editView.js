@@ -1,4 +1,6 @@
 app.editView = Backbone.View.extend({
+    startStep : null,
+
     initialize: function(options) {
         var me = this;
         
@@ -12,11 +14,23 @@ app.editView = Backbone.View.extend({
             me.navigateBack(e);
         });
 
+        if(options.startStep) {
+            this.startStep = options.startStep;
+        }
+
         this.viewStack = new Array();
     },
 
     render: function() {
-        this.renderEditStepTitle();    
+        if(this.startStep == 'location') {
+            this.renderEditStepLocation(); 
+        }
+        else if(this.startStep == 'time') {
+            this.renderEditStepDateAndTimeSetup(); 
+        }
+        else {
+            this.renderEditStepTitle();    
+        }
 
         return this;
     },
@@ -36,8 +50,13 @@ app.editView = Backbone.View.extend({
         this.model.set('title', title);
         this.model.set('title_value', title);
 
-        this.viewStack.push("renderEditStepTitle");
-        this.renderEditStepLocation();
+        if(this.startStep == 'title') {
+            this.finalizeMeetingCreation();
+        }
+        else {
+            this.viewStack.push("renderEditStepTitle");
+            this.renderEditStepLocation();
+        }
     },
 
     renderEditStepLocation: function() {
@@ -55,8 +74,13 @@ app.editView = Backbone.View.extend({
         this.model.set('location', location);
         this.model.set('location_value', location);
 
-        this.viewStack.push("renderEditStepLocation");
-        this.renderEditStepDateAndTime();
+        if(this.startStep == 'location') {
+            this.finalizeMeetingCreation();
+        }
+        else {
+            this.viewStack.push("renderEditStepLocation");
+            this.renderEditStepDateAndTime();
+        }
     },
 
     saveEditStepLocationOnline: function(e) {
@@ -84,8 +108,13 @@ app.editView = Backbone.View.extend({
             this.model.set('skype_account', '');
         }
 
-        this.viewStack.push("renderEditStepCommunications");
-        this.renderEditStepDateAndTime();
+        if(this.startStep == 'location') {
+            this.finalizeMeetingCreation();
+        }
+        else {
+            this.viewStack.push("renderEditStepCommunications");
+            this.renderEditStepDateAndTime();
+        }
     },
     
     saveEditStepCommunicationsSkype: function(e) {
@@ -111,8 +140,13 @@ app.editView = Backbone.View.extend({
 
         this.model.set('skype_account', skype_account);
 
-        this.viewStack.push("renderEditStepSkypeName");
-        this.renderEditStepDateAndTime();
+        if(this.startStep == 'location') {
+            this.finalizeMeetingCreation();
+        }
+        else {
+            this.viewStack.push("renderEditStepSkypeName");
+            this.renderEditStepDateAndTime();
+        }
     },
 
     renderEditStepDateAndTime: function() {

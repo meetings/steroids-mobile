@@ -91,7 +91,7 @@ exports.editMeetingPanel = function anonymous(locals, attrs, escape, rethrow, me
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Rename</a></li><li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li></ul>');
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit-title" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit title</a></li><li><a id="nav-edit-location" href="#" data-transition="fade"><span class="ui-icon menu-icon-editlocation"></span>Edit location</a></li><li><a id="nav-edit-time" href="#" data-transition="fade"><span class="ui-icon menu-icon-edittime"></span>Edit time</a></li><li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li></ul>');
     }
     return buf.join("");
 };

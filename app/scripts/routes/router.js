@@ -362,6 +362,7 @@ app.router = Backbone.Router.extend({
 
         // Get url params
         var id = params && params.id || null;
+        var field = params && params.field || null;
 
         var new_meeting = (id == null);
 
@@ -369,7 +370,8 @@ app.router = Backbone.Router.extend({
 
         app.views.editMeeting = new app.editView({
             model : app.models.meeting,
-            el : $('#edit')
+            el : $('#edit'),
+            startStep : field
         });
 
         if(new_meeting) {

@@ -1016,15 +1016,23 @@ div#edit-meeting-panel{
         display:none;
     }
     span.menu-icon-edit{
-        @include retina-bg('/images/icon_meetings' , 'png', 20px, 20px);
+        @include retina-bg('/images/icon_plus' , 'png', 20px, 20px);
         background-color:transparent;
         background-position:0px 50%;
         background-repeat:no-repeat;
         padding:5px 0 0 34px;
         height:20px;
     }
-    span.menu-icon-rename{
-        @include retina-bg('/images/icon_facebook' , 'png', 20px, 20px);
+    span.menu-icon-editlocation{
+        @include retina-bg('/images/icon_editlocation' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
+    span.menu-icon-edittime{
+        @include retina-bg('/images/icon_edittime' , 'png', 20px, 20px);
         background-color:transparent;
         background-position:0px 50%;
         background-repeat:no-repeat;
@@ -1032,7 +1040,7 @@ div#edit-meeting-panel{
         height:20px;
     }
     span.menu-icon-remove{
-        @include retina-bg('/images/icon_twitter' , 'png', 20px, 20px);
+        @include retina-bg('/images/icon_cross_white' , 'png', 20px, 20px);
         background-color:transparent;
         background-position:0px 50%;
         background-repeat:no-repeat;
