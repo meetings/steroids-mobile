@@ -1,0 +1,9 @@
+a(href='meeting.html?id='+id)
+    - if(highlight['type'] == 'add_agenda') 
+        div.ui-icon.ui-icon-edit
+    - else if(highlight['type'] == 'suggest_dates')
+        div.ui-icon.ui-icon-grid
+    - else
+        div.ui-icon.ui-icon-plus
+    span.message=highlight['message'] + ": "
+    span.title=title

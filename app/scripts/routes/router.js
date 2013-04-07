@@ -28,10 +28,11 @@ app.router = Backbone.Router.extend({
         // Deferreds for fetches
         var futureFetch = $.Deferred(),
         pastFetch = $.Deferred(),
-        unscheduledFetch = $.Deferred();
+        unscheduledFetch = $.Deferred(),
+        highlightsFetch = $.Deferred();
 
         // wait for ajax requests to succeed, defer show content until that
-        $.when(futureFetch, unscheduledFetch, pastFetch).then(function(){
+        $.when(futureFetch, unscheduledFetch, pastFetch, highlightsFetch).then(function(){
             app.showContent();
             if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0){
                 var offset;
@@ -139,6 +140,20 @@ app.router = Backbone.Router.extend({
             if( app.collections.past_meetings.length === 0 ) app.views.past.remove();
             pastFetch.resolve();
         },  data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
+
+        // Fetch highlights and highlighted meetigns
+        app.collections.highlights = new app.meetingCollection({},{ override_endpoint : 'highlighted_meetings' });
+        app.views.highlights = new app.highlightedMeetingsView({
+            collection : app.collections.highlights,
+            childViewConstructor : app.highlightedMeetingInListView,
+            childViewTagName : 'li',
+            el : '#highlights',
+            infiniScroll : false
+        });
+        app.collections.highlights.fetch({ success : function(col,res){
+            if( app.collections.highlights.length === 0 ) app.views.highlights.remove();
+            highlightsFetch.resolve();
+        }});
     },
 
 

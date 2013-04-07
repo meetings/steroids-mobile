@@ -308,6 +308,22 @@ ul.meeting-list{
         }
     }
 }
+ul.highlight-list{
+    li {
+        a {
+            font-size:14px;
+        }
+
+        .ui-icon {
+            float: left;
+            margin-right: 10px;
+        }
+
+        .title {
+            font-weight: normal;
+        }
+    }
+}
 ul li.today a div.top-bar{
     background-color:#d8e6be;
 }
@@ -751,6 +767,12 @@ h3.past {
 }
 h3.schedule {
     @include retina-bg('/images/schedule' , 'png', 20px, 20px);
+    padding-left:25px;
+    padding-top:4px;
+    background-repeat:no-repeat;
+}
+h3.tasks {
+    @include retina-bg('/images/tasks' , 'png', 20px, 20px);
     padding-left:25px;
     padding-top:4px;
     background-repeat:no-repeat;

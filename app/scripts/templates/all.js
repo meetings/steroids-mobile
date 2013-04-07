@@ -255,6 +255,40 @@ exports.editStepTitleView = function anonymous(locals, attrs, escape, rethrow, m
     return buf.join("");
 };
 
+// highlightedMeetingInListView.jade compiled template
+exports.highlightedMeetingInListView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push("<a");
+        buf.push(attrs({
+            href: "meeting.html?id=" + id
+        }, {
+            href: true
+        }));
+        buf.push(">");
+        if (highlight["type"] == "add_agenda") {
+            buf.push('<div class="ui-icon ui-icon-edit"></div>');
+        } else if (highlight["type"] == "suggest_dates") {
+            buf.push('<div class="ui-icon ui-icon-grid"></div>');
+        } else {
+            buf.push('<div class="ui-icon ui-icon-plus"></div>');
+        }
+        buf.push('<span class="message">');
+        var __val__ = highlight["message"] + ": ";
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push('</span><span class="title">');
+        var __val__ = title;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push("</span></a>");
+    }
+    return buf.join("");
+};
+
 // loginView.jade compiled template
 exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
