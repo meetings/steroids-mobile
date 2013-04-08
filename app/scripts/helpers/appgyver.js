@@ -49,32 +49,32 @@
         {
           case path + "/meeting.html":
             window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
+              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams);
             });
             break;
           case path + "/addParticipant.html":
             window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
+              if (event.data.preloadId === "addParticipantPage") AppGyver.refreshPreload(event.data.urlParams);
             });
             break;
           case path + "/edit.html":
             window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams.id);
+              if (event.data.preloadId === "editPage") AppGyver.refreshPreload(event.data.urlParams);
             });
             break;
           case path + "/participants.html":
             window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "participantsPage") AppGyver.refreshPreload(event.data.urlParams.id);
+              if (event.data.preloadId === "participantsPage") AppGyver.refreshPreload(event.data.urlParams);
             });
             break;
           case path + "/participant.html":
             window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "participantPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+              if (event.data.preloadId === "participantPage") AppGyver.refreshPreload(event.data.urlParams, true);
             });
             break;
           case path + "/materials.html":
             window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "materialsPage") AppGyver.refreshPreload(event.data.urlParams.id);
+              if (event.data.preloadId === "materialsPage") AppGyver.refreshPreload(event.data.urlParams);
             });
             break;
           case path + "/material.html":
@@ -84,12 +84,12 @@
               steroids.modal.hide();
             });
             window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+              if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams, true);
             });
             break;
           case path + "/scheduling.html":
             window.addEventListener("message", function(event) {
-              if (event.data.preloadId === "schedulingPage") AppGyver.refreshPreload(event.data.urlParams.path, true);
+              if (event.data.preloadId === "schedulingPage") AppGyver.refreshPreload(event.data.urlParams, true);
             });
             break;
         }
@@ -133,13 +133,21 @@
     },
 
     // this could actually be implemented using backbone model changing etc.
-    refreshPreload: function(id, isPath){
+    refreshPreload: function(urlParams, isPath){
+
+      var id = urlParams.id || urlParams.path;
+      var url;
+
       if (isPath) {
-        var url = window.location.origin + id;
+        url = window.location.origin + id;
       } else {
-        var url = window.location.origin + window.location.pathname + "?id="+id;
+        url = window.location.origin + window.location.pathname + "?id="+id;
       }
-      console.log("change to url: ", url)
+
+
+      if( urlParams.field ) url += '&field=' + urlParams.field;
+
+      console.log("change to url: ", url);
 
       if (typeof window.router === "undefined") {
 
