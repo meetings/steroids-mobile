@@ -1,12 +1,18 @@
-app.editMeetingPanelView = Backbone.View.extend({    
+app.editMeetingPanelView = Backbone.View.extend({
     initialize : function(options) {
         this.menu_active = options.active;
         this.meetingId = options.meetingId;
+        _(this).bindAll('editMeetingTitle','editMeetingLocation','editMeetingTime');
     },
 
     render : function() {
         this.$el.html( templatizer.editMeetingPanel() );
-    },
+
+        // Hack to get the panel working on mobile without using tirgger create
+        this.$el.page();
+        this.$el.removeClass('ui-page');
+        $('.ui-btn-active',this.el).removeClass('ui-btn-active');
+},
 
     events : {
         'click #nav-edit-title' : 'editMeetingTitle',
@@ -16,25 +22,25 @@ app.editMeetingPanelView = Backbone.View.extend({
     },
 
     editMeetingTitle : function(e){
+        e.preventDefault();
         if ( app.options.build !== 'web' ) {
-            e.preventDefault();
-            AppGyver.openPreload("editPage", {id: this.model.get('id'), field : 'title'});
+            AppGyver.openPreload("editPage", {id: this.meetingId, field : 'title'});
         } else {
             window.location = 'edit.html?id=' + this.meetingId + '&field=title';
         }
     },
     editMeetingLocation : function(e){
+        e.preventDefault();
         if ( app.options.build !== 'web' ) {
-            e.preventDefault();
-            AppGyver.openPreload("editPage", {id: this.model.get('id'), field : 'location'});
+            AppGyver.openPreload("editPage", {id: this.meetingId, field : 'location'});
         } else {
             window.location = 'edit.html?id=' + this.meetingId + '&field=location';
         }
     },
     editMeetingTime : function() {
+        e.preventDefault();
         if ( app.options.build !== 'web' ) {
-            e.preventDefault();
-            AppGyver.openPreload("editPage", {id: this.model.get('id'), field : 'time'});
+            AppGyver.openPreload("editPage", {id: this.meetingId, field : 'time'});
         } else {
             window.location = 'edit.html?id=' + this.meetingId + '&field=time';
         }

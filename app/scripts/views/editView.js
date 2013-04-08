@@ -3,7 +3,7 @@ app.editView = Backbone.View.extend({
 
     initialize: function(options) {
         var me = this;
-        
+
         // Bind error and success handlers
         this.model.bind('error', this.errorHandler, this);
         this.model.bind('success', this.successHandler, this);
@@ -23,13 +23,13 @@ app.editView = Backbone.View.extend({
 
     render: function() {
         if(this.startStep == 'location') {
-            this.renderEditStepLocation(); 
+            this.renderEditStepLocation();
         }
         else if(this.startStep == 'time') {
-            this.renderEditStepDateAndTimeSetup(); 
+            this.renderEditStepDateAndTimeSetup();
         }
         else {
-            this.renderEditStepTitle();    
+            this.renderEditStepTitle();
         }
 
         return this;
@@ -61,7 +61,7 @@ app.editView = Backbone.View.extend({
 
     renderEditStepLocation: function() {
         $('#headerTitle').text('Meeting location');
-        
+
         this.$el.html( templatizer.editStepLocationView( this.model.toJSON() ) );
         this.$el.trigger("create");
     },
@@ -116,7 +116,7 @@ app.editView = Backbone.View.extend({
             this.renderEditStepDateAndTime();
         }
     },
-    
+
     saveEditStepCommunicationsSkype: function(e) {
         e.preventDefault();
 
@@ -125,7 +125,7 @@ app.editView = Backbone.View.extend({
         this.viewStack.push("renderEditStepCommunications");
         this.renderEditStepSkypeName();
     },
-    
+
     renderEditStepSkypeName: function() {
         $('#headerTitle').text('Skype');
 
@@ -219,7 +219,7 @@ app.editView = Backbone.View.extend({
 
         // after saving, move to meeting view to finish the draft
         var me = this;
-        
+
         me.model.save({}, {
             success : function() {
                 me.openMeetingView();
@@ -232,7 +232,6 @@ app.editView = Backbone.View.extend({
 
     openMeetingView : function(){
         if ( app.options.build !== 'web' ) {
-            e.preventDefault();
             AppGyver.openPreload("meetingPage", {id: this.model.get('id')});
         } else {
             window.location = 'meeting.html?id=' + this.model.get('id');
@@ -243,7 +242,7 @@ app.editView = Backbone.View.extend({
         // remove current view
         //this.viewStack.pop();
 
-        // If we are past the first creation step, prevent the default action 
+        // If we are past the first creation step, prevent the default action
         // and call the previous render step.
         if(this.viewStack.length > 0) {
             var prevStepFn = this.viewStack.pop();

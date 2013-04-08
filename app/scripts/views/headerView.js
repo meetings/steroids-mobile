@@ -19,7 +19,7 @@ app.headerView = Backbone.View.extend({
     createMeeting : function(e){
         e.preventDefault();
         if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload('editPage');
+            AppGyver.openPreload('editPage', { id: ''});
         }
         else {
             window.location = 'edit.html';
@@ -45,7 +45,7 @@ app.headerView = Backbone.View.extend({
         if ( this.model.model_type && this.model.model_type == 'material_edit' ) {
             // todo: activate disabled Save button
 //            $("#edit-material-save").
-        } 
+        }
     },
 
     editMaterialCancel : function(e){

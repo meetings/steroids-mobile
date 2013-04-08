@@ -10,6 +10,16 @@ app.meetingView = Backbone.View.extend({
          options.model.bind('change', this.render, this);
 
         _(this).bindAll('openMaterialView', 'openParticipantView');
+
+        // Open panel
+        $('div.main-div').swipeleft(function(){
+            $( "#edit-meeting-panel" ).panel( "open" );
+        });
+
+        // Close panel with click
+        $('div.ui-panel-content-wrap,div.ui-panel-dismiss').live('click', function(){
+            $( "#edit-meeting-panel" ).panel( "close" );
+        });
     },
 
     render: function() {
@@ -24,7 +34,7 @@ app.meetingView = Backbone.View.extend({
             $('#headerTitle').text('Overview');
 
             $(".back-button").unbind().click(function(e) {
-                app.headerView.navigateBack(e);                
+                app.headerView.navigateBack(e);
             });
 
             $('#open-right-panel').show();
@@ -85,7 +95,7 @@ app.meetingView = Backbone.View.extend({
             greeting_message : $('#invite-message').val(),
             require_rsvp : $('#invite-require-rsvp').prop('checked') ? '1' : '0',
             user_id : app.auth.user,
-            dic : app.auth.token            
+            dic : app.auth.token
         };
 
         console.log(data);
@@ -228,8 +238,8 @@ app.meetingView = Backbone.View.extend({
     },
 
     openAddParticipantView : function(e) {
+        e.preventDefault();
         if ( app.options.build !== 'web' ) {
-            e.preventDefault();
             AppGyver.openPreload("addParticipantPage", {id: this.model.get('id')});
         } else {
             document.location = '/addParticipant.html?mid='+this.model.get('id');

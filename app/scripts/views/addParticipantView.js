@@ -103,6 +103,7 @@ app.addParticipantView = Backbone.View.extend({
         // after saving, move to meeting view to finish the draft
         var me = this;
 
+        console.log(me.model);
         me.model.save({}, {
             success : function() {
                 me.openMeetingView();
@@ -120,7 +121,6 @@ app.addParticipantView = Backbone.View.extend({
 
     openMeetingView : function(){
         if ( app.options.build !== 'web' ) {
-            e.preventDefault();
             AppGyver.openPreload("meetingPage", {id: this.model.get('meeting_id')});
         } else {
             window.location = 'meeting.html?id=' + this.model.get('meeting_id');

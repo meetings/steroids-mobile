@@ -327,16 +327,15 @@ app.router = Backbone.Router.extend({
         // Setup header
         app.views.header = new app.headerView({ el : '#material' });
 
-        // Setup edit panel
-        app.views.editPanel = new app.editMaterialPanelView({ el : '#edit-material-panel', materialId : id });
-        app.views.editPanel.render();
-
         app.models.material = new app.materialModel();
         app.models.material.url = app.defaults.api_host + '/v1/meeting_materials/' + id;
         app.views.material = new app.materialView({
             model : app.models.material,
             el : $('#material_content')
         });
+
+        // Setup edit panel
+        app.views.editPanel = new app.editMaterialPanelView({ el : '#edit-material-panel', materialId : id, model : app.models.material });
 
         app.models.material.fetch({ success : function(){
             materialFetch.resolve();
@@ -377,6 +376,7 @@ app.router = Backbone.Router.extend({
     },
 
     edit : function(params) {
+        console.log(params);
         if (app.options.build !== 'web') {
             AppGyver.cleanBackboneZombieEvents();
         }
@@ -422,7 +422,7 @@ app.router = Backbone.Router.extend({
         app.views.panel.render();
 
         // Get url params
-        var mid = params && params.mid || null;
+        var mid = params && params.id || null;
 
         app.models.participant = new app.participantModel({ id : null, meeting_id : mid});
         app.models.participant.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/';
