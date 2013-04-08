@@ -37,7 +37,7 @@ app.editMeetingPanelView = Backbone.View.extend({
             window.location = 'edit.html?id=' + this.meetingId + '&field=location';
         }
     },
-    editMeetingTime : function() {
+    editMeetingTime : function(e) {
         e.preventDefault();
         if ( app.options.build !== 'web' ) {
             AppGyver.openPreload("editPage", {id: this.meetingId, field : 'time'});
@@ -46,6 +46,7 @@ app.editMeetingPanelView = Backbone.View.extend({
         }
     },
     removeMeeting : function(e){
+        e.preventDefault();
         alert('removeMeeting');
     }
 });
