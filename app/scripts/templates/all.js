@@ -91,7 +91,11 @@ exports.editMaterialPanel = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Rename</a></li><li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Download</a></li><li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li></ul>');
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li>');
+        if (locals.download_url) {
+            buf.push('<li><a id="nav-download" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Download</a></li>');
+        }
+        buf.push("</ul>");
     }
     return buf.join("");
 };

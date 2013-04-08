@@ -1,0 +1,129 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('/static/fonts/icomoon.eot');
+	src:url('/static/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('/static/fonts/icomoon.woff') format('woff'),
+		url('/static/fonts/icomoon.ttf') format('truetype'),
+		url('/static/fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+span.ui-btn-text i{
+    font-size:20px;
+    line-height:14px;
+    display:inline-block;
+    position:relative;
+    top:-2px;
+}
+
+.ui-panel a i{
+    font-size:20px;
+    line-height:14px;
+    display:inline-block;
+    position:relative;
+    top:-2px;
+    padding:0 14px 0 0;
+    vertical-align:middle;
+}
+
+.icon-error, .icon-check, .icon-linkedin, .icon-leftarrow, .icon-google, .icon-facebook, .icon-rightarrow, .icon-rename, .icon-emblem, .icon-cross, .icon-time, .icon-teleconf, .icon-settings, .icon-search, .icon-schedule, .icon-replace, .icon-question, .icon-profile, .icon-print, .icon-note, .icon-mobile, .icon-mail, .icon-location, .icon-edit, .icon-download, .icon-delete, .icon-comment, .icon-calendar, .icon-addressbook, .icon-add {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+}
+.icon-error:before {
+	content: "\e000";
+}
+.icon-check:before {
+	content: "\e001";
+}
+.icon-linkedin:before {
+	content: "\e002";
+}
+.icon-leftarrow:before {
+	content: "\e003";
+}
+.icon-google:before {
+	content: "\e004";
+}
+.icon-facebook:before {
+	content: "\e005";
+}
+.icon-rightarrow:before {
+	content: "\e006";
+}
+.icon-rename:before {
+	content: "\e007";
+}
+.icon-emblem:before {
+	content: "\e008";
+}
+.icon-cross:before {
+	content: "\e009";
+}
+.icon-time:before {
+	content: "\e00a";
+}
+.icon-teleconf:before {
+	content: "\e00b";
+}
+.icon-settings:before {
+	content: "\e00c";
+}
+.icon-search:before {
+	content: "\e00d";
+}
+.icon-schedule:before {
+	content: "\e00e";
+}
+.icon-replace:before {
+	content: "\e00f";
+}
+.icon-question:before {
+	content: "\e010";
+}
+.icon-profile:before {
+	content: "\e011";
+}
+.icon-print:before {
+	content: "\e012";
+}
+.icon-note:before {
+	content: "\e013";
+}
+.icon-mobile:before {
+	content: "\e014";
+}
+.icon-mail:before {
+	content: "\e015";
+}
+.icon-location:before {
+	content: "\e016";
+}
+.icon-edit:before {
+	content: "\e017";
+}
+.icon-download:before {
+	content: "\e018";
+}
+.icon-delete:before {
+	content: "\e019";
+}
+.icon-comment:before {
+	content: "\e01a";
+}
+.icon-calendar:before {
+	content: "\e01b";
+}
+.icon-addressbook:before {
+	content: "\e01c";
+}
+.icon-add:before {
+	content: "\e01d";
+}
+
