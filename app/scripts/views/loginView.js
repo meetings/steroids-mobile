@@ -71,7 +71,7 @@ app.loginView = Backbone.View.extend({
                     $form.append( $('<p class="error">An unknown error has happened. Please go back and try again!</p>').delay(5000).fadeOut() );
                 }
             }
-        });
+        }, 'json' );
     },
     tryagain : function(e){
         e.preventDefault();

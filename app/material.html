@@ -49,6 +49,7 @@
         <script src="scripts/views/genericCollectionView.js"></script>
         <script src="scripts/views/headerView.js"></script>
         <script src="scripts/views/commentListView.js"></script>
+        <script src="scripts/views/editMaterialPanelView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/commentModel.js"></script>
         <script src="scripts/collections/commentCollection.js"></script>
@@ -65,7 +66,7 @@
             <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false" data-tap-toggle="false">
                 <a class="back-button" href="#" data-icon="delete" data-theme="b">Close</a>
                 <h1>Material</h1>
-                <a id="download-link" href="#" data-icon="mtngs-ext" data-iconpos="notext" data-theme="b"></a>
+                <a id="open-right-panel" href="#edit-material-panel" data-icon="mtngs-panel-edit" data-iconpos="notext" data-theme="b"></a>
             </div>
             <div class="main-div" data-role="content" >
                 <div class="loader"><span class="loader"></span></div>
@@ -79,6 +80,9 @@
                     <ul data-role="listview" data-inset="true" id="comments" data-theme="d">
                     </ul>
                 </div>
+            </div>
+            <div class="edit-panel" data-role="panel" id="edit-material-panel" data-position="right" data-position-fixed="true" data-theme="c">
+            <!-- panel content goes here -->
             </div>
         </div><!-- /page -->
 <script type="text/javascript" charset="utf-8">

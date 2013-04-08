@@ -1,12 +1,13 @@
-- if ( fetch_type !== '' )
-    if( fetch_type === 'media')
-        h3=title
-        !=content
+- if ( model.fetch_type !== '' )
+    if( model.fetch_type === 'media')
+        h3=model.title
+        !=model.content
     else
-        h3=title
-        - if( title == "Agenda" && content == "")
+        h3=model.title
+        - if( model.title == "Agenda" && model.content == "")
             p.notruncation Agenda is empty.
-        - else if( title == "Action Points" && content == "")
+        - else if( model.title == "Action Points" && model.content == "")
             p.notruncation Action points are empty.
         - else
-            p.notruncation!=content
+            p.notruncation!=model.content
+

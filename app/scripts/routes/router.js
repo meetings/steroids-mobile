@@ -9,6 +9,7 @@ app.router = Backbone.Router.extend({
         "meeting.html" : "meeting",
         "participants.html" : "participants",
         "materials.html" : "materials",
+        "edit_material.html" : "edit_material",
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
@@ -312,6 +313,8 @@ app.router = Backbone.Router.extend({
         var commentsFetch = $.Deferred(),
         materialFetch = $.Deferred();
 
+        var id = params.id || 0;
+
         $.when(commentsFetch, materialFetch).then(function(){
             app.showContent();
         });
@@ -324,9 +327,12 @@ app.router = Backbone.Router.extend({
         // Setup header
         app.views.header = new app.headerView({ el : '#material' });
 
-        var id = params.id || 0;
+        // Setup edit panel
+        app.views.editPanel = new app.editMaterialPanelView({ el : '#edit-material-panel', materialId : id });
+        app.views.editPanel.render();
+
         app.models.material = new app.materialModel();
-        app.models.material.url = app.defaults.api_host + '/v1/materials/' + id;
+        app.models.material.url = app.defaults.api_host + '/v1/meeting_materials/' + id;
         app.views.material = new app.materialView({
             model : app.models.material,
             el : $('#material_content')
@@ -337,7 +343,7 @@ app.router = Backbone.Router.extend({
         }});
 
         app.collections.comments = new app.commentCollection();
-        app.collections.comments.url = app.defaults.api_host + '/v1/materials/' + id + '/comments';
+        app.collections.comments.url = app.defaults.api_host + '/v1/meeting_materials/' + id + '/comments';
         app.views.comments = new app.commentListView({
             el : $('#comments'),
             collection : app.collections.comments,
@@ -348,6 +354,26 @@ app.router = Backbone.Router.extend({
         app.collections.comments.fetch({ success : function(){
             commentsFetch.resolve();
         }});
+    },
+
+    edit_material : function(params) {
+        var id = params.id || 0;
+
+        if (app.options.build !== 'web') {
+            // Cleanup zombie events
+            AppGyver.cleanBackboneZombieEvents();
+        }
+
+        // Setup header
+        app.models.material_edit = new app.materialEditModel();
+
+        app.views.header = new app.headerView({ el : '#material', model : app.models.material_edit });
+        app.views.material = new app.materialEditView({
+            model : app.models.material_edit,
+            el : $('#material_content'),
+            material_id : params.id,
+            continue_edit : params.continue_edit
+        });
     },
 
     edit : function(params) {
