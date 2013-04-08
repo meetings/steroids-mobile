@@ -56,7 +56,8 @@ app.router = Backbone.Router.extend({
                 }
             }
             else{
-                $('.main-div').html('<h2>Sorry</h2><p>Our mobile app doesn\'t yet support creating meetings.</p><p>Open the login link in your email with a desktop browser to get started!</p><p class="sorry"><span class="sorry-squrre"></span></p>');
+                $('.main-div').html(templatizer.noMeetingsView());
+                $('.main-div').trigger("create");
             }
         });
 

@@ -813,13 +813,20 @@ h3.tasks {
     margin-top:5px !important;
 }
 
-.ui-icon-mtngs-add-meeting {
+.ui-icon-mtngs-add-meeting-button {
     @include retina-bg('/images/icon_add_white', 'png', 18px, 18px);
     background-color:transparent;
     box-shadow:none;
     left:5px;
     margin-left:16px !important;
     margin-top:5px !important;
+}
+
+.ui-icon-mtngs-add-meeting {
+    @include retina-bg('/images/icon_add_white', 'png', 18px, 18px);
+    background-color:transparent;
+    box-shadow:none;
+    left:5px;
 }
 
 .ui-icon-mtngs-add-participant {
