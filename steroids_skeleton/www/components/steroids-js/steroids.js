@@ -1,5 +1,5 @@
 (function(window){
-/*! steroids-js - v0.4.0 - 2013-03-21 */
+/*! steroids-js - v0.5.0 - 2013-03-22 */
 ;var Bridge,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
@@ -213,40 +213,12 @@ WebsocketBridge = (function(_super) {
   };
 
   WebsocketBridge.prototype.reopen = function() {
-    var _this = this;
-    window.steroids.debug("websocket reopen");
-    this.websocket = null;
-    return this.requestWebSocketPort(function(port) {
-      _this.websocket = new WebSocket("ws://localhost:" + port);
-      _this.websocket.onmessage = _this.message_handler;
-      _this.websocket.onclose = _this.reopen;
-      _this.websocket.onopen = function() {
-        window.steroids.debug("websocket websocket opened");
-        _this.map_context();
-        return _this.markWebsocketUsable();
-      };
-      return window.steroids.debug("websocket websocket connecting");
-    });
-  };
-
-  WebsocketBridge.prototype.requestWebSocketPort = function(callback) {
-    var xmlhttp,
-      _this = this;
-    window.steroids.debug("websocket request port");
-    xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState === 4) {
-        window.steroids.debug("websocket request port success: " + xmlhttp.responseText);
-        return callback(xmlhttp.responseText);
-      }
-    };
-    xmlhttp.open("GET", "http://dolans.inetrnul.do.nut.cunnoct.localhost/");
-    return xmlhttp.send();
-  };
-
-  WebsocketBridge.prototype.markWebsocketUsable = function() {
-    window.steroids.debug("websocket open, marking usable");
-    return window.steroids.fireSteroidsEvent("websocketUsable");
+    this.websocket = new WebSocket("ws://localhost:31337");
+    this.websocket.onmessage = this.message_handler;
+    this.websocket.onclose = this.reopen;
+    this.websocket.addEventListener("open", this.map_context);
+    this.map_context();
+    return false;
   };
 
   WebsocketBridge.prototype.map_context = function() {
@@ -257,14 +229,13 @@ WebsocketBridge = (function(_super) {
   };
 
   WebsocketBridge.prototype.sendMessageToNative = function(message) {
-    var _ref,
-      _this = this;
-    if (((_ref = this.websocket) != null ? _ref.readyState : void 0) === 1) {
-      return this.websocket.send(message);
-    } else {
-      return window.steroids.on("websocketUsable", function() {
+    var _this = this;
+    if (this.websocket.readyState === 0) {
+      return this.websocket.addEventListener("open", function() {
         return _this.websocket.send(message);
       });
+    } else {
+      return this.websocket.send(message);
     }
   };
 
@@ -515,7 +486,7 @@ Animation = (function() {
   };
 
   function Animation(options) {
-    var _ref;
+    var _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
     if (options == null) {
       options = {};
     }
@@ -525,10 +496,11 @@ Animation = (function() {
     if (this.transition == null) {
       throw "transition required";
     }
-    this.reversedTransition = this.constructor.TRANSITION_REVERSION_MAPPING[this.transition];
-    this.duration = options.duration || 0.7;
-    this.reversedDuration = this.duration;
-    this.curve = options.curve || "easeInOut";
+    this.reversedTransition = (_ref1 = options.reversedTransition) != null ? _ref1 : this.constructor.TRANSITION_REVERSION_MAPPING[this.transition];
+    this.duration = (_ref2 = options.duration) != null ? _ref2 : 0.7;
+    this.reversedDuration = (_ref3 = options.reversedDuration) != null ? _ref3 : this.duration;
+    this.curve = (_ref4 = options.curve) != null ? _ref4 : "easeInOut";
+    this.reversedCurve = (_ref5 = options.reversedCurve) != null ? _ref5 : "easeInOut";
   }
 
   Animation.prototype.perform = function(options, callbacks) {
@@ -742,6 +714,8 @@ LayerCollection = (function() {
       parameters.pushAnimationDuration = options.animation.duration;
       parameters.popAnimation = options.animation.reversedTransition;
       parameters.popAnimationDuration = options.animation.reversedDuration;
+      parameters.pushAnimationCurve = options.animation.curve;
+      parameters.popAnimationCurve = options.animation.reversedCurve;
     }
     return steroids.nativeBridge.nativeCall({
       method: "openLayer",
@@ -1686,7 +1660,7 @@ PostMessage = (function() {
 }).call(this);
 ;
 window.steroids = {
-  version: "0.4.0",
+  version: "0.5.0",
   Animation: Animation,
   XHR: XHR,
   File: File,
@@ -1720,36 +1694,30 @@ window.steroids = {
   },
   on: function(event, callback) {
     var _base;
-    this.debug("on event " + event);
     if (this["" + event + "_has_fired"] != null) {
-      this.debug("on event " + event + ", alrueady fierd");
       return callback();
     } else {
-      this.debug("on event " + event + ", waiting");
       (_base = this.eventCallbacks)[event] || (_base[event] = []);
       return this.eventCallbacks[event].push(callback);
     }
   },
   fireSteroidsEvent: function(event) {
-    var callback, callbacks, _i, _len, _results;
-    this.debug("firign event " + event);
+    var callback, _i, _len, _ref, _results;
     this["" + event + "_has_fired"] = new Date().getTime();
     if (this.eventCallbacks[event] != null) {
-      callbacks = this.eventCallbacks[event].splice(0);
+      _ref = this.eventCallbacks[event];
       _results = [];
-      for (_i = 0, _len = callbacks.length; _i < _len; _i++) {
-        callback = callbacks[_i];
-        this.debug("firing event callback");
-        _results.push(callback());
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        callback = _ref[_i];
+        callback();
+        _results.push(this.eventCallbacks[event].splice(this.eventCallbacks[event].indexOf(callback), 1));
       }
       return _results;
     }
   },
   markComponentReady: function(model) {
-    this.debug("" + model + " is ready");
     this.waitingForComponents.splice(this.waitingForComponents.indexOf(model), 1);
     if (this.waitingForComponents.length === 0) {
-      this.debug("steroids is ready");
       return this.fireSteroidsEvent("ready");
     }
   }
