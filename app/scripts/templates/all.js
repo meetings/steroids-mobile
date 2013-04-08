@@ -604,6 +604,148 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
     return buf.join("");
 };
 
+// newProfileView.jade compiled template
+exports.newProfileView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<!-- THIS IS OLD just copied from participant template--><div class="ui-grid-a"><div class="ui-block-a">');
+        if (image) {
+            buf.push("<img");
+            buf.push(attrs({
+                src: image,
+                "class": "mtngs-profile-image"
+            }, {
+                src: true
+            }));
+            buf.push("/>");
+        } else {
+            buf.push('<span class="placeholder-100 mtngs-profile-image"></span>');
+        }
+        buf.push('</div><div class="ui-block-b">');
+        var ipad = navigator.userAgent.match(/iPad/i) != null;
+        if (phone && !ipad) {
+            buf.push("<a");
+            buf.push(attrs({
+                href: "tel:" + phone,
+                "data-role": "button",
+                "data-theme": "b"
+            }, {
+                href: true,
+                "data-role": true,
+                "data-theme": true
+            }));
+            buf.push(">");
+            var __val__ = "Call";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</a>");
+        }
+        if (phone) {
+            buf.push("<a");
+            buf.push(attrs({
+                href: "sms:" + phone,
+                "data-role": "button",
+                "data-theme": "b"
+            }, {
+                href: true,
+                "data-role": true,
+                "data-theme": true
+            }));
+            buf.push(">");
+            var __val__ = "SMS";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</a>");
+        }
+        if (skype) {
+            buf.push("<a");
+            buf.push(attrs({
+                href: "skype:" + skype,
+                "data-role": "button",
+                "data-theme": "b"
+            }, {
+                href: true,
+                "data-role": true,
+                "data-theme": true
+            }));
+            buf.push(">");
+            var __val__ = "Skype";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</a>");
+        }
+        buf.push("</div></div>");
+        if (name) {
+            buf.push('<h3 style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;">');
+            var __val__ = name;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</h3>");
+        }
+        if (organization && organization_title) {
+            buf.push("<p>");
+            var __val__ = organization + ", " + organization_title;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (organization && !organization_title) {
+            buf.push("<p>");
+            var __val__ = organization;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (!organization && organization_title) {
+            buf.push("<p>");
+            var __val__ = organization_title;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        buf.push('<ul data-role="listview" data-inset="true" data-theme="a"><li><p class="mtngs-email"><a');
+        buf.push(attrs({
+            style: "font-weight:normal;color:#555;",
+            href: "mailto:" + email
+        }, {
+            style: true,
+            href: true
+        }));
+        buf.push(">");
+        var __val__ = email;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push("</a></p>");
+        if (phone) {
+            buf.push('<p class="mtngs-mobile">');
+            var __val__ = phone;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (skype) {
+            buf.push('<p class="mtngs-skype">');
+            var __val__ = skype;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
+        }
+        if (linkedin) {
+            buf.push('<p class="mtngs-linkedin">');
+            if (linkedin.indexOf("http") === -1) linkedin = "http://" + linkedin;
+            buf.push("<a");
+            buf.push(attrs({
+                style: "font-weight:normal;color:#555;",
+                href: linkedin
+            }, {
+                style: true,
+                href: true
+            }));
+            buf.push(">");
+            var __val__ = "LinkedIn Profile";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</a></p>");
+        }
+        buf.push("</li></ul>");
+    }
+    return buf.join("");
+};
+
 // noticeBar.jade compiled template
 exports.noticeBar = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;

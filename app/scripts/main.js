@@ -11,6 +11,7 @@ window.app = {
     auth : {
         user : null,
         token : null,
+        tos_verify_required : false,
         cookiename : 'mtngs_mobile_auth',
         cookievalid : 14 // in days
     },
@@ -115,47 +116,49 @@ window.app = {
             }
         }
     },
-    _doRedirects : function(){
+    _doRedirects : function() {
         // TODO: opening of the page stacks
         var redirect_meeting = this._getUrlParamByName( 'redirect_to_meeting' );
         var proposals = this._getUrlParamByName( 'proposals' );
         var clear = this._getUrlParamByName( 'clear' );
+
+        var chosen_redirect = '';
+
         if ( clear == 'true'){
             app.auth.user = '';
             app.auth.token = '';
             return;
         }
         else if( proposals === 'answer' && redirect_meeting ){
-            window.location = '/scheduling.html?mode=answer&id=' + redirect_meeting;
+            chosen_redirect = '/scheduling.html?mode=answer&id=' + redirect_meeting;
         }
         else if( proposals === 'choose' && redirect_meeting ){
-            window.location = '/scheduling.html?mode=choose&id=' + redirect_meeting;
+            chosen_redirect = '/scheduling.html?mode=choose&id=' + redirect_meeting;
         }
         else if( redirect_meeting && redirect_meeting !== 0 && redirect_meeting !== '0' ){
-            window.location = '/meeting.html?id=' + redirect_meeting;
+            chosen_redirect = '/meeting.html?id=' + redirect_meeting;
         }
         else if( window.location.toString().indexOf( 'login.html') !== -1 ){
-            window.location = '/index.html';
+            chosen_redirect = '/index.html';
+        }
+
+        if ( app.auth.tos_verify_required || window.location.toString().indexOf( 'login.html') !== -1 ) {
+            chosen_redirect = chosen_redirect || window.location + "";
+            window.location = '/new_profile.html?url_after_tos_accept=' + encodeURIComponent( chosen_redirect );
+        }
+        else if ( chosen_redirect ) {
+            window.location = chosen_redirect;
         }
     },
     _readAuthUrlParams : function(){
-        var user = this._getUrlParamByName( 'user_id' );
-        var token = this._getUrlParamByName( 'dic' );
-        if( user && token ){
-            app.auth.user = user;
-            app.auth.token = token;
-            this._createAuthCookie();
-            return true;
-        }
-        else{
-            return false;
-        }
+        return this._loginWithParams( this._getUrlParamByName( 'user_id' ), this._getUrlParamByName( 'dic' ) );
     },
     _loginWithParams : function( user, token ){
         if( user && token ){
             app.auth.user = user;
             app.auth.token = token;
             this._createAuthCookie();
+            this.auth.tos_verify_required = 1;
             return true;
         }
         else{

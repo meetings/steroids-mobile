@@ -48,13 +48,13 @@ app.loginView = Backbone.View.extend({
                 // Login
                 app._loginWithParams( response.result.user_id, response.result.token );
 
-                window.location = '/index.html';
-                return;
-
-                // SHOW signup form
-                $form.fadeOut(function(){
-                    $('#profile-form').fadeIn();
-                });
+                var target_location = '/index.html';
+                if ( response.result.tos_accepted ) {
+                    window.location = target_location;
+                }
+                else {
+                    window.location = '/new_profile.html?url_after_tos_accept=' + encodeURIComponent( target_location );
+                }
             }
             else{
                 $button.html('Continue');

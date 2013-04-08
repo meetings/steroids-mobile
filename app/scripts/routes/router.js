@@ -4,6 +4,7 @@ app.router = Backbone.Router.extend({
     routes : {
         "" : "meetings",
         "login.html" : "login",
+        "new_profile.html" : "new_profile",
         "index.html" : "meetings",
         "settings.html" : "settings",
         "meeting.html" : "meeting",
@@ -161,6 +162,20 @@ app.router = Backbone.Router.extend({
     login : function() {
         app.views.login = new app.loginView({ el : $('#login-page') });
         app.views.login.render();
+    },
+
+    new_profile : function( params ) {
+        app.models.currentUser = new app.userModel( { id : 'me' } );
+        app.models.currentUser.fetch({ success : function(){
+            if ( app.models.currentUser.get('tos_accepted') ) {
+                window.location = params.url_after_tos_accept;
+            }
+            else {
+                app.views.newProfile = new app.newProfileView({ el : $('#new-profile-page'), model : app.models.currentUser });
+                app.views.newProfile.render();
+                app.showContent();
+            }
+        }});        
     },
 
     meeting : function(params) {
