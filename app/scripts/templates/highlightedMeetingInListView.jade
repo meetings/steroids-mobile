@@ -1,9 +1,11 @@
 a(href='meeting.html?id='+id)
     - if(highlight['type'] == 'add_agenda') 
-        div.ui-icon.ui-icon-edit
+        i.task-icon.icon-edit
     - else if(highlight['type'] == 'suggest_dates')
-        div.ui-icon.ui-icon-grid
+        i.task-icon.icon-calendar
+    - else if(highlight['type'] == 'confirm_time')
+        i.task-icon.icon-time
     - else
-        div.ui-icon.ui-icon-plus
+        i.task-icon.icon-add
     span.message=highlight['message'] + ": "
     span.title=title

@@ -290,11 +290,13 @@ exports.highlightedMeetingInListView = function anonymous(locals, attrs, escape,
         }));
         buf.push(">");
         if (highlight["type"] == "add_agenda") {
-            buf.push('<div class="ui-icon ui-icon-edit"></div>');
+            buf.push('<i class="task-icon icon-edit"></i>');
         } else if (highlight["type"] == "suggest_dates") {
-            buf.push('<div class="ui-icon ui-icon-grid"></div>');
+            buf.push('<i class="task-icon icon-calendar"></i>');
+        } else if (highlight["type"] == "confirm_time") {
+            buf.push('<i class="task-icon icon-time"></i>');
         } else {
-            buf.push('<div class="ui-icon ui-icon-plus"></div>');
+            buf.push('<i class="task-icon icon-add"></i>');
         }
         buf.push('<span class="message">');
         var __val__ = highlight["message"] + ": ";

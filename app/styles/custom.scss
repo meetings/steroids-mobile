@@ -314,8 +314,8 @@ ul.highlight-list{
             font-size:14px;
         }
 
-        .ui-icon {
-            float: left;
+        .task-icon {
+            display: inline-block;
             margin-right: 10px;
         }
 
@@ -813,6 +813,15 @@ h3.tasks {
     margin-top:5px !important;
 }
 
+.ui-icon-mtngs-add-meeting {
+    @include retina-bg('/images/icon_add_white', 'png', 18px, 18px);
+    background-color:transparent;
+    box-shadow:none;
+    left:5px;
+    margin-left:16px !important;
+    margin-top:5px !important;
+}
+
 .ui-icon-mtngs-add-participant {
     @include retina-bg('/images/icon_plus', 'png', 18px, 18px);
     background-color:transparent;
@@ -1016,7 +1025,7 @@ div.edit-panel{
         display:none;
     }
     span.menu-icon-edit{
-        @include retina-bg('/images/icon_plus' , 'png', 20px, 20px);
+        @include retina-bg('/images/icon_rename' , 'png', 20px, 20px);
         background-color:transparent;
         background-position:0px 50%;
         background-repeat:no-repeat;
@@ -1040,7 +1049,7 @@ div.edit-panel{
         height:20px;
     }
     span.menu-icon-remove{
-        @include retina-bg('/images/icon_cross_white' , 'png', 20px, 20px);
+        @include retina-bg('/images/icon_remove' , 'png', 20px, 20px);
         background-color:transparent;
         background-position:0px 50%;
         background-repeat:no-repeat;
