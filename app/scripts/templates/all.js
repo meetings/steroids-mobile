@@ -746,6 +746,20 @@ exports.newProfileView = function anonymous(locals, attrs, escape, rethrow, merg
     return buf.join("");
 };
 
+// noMeetingsView.jade compiled template
+exports.noMeetingsView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<p>Click the button to add a meeting.</p><a href="edit.html" data-theme="b" data-icon="mtngs-add-meeting" data-role="button" class="open-add-meeting-view">Add a meeting</a>');
+    }
+    return buf.join("");
+};
+
 // noticeBar.jade compiled template
 exports.noticeBar = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
