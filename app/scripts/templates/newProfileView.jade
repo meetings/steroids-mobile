@@ -1,35 +1,25 @@
-// THIS IS OLD just copied from participant template
-.ui-grid-a
-    .ui-block-a
-        - if( image )
-            img(src=image).mtngs-profile-image
-        - else
-            span.placeholder-100.mtngs-profile-image
-    .ui-block-b
-        - var ipad = navigator.userAgent.match(/iPad/i) != null;
-        - if (phone && ! ipad )
-            a(href="tel:"+phone,data-role="button",data-theme="b")='Call'
-        - if (phone)
-            a(href="sms:"+phone,data-role="button",data-theme="b")='SMS'
-        - if (skype)
-            a(href="skype:"+skype,data-role="button",data-theme="b")='Skype'
-- if(name)
-    h3(style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;")=name
--if( organization && organization_title )
-    p=organization + ', '+organization_title
--if( organization && ! organization_title )
-    p=organization
--if( ! organization && organization_title )
-    p=organization_title
-ul(data-role="listview",data-inset="true",data-theme="a")
-    li
-        p.mtngs-email
-            a(style="font-weight:normal;color:#555;",href="mailto:"+email)=email
-        - if (phone)
-            p.mtngs-mobile=phone
-        - if (skype)
-            p.mtngs-skype=skype
-        - if (linkedin)
-            p.mtngs-linkedin
-                - if( linkedin.indexOf('http') === -1) linkedin = 'http://' + linkedin;
-                a(style="font-weight:normal;color:#555;",href=linkedin)="LinkedIn Profile"
+div#signup-form.form-full-width(data-role="fieldcontain")
+    .ui-grid-a
+        .ui-block-a
+            - if( image )
+                img(src=image).mtngs-profile-image
+            - else
+                span.placeholder-100.mtngs-profile-image
+        .ui-block-b
+            div.input-top
+                input#user-firstname(data-theme="b",type="text",name="user-firstname",value=first_name,placeholder="First name")
+            div.input-bottom
+                input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=last_name,placeholder="Last name")
+    p
+        input#user-organization(data-theme="b",type="text",name="user-organization",value=organization,placeholder="Organization")
+    
+    p
+        input#user-title(data-theme="b",type="text",name="user-title",value=organization_title, placeholder="Title")
+    p
+        input#user-email(data-theme="b",type="text",name="user-email",value=email,placeholder="Email")
+    p
+        input#user-phone(data-theme="b",type="text",name="user-phone",value=phone,placeholder="Phone")
+    p
+        input#user-skype(data-theme="b",type="text",name="user-skype",value=skype,placeholder="Skype")
+    div.controls
+        a.save-profile-data(data-theme="b", type="button") Save

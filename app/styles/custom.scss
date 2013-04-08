@@ -1179,5 +1179,27 @@ div#add-participant {
     }
 }
 
+// Sign up page
+div#signup-form {
+    div.input-top div.ui-input-text {
+        border-bottom-right-radius: 0px;
+        -moz-border-radius-bottomright: 0px;
+        -webkit-border-bottom-right-radius: 0px;
+        
+        border-bottom-left-radius: 0px;
+        -moz-border-radius-bottomleft: 0px;
+        -webkit-border-bottom-left-radius: 0px;
+    }
+
+    div.input-bottom div.ui-input-text {
+        border-top-left-radius: 0px;
+        -moz-border-radius-topleft: 0px;
+        -webkit-border-top-left-radius: 0px;
+
+        border-top-right-radius: 0px;
+        -moz-border-radius-topright: 0px;
+        -webkit-border-top-right-radius: 0px;
+    }
+}
 
 

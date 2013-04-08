@@ -613,7 +613,7 @@ exports.newProfileView = function anonymous(locals, attrs, escape, rethrow, merg
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<!-- THIS IS OLD just copied from participant template--><div class="ui-grid-a"><div class="ui-block-a">');
+        buf.push('<div id="signup-form" data-role="fieldcontain" class="form-full-width"><div class="ui-grid-a"><div class="ui-block-a">');
         if (image) {
             buf.push("<img");
             buf.push(attrs({
@@ -626,122 +626,113 @@ exports.newProfileView = function anonymous(locals, attrs, escape, rethrow, merg
         } else {
             buf.push('<span class="placeholder-100 mtngs-profile-image"></span>');
         }
-        buf.push('</div><div class="ui-block-b">');
-        var ipad = navigator.userAgent.match(/iPad/i) != null;
-        if (phone && !ipad) {
-            buf.push("<a");
-            buf.push(attrs({
-                href: "tel:" + phone,
-                "data-role": "button",
-                "data-theme": "b"
-            }, {
-                href: true,
-                "data-role": true,
-                "data-theme": true
-            }));
-            buf.push(">");
-            var __val__ = "Call";
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</a>");
-        }
-        if (phone) {
-            buf.push("<a");
-            buf.push(attrs({
-                href: "sms:" + phone,
-                "data-role": "button",
-                "data-theme": "b"
-            }, {
-                href: true,
-                "data-role": true,
-                "data-theme": true
-            }));
-            buf.push(">");
-            var __val__ = "SMS";
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</a>");
-        }
-        if (skype) {
-            buf.push("<a");
-            buf.push(attrs({
-                href: "skype:" + skype,
-                "data-role": "button",
-                "data-theme": "b"
-            }, {
-                href: true,
-                "data-role": true,
-                "data-theme": true
-            }));
-            buf.push(">");
-            var __val__ = "Skype";
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</a>");
-        }
-        buf.push("</div></div>");
-        if (name) {
-            buf.push('<h3 style="margin-top:0px;padding-top:0px;margin-bottom:0px;margin-top:15px;">');
-            var __val__ = name;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</h3>");
-        }
-        if (organization && organization_title) {
-            buf.push("<p>");
-            var __val__ = organization + ", " + organization_title;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
-        }
-        if (organization && !organization_title) {
-            buf.push("<p>");
-            var __val__ = organization;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
-        }
-        if (!organization && organization_title) {
-            buf.push("<p>");
-            var __val__ = organization_title;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
-        }
-        buf.push('<ul data-role="listview" data-inset="true" data-theme="a"><li><p class="mtngs-email"><a');
+        buf.push('</div><div class="ui-block-b"><div class="input-top"><input');
         buf.push(attrs({
-            style: "font-weight:normal;color:#555;",
-            href: "mailto:" + email
+            id: "user-firstname",
+            "data-theme": "b",
+            type: "text",
+            name: "user-firstname",
+            value: first_name,
+            placeholder: "First name"
         }, {
-            style: true,
-            href: true
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
         }));
-        buf.push(">");
-        var __val__ = email;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</a></p>");
-        if (phone) {
-            buf.push('<p class="mtngs-mobile">');
-            var __val__ = phone;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
-        }
-        if (skype) {
-            buf.push('<p class="mtngs-skype">');
-            var __val__ = skype;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
-        }
-        if (linkedin) {
-            buf.push('<p class="mtngs-linkedin">');
-            if (linkedin.indexOf("http") === -1) linkedin = "http://" + linkedin;
-            buf.push("<a");
-            buf.push(attrs({
-                style: "font-weight:normal;color:#555;",
-                href: linkedin
-            }, {
-                style: true,
-                href: true
-            }));
-            buf.push(">");
-            var __val__ = "LinkedIn Profile";
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</a></p>");
-        }
-        buf.push("</li></ul>");
+        buf.push('/></div><div class="input-bottom"><input');
+        buf.push(attrs({
+            id: "user-lastname",
+            "data-theme": "b",
+            type: "text",
+            name: "user-firstname",
+            value: last_name,
+            placeholder: "Last name",
+            "class": "corners-bottom"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></div></div></div><p><input");
+        buf.push(attrs({
+            id: "user-organization",
+            "data-theme": "b",
+            type: "text",
+            name: "user-organization",
+            value: organization,
+            placeholder: "Organization"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-title",
+            "data-theme": "b",
+            type: "text",
+            name: "user-title",
+            value: organization_title,
+            placeholder: "Title"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-email",
+            "data-theme": "b",
+            type: "text",
+            name: "user-email",
+            value: email,
+            placeholder: "Email"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-phone",
+            "data-theme": "b",
+            type: "text",
+            name: "user-phone",
+            value: phone,
+            placeholder: "Phone"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-skype",
+            "data-theme": "b",
+            type: "text",
+            name: "user-skype",
+            value: skype,
+            placeholder: "Skype"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/></p><div class="controls"><a data-theme="b" type="button" class="save-profile-data">Save</a></div></div>');
     }
     return buf.join("");
 };
