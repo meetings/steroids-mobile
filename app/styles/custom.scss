@@ -447,6 +447,18 @@ div#material-container{
     ul{
         margin-bottom:0px;
     }
+
+    #locked {
+        background-color: #eee;
+        padding: 10px;
+
+        p { margin-top: 0; }
+
+        a { 
+            font-weight: normal; 
+            color: #2489ce;
+        }
+    }
 }
 div#material-container.scribd{
     ul li{

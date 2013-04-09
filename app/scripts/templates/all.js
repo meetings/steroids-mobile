@@ -430,18 +430,20 @@ exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge)
                 var __val__ = model.content;
                 buf.push(null == __val__ ? "" : __val__);
             } else {
-                buf.push("<h3>");
-                var __val__ = model.title;
-                buf.push(escape(null == __val__ ? "" : __val__));
-                buf.push("</h3>");
                 if (current_edit) {
                     buf.push('<div id="locked">');
                     if (current_edit.creator_id == auth_user_id) {
-                        buf.push("<p>Page is locked by you. Continue interrupted edit</p>");
+                        buf.push('<p>This document is locked by you. </p><a href="#" class="open-continued-material-edit">Continue editing by clicking here</a>');
                     } else {
-                        buf.push("<p>Page is currently locked.</p>");
+                        buf.push("<p>");
+                        var __val__ = "This document is locked by " + current_edit.creator_name + ".";
+                        buf.push(escape(null == __val__ ? "" : __val__));
+                        buf.push("</p>");
                     }
-                    buf.push('</div><p class="notruncation">');
+                    buf.push("</div><h3>");
+                    var __val__ = model.title;
+                    buf.push(escape(null == __val__ ? "" : __val__));
+                    buf.push('</h3><p class="notruncation">');
                     var __val__ = current_edit.content;
                     buf.push(null == __val__ ? "" : __val__);
                     buf.push("</p>");

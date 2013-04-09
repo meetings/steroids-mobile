@@ -3,13 +3,14 @@
         h3=model.title
         !=model.content
     else
-        h3=model.title
         - if( current_edit )
             div#locked
                 -if( current_edit.creator_id == auth_user_id )
-                    p Page is locked by you. Continue interrupted edit
+                    p This document is locked by you. 
+                    a.open-continued-material-edit(href="#") Continue editing by clicking here
                 -else
-                    p Page is currently locked.
+                    p="This document is locked by " + current_edit.creator_name + "."
+            h3=model.title
             p.notruncation!=current_edit.content
         - else
             - if( model.title == "Agenda" && model.content == "")

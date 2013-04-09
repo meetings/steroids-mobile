@@ -49,6 +49,13 @@ app.materialView = Backbone.View.extend({
     },
 
     events : {
+        'click .open-continued-material-edit' : 'continueEditing'
+    },
+
+    continueEditing : function(e) {
+        e.preventDefault();
+
+        window.location = '/editMaterial.html?id=' + this.model.id + '&continue_edit=1';
     },
 
     initDownloadLink: function(){
