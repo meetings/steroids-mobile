@@ -148,7 +148,12 @@ window.app = {
 
         if ( app.auth.tos_verify_required || window.location.toString().indexOf( 'login.html') !== -1 ) {
             chosen_redirect = chosen_redirect || window.location + "";
-            window.location = '/profile.html?url_after_tos_accept=' + encodeURIComponent( chosen_redirect );
+            if ( app.options.build !== 'web' ) {
+                AppGyver.openPreload( AppGyver.getPreloadIdFromUrl(chosen_redirect), { url_after : chosen_redirect });
+            }
+            else {
+                window.location = '/profile.html?url_after_tos_accept=' + encodeURIComponent( chosen_redirect );
+            }
         }
         else if ( chosen_redirect ) {
             if ( app.options.build !== 'web' ) {

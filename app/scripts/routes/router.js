@@ -4,13 +4,13 @@ app.router = Backbone.Router.extend({
     routes : {
         "" : "meetings",
         "login.html" : "login",
-        "new_profile.html" : "new_profile",
+        "profile.html" : "profile",
         "index.html" : "meetings",
         "settings.html" : "settings",
         "meeting.html" : "meeting",
         "participants.html" : "participants",
         "materials.html" : "materials",
-        "edit_material.html" : "edit_material",
+        "editMaterial.html" : "editMaterial",
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
@@ -159,16 +159,15 @@ app.router = Backbone.Router.extend({
         }});
     },
 
-
     login : function() {
         app.views.login = new app.loginView({ el : $('#login-page') });
         app.views.login.render();
     },
 
-    new_profile : function( params ) {
+    profile : function( params ) {
         app.models.currentUser = new app.userModel( { id : 'me' } );
         app.models.currentUser.fetch({ success : function(){
-            if ( app.models.currentUser.get('tos_accepted') ) {
+            if ( app.models.currentUser.get('tos_accepted') ){
                 window.location = params.url_after_tos_accept;
             }
             else {
@@ -176,7 +175,7 @@ app.router = Backbone.Router.extend({
                 app.views.newProfile.render();
                 app.showContent();
             }
-        }});        
+        }});
     },
 
     meeting : function(params) {
@@ -371,7 +370,7 @@ app.router = Backbone.Router.extend({
         }});
     },
 
-    edit_material : function(params) {
+    editMaterial : function(params) {
         var id = params.id || 0;
 
         if (app.options.build !== 'web') {
