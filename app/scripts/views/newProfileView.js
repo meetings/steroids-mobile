@@ -16,14 +16,21 @@ app.newProfileView = Backbone.View.extend({
             primary_email : $('#user-email').val(),
             phone : $('#user-phone').val(),
             organization : $('#user-organization').val(),
-            title : $('#user-title').val()
+            title : $('#user-title').val(),
+            tos_accepted : '1'
         };
 
-        this.model.save(data, function() {
-            alert('saved!');            
+        this.model.save(data, {
+            success : function() {
+                alert('asdas');
+                this.openMeetingList();
+            },
+            error: function() {
+                alert('adding participant failed.');
+            }
         });
 
-        this.openMeetingList();
+        
     },
 
     openMeetingList : function() {
