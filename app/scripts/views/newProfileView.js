@@ -22,23 +22,21 @@ app.newProfileView = Backbone.View.extend({
 
         this.model.save(data, {
             success : function() {
-                alert('asdas');
                 this.openMeetingList();
             },
             error: function() {
                 alert('adding participant failed.');
             }
         });
-
-        
     },
 
     openMeetingList : function() {
-        //if ( app.options.build !== 'web' ) {
-        //    AppGyver.openPreload("inde", {id: this.model.get('id')});
-        //} else {
-        window.location = 'index.html';
-        //}        
+        if ( app.options.build !== 'web' ) {
+            AppGyver.openPreload("", {id: ''});
+        }
+        else {
+            window.location = '/index.html';
+        }
     },
 
     events : {

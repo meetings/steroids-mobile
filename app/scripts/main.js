@@ -38,9 +38,8 @@ window.app = {
             return;
         }
 
-        // Check login
+        // Login & redirects
         if( this._requireLogin() ){
-            // Check meeting redirect
             this._doRedirects();
         }
 
@@ -111,7 +110,12 @@ window.app = {
         else{
             // Throw the user out if no credentials
             if( window.location.toString().indexOf( 'login.html') === -1 ){
-                window.location = '/login.html';
+                if ( app.options.build !== 'web' ) {
+                    AppGyver.openPreload("loginPage", {id : ''}, false, 'login');
+                }
+                else {
+                    window.location = '/login.html';
+                }
                 return false;
             }
         }
@@ -138,16 +142,21 @@ window.app = {
         else if( redirect_meeting && redirect_meeting !== 0 && redirect_meeting !== '0' ){
             chosen_redirect = '/meeting.html?id=' + redirect_meeting;
         }
-        else if( window.location.toString().indexOf( 'login.html') !== -1 ){
+        else if( window.location.toString().indexOf( 'login.html') !== -1 ||  window.location.toString().indexOf( 'appstart.html') !== -1 ){
             chosen_redirect = '/index.html';
         }
 
         if ( app.auth.tos_verify_required || window.location.toString().indexOf( 'login.html') !== -1 ) {
             chosen_redirect = chosen_redirect || window.location + "";
-            window.location = '/new_profile.html?url_after_tos_accept=' + encodeURIComponent( chosen_redirect );
+            window.location = '/profile.html?url_after_tos_accept=' + encodeURIComponent( chosen_redirect );
         }
         else if ( chosen_redirect ) {
-            window.location = chosen_redirect;
+            if ( app.options.build !== 'web' ) {
+                AppGyver.openPreload( AppGyver.getPreloadIdFromUrl(chosen_redirect), { url_after : chosen_redirect });
+            }
+            else {
+                window.location = chosen_redirect;
+            }
         }
     },
     _readAuthUrlParams : function(){

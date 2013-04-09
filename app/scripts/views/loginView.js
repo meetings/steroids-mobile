@@ -37,7 +37,7 @@ app.loginView = Backbone.View.extend({
         var $form = $('#pin-form');
         var $button = $(e.target);
         var $pin_field = $('#pin');
-        $button.html('Checking...')
+        $button.html('Checking...');
         if( ! $pin_field.val() ){
              $button.html('Continue');
              $form.append( $('<p class="error">Oops, looks like you skipped the PIN.</p>').delay(5000).fadeOut() );
@@ -48,12 +48,24 @@ app.loginView = Backbone.View.extend({
                 // Login
                 app._loginWithParams( response.result.user_id, response.result.token );
 
-                var target_location = '/index.html';
+                var target_location = '/index.html'
+
+                // If tos is accepted
                 if ( response.result.tos_accepted ) {
-                    window.location = target_location;
+                    if ( app.options.build !== 'web' ) {
+                        steroids.layers.popAll();
+                    }
+                    else {
+                        window.location = '/index.html';
+                    }
                 }
                 else {
-                    window.location = '/new_profile.html?url_after_tos_accept=' + encodeURIComponent( target_location );
+                    if ( app.options.build !== 'web' ) {
+                        AppGyver.openPreload('profilePage', { url_after : target_location })
+                    }
+                    else {
+                        window.location = '/profile.html?url_after_tos_accept=' + encodeURIComponent( target_location );
+                    }
                 }
             }
             else{
