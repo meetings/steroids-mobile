@@ -346,8 +346,12 @@ app.router = Backbone.Router.extend({
 
         app.models.material = new app.materialModel();
         app.models.material.url = app.defaults.api_host + '/v1/meeting_materials/' + id;
+
+        app.collections.material_edits = new app.materialEditCollection( [], { material_id : id } );
+        
         app.views.material = new app.materialView({
             model : app.models.material,
+            edit_collection : app.collections.material_edits,
             el : $('#material_content')
         });
 
