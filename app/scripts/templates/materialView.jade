@@ -4,10 +4,18 @@
         !=model.content
     else
         h3=model.title
-        - if( model.title == "Agenda" && model.content == "")
-            p.notruncation Agenda is empty.
-        - else if( model.title == "Action Points" && model.content == "")
-            p.notruncation Action points are empty.
+        - if( current_edit )
+            div#locked
+                -if( current_edit.creator_id == auth_user_id )
+                    p Page is locked by you. Continue interrupted edit
+                -else
+                    p Page is currently locked.
+            p.notruncation!=current_edit.content
         - else
-            p.notruncation!=model.content
+            - if( model.title == "Agenda" && model.content == "")
+                p.notruncation Agenda is empty.
+            - else if( model.title == "Action Points" && model.content == "")
+                p.notruncation Action points are empty.
+            - else
+                p.notruncation!=model.content
 

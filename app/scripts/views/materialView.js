@@ -1,7 +1,16 @@
 app.materialView = Backbone.View.extend({
 
     initialize: function(options) {
-        options.model.bind('change', this.render, this);
+        options.model.on('change', this.render, this);
+        options.edit_collection.on('change', this.render, this);
+        options.edit_collection.on('remove', this.render, this);
+        options.edit_collection.on('add', this.render, this);
+        options.edit_collection.on('remove', function() { options.model.fetch() }, this);
+
+        // Start polling for new edit versions
+
+        this.edit_collection = options.edit_collection;
+        this.edits_polling();
 
         // Open panel
         $('div.main-div').swipeleft(function(){
@@ -15,8 +24,25 @@ app.materialView = Backbone.View.extend({
 
     },
 
+    current_edits_polling_timeout: false,
+    edits_polling: function() {
+        this.edit_collection.fetch( { update : true });
+
+        if ( this.current_edits_polling_timeout ) {
+            clearTimeout( this.current_edits_polling_timeout );
+        }
+
+        var that = this;
+        this.current_edits_polling_timeout = setTimeout( function() { that.edits_polling() }, 5000 );
+    },
+
     render: function() {
-        this.$el.html( templatizer.materialView( { model : this.model.toJSON() }  ) ); // Render template
+        var current_edit = this.edit_collection.at(0);
+        this.$el.html( templatizer.materialView( {
+            model : this.model.toJSON(),
+            current_edit : current_edit ? current_edit.toJSON() : false,
+            auth_user_id : app.auth.user
+        } ) );
         this.initDownloadLink();
         this.initScribd();
         return this;

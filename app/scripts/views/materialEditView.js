@@ -4,10 +4,11 @@ app.materialEditView = Backbone.View.extend({
         var that = this;
         this.ready_to_render = false;
         this.rendered_once = false;
+        var start_url = options.continue_edit ?
+            app.defaults.api_host + '/v1/meeting_materials/' + options.material_id + '/continue_edit' :
+            app.defaults.api_host + '/v1/meeting_materials/' + options.material_id + '/edits';
 
-        var start_url = app.defaults.api_host + '/v1/meeting_materials/' + options.material_id + '/edits';
         var params = {
-            continue_edit : options.continue_edit,
             user_id : app.auth.user,
             dic : app.auth.token
         };
@@ -18,6 +19,7 @@ app.materialEditView = Backbone.View.extend({
             if ( response.id ) {
                 that.model.set( response );
                 that.model.set( 'old_content' , response.content );
+                that.ensure_lock();
             }
             else {
                 that.error_message = response.error.message;
@@ -27,6 +29,18 @@ app.materialEditView = Backbone.View.extend({
             app.showContent();
 
         }, 'json' );
+    },
+
+    current_lock_ensure_timeout: false,
+    ensure_lock: function() {
+        this.model.check_save( false, true );
+
+        if ( this.current_lock_ensure_timeout ) {
+            clearTimeout( this.current_lock_ensure_timeout );
+        }
+
+        var that = this;
+        this.current_lock_ensure_timeout = setTimeout( function() { that.edits_polling() }, 5 * 60 * 1000 );
     },
 
     render: function() {
@@ -56,7 +70,7 @@ app.materialEditView = Backbone.View.extend({
             theme_advanced_toolbar_align : "center",
 
             onchange_callback : function( instance ) {
-                that.model.set( { content : instance.getContent() } );
+                that.model.update_edit_content( instance.getContent() );
             },
 
             mode:'textareas'

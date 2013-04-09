@@ -5,9 +5,13 @@ app.materialEditModel = Backbone.Model.extend({
         this.on('change', function(e) {
             if ( this.id ) {
                 this.url = app.defaults.api_host + '/v1/meeting_material_edits/' + this.id;
-                this.check_save();
             }
         }, this );
+    },
+
+    update_edit_content : function( content ) {
+        this.set('content', content );
+        this.check_save();
     },
 
     storing_in_progress : false,
@@ -17,7 +21,7 @@ app.materialEditModel = Backbone.Model.extend({
     last_saved_content : false,
     last_saved_content_set : false,
 
-    check_save : function( from_timeout ) {
+    check_save : function( from_timeout, ignore_same_content ) {
         if ( from_timeout ) {
             this.save_timeout = false;
         }
@@ -34,7 +38,7 @@ app.materialEditModel = Backbone.Model.extend({
             return;
         }
 
-        if ( this.last_saved_content == this.get('content') ) {
+        if ( ! ignore_same_content && this.last_saved_content == this.get('content') ) {
             return;
         }
 

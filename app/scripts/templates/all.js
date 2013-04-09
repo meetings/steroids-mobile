@@ -410,15 +410,28 @@ exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge)
                 var __val__ = model.title;
                 buf.push(escape(null == __val__ ? "" : __val__));
                 buf.push("</h3>");
-                if (model.title == "Agenda" && model.content == "") {
-                    buf.push('<p class="notruncation">Agenda is empty.</p>');
-                } else if (model.title == "Action Points" && model.content == "") {
-                    buf.push('<p class="notruncation">Action points are empty.</p>');
-                } else {
-                    buf.push('<p class="notruncation">');
-                    var __val__ = model.content;
+                if (current_edit) {
+                    buf.push('<div id="locked">');
+                    if (current_edit.creator_id == auth_user_id) {
+                        buf.push("<p>Page is locked by you. Continue interrupted edit</p>");
+                    } else {
+                        buf.push("<p>Page is currently locked.</p>");
+                    }
+                    buf.push('</div><p class="notruncation">');
+                    var __val__ = current_edit.content;
                     buf.push(null == __val__ ? "" : __val__);
                     buf.push("</p>");
+                } else {
+                    if (model.title == "Agenda" && model.content == "") {
+                        buf.push('<p class="notruncation">Agenda is empty.</p>');
+                    } else if (model.title == "Action Points" && model.content == "") {
+                        buf.push('<p class="notruncation">Action points are empty.</p>');
+                    } else {
+                        buf.push('<p class="notruncation">');
+                        var __val__ = model.content;
+                        buf.push(null == __val__ ? "" : __val__);
+                        buf.push("</p>");
+                    }
                 }
             }
         }
