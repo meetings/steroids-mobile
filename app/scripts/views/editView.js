@@ -196,12 +196,20 @@ app.editView = Backbone.View.extend({
         var begin_date = moment($('#meeting-begin-date').val());
         var end_date = moment($('#meeting-end-date').val());
 
-        this.model.set('begin_date', begin_date.format('YYYY-MM-DD'));
-        this.model.set('begin_time', begin_date.format('HH:mm'));
-        this.model.set('end_date', end_date.format('YYYY-MM-DD'));
-        this.model.set('end_time', end_date.format('HH:mm'));
+        // Check that the end time is after the begin time
+        if(end_date < begin_date) {
+            alert('End time cannot be before the start time.');
 
-        this.finalizeMeetingCreation();
+            $('#meeting-end-date').val(begin_date.format('YYYY-MM-DDTHH:mm'));
+        }
+        else {
+            this.model.set('begin_date', begin_date.format('YYYY-MM-DD'));
+            this.model.set('begin_time', begin_date.format('HH:mm'));
+            this.model.set('end_date', end_date.format('YYYY-MM-DD'));
+            this.model.set('end_time', end_date.format('HH:mm'));
+
+            this.finalizeMeetingCreation();
+        }
     },
 
     finalizeMeetingCreation: function() {

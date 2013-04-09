@@ -47,7 +47,7 @@
         <script src="scripts/views/materialView.js"></script>
         <script src="scripts/views/materialEditView.js"></script>
         <script src="scripts/views/participantView.js"></script>
-        <script src="scripts/views/newProfileView.js"></script>
+        <script src="scripts/views/profileView.js"></script>
         <script src="scripts/views/genericCollectionView.js"></script>
         <script src="scripts/views/headerView.js"></script>
         <script src="scripts/views/commentListView.js"></script>
@@ -66,14 +66,15 @@
     </head>
     <body>
         <!-- Material view -->
-        <div data-role="page" id="material" data-theme="a">
+        <div data-role="page" id="profile" data-theme="a">
             <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false" data-tap-toggle="false">
-                <h1>Welcome</h1>
+                <a class="back-button" href="#" data-icon="mtngs-back" data-theme="b" >Back</a>
+                <h1 id="headerTitle">Profile</h1>
             </div>
             <div class="main-div" data-role="content" >
                 <div class="loader"><span class="loader"></span></div>
                 <div class="content">
-                    <div id="new-profile-page">
+                    <div id="profile-page">
 
                     </div>
                 </div>

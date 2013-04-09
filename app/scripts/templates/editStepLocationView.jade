@@ -1,7 +1,11 @@
 div#edit-form.form-full-width(data-role="fieldcontain")
     input#meeting-location(data-theme="b",type="text",name="meeting-location",value=location,placeholder="Meeting location")
     div.controls
-        a#submitStepLocation(data-theme="b", type="button") Continue
+        a#submitStepLocation(data-theme="b", type="button") 
+            - if(id != null)
+                | Save
+            - else
+                | Continue        
     p.separator OR
     div.controls
         a#submitStepLocationOnline(data-theme="b", type="button") Meeting is online

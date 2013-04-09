@@ -64,7 +64,7 @@ app.addParticipantView = Backbone.View.extend({
     },
 
     saveParticipantOrBuildInvite : function() {
-        if(this.meetingModel && !this.meetingModel.is_draft) {
+        if(this.meetingModel && this.meetingModel.get('is_draft') != 1) {
             this.renderInvite();
         }
         else {

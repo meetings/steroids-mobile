@@ -109,7 +109,7 @@ exports.editMeetingPanel = function anonymous(locals, attrs, escape, rethrow, me
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit-title" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit title</a></li><li><a id="nav-edit-location" href="#" data-transition="fade"><span class="ui-icon menu-icon-editlocation"></span>Edit location</a></li><li><a id="nav-edit-time" href="#" data-transition="fade"><span class="ui-icon menu-icon-edittime"></span>Edit time</a></li><li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li></ul>');
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit-title" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit title</a></li><li><a id="nav-edit-location" href="#" data-transition="fade"><span class="ui-icon menu-icon-editlocation"></span>Edit location</a></li><li><a id="nav-edit-time" href="#" data-transition="fade"><span class="ui-icon menu-icon-edittime"></span>Edit time</a></li><!--li--><!--    a#nav-remove(href="#",data-transition="fade")--><!--        span.ui-icon.menu-icon-remove--><!--        | Remove--></ul>');
     }
     return buf.join("");
 };
@@ -137,7 +137,7 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><ul data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> <input');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><ul id="date-selection" data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> <input');
         buf.push(attrs({
             id: "meeting-begin-date",
             "data-theme": "b",
@@ -167,7 +167,13 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
             value: true,
             placeholder: true
         }));
-        buf.push('/></div></div></li></ul><div class="controls"><a id="submitStepDateAndTimeFinish" data-theme="b" type="button">Continue</a></div></div>');
+        buf.push('/></div></div></li></ul><div class="controls"><a id="submitStepDateAndTimeFinish" data-theme="b" type="button">');
+        if (id != null) {
+            buf.push("Save");
+        } else {
+            buf.push("Done");
+        }
+        buf.push("</a></div></div>");
     }
     return buf.join("");
 };
@@ -210,7 +216,13 @@ exports.editStepLocationView = function anonymous(locals, attrs, escape, rethrow
             value: true,
             placeholder: true
         }));
-        buf.push('/><div class="controls"><a id="submitStepLocation" data-theme="b" type="button">Continue</a></div><p class="separator">OR</p><div class="controls"><a id="submitStepLocationOnline" data-theme="b" type="button">Meeting is online</a></div></div>');
+        buf.push('/><div class="controls"><a id="submitStepLocation" data-theme="b" type="button"> ');
+        if (id != null) {
+            buf.push("Save");
+        } else {
+            buf.push("Continue        ");
+        }
+        buf.push('</a></div><p class="separator">OR</p><div class="controls"><a id="submitStepLocationOnline" data-theme="b" type="button">Meeting is online</a></div></div>');
     }
     return buf.join("");
 };
@@ -239,7 +251,13 @@ exports.editStepSkypeNameView = function anonymous(locals, attrs, escape, rethro
             value: true,
             placeholder: true
         }));
-        buf.push('/><div class="controls"><a id="submitStepSkypeName" data-theme="b" type="button">Continue</a></div></div>');
+        buf.push('/><div class="controls"><a id="submitStepSkypeName" data-theme="b" type="button"> ');
+        if (id != null) {
+            buf.push("Save");
+        } else {
+            buf.push("Continue");
+        }
+        buf.push("</a></div></div>");
     }
     return buf.join("");
 };
@@ -268,7 +286,13 @@ exports.editStepTitleView = function anonymous(locals, attrs, escape, rethrow, m
             value: true,
             placeholder: true
         }));
-        buf.push('/><div class="controls"><a id="submitStepTitle" data-theme="b" type="button">Continue</a></div></div>');
+        buf.push('/><div class="controls"><a id="submitStepTitle" data-theme="b" type="button"> ');
+        if (id != null) {
+            buf.push("Save");
+        } else {
+            buf.push("Continue");
+        }
+        buf.push("</a></div></div>");
     }
     return buf.join("");
 };
@@ -604,139 +628,6 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
     return buf.join("");
 };
 
-// newProfileView.jade compiled template
-exports.newProfileView = function anonymous(locals, attrs, escape, rethrow, merge) {
-    attrs = attrs || jade.attrs;
-    escape = escape || jade.escape;
-    rethrow = rethrow || jade.rethrow;
-    merge = merge || jade.merge;
-    var buf = [];
-    with (locals || {}) {
-        var interp;
-        buf.push('<div id="signup-form" data-role="fieldcontain" class="form-full-width"><div class="ui-grid-a"><div class="ui-block-a">');
-        if (image) {
-            buf.push("<img");
-            buf.push(attrs({
-                src: image,
-                "class": "mtngs-profile-image"
-            }, {
-                src: true
-            }));
-            buf.push("/>");
-        } else {
-            buf.push('<span class="placeholder-100 mtngs-profile-image"></span>');
-        }
-        buf.push('</div><div class="ui-block-b"><div class="input-top"><input');
-        buf.push(attrs({
-            id: "user-firstname",
-            "data-theme": "b",
-            type: "text",
-            name: "user-firstname",
-            value: first_name,
-            placeholder: "First name"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push('/></div><div class="input-bottom"><input');
-        buf.push(attrs({
-            id: "user-lastname",
-            "data-theme": "b",
-            type: "text",
-            name: "user-firstname",
-            value: last_name,
-            placeholder: "Last name",
-            "class": "corners-bottom"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push("/></div></div></div><p><input");
-        buf.push(attrs({
-            id: "user-organization",
-            "data-theme": "b",
-            type: "text",
-            name: "user-organization",
-            value: organization,
-            placeholder: "Organization"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push("/></p><p><input");
-        buf.push(attrs({
-            id: "user-title",
-            "data-theme": "b",
-            type: "text",
-            name: "user-title",
-            value: organization_title,
-            placeholder: "Title"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push("/></p><p><input");
-        buf.push(attrs({
-            id: "user-email",
-            "data-theme": "b",
-            type: "text",
-            name: "user-email",
-            value: email,
-            placeholder: "Email"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push("/></p><p><input");
-        buf.push(attrs({
-            id: "user-phone",
-            "data-theme": "b",
-            type: "text",
-            name: "user-phone",
-            value: phone,
-            placeholder: "Phone"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push("/></p><p><input");
-        buf.push(attrs({
-            id: "user-skype",
-            "data-theme": "b",
-            type: "text",
-            name: "user-skype",
-            value: skype,
-            placeholder: "Skype"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push('/></p><div class="controls"><a data-theme="b" type="button" class="save-profile-data">Save</a></div></div>');
-    }
-    return buf.join("");
-};
-
 // noMeetingsView.jade compiled template
 exports.noMeetingsView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;
@@ -855,7 +746,7 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
             "data-theme": true,
             "class": true
         }));
-        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li><li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li><li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li><li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li><li data-role="list-divider" data-theme="c">OTHER</li><li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li><li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li><li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li></ul>');
+        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li><li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li><li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li><li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li><li data-role="list-divider" data-theme="c">OTHER</li><li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li><li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li><li><a id="nav-edit-profile" href="profile.html" data-transition="fade"><span class="ui-icon menu-icon-edit-profile"></span>Edit profile</a></li><li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li></ul>');
         if (app.options.build === "web") {
             buf.push('<a href="#" class="no-mobile">Switch to normal website</a>');
         }
@@ -1066,6 +957,115 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push("</a></p>");
         }
         buf.push("</li></ul>");
+    }
+    return buf.join("");
+};
+
+// profileView.jade compiled template
+exports.profileView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div id="signup-form" data-role="fieldcontain" class="form-full-width"><p><input');
+        buf.push(attrs({
+            id: "user-firstname",
+            "data-theme": "b",
+            type: "text",
+            name: "user-firstname",
+            value: first_name,
+            placeholder: "First name"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-lastname",
+            "data-theme": "b",
+            type: "text",
+            name: "user-firstname",
+            value: last_name,
+            placeholder: "Last name",
+            "class": "corners-bottom"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-organization",
+            "data-theme": "b",
+            type: "text",
+            name: "user-organization",
+            value: organization,
+            placeholder: "Organization"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-title",
+            "data-theme": "b",
+            type: "text",
+            name: "user-title",
+            value: organization_title,
+            placeholder: "Title"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-phone",
+            "data-theme": "b",
+            type: "text",
+            name: "user-phone",
+            value: phone,
+            placeholder: "Phone"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push("/></p><p><input");
+        buf.push(attrs({
+            id: "user-skype",
+            "data-theme": "b",
+            type: "text",
+            name: "user-skype",
+            value: skype,
+            placeholder: "Skype"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/></p><div class="controls"><a data-theme="b" type="button" class="save-profile-data">Save</a></div>');
+        if (tos_accepted != 1) {
+            buf.push('<p class="tos-disclaimer">By proceeding you accept the <a href="#" class="open-tos-page">Terms of service</a>.</p>');
+        }
+        buf.push("</div>");
     }
     return buf.join("");
 };

@@ -992,6 +992,14 @@ div#left-panel{
         padding:5px 0 0 34px;
         height:20px;
     }
+    span.menu-icon-edit-profile{
+        @include retina-bg('/images/icon_edit' , 'png', 20px, 20px);
+        background-color:transparent;
+        background-position:0px 50%;
+        background-repeat:no-repeat;
+        padding:5px 0 0 34px;
+        height:20px;
+    }
     span.menu-icon-logout{
         @include retina-bg('/images/icon_logout' , 'png', 20px, 20px);
         background-color:transparent;
@@ -1172,6 +1180,21 @@ div.form-full-width {
     }
 }
 
+// Edit meeting pages styles
+div#edit-form {
+    #date-selection {
+        .ui-grid-a .ui-block-a { 
+            width: 30%;
+            line-height: 40px;
+        }
+
+        .ui-grid-a .ui-block-b { 
+            width: 70%; 
+            line-height: 40px;
+        }
+    }
+}
+
 // Add participant page
 div#add-participant {
     #participant-name-wrapper {
@@ -1199,6 +1222,17 @@ div#signup-form {
         border-top-right-radius: 0px;
         -moz-border-radius-topright: 0px;
         -webkit-border-top-right-radius: 0px;
+    }
+
+    .tos-disclaimer {
+        font-size:13px;
+        color: #666;
+
+        a {
+            color: #666;
+            text-decoration: underline;
+            font-weight: normal;
+        }
     }
 }
 

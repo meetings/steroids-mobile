@@ -165,16 +165,18 @@ app.router = Backbone.Router.extend({
     },
 
     profile : function( params ) {
+        // Start header
+        app.views.header = new app.headerView({ el : '#profile' });
+
         app.models.currentUser = new app.userModel( { id : 'me' } );
-        app.models.currentUser.fetch({ success : function(){
-            if ( app.models.currentUser.get('tos_accepted') ){
-                window.location = params.url_after_tos_accept;
-            }
-            else {
-                app.views.newProfile = new app.newProfileView({ el : $('#new-profile-page'), model : app.models.currentUser });
-                app.views.newProfile.render();
-                app.showContent();
-            }
+
+        app.models.currentUser.fetch({ success : function() {
+            app.views.profile = new app.profileView({ 
+                el : $('#profile-page'), 
+                model : app.models.currentUser 
+            });
+            app.views.profile.render();
+            app.showContent();
         }});
     },
 

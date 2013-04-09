@@ -1,5 +1,5 @@
 div#edit-form.form-full-width(data-role="fieldcontain")
-    ul(data-role='listview', data-inset='true')
+    ul#date-selection(data-role='listview', data-inset='true')
         li(data-icon="false")
             .ui-grid-a
                 .ui-block-a Starts
@@ -12,4 +12,8 @@ div#edit-form.form-full-width(data-role="fieldcontain")
                     input#meeting-end-date(data-theme="b",type="datetime-local",name="meeting-end-date",value=(end_date + "T" + end_time),placeholder="Ends")
 
     div.controls
-        a#submitStepDateAndTimeFinish(data-theme="b", type="button") Continue
+        a#submitStepDateAndTimeFinish(data-theme="b", type="button")
+            - if(id != null)
+                | Save
+            - else
+                | Done
