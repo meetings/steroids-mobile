@@ -292,7 +292,7 @@ app.router = Backbone.Router.extend({
             // Setup links to add participants
             $('a.addParticipant').click(function(e) {
                 e.preventDefault();
-                window.location = 'addParticipant.html?mid=' + id;
+                window.location = 'addParticipant.html?id=' + id;
             });
 
             app.showContent();

@@ -241,7 +241,7 @@ app.meetingView = Backbone.View.extend({
         if ( app.options.build !== 'web' ) {
             AppGyver.openPreload("addParticipantPage", {id: this.model.get('id')});
         } else {
-            document.location = '/addParticipant.html?mid='+this.model.get('id');
+            document.location = '/addParticipant.html?id='+this.model.get('id');
         }
     },
 
