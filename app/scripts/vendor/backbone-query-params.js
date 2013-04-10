@@ -282,3 +282,21 @@ function iterateQueryString(queryString, callback) {
 
 })(_, Backbone);
 
+
+// Backbone close
+Backbone.View.prototype.close = function () {
+    // Do before close operations
+    if (this.beforeClose) {
+        this.beforeClose();
+    }
+    // Clean possible subviews
+    if( this.subviews ){
+        for (var key in this.subviews) {
+            if (this.subviews.hasOwnProperty(key)) {
+                this.subviews[key].close();
+            }
+        }
+    }
+    this.remove();
+    this.unbind();
+};

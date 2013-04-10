@@ -4,6 +4,7 @@ app.schedulingView = Backbone.View.extend({
 
     initialize: function(options) {
         if( options && options.mode ) this.mode = options.mode;
+        view.listenTo(this.model, 'change', this.render);
     },
 
     render: function() {
@@ -121,7 +122,7 @@ app.schedulingView = Backbone.View.extend({
             steroids.layers.pop();
 
           }
-          
+
           AppGyver.switchContext('meetingPage', { id : app.models.meeting.id } );
         }});
     },

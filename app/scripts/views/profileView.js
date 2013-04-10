@@ -2,6 +2,7 @@ app.profileView = Backbone.View.extend({
 
     initialize: function(options) {
         this.context_after_tos_accept = options.context_after_tos_accept;
+        this.model.on('change', this.render, this);
     },
     render: function() {
         this.$el.html( templatizer.profileView( this.model.toJSON() ) ); // Render template

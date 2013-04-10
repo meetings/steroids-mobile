@@ -20,9 +20,11 @@ app.router = Backbone.Router.extend({
     meetings : function() {
 
         // Render panel & setup header
-        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-        app.views.header = new app.headerView({ el : '#meetings' });
-        app.views.panel.render();
+        if( ! app.views.panel ) {
+            app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+            app.views.panel.render();
+        }
+        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
         // Get times
         var today = Math.floor( moment().sod() / 1000 );
@@ -46,8 +48,8 @@ app.router = Backbone.Router.extend({
                     offset = $('#future').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
-                else if( $('#tasks').length > 0 ){
-                    offset = $('#tasks').offset();
+                else if( $('#highlights').length > 0 ){
+                    offset = $('#highlights').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
                 else if( $('#unscheduled').length > 0 ){
@@ -65,74 +67,49 @@ app.router = Backbone.Router.extend({
             }
         });
 
-        // Fetch all future meetings & split them to collections
-        app.collections.future_meetings = new app.meetingCollection();
-        app.collections.future_meetings.fetch({ success : function(col,res){
-            // Get times
-            var today = Math.floor ( moment().utc().sod() / 1000 );
-            var today_end = Math.floor ( moment().utc().eod() / 1000 );
 
-            // Create a new collection of todays meetings
-            var today_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
-                return ( o['begin_epoch'] >= today && o['begin_epoch'] <= today_end );
-            });
-            app.collections.today = new app.meetingCollection( today_meetings );
+        // Create collections
+        if( ! app.collections.future_meetings ) app.collections.future_meetings = new app.meetingCollection();
+        if( ! app.collections.unscheduled_meetings ) app.collections.unscheduled_meetings = new app.meetingCollection({},{ override_endpoint : 'unscheduled_meetings' });
+        if( ! app.collections.upcoming ) app.collections.upcoming = new app.meetingCollection();
+        if( ! app.collections.today ) app.collections.today = new app.meetingCollection();
+        if( ! app.collections.past_meetings ) {
+            app.collections.past_meetings = new app.meetingCollection();
+            app.collections.past_meetings.comparator = function(meeting){
+                return meeting.get('begin_epoch');
+            };
+        }
+        if( ! app.collections.highlights ) app.collections.highlights = new app.meetingCollection({},{ override_endpoint : 'highlighted_meetings' });
 
-            // Create new collection of upcoming meetings
-            var upcoming_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
-                return ( o['begin_epoch'] > today_end );
-            });
-            app.collections.upcoming = new app.meetingCollection( upcoming_meetings );
+        // Create views
+        if( ! app.views.future ) app.views.future = new app.upcomingMeetingsView({
+            collection : app.collections.upcoming,
+            childViewConstructor : app.meetingInListView,
+            childViewTagName : 'li',
+            el : '#future',
+            emptyString : '<li class="end">No more upcoming meetings.</li>',
+            infiniScroll : true,
+            infiniScrollDirection : 'down',
+            infiniScrollExtraParams : { start_min : today, sort : "asc" }
+        });
 
-            // Create view for upcoming meetings and render or remove if empty
-            app.views.future = new app.upcomingMeetingsView({
-                collection : app.collections.upcoming,
-                childViewConstructor : app.meetingInListView,
-                childViewTagName : 'li',
-                el : '#future',
-                emptyString : '<li class="end">No more upcoming meetings.</li>',
-                infiniScroll : true,
-                infiniScrollDirection : 'down',
-                infiniScrollExtraParams : { start_min : today, sort : "asc" }
-            });
-            if( app.collections.future_meetings.length === 0 ) app.views.future.remove();
-            else app.views.future.render();
+        if( ! app.views.today ) app.views.today = new app.todayMeetingsView({
+            collection : app.collections.today,
+            childViewConstructor : app.meetingInListView,
+            childViewTagName : 'li',
+            el : $('#today'),
+            infiniScroll : false
+        });
 
-            // Create a view for todays meetings and render or remove if empty
-            app.views.today = new app.todayMeetingsView({
-                collection : app.collections.today,
-                childViewConstructor : app.meetingInListView,
-                childViewTagName : 'li',
-                el : $('#today'),
-                infiniScroll : false
-            });
-            if( app.collections.today.length === 0 ) app.views.today.remove();
-            else app.views.today.render();
-
-            futureFetch.resolve(); // Resolve the deferred
-
-        },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
-
-        // Get the unscheduled meetings
-        app.collections.unscheduled_meetings = new app.meetingCollection({},{ override_endpoint : 'unscheduled_meetings' });
-        app.views.unscheduled = new app.unscheduledMeetingsView({
+        if( ! app.views.unscheduled ) app.views.unscheduled = new app.unscheduledMeetingsView({
             collection : app.collections.unscheduled_meetings,
             childViewConstructor : app.meetingInListView,
             childViewTagName : 'li',
             el : '#unscheduled',
             infiniScroll : false
         });
-        app.collections.unscheduled_meetings.fetch({ success : function(col,res){
-            if( app.collections.unscheduled_meetings.length === 0 ) app.views.unscheduled.remove();
-            unscheduledFetch.resolve();
-        }, data : { include_draft : 1 }});
 
-        // Fetch past meetings
-        app.collections.past_meetings = new app.meetingCollection();
-        app.collections.past_meetings.comparator = function(meeting){
-            return meeting.get('begin_epoch');
-        };
-        app.views.past = new app.genericCollectionView({
+        if( ! app.views.past ) app.views.past = new app.genericCollectionView({
             collection : app.collections.past_meetings,
             childViewConstructor : app.meetingInListView,
             childViewTagName : 'li',
@@ -143,23 +120,82 @@ app.router = Backbone.Router.extend({
             infiniScrollExtraParams : { start_max : today, sort : "desc" },
             mode : "addtotop"
         });
-        app.collections.past_meetings.fetch({ success : function(col,res){
-            if( app.collections.past_meetings.length === 0 ) app.views.past.remove();
-            pastFetch.resolve();
-        },  data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
 
-        // Fetch highlights and highlighted meetigns
-        app.collections.highlights = new app.meetingCollection({},{ override_endpoint : 'highlighted_meetings' });
-        app.views.highlights = new app.highlightedMeetingsView({
+        if( ! app.views.highlights ) app.views.highlights = new app.highlightedMeetingsView({
             collection : app.collections.highlights,
             childViewConstructor : app.highlightedMeetingInListView,
             childViewTagName : 'li',
             el : '#highlights',
             infiniScroll : false
         });
+
+        // Fetch things
+
+        app.collections.future_meetings.fetch({ success : function(col,res){
+            // Get times
+            var today = Math.floor ( moment().utc().sod() / 1000 );
+            var today_end = Math.floor ( moment().utc().eod() / 1000 );
+
+            // Create a new collection of todays meetings
+            var today_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
+                return ( o['begin_epoch'] >= today && o['begin_epoch'] <= today_end );
+            });
+            app.collections.today.reset( today_meetings );
+
+
+            // Create new collection of upcoming meetings
+            var upcoming_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
+                return ( o['begin_epoch'] > today_end );
+            });
+            app.collections.upcoming.reset( upcoming_meetings );
+
+            futureFetch.resolve(); // Resolve the deferred
+
+            // Hide empty views / show views that have stuff
+            // TODO: do this in collection view perhaps?
+            if( app.collections.future_meetings.length === 0 ){
+                app.views.upcoming.$el.hide();
+            }
+            else{
+                app.views.upcoming.$el.show();
+            }
+            if( app.collections.today_meetings.length === 0 ){
+                app.views.today.$el.hide();
+            }
+            else{
+                app.views.today.$el.show();
+            }
+        },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
+
+        app.collections.unscheduled_meetings.fetch({ success : function(col,res){
+            unscheduledFetch.resolve();
+            if( app.collections.unscheduled_meetings.length === 0 ){
+                app.views.unscheduled.$el.hide();
+            }
+            else{
+                app.views.unscheduled.$el.show();
+            }
+        }, data : { include_draft : 1 }});
+
+        app.collections.past_meetings.fetch({ success : function(col,res){
+            pastFetch.resolve();
+
+            if( app.collections.past.length === 0 ){
+                app.views.past.$el.hide();
+            }
+            else{
+                app.views.unscheduled.$el.show();
+            }
+        },  data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
+
         app.collections.highlights.fetch({ success : function(col,res){
-            if( app.collections.highlights.length === 0 ) app.views.highlights.remove();
             highlightsFetch.resolve();
+            if( app.collections.highlights.length === 0 ){
+                app.views.highlights.$el.hide();
+            }
+            else{
+                app.views.highlights.$el.show();
+            }
         }});
     },
 
@@ -173,17 +209,18 @@ app.router = Backbone.Router.extend({
 
     profile : function( params ) {
         // Start header
-        app.views.header = new app.headerView({ el : '#profile' });
+        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#profile' });
 
-        app.models.currentUser = new app.userModel( { id : 'me' } );
+        if( ! app.models.currentUser ) app.models.currentUser = new app.userModel( { id : 'me' } );
+
+        // TODO: remove and recreate
+        app.views.profile = new app.profileView({
+            el : $('#profile-page'),
+            context_after_tos_accept : params.context_after_tos_accept,
+            model : app.models.currentUser
+        });
 
         app.models.currentUser.fetch({ success : function() {
-            app.views.profile = new app.profileView({
-                el : $('#profile-page'),
-                context_after_tos_accept : params.context_after_tos_accept,
-                model : app.models.currentUser
-            });
-            app.views.profile.render();
             app.showContent();
         }});
     },
@@ -257,22 +294,20 @@ app.router = Backbone.Router.extend({
         var mode = params.mode || 'answer';
 
         // Start header
-        app.views.header = new app.headerView({ el : '#meetings' });
+        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
         // Get meeting
-        app.models.meeting = new app.meetingModel({ id : id });
-        app.views.scheduling = new app.schedulingView({
+        if( ! app.models.meeting ) app.models.meeting = new app.meetingModel({ id : id });
+        if( ! app.views.scheduling ) app.views.scheduling = new app.schedulingView({
             el : $('#scheduling'),
             model : app.models.meeting,
             mode : mode
         } );
+
         app.models.meeting.fetch({ success : function(){
             // Init current meeting user
             var data = app.models.meeting.getMeetingUserByID( app.auth.user );
             app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
-
-            app.views.scheduling.render();
-
             app.showContent();
         }, timeout : 5000 });
 
@@ -283,20 +318,24 @@ app.router = Backbone.Router.extend({
             AppGyver.cleanBackboneZombieEvents();
         }
 
-        // Render panel
-        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-        app.views.header = new app.headerView({ el : '#participants' });
-        app.views.panel.render();
+        if( ! app.views.panel ){
+            app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+            app.views.panel.render();
+        }
+        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#participants' });
 
         var id = params.id || 0;
 
-        app.collections.participants = new app.participantCollection( [], { meeting_id : id } );
-        app.views.materials = new app.genericCollectionView({
+        if( ! app.collections.participants ) app.collections.participants = new app.participantCollection();
+        app.collections.participants.url = app.defaults.api_host + '/v1/meetings/' + id + '/participants';
+
+        if( ! app.views.materials ) app.views.materials = new app.genericCollectionView({
             el : $('#participants_list'),
             collection : app.collections.participants,
             childViewTagName : 'li',
             childViewConstructor : app.participantInListView
         });
+
         app.collections.participants.fetch({ success : function(){
             // Setup links to add participants
             $('a.addParticipant').click(function(e) {
@@ -404,21 +443,22 @@ app.router = Backbone.Router.extend({
     },
 
     edit : function(params) {
-        console.log(params);
         if (app.options.build !== 'web') {
             AppGyver.cleanBackboneZombieEvents();
         }
 
         // Render panel
-        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-        app.views.header = new app.headerView({ el : '#meetings' });
-        app.views.panel.render();
+        if( ! app.views.panel ){
+            app.views.panel.render();
+            app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+        }
+        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
         // Get url params
         var id = params && params.id || null;
         var field = params && params.field || null;
 
-        var new_meeting = (id == null);
+        var new_meeting = (id === null);
 
         app.models.meeting = new app.meetingModel({ id : id});
 
@@ -445,9 +485,11 @@ app.router = Backbone.Router.extend({
         }
 
         // Render panel
-        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-        app.views.header = new app.headerView({ el : '#meetings' });
-        app.views.panel.render();
+        if( ! app.views.panel ) {
+            app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+            app.views.panel.render();
+        }
+        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
         // Get url params
         var mid = params && params.id || null;
