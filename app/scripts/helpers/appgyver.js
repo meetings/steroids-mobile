@@ -113,36 +113,26 @@
         },
         // this could actually be implemented using backbone model changing etc.
         refreshPreload: function( context, params ){
-
             var url = this.formContextURL( context, params );
             console.log("change to url: ", url);
 
             if (typeof window.router === "undefined") {
-
                 history.replaceState({}, document.title, url);
-
                 app.init();
-
             }
             else {
+                AppGyver.hideContent();
 
-                //router.navigate( url, { trigger : true, replace : true } );
                 if ( "" + window.location.pathname + window.location.search == url) {
-
-                 //   app.showContent();
                     url = url + ( ( url.indexOf('?') > -1 ) ? '&' : '?' );
                     url = url + 'random=1';
-
                 }
-                //else {
-            console.log("real url: ", url );
+                console.log("real url: ", url );
 
-                    history.replaceState({}, document.title, url);
+                history.replaceState({}, document.title, url);
+                Backbone.history.checkUrl();
 
-                    Backbone.history.checkUrl();
-
-                //}
-
+                //router.navigate( url, { trigger : true, replace : true } );
                 /*Backbone.history.navigate(pathname+"?id="+id, {trigger: true, replace: true});*/
                 // not working as expected, pollutes window.location.search with duplicate parameters
             }
@@ -179,7 +169,6 @@
         },
         popContext : function() {
             if ( app.options.build !== 'web' ) {
-                setTimeout(function(){ AppGyver.hideContent(); }, 100);
                 if ( app.current_context && app.current_context.open_in_modal ) {
                     steroids.modal.hide();
                 }

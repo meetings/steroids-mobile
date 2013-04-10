@@ -49,17 +49,14 @@ app.loginView = Backbone.View.extend({
                 // Login
                 app._loginWithParams( response.result.user_id, response.result.token );
 
+                if ( app.options.build !== 'web' ) {
+                    AppGyver.popContext();
+                }
+
                 var target_context = ['meetingsPage'];
 
-                // If tos is accepted
                 if ( response.result.tos_accepted ) {
-                    if ( app.options.build !== 'web' ) {
-                        AppGyver.popContext();
-                    }
-                    setTimeout( function() {
-                        AppGyver.switchContext.apply( AppGyver, target_context );
-                    }, 1000 );
-
+                    AppGyver.switchContext.apply( AppGyver, target_context );
                 }
                 else {
                     AppGyver.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( target_context ) } );

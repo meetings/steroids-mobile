@@ -164,8 +164,11 @@ app.router = Backbone.Router.extend({
     },
 
     login : function() {
-        app.views.login = new app.loginView({ el : $('#login-page') });
+        if ( ! app.views.login ) {
+            app.views.login = new app.loginView({ el : $('#login-page') });
+        }
         app.views.login.render();
+        app.showContent();
     },
 
     profile : function( params ) {
