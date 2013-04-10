@@ -36,7 +36,7 @@ app.router = Backbone.Router.extend({
         // wait for ajax requests to succeed, defer show content until that
         $.when(futureFetch, unscheduledFetch, pastFetch, highlightsFetch).then(function(){
             app.showContent();
-            if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0){
+            if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0 || app.collections.unscheduled_meetings.length > 0){
                 var offset;
                 if( $('#today').length > 0 ){
                     offset = $('#today').offset();
@@ -173,6 +173,7 @@ app.router = Backbone.Router.extend({
         app.models.currentUser.fetch({ success : function() {
             app.views.profile = new app.profileView({ 
                 el : $('#profile-page'), 
+                context_after_tos_accept : params.context_after_tos_accept, 
                 model : app.models.currentUser 
             });
             app.views.profile.render();
@@ -293,7 +294,7 @@ app.router = Backbone.Router.extend({
             // Setup links to add participants
             $('a.addParticipant').click(function(e) {
                 e.preventDefault();
-                window.location = 'addParticipant.html?id=' + id;
+                AppGyver.switchContext("addParticipantPage", { id : id } );
             });
 
             app.showContent();
@@ -312,10 +313,9 @@ app.router = Backbone.Router.extend({
         app.views.header = new app.headerView({ el : '#participant' });
         app.views.panel.render();
 
-        var mid = params.mid || 0;
         var id = params.id || 0;
         app.models.participant = new app.participantModel();
-        app.models.participant.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/'+id;
+        app.models.participant.url = app.defaults.api_host + '/v1/meeting_participants/'+id;
         app.views.user = new app.participantView({
             model : app.models.participant,
             el : $('#participant_info')

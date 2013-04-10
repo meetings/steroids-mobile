@@ -120,10 +120,9 @@ app.schedulingView = Backbone.View.extend({
 
             steroids.layers.pop();
 
-          } else {
-            window.location = '/meeting.html?id=' + app.models.meeting.get('id');
           }
-
+          
+          AppGyver.switchContext('meetingPage', { id : app.models.meeting.id } );
         }});
     },
 
@@ -151,9 +150,8 @@ app.schedulingView = Backbone.View.extend({
 
               steroids.layers.pop();
 
-            } else {
-              window.location = '/meeting.html?id=' + app.models.meeting.get('id');
             }
+            AppGyver.switchContext('meetingPage', { id : app.models.meeting.id } );
         } });
     }
 });

@@ -2,7 +2,7 @@ app.participantInListView = Backbone.View.extend({
     initialize: function(options) {
     },
     render: function() {
-        this.$el.html( templatizer.participantInListView( _.extend(this.model.toJSON(), { show_url : this.model.show_url }) ) ); // Render template
+        this.$el.html( templatizer.participantInListView( this.model.toJSON() ) ); // Render template
 
         return this;
     },
@@ -11,11 +11,7 @@ app.participantInListView = Backbone.View.extend({
     },
 
     openParticipant: function(e){
-      if( app.options.build !== 'web' ) {
         e.preventDefault();
-        AppGyver.openPreload("participantPage", {path: this.model.show_url});
-      } else {
-        document.location = this.model.show_url;
-      }
+        AppGyver.switchContext("participantPage", { id : this.model.id } );
     }
 });

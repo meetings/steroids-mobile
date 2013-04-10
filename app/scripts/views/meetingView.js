@@ -113,11 +113,7 @@ app.meetingView = Backbone.View.extend({
     },
 
     reloadMeeting : function() {
-        if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload("meetingPage", {id: this.model.get('id')});
-        } else {
-            window.location = 'meeting.html?id=' + this.model.get('id');
-        }
+        AppGyver.switchContext("meetingPage", {id: this.model.get('id')});
     },
 
     navigateBack: function(e) {

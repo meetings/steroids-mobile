@@ -2,12 +2,20 @@
 (function(){
 
     window.AppGyver = {
-
-        views : [
-            { file : 'index.html', id : 'meetingsPage' },
-            { file : 'login.html', id : 'loginPage' },
+        contexts : [
+            { file : 'index.html', id : 'meetingsPage', load_before_init : true },
+            { file : 'login.html', id : 'loginPage', load_before_init : true, open_in_modal : true, animation : 'login' },
+            { file : 'profile.html', id : 'profilePage', load_before_init : true },
             { file : 'meeting.html', id : 'meetingPage' },
-            { file : 'participants.html', id : 'participantsPage' }
+            { file : 'participants.html', id : 'participantsPage' },
+            { file : 'participant.html', id : 'participantPage', open_in_modal : true },
+            { file : 'materials.html', id : 'materialsPage' },
+            { file : 'material.html', id : 'materialPage', open_in_modal : true },
+            { file : 'scheduling.html', id : 'schedulingPage', open_in_modal : true },
+            { file : 'addParticipant.html', id : 'addParticipantPage' },
+            { file : 'edit.html', id : 'editPage' },
+            { file : 'editMaterial.html', id : 'editMaterialPage', open_in_modal : true },
+            { file : 'signup.html', id : 'signupPage' },
         ],
 
         init: function(){
@@ -22,103 +30,46 @@
             // handle preloading on app start
             if (/appstart\.html/.test(window.location.href)) {
                 steroids.on("ready", function(){
-                    var loginPage = $.Deferred();
-                    var meetingsPage = $.Deferred();
-                    $.when( loginPage, meetingsPage).then(function(){
+                    var before_init_deferreds = [];
+
+                    for ( var i in AppGyver.contexts ) {
+                        var context = AppGyver.contexts[i];
+                        var deferred = context.load_before_init ? $.Deferred() : false;
+                        if ( deferred ) before_init_deferreds.push( deferred );
+                        AppGyver.preload( path + "/" + context.file, context.id, deferred );
+                    }
+
+                  //  $.when.apply( $, before_init_deferreds ).then(function(){
                         setTimeout(function(){
                             app.init();
-                        }, 750);
-                    });
-                    AppGyver.preload(path + "/index.html", "meetingsPage", meetingsPage);
-                    AppGyver.preload(path + "/login.html", "loginPage", loginPage);
-                    AppGyver.preload(path + "/meeting.html", "meetingPage");
-                    AppGyver.preload(path + "/participants.html", "participantsPage");
-                    AppGyver.preload(path + "/participant.html", "participantPage");
-                    AppGyver.preload(path + "/materials.html", "materialsPage");
-                    AppGyver.preload(path + "/material.html", "materialPage");
-                    AppGyver.preload(path + "/scheduling.html", "schedulingPage");
-                    AppGyver.preload(path + "/addParticipant.html", "addParticipantPage");
-                    AppGyver.preload(path + "/edit.html", "editPage");
-                    AppGyver.preload(path + "/editMaterial.html", "editMaterialPage");
-                    AppGyver.preload(path + "/profile.html", "profilePage");
-                    AppGyver.preload(path + "/signup.html", "signupPage");
+                        }, 5000);
+                   // });
                 });
             }
             else {
-                // add listeners for triggering updates to preloaded views
-                switch (window.location.href){
-                    case path + "/index.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "meetingsPage") AppGyver.refreshPreload(event.data.urlParams);
-                    });
-                    break;
-                    case path + "/login.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "loginPage") AppGyver.refreshPreload(event.data.urlParams);
-                    });
-                    break;
-                    case path + "/signup.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "signupPage") AppGyver.refreshPreload(event.data.urlParams);
-                    });
-                    break;
-                    case path + "/meeting.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "meetingPage") AppGyver.refreshPreload(event.data.urlParams);
-                    });
-                    break;
-                    case path + "/addParticipant.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "addParticipantPage") AppGyver.refreshPreload(event.data.urlParams);
-                    });
-                    break;
-                    case path + "/edit.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "editPage") AppGyver.refreshPreload(event.data.urlParams);
-                    });
-                    break;
-                    case path + "/participants.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "participantsPage") AppGyver.refreshPreload(event.data.urlParams);
-                    });
-                    break;
-                    case path + "/participant.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "participantPage") AppGyver.refreshPreload(event.data.urlParams, true);
-                    });
-                    break;
-                    case path + "/materials.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "materialsPage") AppGyver.refreshPreload(event.data.urlParams);
-                    });
-                    break;
-                    case path + "/material.html":
-                        // override 'close' to close modal, not go back popping layer
-                        $(".back-button ").off().on("click", function(e){
-                        e.preventDefault();
-                        steroids.modal.hide();
-                    });
-                    window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "materialPage") AppGyver.refreshPreload(event.data.urlParams, true);
-                    });
-                    break;
-                    case path + "/editMaterial.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "editMaterialPage") AppGyver.refreshPreload(event.data.urlParams, true);
-                    });
-                    break;
-                    case path + "/profile.html":
-                        window.addEventListener("message", function(event) {
-                            if (event.data.preloadId === "profilePage") AppGyver.refreshPreload(event.data.urlParams, true);
-                        });
-                    break;
-                    case path + "/scheduling.html":
-                        window.addEventListener("message", function(event) {
-                        if (event.data.preloadId === "schedulingPage") AppGyver.refreshPreload(event.data.urlParams, true);
-                    });
-                    break;
+                for ( var i in AppGyver.contexts ) {
+                    this.initMatchingContext( window.location.href + "", path, AppGyver.contexts[i] );
                 }
             }
+        },
+
+        initMatchingContext: function( href, path, context ) {
+            if ( href == path + '/' + context.file ) {
+                window.addEventListener("message", function(event) {
+                    if ( event.data.preloadId !== context.id ) return;
+
+                    // TODO: refactor this to view or something..
+                    if ( context.id == 'materialPage' ) {
+                        $(".back-button ").off().on("click", function(e){
+                            e.preventDefault();
+                            steroids.modal.hide();
+                        });
+                    }
+
+                    AppGyver.refreshPreload( context, event.data.urlParams );
+                } );
+            }
+        
         },
 
         preload: function(url, id, deferred ){
@@ -129,6 +80,7 @@
 
         // TODO: support different animations
         openPreload: function(preloadId, urlParams, openInModal, animation ){
+
 
             window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*");
 
@@ -167,25 +119,10 @@
                 steroids.layers.push(options, {onSuccess: removeActive});
             }
         },
-
         // this could actually be implemented using backbone model changing etc.
-        refreshPreload: function(urlParams, isPath){
+        refreshPreload: function( context, params ){
 
-            // TODO: Make handling if url params & stuff sane here
-            var id = urlParams.id || urlParams.path;
-            var url;
-
-            if (isPath) {
-                url = window.location.origin + id;
-            }
-            else {
-                url = window.location.origin + window.location.pathname + "?id="+id;
-            }
-
-
-            if( urlParams.field ) url += '&field=' + urlParams.field;
-            if( urlParams.url_after ) url += '&url_after=' + urlParams.url_after;
-
+            var url = this.formContextURL( context, params );
             console.log("change to url: ", url);
 
             if (typeof window.router === "undefined") {
@@ -198,18 +135,21 @@
             else {
 
                 //router.navigate( url, { trigger : true, replace : true } );
-                if (window.location.href === url) {
+                if ( "" + window.location.pathname + window.location.search == url) {
 
-                    app.showContent();
+                 //   app.showContent();
+                    url = url + ( ( url.indexOf('?') > -1 ) ? '&' : '?' );
+                    url = url + 'random=1';
 
                 }
-                else {
+                //else {
+            console.log("real url: ", url );
 
                     history.replaceState({}, document.title, url);
 
                     Backbone.history.checkUrl();
 
-                }
+                //}
 
                 /*Backbone.history.navigate(pathname+"?id="+id, {trigger: true, replace: true});*/
                 // not working as expected, pollutes window.location.search with duplicate parameters
@@ -230,10 +170,36 @@
             });
         },
 
-        // Return preload id for a given url
-        getPreloadIdFromUrl : function(url){
-            for (var i = 0; i < this.views.length; i++) {
-                if( url.indexOf( this.views[i].file ) !== 0 ) return this.views[i].id;
+        switchContext: function( context_id, params, options ) {
+            params = params || {};
+
+            var context = this.getContextForID( context_id );
+            if ( ! context ) {
+                alert( "unknown context switch: " + context_id );
+            }
+
+            if ( app.options.build !== 'web' ) {
+                AppGyver.openPreload( context_id, params, context.open_in_modal, context.animation );
+            }
+            else {
+                window.location = this.formContextURL( context, params );
+            }                       
+        },
+        formContextURL : function( context, params ) {
+            params = params || {};
+            var query_options=[];
+            var param;
+            for ( param in params ) {
+                query_options.push( encodeURIComponent(param) + '=' + encodeURIComponent( params[param] ) );
+            }
+            var query_string = query_options.length ? '?' : '';
+            query_string = query_string + query_options.join('&');
+
+            return '/' + context.file + query_string;                         
+        },
+        getContextForID : function( id ){
+            for (var i = 0; i < this.contexts.length; i++) {
+                if ( id == this.contexts[i].id ) return this.contexts[i];
             }
             return false;
         }

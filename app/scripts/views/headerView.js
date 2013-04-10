@@ -18,12 +18,7 @@ app.headerView = Backbone.View.extend({
 
     createMeeting : function(e){
         e.preventDefault();
-        if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload('editPage', { id: ''});
-        }
-        else {
-            window.location = 'edit.html';
-        }
+        AppGyver.switchContext('editPage', { id: '' });
     },
 
     navigateBack : function(e){

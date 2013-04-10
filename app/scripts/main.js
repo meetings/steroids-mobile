@@ -37,7 +37,6 @@ window.app = {
             $('body').html( templatizer.updateBrowser() );
             return;
         }
-
         // Login & redirects
         if( this._requireLogin() ){
             this._doRedirects();
@@ -110,12 +109,7 @@ window.app = {
         else{
             // Throw the user out if no credentials
             if( window.location.toString().indexOf( 'login.html') === -1 ){
-                if ( app.options.build !== 'web' ) {
-                    AppGyver.openPreload("loginPage", {id : ''}, false, 'login');
-                }
-                else {
-                    window.location = '/login.html';
-                }
+                AppGyver.switchContext("loginPage", {id : ''} );
                 return false;
             }
         }
@@ -126,7 +120,7 @@ window.app = {
         var proposals = this._getUrlParamByName( 'proposals' );
         var clear = this._getUrlParamByName( 'clear' );
 
-        var chosen_redirect = '';
+        var chosen_redirect = false;
 
         if ( clear == 'true'){
             app.auth.user = '';
@@ -134,34 +128,24 @@ window.app = {
             return;
         }
         else if( proposals === 'answer' && redirect_meeting ){
-            chosen_redirect = '/scheduling.html?mode=answer&id=' + redirect_meeting;
+            chosen_redirect = [ 'schedulingPage', { mode : 'answer', id : redirect_meeting } ];
         }
         else if( proposals === 'choose' && redirect_meeting ){
-            chosen_redirect = '/scheduling.html?mode=choose&id=' + redirect_meeting;
+            chosen_redirect = [ 'schedulingPage', { mode : 'choose', id : redirect_meeting } ];
         }
         else if( redirect_meeting && redirect_meeting !== 0 && redirect_meeting !== '0' ){
-            chosen_redirect = '/meeting.html?id=' + redirect_meeting;
+            chosen_redirect = [ 'meetingPage', { id : redirect_meeting } ];
         }
-        else if( window.location.toString().indexOf( 'login.html') !== -1 ||  window.location.toString().indexOf( 'appstart.html') !== -1 ){
-            chosen_redirect = '/index.html';
+        else if( window.location.toString().indexOf( 'login.html') !== -1 || window.location.toString().indexOf( 'appstart.html') !== -1 ){
+            chosen_redirect = [ 'meetingsPage' ];
         }
 
-        if ( app.auth.tos_verify_required || window.location.toString().indexOf( 'login.html') !== -1 ) {
-            chosen_redirect = chosen_redirect || window.location + "";
-            if ( app.options.build !== 'web' ) {
-                AppGyver.openPreload( AppGyver.getPreloadIdFromUrl(chosen_redirect), { url_after : chosen_redirect });
-            }
-            else {
-                window.location = '/profile.html?url_after_tos_accept=' + encodeURIComponent( chosen_redirect );
-            }
+        if ( 0 && app.auth.tos_verify_required || window.location.toString().indexOf( 'login.html') !== -1 ) {
+            chosen_redirect = chosen_redirect || [ 'pop' ];
+            AppGyver.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( chosen_redirect ) } );
         }
         else if ( chosen_redirect ) {
-            if ( app.options.build !== 'web' ) {
-                AppGyver.openPreload( AppGyver.getPreloadIdFromUrl(chosen_redirect), { url_after : chosen_redirect });
-            }
-            else {
-                window.location = chosen_redirect;
-            }
+            AppGyver.switchContext.apply( AppGyver, chosen_redirect );
         }
     },
     _readAuthUrlParams : function(){

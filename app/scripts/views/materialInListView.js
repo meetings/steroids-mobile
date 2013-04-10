@@ -3,7 +3,7 @@ app.materialInListView = Backbone.View.extend({
     },
 
     render: function() {
-        this.$el.html( templatizer.materialInListView( _.extend(this.model.toJSON(), { show_url : this.model.show_url }) ) ); // Render template
+        this.$el.html( templatizer.materialInListView( this.model.toJSON() ) ); // Render template
         this.$el.attr('data-theme','a');
 
         return this;
@@ -13,11 +13,7 @@ app.materialInListView = Backbone.View.extend({
     },
 
     openMaterial : function(e){
-      if( app.options.build !== 'web' ) {
         e.preventDefault();
-        AppGyver.openPreload("materialPage", {path: this.model.show_url}, true);
-      } else {
-        document.location = this.model.show_url;
-      }
+        AppGyver.switchContext("materialPage", { id: this.model.id } );
     }
 });

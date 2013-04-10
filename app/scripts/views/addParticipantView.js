@@ -120,11 +120,7 @@ app.addParticipantView = Backbone.View.extend({
     },
 
     openMeetingView : function(){
-        if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload("meetingPage", {id: this.model.get('meeting_id')});
-        } else {
-            window.location = 'meeting.html?id=' + this.model.get('meeting_id');
-        }
+        AppGyver.switchContext("meetingPage", {id: this.model.get('meeting_id')});
     },
 
     events: {

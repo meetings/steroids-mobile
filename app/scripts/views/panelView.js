@@ -30,6 +30,9 @@ app.panelView = Backbone.View.extend({
         if( app.options.build !== 'web' ){
             $('#left-panel').panel('close');
             steroids.layers.popAll();
+            setTimeout(function() {
+                AppGyver.switchContext('meetingsPage');
+            }, 3000 );
         }
         else{
             window.location = '/index.html';

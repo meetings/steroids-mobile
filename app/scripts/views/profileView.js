@@ -1,5 +1,8 @@
 app.profileView = Backbone.View.extend({
 
+    initialize: function(options) {
+        this.context_after_tos_accept = options.context_after_tos_accept;
+    },
     render: function() {
         this.$el.html( templatizer.profileView( this.model.toJSON() ) ); // Render template
 
@@ -44,9 +47,7 @@ app.profileView = Backbone.View.extend({
             $('#left-panel').panel('close');
             steroids.layers.popAll();
         }
-        else{
-            window.location = '/index.html';
-        }
+        AppGyver.switchContext.apply( AppGyver, this.context_after_tos_accept );
     },
 
     openTos : function(e){

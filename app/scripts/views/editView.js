@@ -230,6 +230,9 @@ app.editView = Backbone.View.extend({
 
         me.model.save({}, {
             success : function() {
+                if ( app.options.build !== 'web' ) {
+                    steroids.layers.pop();
+                }
                 me.openMeetingView();
             },
             error: function() {
@@ -239,11 +242,7 @@ app.editView = Backbone.View.extend({
     },
 
     openMeetingView : function(){
-        if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload("meetingPage", {id: this.model.get('id')});
-        } else {
-            window.location = 'meeting.html?id=' + this.model.get('id');
-        }
+        AppGyver.switchContext("meetingPage", {id: this.model.get('id')});
     },
 
     navigateBack: function(e) {

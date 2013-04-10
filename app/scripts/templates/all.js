@@ -380,13 +380,7 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push("<a");
-        buf.push(attrs({
-            href: show_url
-        }, {
-            href: true
-        }));
-        buf.push(">");
+        buf.push('<a href="href">');
         if (fetch_type === "media") {
             buf.push('<span class="material-image ui-li-thumb ui-corner-tl"></span>');
         } else if (fetch_type === "page") {
@@ -778,13 +772,7 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push("<a");
-        buf.push(attrs({
-            href: show_url
-        }, {
-            href: true
-        }));
-        buf.push('><div class="wrap ui-li-thumb">');
+        buf.push('<a href="href"><div class="wrap ui-li-thumb">');
         if (locals.image) {
             buf.push("<img");
             buf.push(attrs({

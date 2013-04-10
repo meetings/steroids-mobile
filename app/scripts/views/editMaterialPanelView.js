@@ -31,7 +31,8 @@ app.editMaterialPanelView = Backbone.View.extend({
 
     editMaterial : function(e){
         e.preventDefault();
-        window.location = '/editMaterial.html?id=' + this.materialId;
+
+        AppGyver.switchContext( 'editMaterialPage', { id : this.materialId } );
     },
     renameMaterial : function(e){
         e.preventDefault();

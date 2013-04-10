@@ -23,27 +23,15 @@ app.editMeetingPanelView = Backbone.View.extend({
 
     editMeetingTitle : function(e){
         e.preventDefault();
-        if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload("editPage", {id: this.meetingId, field : 'title'});
-        } else {
-            window.location = 'edit.html?id=' + this.meetingId + '&field=title';
-        }
+        AppGyver.switchContext("editPage", {id: this.meetingId, field : 'title'});
     },
     editMeetingLocation : function(e){
         e.preventDefault();
-        if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload("editPage", {id: this.meetingId, field : 'location'});
-        } else {
-            window.location = 'edit.html?id=' + this.meetingId + '&field=location';
-        }
+        AppGyver.switchContext("editPage", {id: this.meetingId, field : 'location'});
     },
     editMeetingTime : function(e) {
         e.preventDefault();
-        if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload("editPage", {id: this.meetingId, field : 'time'});
-        } else {
-            window.location = 'edit.html?id=' + this.meetingId + '&field=time';
-        }
+        AppGyver.switchContext("editPage", {id: this.meetingId, field : 'time'});
     },
     removeMeeting : function(e){
         e.preventDefault();

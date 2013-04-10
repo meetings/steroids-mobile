@@ -55,7 +55,7 @@ app.materialView = Backbone.View.extend({
     continueEditing : function(e) {
         e.preventDefault();
 
-        window.location = '/editMaterial.html?id=' + this.model.id + '&continue_edit=1';
+        AppGyver.switchContext( 'editMaterialPage', { id : this.model.id, continue_edit : 1 } );
     },
 
     initDownloadLink: function(){

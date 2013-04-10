@@ -37,23 +37,11 @@ app.nextActionView = Backbone.View.extend({
     },
     answerScheduling : function(e){
         e.preventDefault();
-        if ( app.options.build !== 'web' ) {
-
-          AppGyver.openPreload("schedulingPage", {path: '/scheduling.html?id=' + app.models.meeting.get('id')});
-
-        } else {
-          window.location = '/scheduling.html?id=' + app.models.meeting.get('id');
-        }
+        AppGyver.switchContext("schedulingPage", { id : app.models.meeting.get('id')});
     },
     openChooseDate : function(e){
         e.preventDefault();
-        if ( app.options.build !== 'web' ) {
-
-          AppGyver.openPreload("schedulingPage", {path: '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id')});
-
-        } else {
-          window.location = '/scheduling.html?mode=choose&id=' + app.models.meeting.get('id');
-        }
+        AppGyver.switchContext("schedulingPage", { mode : 'choose', id : app.models.meeting.get('id')});
     },
     getSchedulingStatus : function(){
         var status = {
