@@ -136,15 +136,20 @@ window.app = {
         else if( redirect_meeting && redirect_meeting !== 0 && redirect_meeting !== '0' ){
             chosen_redirect = [ 'meetingPage', { id : redirect_meeting } ];
         }
-        else if( window.location.toString().indexOf( 'login.html') !== -1 || window.location.toString().indexOf( 'appstart.html') !== -1 ){
+        else if( window.location.toString().indexOf( 'login.html') !== -1 ){
             chosen_redirect = [ 'meetingsPage' ];
         }
 
-        if ( 0 && app.auth.tos_verify_required || window.location.toString().indexOf( 'login.html') !== -1 ) {
-            chosen_redirect = chosen_redirect || [ 'pop' ];
-            AppGyver.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( chosen_redirect ) } );
+        if ( app.auth.tos_verify_required || window.location.toString().indexOf( 'login.html') !== -1 ) {
+            chosen_redirect = chosen_redirect || [ 'meetingsPage' ];
+            new app.userModel({ id : 'me' }).fetch( function( response ) {
+                if ( ! ( response && response.tos_accepted ) ) {
+                    AppGyver.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( chosen_redirect ) } );
+                };
+            } );
         }
-        else if ( chosen_redirect ) {
+
+        if ( chosen_redirect ) {
             AppGyver.switchContext.apply( AppGyver, chosen_redirect );
         }
     },
