@@ -43,10 +43,10 @@ steroids.config.name = "New Application"
 #   - http://www.google.com (directly from internet)
 
 <!-- start build include: ios -->
-steroids.config.location = "http://localhost/appstart.html"
+steroids.config.location = "http://localhost/index.html"
 <!-- stop build include -->
 <!-- start build include: android -->
-steroids.config.location = "appstart.html"
+steroids.config.location = "index.html"
 <!-- stop build include -->
 
 # -- Tabs --

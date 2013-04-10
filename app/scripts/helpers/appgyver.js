@@ -4,7 +4,7 @@
     window.AppGyver = {
         contexts : [
             { file : 'index.html', id : 'meetingsPage', load_before_init : true },
-            { file : 'login.html', id : 'loginPage', load_before_init : true, open_in_modal : false, },
+            { file : 'login.html', id : 'loginPage', load_before_init : true, open_in_modal : false },
             { file : 'profile.html', id : 'profilePage', load_before_init : true },
             { file : 'meeting.html', id : 'meetingPage' },
             { file : 'participants.html', id : 'participantsPage' },
@@ -28,12 +28,13 @@
             });
 
             // handle preloading on app start
-            if (/appstart\.html/.test(window.location.href)) {
+            if (/index\.html/.test(window.location.href)) {
                 steroids.on("ready", function(){
                     var before_init_deferreds = [];
 
                     for ( var i in AppGyver.contexts ) {
                         var context = AppGyver.contexts[i];
+                        if( context.id === 'meetingsPage' ) continue;
                         var deferred = context.load_before_init ? $.Deferred() : false;
                         if ( deferred ) before_init_deferreds.push( deferred );
                         AppGyver.preload( path + "/" + context.file, context.id, deferred );
@@ -42,14 +43,12 @@
                   //  $.when.apply( $, before_init_deferreds ).then(function(){
                         setTimeout(function(){
                             app.init();
-                        }, 5000);
+                        }, 1000);
                    // });
                 });
             }
-            else {
-                for ( var i in AppGyver.contexts ) {
-                    this.initMatchingContext( window.location.href + "", path, AppGyver.contexts[i] );
-                }
+            for ( var i in AppGyver.contexts ) {
+                this.initMatchingContext( window.location.href + "", path, AppGyver.contexts[i] );
             }
         },
 
@@ -73,11 +72,13 @@
         // TODO: support different animations
         openPreload: function(preloadId, urlParams, openInModal, animation ){
 
-
             window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*");
 
             var removeActive = function() {
                 $(".ui-btn-active").removeClass("ui-btn-active");
+                $("#left-panel").panel('close');
+                $("#edit-meeting-panel").panel('close');
+                $("#edit-material-panel").panel('close');
             };
 
             var options = {
@@ -108,7 +109,13 @@
                     onSuccess: removeActive
                 });
             } else {
-                steroids.layers.push(options, {onSuccess: removeActive});
+
+                if( preloadId === 'meetingsPage' ){
+                    steroids.layers.popAll();
+                }
+                else{
+                    steroids.layers.push(options, {onSuccess: removeActive});
+                }
             }
         },
         // this could actually be implemented using backbone model changing etc.

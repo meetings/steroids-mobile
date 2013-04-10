@@ -31,24 +31,16 @@ app.profileView = Backbone.View.extend({
             tos_accepted : '1'
         };
 
-        var me = this;
+        var that = this;
 
         this.model.save(data, {
             success : function() {
-                me.openMeetingList();
+                AppGyver.switchContext.apply( AppGyver, JSON.parse( that.context_after_tos_accept || '["meetingsPage"]' ) );
             },
             error: function() {
-                alert('adding participant failed.');
+                alert('Saving profile failed. Please try again!');
             }
         });
-    },
-
-    openMeetingList : function() {
-        if( app.options.build !== 'web' ){
-            $('#left-panel').panel('close');
-            steroids.layers.popAll();
-        }
-        AppGyver.switchContext.apply( AppGyver, JSON.parse( this.context_after_tos_accept || '[]' ) );
     },
 
     openTos : function(e){
