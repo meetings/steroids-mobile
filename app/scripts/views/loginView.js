@@ -54,9 +54,12 @@ app.loginView = Backbone.View.extend({
                 // If tos is accepted
                 if ( response.result.tos_accepted ) {
                     if ( app.options.build !== 'web' ) {
-                        steroids.layers.popAll();
+                        AppGyver.popContext();
                     }
-                    AppGyver.switchContext.apply( AppGyver, target_context );
+                    setTimeout( function() {
+                        AppGyver.switchContext.apply( AppGyver, target_context );
+                    }, 1000 );
+
                 }
                 else {
                     AppGyver.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( target_context ) } );

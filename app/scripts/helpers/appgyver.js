@@ -4,17 +4,17 @@
     window.AppGyver = {
         contexts : [
             { file : 'index.html', id : 'meetingsPage', load_before_init : true },
-            { file : 'login.html', id : 'loginPage', load_before_init : true, open_in_modal : true, animation : 'login' },
+            { file : 'login.html', id : 'loginPage', load_before_init : true, open_in_modal : false, animation : 'login' },
             { file : 'profile.html', id : 'profilePage', load_before_init : true },
             { file : 'meeting.html', id : 'meetingPage' },
             { file : 'participants.html', id : 'participantsPage' },
-            { file : 'participant.html', id : 'participantPage', open_in_modal : true },
+            { file : 'participant.html', id : 'participantPage', open_in_modal : false },
             { file : 'materials.html', id : 'materialsPage' },
-            { file : 'material.html', id : 'materialPage', open_in_modal : true },
-            { file : 'scheduling.html', id : 'schedulingPage', open_in_modal : true },
+            { file : 'material.html', id : 'materialPage' },
+            { file : 'scheduling.html', id : 'schedulingPage', open_in_modal : false },
             { file : 'addParticipant.html', id : 'addParticipantPage' },
             { file : 'edit.html', id : 'editPage' },
-            { file : 'editMaterial.html', id : 'editMaterialPage', open_in_modal : true },
+            { file : 'editMaterial.html', id : 'editMaterialPage', open_in_modal : false },
             { file : 'signup.html', id : 'signupPage' },
         ],
 
@@ -57,15 +57,7 @@
             if ( href == path + '/' + context.file ) {
                 window.addEventListener("message", function(event) {
                     if ( event.data.preloadId !== context.id ) return;
-
-                    // TODO: refactor this to view or something..
-                    if ( context.id == 'materialPage' ) {
-                        $(".back-button ").off().on("click", function(e){
-                            e.preventDefault();
-                            steroids.modal.hide();
-                        });
-                    }
-
+                    app.current_context = context;
                     AppGyver.refreshPreload( context, event.data.urlParams );
                 } );
             }
@@ -184,6 +176,23 @@
             else {
                 window.location = this.formContextURL( context, params );
             }                       
+        },
+        popContext : function() {
+            if ( app.options.build !== 'web' ) {
+                setTimeout(function(){ AppGyver.hideContent(); }, 100);
+                if ( app.current_context && app.current_context.open_in_modal ) {
+                    steroids.modal.hide();
+                }
+                else {
+                    steroids.layers.pop();
+                }
+            }
+            else if ( $('.back-button').attr('href') !== '#' ){
+                window.location = $('.back-button').attr('href');
+            }
+            else {
+                history.go(-1);
+            }
         },
         formContextURL : function( context, params ) {
             params = params || {};

@@ -24,16 +24,7 @@ app.headerView = Backbone.View.extend({
     navigateBack : function(e){
         e.preventDefault();
 
-        if ( app.options.build !== 'web' ) {
-            setTimeout(function(){ AppGyver.hideContent(); }, 100);
-            steroids.layers.pop();
-        }
-        else if ( $('.back-button').attr('href') !== '#' ){
-            window.location = $('.back-button').attr('href');
-        }
-        else {
-            history.go(-1);
-        }
+        AppGyver.popContext();
     },
 
     handleChange : function(e) {
@@ -45,15 +36,7 @@ app.headerView = Backbone.View.extend({
 
     editMaterialCancel : function(e){
         e.preventDefault();
-
-        // TODO: Add confirmation if content has changed
-        if ( app.options.build !== 'web' ) {
-            setTimeout(function(){ AppGyver.hideContent(); }, 100);
-            steroids.layers.pop();
-        }
-        else {
-            history.go(-1);
-        }
+        AppGyver.popContext();
     },
     editMaterialSave : function(e){
         e.preventDefault();
@@ -71,13 +54,7 @@ app.headerView = Backbone.View.extend({
             url : save_url,
             data : params,
             success : function( response ) {
-                if ( app.options.build !== 'web' ) {
-                    setTimeout(function(){ AppGyver.hideContent(); }, 100);
-                    steroids.layers.pop();
-                }
-                else {
-                    history.go(-1);
-                }
+                AppGyver.popContext();
             }
         } );
     }
