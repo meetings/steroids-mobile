@@ -154,12 +154,12 @@ app.router = Backbone.Router.extend({
             // Hide empty views / show views that have stuff
             // TODO: do this in collection view perhaps?
             if( app.collections.future_meetings.length === 0 ){
-                app.views.upcoming.$el.hide();
+                app.views.future.$el.hide();
             }
             else{
-                app.views.upcoming.$el.show();
+                app.views.future.$el.show();
             }
-            if( app.collections.today_meetings.length === 0 ){
+            if( app.collections.today.length === 0 ){
                 app.views.today.$el.hide();
             }
             else{
@@ -180,11 +180,11 @@ app.router = Backbone.Router.extend({
         app.collections.past_meetings.fetch({ success : function(col,res){
             pastFetch.resolve();
 
-            if( app.collections.past.length === 0 ){
+            if( app.collections.past_meetings.length === 0 ){
                 app.views.past.$el.hide();
             }
             else{
-                app.views.unscheduled.$el.show();
+                app.views.past.$el.show();
             }
         },  data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
 
