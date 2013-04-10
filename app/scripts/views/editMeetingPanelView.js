@@ -23,17 +23,17 @@ app.editMeetingPanelView = Backbone.View.extend({
     editMeetingTitle : function(e){
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext("editPage", {id: this.meetingId, field : 'title'});
+        AppGyver.switchContext("singleEditPage", {id: this.meetingId, field : 'title'});
     },
     editMeetingLocation : function(e){
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext("editPage", {id: this.meetingId, field : 'location'});
+        AppGyver.switchContext("singleEditPage", {id: this.meetingId, field : 'location'});
     },
     editMeetingTime : function(e) {
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext("editPage", {id: this.meetingId, field : 'time'});
+        AppGyver.switchContext("singleEditPage", {id: this.meetingId, field : 'time'});
     },
     removeMeeting : function(e){
         e.preventDefault();

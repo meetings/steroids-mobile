@@ -14,6 +14,7 @@
             { file : 'scheduling.html', id : 'schedulingPage', open_in_modal : false },
             { file : 'addParticipant.html', id : 'addParticipantPage' },
             { file : 'edit.html', id : 'editPage' },
+            { file : 'edit.html', id : 'singleEditPage' },
             { file : 'editMaterial.html', id : 'editMaterialPage', open_in_modal : false },
             { file : 'signup.html', id : 'signupPage' }
         ],
