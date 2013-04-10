@@ -56,7 +56,6 @@
             if ( href == path + '/' + context.file ) {
                 window.addEventListener("message", function(event) {
                     if ( event.data.preloadId !== context.id ) return;
-                    app.current_context = context;
                     AppGyver.refreshPreload( context, event.data.urlParams );
                 } );
             }
@@ -176,12 +175,7 @@
         },
         popContext : function() {
             if ( app.options.build !== 'web' ) {
-                if ( app.current_context && app.current_context.open_in_modal ) {
-                    steroids.modal.hide();
-                }
-                else {
-                    steroids.layers.pop();
-                }
+                steroids.layers.pop();
             }
             else if ( $('.back-button').attr('href') !== '#' ){
                 window.location = $('.back-button').attr('href');
