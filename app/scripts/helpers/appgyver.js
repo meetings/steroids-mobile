@@ -69,7 +69,11 @@
         },
 
         // TODO: support different animations
-        openPreload: function(preloadId, urlParams, openInModal, animation ){
+        openPreload: function(context, params, options ) {
+            var preloadId = context.id;
+            var urlParams = params;
+            var openInModal = context.open_in_modal;
+            var animation = context.animation;
 
             window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*");
 
@@ -108,8 +112,10 @@
                     onSuccess: removeActive
                 });
             } else {
-
-                if( preloadId === 'meetingsPage' ){
+                if ( options.pop ) {
+                    steroids.layers.pop();
+                }
+                else if( preloadId === 'meetingsPage' ){
                     steroids.layers.popAll();
                 }
                 else{
@@ -167,7 +173,7 @@
             }
 
             if ( app.options.build !== 'web' ) {
-                AppGyver.openPreload( context_id, params, context.open_in_modal, context.animation );
+                AppGyver.openPreload( context, params, options );
             }
             else {
                 window.location = this.formContextURL( context, params );
