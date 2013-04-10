@@ -373,12 +373,12 @@ app.router = Backbone.Router.extend({
     },
 
     material : function(params) {
-        var commentsFetch = $.Deferred(),
-        materialFetch = $.Deferred();
+        var commentsFetched = $.Deferred();
+        var materialFetched = $.Deferred();
 
         var id = params.id || 0;
 
-        $.when(commentsFetch, materialFetch).then(function(){
+        $.when(commentsFetched, materialFetched).then(function(){
             app.showContent();
         });
 
@@ -405,7 +405,7 @@ app.router = Backbone.Router.extend({
         app.views.editPanel = new app.editMaterialPanelView({ el : '#edit-material-panel', materialId : id, model : app.models.material });
 
         app.models.material.fetch({ success : function(){
-            materialFetch.resolve();
+            materialFetched.resolve();
         }});
 
         app.collections.comments = new app.commentCollection();
@@ -418,25 +418,15 @@ app.router = Backbone.Router.extend({
         });
 
         app.collections.comments.fetch({ success : function(){
-            commentsFetch.resolve();
+            commentsFetched.resolve();
         }});
     },
 
     editMaterial : function(params) {
-        var id = params.id || 0;
-
-        if (app.options.build !== 'web') {
-            // Cleanup zombie events
-            AppGyver.cleanBackboneZombieEvents();
-        }
-
-        // Setup header
-        app.models.material_edit = new app.materialEditModel();
-
-        app.views.header = new app.headerView({ el : '#material', model : app.models.material_edit });
-        app.views.material = new app.materialEditView({
-            model : app.models.material_edit,
-            el : $('#material_content'),
+        if ( app.views.editMaterial ) app.views.editMaterial.close();
+        
+        app.views.editMaterial = new app.materialEditView({
+            el : $('#material .view-container'),
             material_id : params.id,
             continue_edit : params.continue_edit
         });

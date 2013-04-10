@@ -7,12 +7,13 @@
             div#locked
                 -if( current_edit.creator_id == auth_user_id )
                     p This document is locked by you. 
-                    a.open-continued-material-edit(href="#") Continue editing by clicking here
+                    a.open-continued-material-edit(href="#") Continue interrupted edit?
                 -else
                     p="This document is locked by " + current_edit.creator_name + "."
             h3=model.title
             p.notruncation!=current_edit.content
         - else
+            h3=model.title
             - if( model.title == "Agenda" && model.content == "")
                 p.notruncation Agenda is empty.
             - else if( model.title == "Action Points" && model.content == "")

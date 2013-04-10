@@ -1,9 +1,23 @@
 app.materialEditView = Backbone.View.extend({
 
+    beforeClose : function() {
+        this.$el.parent().append( $('<div class="view-container"></div>') );
+
+        if ( this.current_lock_ensure_timeout ) {
+            clearTimeout( this.current_lock_ensure_timeout );
+        }
+    },
+
     initialize: function(options) {
         var that = this;
+
+        this.model = new app.materialEditModel();
+
+        _(this).bindAll('editMaterialCancel','editMaterialSave');
+        
         this.ready_to_render = false;
         this.rendered_once = false;
+
         var start_url = options.continue_edit ?
             app.defaults.api_host + '/v1/meeting_materials/' + options.material_id + '/continue_edit' :
             app.defaults.api_host + '/v1/meeting_materials/' + options.material_id + '/edits';
@@ -25,8 +39,7 @@ app.materialEditView = Backbone.View.extend({
                 that.error_message = response.error.message;
             }
 
-            that.render();                
-            app.showContent();
+            that.render();
 
         }, 'json' );
     },
@@ -47,12 +60,18 @@ app.materialEditView = Backbone.View.extend({
         if ( ! this.rendered_once && this.ready_to_render ) {
             this.rendered_once = true;
             this.$el.html( templatizer.materialEditView( { model : this.model.toJSON(), error_message : this.error_message }  ) );
+
             this.initTinyMCE();
+
+            this.$el.parent().trigger('pagecreate');
+            app.showContent();
         }
         return this;
     },
 
-    events : {
+    events: {
+        "click #edit-material-cancel" : "editMaterialCancel",
+        "click #edit-material-save" : "editMaterialSave" 
     },
 
     initTinyMCE : function() {
@@ -75,5 +94,31 @@ app.materialEditView = Backbone.View.extend({
 
             mode:'textareas'
         });
+    },
+    
+    editMaterialCancel : function(e){
+        e.preventDefault();
+        AppGyver.popContext();
+    },
+
+    editMaterialSave : function(e){
+        e.preventDefault();
+        var save_url = app.defaults.api_host + '/v1/meeting_materials/' + this.model.get('material_id');
+        var params = {
+            edit_id : this.model.id,
+            content : this.model.get('content') || '',
+            old_content : this.model.old_content || '',
+            user_id : app.auth.user,
+            dic : app.auth.token
+        };
+
+        $.ajax( {
+            type : 'PUT',
+            url : save_url,
+            data : params,
+            success : function( response ) {
+                AppGyver.popContext();
+            }
+        } );
     }
 });

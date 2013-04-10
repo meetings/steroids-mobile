@@ -356,6 +356,7 @@ exports.materialEditView = function anonymous(locals, attrs, escape, rethrow, me
     var buf = [];
     with (locals || {}) {
         var interp;
+        buf.push('<div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="edit-material-cancel">Cancel</a><h1>Edit Material</h1><a id="edit-material-save" href="#" data-theme="b">Save</a></div><div data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="material_content">');
         if (error_message) {
             buf.push("<p>");
             var __val__ = error_message;
@@ -367,6 +368,7 @@ exports.materialEditView = function anonymous(locals, attrs, escape, rethrow, me
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</textarea>");
         }
+        buf.push("</div></div></div>");
     }
     return buf.join("");
 };
@@ -427,7 +429,7 @@ exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge)
                 if (current_edit) {
                     buf.push('<div id="locked">');
                     if (current_edit.creator_id == auth_user_id) {
-                        buf.push('<p>This document is locked by you. </p><a href="#" class="open-continued-material-edit">Continue editing by clicking here</a>');
+                        buf.push('<p>This document is locked by you. </p><a href="#" class="open-continued-material-edit">Continue interrupted edit?</a>');
                     } else {
                         buf.push("<p>");
                         var __val__ = "This document is locked by " + current_edit.creator_name + ".";
@@ -442,6 +444,10 @@ exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge)
                     buf.push(null == __val__ ? "" : __val__);
                     buf.push("</p>");
                 } else {
+                    buf.push("<h3>");
+                    var __val__ = model.title;
+                    buf.push(escape(null == __val__ ? "" : __val__));
+                    buf.push("</h3>");
                     if (model.title == "Agenda" && model.content == "") {
                         buf.push('<p class="notruncation">Agenda is empty.</p>');
                     } else if (model.title == "Action Points" && model.content == "") {
@@ -629,7 +635,11 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             });
             buf.push("</div>");
         }
-        buf.push('</a></li></ul><!-- Materials--><ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul><a href="#materialsPopup" data-rel="popup" data-theme="b" type="button">Add materials</a><div id="materialsPopup" data-role="popup" data-overlay-theme="a" data-theme="c" class="ui-corner-all"><div data-role="content" data-theme="d" class="ui-corner-bottom ui-content"><h3 class="ui-title">Choose source        </h3><a href="#" data-role="button" data-theme="a" class="add-photo-material">Camera</a><a href="#" data-role="button" data-theme="a">Existing photo</a><a href="#" data-role="button" data-rel="back" data-theme="c">Cancel</a></div></div>');
+        buf.push('</a></li></ul><!-- Materials--><ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul>');
+        if (0) {
+            buf.push('<a href="#materialsPopup" data-rel="popup" data-theme="b" type="button">Add materials</a>');
+        }
+        buf.push('<div id="materialsPopup" data-role="popup" data-overlay-theme="a" data-theme="c" class="ui-corner-all"><div data-role="content" data-theme="d" class="ui-corner-bottom ui-content"><h3 class="ui-title">Choose source        </h3><a href="#" data-role="button" data-theme="a" class="add-photo-material">Camera</a><a href="#" data-role="button" data-theme="a">Existing photo</a><a href="#" data-role="button" data-rel="back" data-theme="c">Cancel</a></div></div>');
         if (app.options.build !== "web") {
             buf.push('<a href="#" data-role="button" class="add-photo-material">Add photo</a><img id="myImage"/><div id="upload_progress"></div><div style="display:none;" class="file-save-form"><input id="file-upload-name" type="text" placeholder="Type filename here..."/><input id="file-upload-id" type="hidden"/><a href="#" data-role="button" style="display:none;" class="save-photo-material">Add to meeting</a></div><div style="display:none;" class="save-text"><p>Saving material...</p></div>');
         }
