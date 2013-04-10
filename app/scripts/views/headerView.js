@@ -11,7 +11,7 @@ app.headerView = Backbone.View.extend({
 
     events: {
         "click .back-button" : "navigateBack",
-        "click #create-meeting" : "createMeeting",
+        "click .open-add-meeting-view" : "createMeeting",
         "click .meeting-back-button" : "meetingBack"
     },
 

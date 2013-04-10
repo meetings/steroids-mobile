@@ -656,7 +656,7 @@ exports.noMeetingsView = function anonymous(locals, attrs, escape, rethrow, merg
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<p>Click the button to add a meeting.</p><a href="edit.html" data-theme="b" data-icon="mtngs-add-meeting" data-role="button" class="open-add-meeting-view">Add a meeting</a>');
+        buf.push('<p>Click the button to add a meeting.</p><a href="#" data-theme="b" data-icon="mtngs-add-meeting" data-role="button" class="open-add-meeting-view">Add a meeting</a>');
     }
     return buf.join("");
 };

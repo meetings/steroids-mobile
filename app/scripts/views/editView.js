@@ -188,6 +188,7 @@ app.editView = Backbone.View.extend({
 
         this.$el.html( templatizer.editStepDateAndTimeSetupView( this.model.toJSON() ) );
         this.$el.trigger("create");
+        console.log(this.model.get('id'));
     },
 
     saveEditStepDateAndTimeFinish: function(e) {
@@ -230,9 +231,6 @@ app.editView = Backbone.View.extend({
 
         me.model.save({}, {
             success : function() {
-                if ( app.options.build !== 'web' ) {
-                    AppGyver.popContext();
-                }
                 me.openMeetingView();
             },
             error: function() {
