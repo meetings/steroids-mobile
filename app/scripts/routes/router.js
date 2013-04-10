@@ -46,6 +46,10 @@ app.router = Backbone.Router.extend({
                     offset = $('#future').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
+                else if( $('#tasks').length > 0 ){
+                    offset = $('#tasks').offset();
+                    window.scrollTo(0, offset.top - 50);
+                }
                 else if( $('#unscheduled').length > 0 ){
                     offset = $('#unscheduled').offset();
                     window.scrollTo(0, offset.top - 50);
@@ -171,10 +175,10 @@ app.router = Backbone.Router.extend({
         app.models.currentUser = new app.userModel( { id : 'me' } );
 
         app.models.currentUser.fetch({ success : function() {
-            app.views.profile = new app.profileView({ 
-                el : $('#profile-page'), 
-                context_after_tos_accept : params.context_after_tos_accept, 
-                model : app.models.currentUser 
+            app.views.profile = new app.profileView({
+                el : $('#profile-page'),
+                context_after_tos_accept : params.context_after_tos_accept,
+                model : app.models.currentUser
             });
             app.views.profile.render();
             app.showContent();
@@ -348,7 +352,7 @@ app.router = Backbone.Router.extend({
         app.models.material.url = app.defaults.api_host + '/v1/meeting_materials/' + id;
 
         app.collections.material_edits = new app.materialEditCollection( [], { material_id : id } );
-        
+
         app.views.material = new app.materialView({
             model : app.models.material,
             edit_collection : app.collections.material_edits,
