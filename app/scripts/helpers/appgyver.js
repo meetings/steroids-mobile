@@ -44,7 +44,7 @@
                   //  $.when.apply( $, before_init_deferreds ).then(function(){
                         setTimeout(function(){
                             app.init();
-                        }, 1000);
+                        }, 2000);
                    // });
                 });
             }
@@ -70,7 +70,7 @@
         },
 
         // TODO: support different animations
-        openPreload: function(context, params, options ) {
+        openPreload: function(context, params, opts ) {
             var preloadId = context.id;
             var urlParams = params;
             var openInModal = context.open_in_modal;
@@ -113,7 +113,7 @@
                     onSuccess: removeActive
                 });
             } else {
-                if ( options.pop ) {
+                if ( opts && opts.pop ) {
                     steroids.layers.pop();
                 }
                 else if( preloadId === 'meetingsPage' ){

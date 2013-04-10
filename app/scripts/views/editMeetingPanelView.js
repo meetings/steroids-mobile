@@ -1,7 +1,5 @@
 app.editMeetingPanelView = Backbone.View.extend({
     initialize : function(options) {
-        this.menu_active = options.active;
-        this.meetingId = options.meetingId;
         _(this).bindAll('editMeetingTitle','editMeetingLocation','editMeetingTime');
     },
 
@@ -22,18 +20,21 @@ app.editMeetingPanelView = Backbone.View.extend({
 
     editMeetingTitle : function(e){
         e.preventDefault();
+        console.log('hir')
         this.$el.panel('close');
-        AppGyver.switchContext("singleEditPage", {id: this.meetingId, field : 'title'});
+        AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'title'});
     },
     editMeetingLocation : function(e){
         e.preventDefault();
+        console.log('edit loc')
         this.$el.panel('close');
-        AppGyver.switchContext("singleEditPage", {id: this.meetingId, field : 'location'});
+        AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'location'});
     },
     editMeetingTime : function(e) {
         e.preventDefault();
+        console.log('dir')
         this.$el.panel('close');
-        AppGyver.switchContext("singleEditPage", {id: this.meetingId, field : 'time'});
+        AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'time'});
     },
     removeMeeting : function(e){
         e.preventDefault();

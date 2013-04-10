@@ -1,7 +1,7 @@
 app.meetingModel = Backbone.Model.extend({
     idAttribute: "id",
     defaults: {
-        "id" : 0,
+        "id" : null,
         "title": "",
         "date_string" : "",
         "time_string": "",
@@ -9,16 +9,8 @@ app.meetingModel = Backbone.Model.extend({
         "participants": [],
         "skype_account" : false
     },
-    initialize : function(data){
-        this.set(data);
-
+    initialize : function(){
         this.url = app.defaults.api_host + '/v1/meetings';
-
-        var id = this.get('id');
-        
-        if(id) {
-            this.url += '/' + id;
-        }
     },
     getMeetingUserByID : function( id ){
         var p = this.get('participants');

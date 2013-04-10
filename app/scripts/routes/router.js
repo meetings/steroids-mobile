@@ -68,18 +68,26 @@ app.router = Backbone.Router.extend({
         });
 
 
-        // Create collections
+        // Create collections && set urls
         if( ! app.collections.future_meetings ) app.collections.future_meetings = new app.meetingCollection();
+        app.collections.future_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/meetings';
+
         if( ! app.collections.unscheduled_meetings ) app.collections.unscheduled_meetings = new app.meetingCollection({},{ override_endpoint : 'unscheduled_meetings' });
+        app.collections.unscheduled_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/unscheduled_meetings';
+
         if( ! app.collections.upcoming ) app.collections.upcoming = new app.meetingCollection();
         if( ! app.collections.today ) app.collections.today = new app.meetingCollection();
+
         if( ! app.collections.past_meetings ) {
             app.collections.past_meetings = new app.meetingCollection();
             app.collections.past_meetings.comparator = function(meeting){
                 return meeting.get('begin_epoch');
             };
         }
+        app.collections.past_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/meetings';
+
         if( ! app.collections.highlights ) app.collections.highlights = new app.meetingCollection({},{ override_endpoint : 'highlighted_meetings' });
+        app.collections.highlights.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/highlighted_meetings';
 
         // Create views
         if( ! app.views.future ) app.views.future = new app.upcomingMeetingsView({
@@ -234,26 +242,29 @@ app.router = Backbone.Router.extend({
             app.showContent();
         });
 
-        if (app.options.build !== 'web') {
-            AppGyver.cleanBackboneZombieEvents();
+        if( ! app.views.panel ) {
+            app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+            app.views.panel.render();
         }
-
-        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-        app.views.header = new app.headerView({ el : '#meetings' });
-        app.views.panel.render();
+        if (! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
         // Get url params
         var id = params.id || 0;
 
-        app.views.editPanel = new app.editMeetingPanelView({ el : '#edit-meeting-panel', meetingId : id });
-        app.views.editPanel.render();
+        if( ! app.models.meeting ) app.models.meeting = new app.meetingModel();
+        app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
+
+        if( ! app.views.editPanel ){
+            app.views.editPanel = new app.editMeetingPanelView({ el : '#edit-meeting-panel', model : app.models.meeting });
+            app.views.editPanel.render();
+        }
 
         // Fetch and show meeting
-        app.models.meeting = new app.meetingModel({ id : id });
-        app.views.meeting = new app.meetingView({
+        if( ! app.views.meeting ) app.views.meeting = new app.meetingView({
             el : $('#meeting'),
             model : app.models.meeting
         });
+
         app.models.meeting.fetch({ success : function(){
 
             // Init current meeting user
@@ -294,11 +305,11 @@ app.router = Backbone.Router.extend({
         var mode = params.mode || 'answer';
 
         // Start header
-        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
+        app.views.header = new app.headerView({ el : '#meetings' });
 
         // Get meeting
-        if( ! app.models.meeting ) app.models.meeting = new app.meetingModel({ id : id });
-        if( ! app.views.scheduling ) app.views.scheduling = new app.schedulingView({
+        app.models.meeting = new app.meetingModel({ id : id });
+        app.views.scheduling = new app.schedulingView({
             el : $('#scheduling'),
             model : app.models.meeting,
             mode : mode
@@ -433,9 +444,6 @@ app.router = Backbone.Router.extend({
     },
 
     edit : function(params) {
-        if (app.options.build !== 'web') {
-            AppGyver.cleanBackboneZombieEvents();
-        }
 
         // Render panel
         if( ! app.views.panel ){
@@ -444,26 +452,29 @@ app.router = Backbone.Router.extend({
         }
         if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
-        // Get url params
-        var id = params && params.id || null;
-        var field = params && params.field || null;
+        if( ! app.models.meeting ) app.models.meeting = new app.meetingModel();
 
-        var new_meeting = (id === null);
-
-        app.models.meeting = new app.meetingModel({ id : id});
-
-        app.views.editMeeting = new app.editView({
+        if( ! app.views.editMeeting ) app.views.editMeeting = new app.editView({
             model : app.models.meeting,
             el : $('#edit'),
             startStep : field
         });
 
+        // Get url params
+        var id = params && params.id || null;
+        var field = params && params.field || null;
+        var new_meeting = (id === null);
+
+        // If this is new meeting or editing an existing
         if(new_meeting) {
-            app.views.editMeeting.render();
+            app.models.meeting.clear().set(app.models.meeting.defaults);
+            app.views.editMeeting.render(false);
             app.showContent();
         }
         else {
+            app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
             app.models.meeting.fetch({ success : function() {
+                app.views.editMeeting.render(field);
                 app.showContent();
             }, timeout : 5000 });
         }
@@ -488,7 +499,8 @@ app.router = Backbone.Router.extend({
         app.models.participant.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/';
 
         // Meeting model is needed for the invitation texts
-        app.models.meeting = new app.meetingModel({ id : mid});
+        app.models.meeting = new app.meetingModel();
+        app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + mid;
 
         app.views.addParticipant = new app.addParticipantView({
             model : app.models.participant,

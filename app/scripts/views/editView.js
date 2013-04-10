@@ -5,23 +5,20 @@ app.editView = Backbone.View.extend({
         var me = this;
 
         // Bind error and success handlers
-        this.model.bind('error', this.errorHandler, this);
-        this.model.bind('success', this.successHandler, this);
-        this.model.bind('change', this.render, this);
+        //this.model.bind('error', this.errorHandler, this);
+        //this.model.bind('success', this.successHandler, this);
+        //this.model.bind('change', this.render, this);
 
         // Add custom handler for back button to return to previous edit state.
         $(".back-button").click(function(e) {
             me.navigateBack(e);
         });
 
-        if(options.startStep) {
-            this.startStep = options.startStep;
-        }
-
         this.viewStack = new Array();
     },
 
-    render: function() {
+    render: function(field) {
+        this.startStep = field;
         if(this.startStep == 'location') {
             this.renderEditStepLocation();
         }
@@ -188,7 +185,6 @@ app.editView = Backbone.View.extend({
 
         this.$el.html( templatizer.editStepDateAndTimeSetupView( this.model.toJSON() ) );
         this.$el.trigger("create");
-        console.log(this.model.get('id'));
     },
 
     saveEditStepDateAndTimeFinish: function(e) {
@@ -228,10 +224,11 @@ app.editView = Backbone.View.extend({
 
         // after saving, move to meeting view to finish the draft
         var me = this;
+        var is_old = this.model.get('id') ? true : false;
 
         me.model.save({}, {
             success : function() {
-                me.openMeetingView();
+                me.openMeetingView(is_old);
             },
             error: function() {
                 alert('meeting creation failed.');
@@ -239,8 +236,9 @@ app.editView = Backbone.View.extend({
         });
     },
 
-    openMeetingView : function(){
-        AppGyver.switchContext("meetingPage", {id: this.model.get('id')});
+    openMeetingView : function(is_old){
+        this.viewStack = [];
+        AppGyver.switchContext("meetingPage", {id: this.model.get('id')}, { pop : is_old });
     },
 
     navigateBack: function(e) {

@@ -66,6 +66,7 @@ app.genericCollectionView = Backbone.View.extend({
 
     // Clean the model
     reset : function(collection, options){
+        // TODO : sometimes things break so that the childviews get set but when they render they just return empty li elems
         this._childViews = [];
         var that = this;
         $.each( collection.models, function(){
