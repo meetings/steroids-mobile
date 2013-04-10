@@ -4,7 +4,7 @@
     window.AppGyver = {
         contexts : [
             { file : 'index.html', id : 'meetingsPage', load_before_init : true },
-            { file : 'login.html', id : 'loginPage', load_before_init : true, open_in_modal : false, animation : 'login' },
+            { file : 'login.html', id : 'loginPage', load_before_init : true, open_in_modal : false, },
             { file : 'profile.html', id : 'profilePage', load_before_init : true },
             { file : 'meeting.html', id : 'meetingPage' },
             { file : 'participants.html', id : 'participantsPage' },
@@ -15,7 +15,7 @@
             { file : 'addParticipant.html', id : 'addParticipantPage' },
             { file : 'edit.html', id : 'editPage' },
             { file : 'editMaterial.html', id : 'editMaterialPage', open_in_modal : false },
-            { file : 'signup.html', id : 'signupPage' },
+            { file : 'signup.html', id : 'signupPage' }
         ],
 
         init: function(){
@@ -61,7 +61,7 @@
                     AppGyver.refreshPreload( context, event.data.urlParams );
                 } );
             }
-        
+
         },
 
         preload: function(url, id, deferred ){
@@ -165,7 +165,7 @@
             }
             else {
                 window.location = this.formContextURL( context, params );
-            }                       
+            }
         },
         popContext : function() {
             if ( app.options.build !== 'web' ) {
@@ -193,7 +193,7 @@
             var query_string = query_options.length ? '?' : '';
             query_string = query_string + query_options.join('&');
 
-            return '/' + context.file + query_string;                         
+            return '/' + context.file + query_string;
         },
         getContextForID : function( id ){
             for (var i = 0; i < this.contexts.length; i++) {
