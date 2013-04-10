@@ -21,6 +21,7 @@ app.panelView = Backbone.View.extend({
         'click #nav-twitter' : 'redirectTwitter',
         'click #nav-support' : 'openSupport',
         'click #nav-tos' : 'openTos',
+        'click #nav-edit-profile' : 'openProfile',
         'click #nav-logout' : 'logout',
         'click #no-mobile' : 'switchNormal'
     },
@@ -60,6 +61,10 @@ app.panelView = Backbone.View.extend({
         e.preventDefault();
         var win=window.open('http://meetin.gs/meetings/terms_of_service', '_blank');
         win.focus();
+    },
+    openProfile : function(e) {
+        e.preventDefault();
+        AppGyver.switchContext('profilePage')
     },
     logout : function(e){
         e.preventDefault();

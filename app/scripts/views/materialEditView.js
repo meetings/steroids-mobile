@@ -70,8 +70,8 @@ app.materialEditView = Backbone.View.extend({
     },
 
     events: {
-        "click #edit-material-cancel" : "editMaterialCancel",
-        "click #edit-material-save" : "editMaterialSave" 
+        "click .edit-material-cancel" : "editMaterialCancel",
+        "click .edit-material-save" : "editMaterialSave" 
     },
 
     initTinyMCE : function() {

@@ -356,7 +356,7 @@ exports.materialEditView = function anonymous(locals, attrs, escape, rethrow, me
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="edit-material-cancel">Cancel</a><h1>Edit Material</h1><a id="edit-material-save" href="#" data-theme="b">Save</a></div><div data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="material_content">');
+        buf.push('<div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="edit-material-cancel">Cancel</a><h1>Edit Material</h1><a href="#" data-theme="b" class="edit-material-save">Save</a></div><div data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="material_content">');
         if (error_message) {
             buf.push("<p>");
             var __val__ = error_message;
