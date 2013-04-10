@@ -424,7 +424,7 @@ app.router = Backbone.Router.extend({
 
     editMaterial : function(params) {
         if ( app.views.editMaterial ) app.views.editMaterial.close();
-        
+
         app.views.editMaterial = new app.materialEditView({
             el : $('#material .view-container'),
             material_id : params.id,
@@ -439,8 +439,8 @@ app.router = Backbone.Router.extend({
 
         // Render panel
         if( ! app.views.panel ){
-            app.views.panel.render();
             app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+            app.views.panel.render();
         }
         if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
