@@ -231,7 +231,7 @@ app.editView = Backbone.View.extend({
         me.model.save({}, {
             success : function() {
                 if ( app.options.build !== 'web' ) {
-                    steroids.layers.pop();
+                    AppGyver.popContext();
                 }
                 me.openMeetingView();
             },

@@ -11,10 +11,9 @@ app.editMaterialPanelView = Backbone.View.extend({
     render : function() {
         this.$el.html( templatizer.editMaterialPanel( this.model.toJSON() ));
 
-        // Hack to get the panel working on mobile without using tirgger create
-        this.$el.page();
-        this.$el.removeClass('ui-page');
-        $('.ui-btn-active',this.el).removeClass('ui-btn-active');
+        if ( app.options.build !== 'web' ) {
+            this.$el.trigger('create');
+        }
     },
 
     events : {
@@ -31,7 +30,7 @@ app.editMaterialPanelView = Backbone.View.extend({
 
     editMaterial : function(e){
         e.preventDefault();
-
+        this.$el.panel('close');
         AppGyver.switchContext( 'editMaterialPage', { id : this.materialId } );
     },
     renameMaterial : function(e){

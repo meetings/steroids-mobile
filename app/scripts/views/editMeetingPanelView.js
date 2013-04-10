@@ -8,11 +8,10 @@ app.editMeetingPanelView = Backbone.View.extend({
     render : function() {
         this.$el.html( templatizer.editMeetingPanel() );
 
-        // Hack to get the panel working on mobile without using tirgger create
-        this.$el.page();
-        this.$el.removeClass('ui-page');
-        $('.ui-btn-active',this.el).removeClass('ui-btn-active');
-},
+        if ( app.options.build !== 'web' ) {
+            this.$el.trigger('create');
+        }
+    },
 
     events : {
         'click #nav-edit-title' : 'editMeetingTitle',
@@ -23,14 +22,17 @@ app.editMeetingPanelView = Backbone.View.extend({
 
     editMeetingTitle : function(e){
         e.preventDefault();
+        this.$el.panel('close');
         AppGyver.switchContext("editPage", {id: this.meetingId, field : 'title'});
     },
     editMeetingLocation : function(e){
         e.preventDefault();
+        this.$el.panel('close');
         AppGyver.switchContext("editPage", {id: this.meetingId, field : 'location'});
     },
     editMeetingTime : function(e) {
         e.preventDefault();
+        this.$el.panel('close');
         AppGyver.switchContext("editPage", {id: this.meetingId, field : 'time'});
     },
     removeMeeting : function(e){
