@@ -22,12 +22,7 @@ app.headerView = Backbone.View.extend({
 
     meetingBack : function(e){
         e.preventDefault();
-        if ( app.options.build !== 'web' ) {
-            steroids.layers.popAll();
-        }
-        else{
-            window.location = '/index.html';
-        }
+        AppGyver.switchContext('meetingsPage');
     },
 
     navigateBack : function(e){
