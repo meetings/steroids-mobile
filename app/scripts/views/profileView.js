@@ -47,7 +47,7 @@ app.profileView = Backbone.View.extend({
             $('#left-panel').panel('close');
             steroids.layers.popAll();
         }
-        AppGyver.switchContext.apply( AppGyver, this.context_after_tos_accept );
+        AppGyver.switchContext.apply( AppGyver, JSON.parse( this.context_after_tos_accept || '[]' ) );
     },
 
     openTos : function(e){
