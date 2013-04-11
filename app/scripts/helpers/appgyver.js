@@ -179,7 +179,7 @@
                 var that = this;
                 setTimeout( function() {
                     if ( 0 && window.location.href.toString().indexOf('index.html') < 0 ) {
-                        window.location = that.formContextURL( AppGyver.current_context, {}, 'randomize' );
+                        window.location = that.formContextURL( AppGyver.current_context, {}, 'randomize', 'preload_id' );
                     }
                 }, 1000 );
             }
@@ -198,7 +198,7 @@
                 history.go(-1);
             }
         },
-        formContextURL : function( context, params, randomize ) {
+        formContextURL : function( context, params, randomize, preload_id ) {
             params = params || {};
 
             var query_options=[];
@@ -209,6 +209,7 @@
             }
             
             if ( randomize ) query_options.push( 'm_rand=' + Math.random() );
+            if ( preload_id ) query_options.push( 'steroids_preload_id=' + context.id );
 
             var query_string = query_options.length ? '?' : '';
             query_string = query_string + query_options.join('&');

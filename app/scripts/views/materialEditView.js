@@ -98,7 +98,7 @@ app.materialEditView = Backbone.View.extend({
 
     editMaterialCancel : function(e){
         e.preventDefault();
-        AppGyver.popContext();
+        AppGyver.switchContext( 'materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
     },
 
     editMaterialSave : function(e){
