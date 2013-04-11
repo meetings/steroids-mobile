@@ -92,18 +92,22 @@ window.app = {
         window.router = new app.router();
         Backbone.history.start({pushState: true});
     },
-    _requireLogin : function(){
-        // Cookie available
-        var auth_cookie = this._readAuthCookie();
+    initializeAuthFromCookie : function() {
+        auth_cookie = this._readAuthCookie();
 
+        var user_and_token = auth_cookie.split(/_(.+)?/,2);
+        app.auth.user = user_and_token[0];
+        app.auth.token = user_and_token[1];
+
+        return user_and_token[1] ? true : false;
+    },
+
+    _requireLogin : function(){
         // Url has auth & user query params
         if( this._readAuthUrlParams() ){
             return true;
         }
-        else if( auth_cookie ){
-            var user_and_token = auth_cookie.split(/_(.+)?/,2);
-            app.auth.user = user_and_token[0];
-            app.auth.token = user_and_token[1];
+        else if( this.initializeAuthFromCookie() ){
             return true;
         }
         else{

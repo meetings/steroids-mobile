@@ -38,7 +38,8 @@
                         if( context.id === 'meetingsPage' ) continue;
                         var deferred = context.load_before_init ? $.Deferred() : false;
                         if ( deferred ) before_init_deferreds.push( deferred );
-                        AppGyver.preload( path + "/" + context.file, context.id, deferred );
+                        var preload_path = "/" + context.file + '?steroids_preload_id=' + context.id;
+                        AppGyver.preload( path + preload_path, context.id, deferred );
                     }
 
                   //  $.when.apply( $, before_init_deferreds ).then(function(){
@@ -47,20 +48,23 @@
                         }, 2000);
                    // });
                 });
-            }
-            for ( var i in AppGyver.contexts ) {
-                this.initMatchingContext( window.location.href + "", path, AppGyver.contexts[i] );
-            }
-        },
 
-        initMatchingContext: function( href, path, context ) {
-            if ( href == path + '/' + context.file ) {
-                window.addEventListener("message", function(event) {
-                    if ( event.data.preloadId !== context.id ) return;
-                    AppGyver.refreshPreload( context, event.data.urlParams );
-                } );
+                AppGyver.current_context = this.getContextForID( 'meetingsPage' );
+            }
+            else {
+                var id_parts = /[\?\&]steroids_preload_id=([^\&]*)/.exec( window.location.href );
+                if ( id_parts[1] ) {
+                    AppGyver.current_context = this.getContextForID( id_parts[1] );
+                }
+                else {
+                    alert("AppGyver init called without preload_id outside index.html!");
+                }
             }
 
+            window.addEventListener("message", function(event) {
+                if ( event.data.preloadId !== AppGyver.current_context.id ) return;
+                AppGyver.refreshPreload( AppGyver.current_context, event.data.urlParams );
+            } );
         },
 
         preload: function(url, id, deferred ){
@@ -126,7 +130,11 @@
         },
         // this could actually be implemented using backbone model changing etc.
         refreshPreload: function( context, params ){
-            var url = this.formContextURL( context, params );
+            if ( app.options.build === 'web' ) {
+                alert("unexpectedly ran refreshPreload in web!");
+            }
+
+            var url = this.formContextURL( context, params, 'randomize' );
             console.log("change to url: ", url);
 
             if (typeof window.router === "undefined") {
@@ -135,19 +143,11 @@
             }
             else {
                 AppGyver.hideContent();
-
-                if ( "" + window.location.pathname + window.location.search == url) {
-                    url = url + ( ( url.indexOf('?') > -1 ) ? '&' : '?' );
-                    url = url + 'random=1';
-                }
-                console.log("real url: ", url );
-
+                app.initializeAuthFromCookie();
                 history.replaceState({}, document.title, url);
                 Backbone.history.checkUrl();
 
-                //router.navigate( url, { trigger : true, replace : true } );
-                /*Backbone.history.navigate(pathname+"?id="+id, {trigger: true, replace: true});*/
-                // not working as expected, pollutes window.location.search with duplicate parameters
+//                router.navigate( url, { trigger : true, replace : true } );
             }
         },
 
@@ -175,6 +175,13 @@
 
             if ( app.options.build !== 'web' ) {
                 AppGyver.openPreload( context, params, options );
+
+                var that = this;
+                setTimeout( function() {
+                    if ( 0 && window.location.href.toString().indexOf('index.html') < 0 ) {
+                        window.location = that.formContextURL( AppGyver.current_context, {}, 'randomize' );
+                    }
+                }, 1000 );
             }
             else {
                 window.location = this.formContextURL( context, params );
@@ -184,20 +191,25 @@
             if ( app.options.build !== 'web' ) {
                 steroids.layers.pop();
             }
-            else if ( $('.back-button').attr('href') !== '#' ){
+            else if ( $('.back-button').length && $('.back-button').attr('href') !== '#' ){
                 window.location = $('.back-button').attr('href');
             }
             else {
                 history.go(-1);
             }
         },
-        formContextURL : function( context, params ) {
+        formContextURL : function( context, params, randomize ) {
             params = params || {};
+
             var query_options=[];
             var param;
+
             for ( param in params ) {
                 query_options.push( encodeURIComponent(param) + '=' + encodeURIComponent( params[param] ) );
             }
+            
+            if ( randomize ) query_options.push( 'm_rand=' + Math.random() );
+
             var query_string = query_options.length ? '?' : '';
             query_string = query_string + query_options.join('&');
 
