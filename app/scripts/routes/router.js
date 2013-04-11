@@ -234,6 +234,10 @@ app.router = Backbone.Router.extend({
     },
 
     meeting : function(params) {
+        // Get url params
+        var id = params.id || 0;
+
+        // Setup deferreds
         var meetingFetch = $.Deferred(),
         materialsFetch = $.Deferred();
 
@@ -242,57 +246,39 @@ app.router = Backbone.Router.extend({
             app.showContent();
         });
 
+        // Setup models & collections
+        if( ! app.collections.materials ) app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
+        app.collections.materials.url = app.defaults.api_host + '/v1/meetings/' + id + '/materials';
+
+        if( ! app.models.meeting ) app.models.meeting = new app.meetingModel();
+        app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
+
+        // Setup views
         if( ! app.views.panel ) {
             app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
             app.views.panel.render();
         }
+
         if (! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
-
-        // Get url params
-        var id = params.id || 0;
-
-        if( ! app.models.meeting ) app.models.meeting = new app.meetingModel();
-        app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
 
         if( ! app.views.editPanel ){
             app.views.editPanel = new app.editMeetingPanelView({ el : '#edit-meeting-panel', model : app.models.meeting });
             app.views.editPanel.render();
         }
 
-        // Fetch and show meeting
         if( ! app.views.meeting ) app.views.meeting = new app.meetingView({
             el : $('#meeting'),
             model : app.models.meeting
         });
 
+        // TODO: Think how data could  be fetched in parallel here. Probably by creating top level view meeting
+        // with subviews for info and materials
         app.models.meeting.fetch({ success : function(){
-
-            // Init current meeting user
-            var data = app.models.meeting.getMeetingUserByID( app.auth.user );
-            app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
-
-            // Show next action bar for the user
-            app.views.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : app.models.meeting_user });
-            app.views.next_action_view.render();
-
-            // Resolve deferred
             meetingFetch.resolve();
-
+            app.collections.materials.fetch({ success : function(){
+                materialsFetch.resolve(); // Resolve deferred
+            }});
         }, timeout : 5000 });
-
-        // Setup materials col & view
-        app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
-        app.collections.materials.url = app.defaults.api_host + '/v1/meetings/' + id + '/materials';
-        app.views.materials = new app.genericCollectionView({
-            el : $('#materials_list'),
-            collection : app.collections.materials,
-            childViewTagName : 'li',
-            childViewConstructor : app.materialInListView
-        });
-
-        app.collections.materials.fetch({ success : function(){
-            materialsFetch.resolve(); // Resolve deferred
-        }});
     },
 
     scheduling : function(params) {
@@ -325,10 +311,6 @@ app.router = Backbone.Router.extend({
     },
 
     participants : function(params) {
-        if (app.options.build !== 'web') {
-            AppGyver.cleanBackboneZombieEvents();
-        }
-
         if( ! app.views.panel ){
             app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
             app.views.panel.render();
@@ -339,8 +321,9 @@ app.router = Backbone.Router.extend({
 
         if( ! app.collections.participants ) app.collections.participants = new app.participantCollection();
         app.collections.participants.url = app.defaults.api_host + '/v1/meetings/' + id + '/participants';
+        app.collections.participants.meeting_id = id;
 
-        if( ! app.views.materials ) app.views.materials = new app.genericCollectionView({
+        if( ! app.views.participants ) app.views.participants = new app.genericCollectionView({
             el : $('#participants_list'),
             collection : app.collections.participants,
             childViewTagName : 'li',
@@ -359,21 +342,18 @@ app.router = Backbone.Router.extend({
     },
 
     participant : function(params) {
-
-        if (app.options.build !== 'web') {
-          // Cleanup zombie events
-          AppGyver.cleanBackboneZombieEvents();
-        }
-
-        // Render footer
-        app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-        app.views.header = new app.headerView({ el : '#participant' });
-        app.views.panel.render();
-
         var id = params.id || 0;
-        app.models.participant = new app.participantModel();
+
+        if( ! app.views.panel ){
+            app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
+            app.views.panel.render();
+        }
+        if( ! app.views.header )app.views.header = new app.headerView({ el : '#participant' });
+
+        if( ! app.models.participant ) app.models.participant = new app.participantModel();
         app.models.participant.url = app.defaults.api_host + '/v1/meeting_participants/'+id;
-        app.views.user = new app.participantView({
+
+        if( ! app.views.user ) app.views.user = new app.participantView({
             model : app.models.participant,
             el : $('#participant_info')
         });
@@ -481,9 +461,9 @@ app.router = Backbone.Router.extend({
     },
 
     addParticipant : function(params) {
-        if (app.options.build !== 'web') {
-            AppGyver.cleanBackboneZombieEvents();
-        }
+        // Get url params
+        var mid = params && params.id || null;
+        var return_context = params && params.override_return_context || 'participantsPage';
 
         // Render panel
         if( ! app.views.panel ) {
@@ -492,27 +472,25 @@ app.router = Backbone.Router.extend({
         }
         if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
-        // Get url params
-        var mid = params && params.id || null;
-
-        app.models.participant = new app.participantModel({ id : null, meeting_id : mid});
-        app.models.participant.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/';
+        var new_user = new app.participantModel();
+        new_user.url = app.defaults.api_host + '/v1/meetings/' + mid + '/participants/';
 
         // Meeting model is needed for the invitation texts
-        app.models.meeting = new app.meetingModel();
+        if( ! app.models.meeting ) app.models.meeting = new app.meetingModel();
         app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + mid;
 
+        // TODO: Fix this to be more intelligent
+        if( app.views.addParticipant ) app.views.addParticipant.undelegateEvents();
         app.views.addParticipant = new app.addParticipantView({
-            model : app.models.participant,
+            model : new_user,
             meetingModel : app.models.meeting,
+            returnContext : return_context,
             el : $('#add-participant')
         });
 
         app.models.meeting.fetch({ success : function() {
             app.showContent();
-
             app.views.addParticipant.render();
         }});
     }
-
 });

@@ -2,14 +2,10 @@ app.addParticipantView = Backbone.View.extend({
     meetingModel : null,
 
     initialize: function(options) {
-        if(options.meetingModel) {
-            this.meetingModel = options.meetingModel;
-        }
-
-        // Bind error and success handlers
-        this.model.bind('error', this.errorHandler, this);
-        this.model.bind('success', this.successHandler, this);
         this.model.bind('change', this.render, this);
+        this.meeting_model = options.meetingModel;
+        this.return_context = options.returnContext;
+        _(this).bindAll('openMeetingView');
     },
 
     render : function() {
@@ -21,7 +17,7 @@ app.addParticipantView = Backbone.View.extend({
 
     saveParticipant : function() {
         var $name = $('#participant-name');
-        var $email = $('#participant-email')
+        var $email = $('#participant-email');
 
         var name = $name.val();
         var email = $email.val();
@@ -103,7 +99,6 @@ app.addParticipantView = Backbone.View.extend({
         // after saving, move to meeting view to finish the draft
         var me = this;
 
-        console.log(me.model);
         me.model.save({}, {
             success : function() {
                 me.openMeetingView();
@@ -120,7 +115,7 @@ app.addParticipantView = Backbone.View.extend({
     },
 
     openMeetingView : function(){
-        AppGyver.switchContext("meetingPage", {id: this.model.get('meeting_id')});
+        AppGyver.switchContext(this.return_context, {id: this.meeting_model.get('id')}, { pop : true });
     },
 
     events: {
@@ -128,4 +123,3 @@ app.addParticipantView = Backbone.View.extend({
         'click .save-meeting-invite' : 'saveInvite'
     }
 });
-_.extend(app.addParticipantView.prototype, app.mixins.connectivity);

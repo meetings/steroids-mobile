@@ -2,12 +2,13 @@ app.meetingView = Backbone.View.extend({
     errors : 0, // Track connection errors for this view
     progressBarStarted : false,
     inviteView : false,
+    subviews : {},
     initialize: function(options) {
 
         // Bind error and success handlers
-         options.model.bind('error', this.errorHandler, this);
-         options.model.bind('success', this.successHandler, this);
-         options.model.bind('change', this.render, this);
+         this.model.bind('error', this.errorHandler, this);
+         this.model.bind('success', this.successHandler, this);
+         this.model.bind('change', this.render, this);
 
         _(this).bindAll('openMaterialView', 'openParticipantView');
 
@@ -49,14 +50,22 @@ app.meetingView = Backbone.View.extend({
         // Start progressbar
         this.initProgressBar();
 
-        // Setup materials col & view
-        app.views.materials = new app.genericCollectionView({
+        // Setup next action view
+        var data = this.model.getMeetingUserByID( app.auth.user );
+        var user = new app.participantModel( data, { meeting_id : this.model.get('id') } );
+
+        // Show next action bar for the user
+        this.subviews.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : user });
+        this.subviews.next_action_view.render();
+
+        // Setup materials view
+        this.subviews.materials = new app.genericCollectionView({
             el : '#materials_list',
             collection : app.collections.materials,
             childViewTagName : 'li',
             childViewConstructor : app.materialInListView
         });
-        app.views.materials.render();
+        this.subviews.materials.render();
 
         return this;
     },
@@ -215,30 +224,18 @@ app.meetingView = Backbone.View.extend({
     },
 
     openMaterialView : function(e){
-        if ( app.options.build !== 'web' ) {
-            e.preventDefault();
-            AppGyver.openPreload("materialsPage", {id: this.model.get('id')});
-        } else {
-            document.location = '/materials.html?id='+this.model.get('id');
-        }
+        e.preventDefault();
+        AppGyver.switchContext("materialsPage", {id: this.model.get('id')});
     },
 
     openParticipantView : function(e){
-        if ( app.options.build !== 'web' ) {
-            e.preventDefault();
-            AppGyver.openPreload("participantsPage", {id: this.model.get('id')});
-        } else {
-            document.location = '/participants.html?id='+this.model.get('id');
-        }
+        e.preventDefault();
+        AppGyver.switchContext("participantsPage", {id: this.model.get('id')});
     },
 
     openAddParticipantView : function(e) {
         e.preventDefault();
-        if ( app.options.build !== 'web' ) {
-            AppGyver.openPreload("addParticipantPage", {id: this.model.get('id')});
-        } else {
-            document.location = '/addParticipant.html?id='+this.model.get('id');
-        }
+        AppGyver.switchContext("addParticipantPage", {id: this.model.get('id'), override_return_context : 'meetingPage' });
     },
 
     openSendInvitesView : function() {
@@ -274,4 +271,4 @@ app.meetingView = Backbone.View.extend({
         }
     }
 });
-_.extend(app.meetingView.prototype, app.mixins.connectivity);
+//_.extend(app.meetingView.prototype, app.mixins.connectivity);
