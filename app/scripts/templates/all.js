@@ -554,10 +554,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         } else {
-            buf.push('<p class="mtngs-calendar"><i class="icon-calendar"></i>');
-            var __val__ = Scheduling in progress;
-            buf.push(escape(null == __val__ ? "" : __val__));
-            buf.push("</p>");
+            buf.push('<p class="mtngs-calendar"><i class="icon-calendar"></i>Scheduling in progress</p>');
         }
         if (location) {
             if (location === "On Skype" || location === "Online" || location === "Location not known") {
@@ -1120,7 +1117,7 @@ exports.rsvpBarView = function anonymous(locals, attrs, escape, rethrow, merge) 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div class="rsvp-answer"><span class="text">Set your RSVP status:</span><a href="#" class="attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
+        buf.push('<div class="rsvp-answer"><span class="text">Set your RSVP status:</span><a href="#" class="yes-attending">Attending</a><a href="#" class="not-attending">Not attending</a></div>');
     }
     return buf.join("");
 };
