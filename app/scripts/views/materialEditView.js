@@ -14,7 +14,7 @@ app.materialEditView = Backbone.View.extend({
         this.model = new app.materialEditModel();
 
         _(this).bindAll('editMaterialCancel','editMaterialSave');
-        
+
         this.ready_to_render = false;
         this.rendered_once = false;
 
@@ -71,7 +71,7 @@ app.materialEditView = Backbone.View.extend({
 
     events: {
         "click .edit-material-cancel" : "editMaterialCancel",
-        "click .edit-material-save" : "editMaterialSave" 
+        "click .edit-material-save" : "editMaterialSave"
     },
 
     initTinyMCE : function() {
@@ -95,7 +95,7 @@ app.materialEditView = Backbone.View.extend({
             mode:'textareas'
         });
     },
-    
+
     editMaterialCancel : function(e){
         e.preventDefault();
         AppGyver.popContext();
@@ -105,7 +105,7 @@ app.materialEditView = Backbone.View.extend({
         e.preventDefault();
         var that = this;
 
-        var save_url = app.defaults.api_host + '/v1/meeting_materials/' + this.model.id;
+        var save_url = app.defaults.api_host + '/v1/meeting_materials/' + this.model.get('material_id');
         var params = {
             edit_id : this.model.id,
             content : this.model.get('content') || '',
@@ -119,7 +119,7 @@ app.materialEditView = Backbone.View.extend({
             url : save_url,
             data : params,
             success : function( response ) {
-                AppGyver.switchContext('materialPage', { id : that.model.meeting_id }, { pop : 1 } );
+                AppGyver.switchContext('materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
             }
         } );
     }

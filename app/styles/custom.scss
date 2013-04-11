@@ -587,6 +587,11 @@ ul#materials_list{
             width:17px;
             height:15px;
             border:none;
+            color:#fff;
+            text-shadow:none;
+            line-height:12px;
+            font-weight:300;
+            margin-top:-7px;
         }
         span.material-image{
             @include retina-bg('/images/m_image', 'png', 46px, 46px);
@@ -888,19 +893,14 @@ h3.tasks {
     margin-left:16px !important;
     margin-top:5px !important;
 }
+
 p.mtngs-calendar{
-    @include retina-bg('/images/icon_cal' , 'png', 20px, 20px);
-    background-color:transparent;
-    background-position:0px 50%;
-    background-repeat:no-repeat;
+    position:relative;
     padding:5px 0 0 34px;
     height:20px;
 }
 p.mtngs-location{
-    @include retina-bg('/images/icon_loc' , 'png', 20px, 20px);
-    background-color:transparent;
-    background-position:0px 50%;
-    background-repeat:no-repeat;
+    position:relative;
     padding:5px 0 0 34px;
     min-height:20px;
 }

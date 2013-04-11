@@ -13,9 +13,15 @@ span.ui-btn-text i{
     line-height:14px;
     display:inline-block;
     position:relative;
-    top:-2px;
+    top:0px;
 }
-
+p i{
+    font-size:22px;
+    position:absolute;
+    top:3px;
+    left:0px;
+    color:#8D8D8D;
+}
 .ui-panel a i{
     font-size:20px;
     line-height:14px;

@@ -223,12 +223,12 @@ app.editView = Backbone.View.extend({
         AppGyver.hideContent();
 
         // after saving, move to meeting view to finish the draft
-        var me = this;
+        var that = this;
         var is_old = this.model.get('id') ? true : false;
 
-        me.model.save({}, {
+        that.model.save({}, {
             success : function() {
-                me.openMeetingView(is_old);
+                that.openMeetingView(is_old);
             },
             error: function() {
                 alert('meeting creation failed.');

@@ -549,21 +549,21 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</h3>");
         if (date_string) {
-            buf.push('<p class="mtngs-calendar">');
+            buf.push('<p class="mtngs-calendar"><i class="icon-calendar"></i>');
             var __val__ = date_string + ", " + time_string + " " + timezone_string;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         } else {
-            buf.push('<p class="mtngs-calendar">Scheduling in progress</p>');
+            buf.push('<p class="mtngs-calendar"><i class="icon-calendar"></i>');
+            var __val__ = Scheduling in progress;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
         }
         if (location) {
             if (location === "On Skype" || location === "Online" || location === "Location not known") {
-                buf.push('<p class="mtngs-location">');
-                var __val__ = location;
-                buf.push(escape(null == __val__ ? "" : __val__));
-                buf.push("</p>");
+                buf.push('<p class="mtngs-location"><i class="icon-location"></i>location</p>');
             } else {
-                buf.push('<p class="mtngs-location"><a href="#" class="open-map-link">');
+                buf.push('<p class="mtngs-location"><i class="icon-location"></i><a href="#" class="open-map-link">');
                 var __val__ = location;
                 buf.push(escape(null == __val__ ? "" : __val__));
                 buf.push("</a></p>");
