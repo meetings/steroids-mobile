@@ -61,7 +61,6 @@ app.schedulingView = Backbone.View.extend({
         var data = this.model.getMeetingUserByID( app.auth.user );
         var user = new app.participantModel( data, { meeting_id : this.model.get('id') } );
 
-
         for (var i = 0; i < props.length; i++) {
             prop_container.append( templatizer.optionInListView( { user : user.toJSON() , proposal : props[i], participants : participants, mode : 'choose' } ) );
         }
@@ -120,15 +119,7 @@ app.schedulingView = Backbone.View.extend({
         $('#confirm-option span span').html('Saving...');
         this.model.save({ chosen_proposal_id : this.chosen_option }, {success : function(res){
           $('#confirm-option span span').html('Done.');
-          if ( app.options.build !== 'web' ) {
-
-            //setTimeout(function(){ AppGyver.hideContent() }, 100)
-
-            steroids.layers.pop();
-
-          }
-
-          AppGyver.switchContext('meetingPage', { id : app.models.meeting.id } );
+          AppGyver.switchContext('meetingPage', { id : app.models.meeting.id }, { pop : true } );
         }});
     },
 
@@ -143,21 +134,12 @@ app.schedulingView = Backbone.View.extend({
             }
         }
 
-        // Set the answers
-        app.models.meeting_user.set('proposal_answers', answers );
-
+        // Save the answers
         $('#save-options span span').html('Saving...');
-        app.models.meeting_user.save({},{ success : function(res){
+        console.log( app.models.meeting_user.url )
+        app.models.meeting_user.save({'proposal_answers': answers},{ success : function(res){
             $('#save-options span span').html('Done.');
-            // TODO: navigation inside app?
-            if ( app.options.build !== 'web' ) {
-
-              setTimeout(function(){ AppGyver.hideContent(); }, 100);
-
-              steroids.layers.pop();
-
-            }
-            AppGyver.switchContext('meetingPage', { id : app.models.meeting.id } );
+            AppGyver.switchContext('meetingPage', { id : app.models.meeting.id }, { pop : true} );
         } });
     }
 });

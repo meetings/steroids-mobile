@@ -283,6 +283,9 @@ app.router = Backbone.Router.extend({
     },
 
     scheduling : function(params) {
+        if (app.options.build !== 'web') {
+            //AppGyver.cleanBackboneZombieEvents();
+        }
 
         // Get url params
         var id = params.id || 0;
@@ -303,6 +306,8 @@ app.router = Backbone.Router.extend({
 
         app.models.meeting.fetch({ success : function(){
             // Init current meeting user
+            var data = app.models.meeting.getMeetingUserByID( app.auth.user );
+            app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
             app.views.scheduling.render();
             app.showContent();
         }, timeout : 5000 });
