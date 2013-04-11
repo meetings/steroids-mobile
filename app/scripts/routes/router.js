@@ -243,6 +243,7 @@ app.router = Backbone.Router.extend({
 
         // wait for ajax requests to succeed, defer show content until that
         $.when(meetingFetch, materialsFetch).then(function(){
+            app.views.meeting.render();
             app.showContent();
         });
 
@@ -277,8 +278,8 @@ app.router = Backbone.Router.extend({
             meetingFetch.resolve();
             app.collections.materials.fetch({ success : function(){
                 materialsFetch.resolve(); // Resolve deferred
-            }});
-        }, timeout : 5000 });
+            }, silent : true }); // Silent as we wan't to render when both fetches are done
+        }, timeout : 5000, silent : true });
     },
 
     scheduling : function(params) {
@@ -348,7 +349,7 @@ app.router = Backbone.Router.extend({
             app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
             app.views.panel.render();
         }
-        if( ! app.views.header )app.views.header = new app.headerView({ el : '#participant' });
+        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#participant' });
 
         if( ! app.models.participant ) app.models.participant = new app.participantModel();
         app.models.participant.url = app.defaults.api_host + '/v1/meeting_participants/'+id;

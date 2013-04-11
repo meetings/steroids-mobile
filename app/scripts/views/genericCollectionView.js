@@ -9,13 +9,6 @@ app.genericCollectionView = Backbone.View.extend({
     },
     initialize : function(options) {
 
-        // Extend jquery
-        (function($) {
-            $.fn.outerHTML = function() {
-                return $(this).clone().wrap('<div></div>').parent().html();
-            }
-        })(jQuery);
-
         // Check requirements
         if (!options.childViewConstructor) throw "no child view constructor provided";
         if (!options.childViewTagName) throw "no child view tag name provided";
@@ -92,7 +85,6 @@ app.genericCollectionView = Backbone.View.extend({
         if (this._rendered) {
 
             if( options.index === 0 || this.options.mode === 'addtotop' ) {
-                //this.addHtmlBuffer = $(childView.render().el).outerHTML() + this.addHtmlBuffer;
                 this.addHtmlBuffer.push( childView.render().el );
                 this.delayedAdd();
             }
