@@ -4,7 +4,7 @@ app.schedulingView = Backbone.View.extend({
 
     initialize: function(options) {
         if( options && options.mode ) this.mode = options.mode;
-        view.listenTo(this.model, 'change', this.render);
+        //this.listenTo(this.model, 'change', this.render);
     },
 
     render: function() {
@@ -28,16 +28,18 @@ app.schedulingView = Backbone.View.extend({
 
     renderAnswer : function(){
         // Render template & trigger jQuery create
-        this.$el.html('<h3>' + this.model.escape('title') + '</h3><p class="mtngs-location">' + this.model.escape('location') + '</p><p>Tap the times suitable for you:</p>');
+        this.$el.html('<h3>' + this.model.escape('title') + '</h3><p class="mtngs-location"><i class="icon-location"></i>' + this.model.escape('location') + '</p><p>Tap the times suitable for you:</p>');
         var prop_container = $('<ul id="proposals" data-theme="a" data-inset="true" data-role="listview"></ul>');
         this.$el.append( prop_container );
 
         // Get proposals & users
         var props = this.model.get('proposals');
         var participants = this.model.get('participants');
+        var data = this.model.getMeetingUserByID( app.auth.user );
+        var user = new app.participantModel( data, { meeting_id : this.model.get('id') } );
 
         for (var i = 0; i < props.length; i++) {
-            prop_container.append( templatizer.optionInListView( { user : app.models.meeting_user.toJSON() , proposal : props[i], participants : participants, mode : 'answer' } ) );
+            prop_container.append( templatizer.optionInListView( { user : user.toJSON() , proposal : props[i], participants : participants, mode : 'answer' } ) );
         }
 
         this.$el.append('<a href="#" id="save-options" data-role="button" data-theme="b">Save options</a>');
@@ -56,9 +58,12 @@ app.schedulingView = Backbone.View.extend({
         // Get proposals & users
         var props = this.model.get('proposals');
         var participants = this.model.get('participants');
+        var data = this.model.getMeetingUserByID( app.auth.user );
+        var user = new app.participantModel( data, { meeting_id : this.model.get('id') } );
+
 
         for (var i = 0; i < props.length; i++) {
-            prop_container.append( templatizer.optionInListView( { user : app.models.meeting_user.toJSON() , proposal : props[i], participants : participants, mode : 'choose' } ) );
+            prop_container.append( templatizer.optionInListView( { user : user.toJSON() , proposal : props[i], participants : participants, mode : 'choose' } ) );
         }
 
         this.$el.trigger("create");

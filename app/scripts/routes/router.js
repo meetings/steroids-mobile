@@ -283,20 +283,19 @@ app.router = Backbone.Router.extend({
     },
 
     scheduling : function(params) {
-        if (app.options.build !== 'web') {
-            AppGyver.cleanBackboneZombieEvents();
-        }
 
         // Get url params
         var id = params.id || 0;
         var mode = params.mode || 'answer';
 
         // Start header
-        app.views.header = new app.headerView({ el : '#meetings' });
+        app.views.header = app.views.header || new app.headerView({ el : '#meetings' });
 
         // Get meeting
-        app.models.meeting = new app.meetingModel({ id : id });
-        app.views.scheduling = new app.schedulingView({
+        app.models.meeting = app.models.meeting || new app.meetingModel();
+        app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
+
+        app.views.scheduling = app.views.scheduling || new app.schedulingView({
             el : $('#scheduling'),
             model : app.models.meeting,
             mode : mode
@@ -304,11 +303,9 @@ app.router = Backbone.Router.extend({
 
         app.models.meeting.fetch({ success : function(){
             // Init current meeting user
-            var data = app.models.meeting.getMeetingUserByID( app.auth.user );
-            app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
+            app.views.scheduling.render();
             app.showContent();
         }, timeout : 5000 });
-
     },
 
     participants : function(params) {
@@ -388,7 +385,7 @@ app.router = Backbone.Router.extend({
             childViewTagName : 'li',
             childViewConstructor : app.commentInListView
         });
-       
+
         app.views.material = app.views.material || new app.materialView({
             el : $('#material_content'),
             model : app.models.material

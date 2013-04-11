@@ -706,7 +706,7 @@ exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, me
         if (participants.length) {
             buf.push('<div class="participants">');
             participants = _.sortBy(participants, function(p) {
-                if (p.proposal_answers[proposal.id] === "yes") return 1; else if (p.proposal_answers[proposal.id] === "no") return 3; else return 2;
+                if (p.proposal_answers && p.proposal_answers[proposal.id] === "yes") return 1; else if (p.proposal_answers && p.proposal_answers[proposal.id] === "no") return 3; else return 2;
             });
             participants.forEach(function(p) {
                 {
@@ -726,9 +726,9 @@ exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, me
                     } else {
                         buf.push('<span class="placeholder-20"></span>');
                     }
-                    if (p.proposal_answers[proposal.id] === "yes") {
+                    if (p.proposal_answers && p.proposal_answers[proposal.id] === "yes") {
                         buf.push('<span class="rsvp yes"></span>');
-                    } else if (p.proposal_answers[proposal.id] === "no") {
+                    } else if (p.proposal_answers && p.proposal_answers[proposal.id] === "no") {
                         buf.push('<span class="rsvp no"></span>');
                     } else {
                         buf.push('<span class="rsvp unknown"></span>');
