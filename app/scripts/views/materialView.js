@@ -1,32 +1,66 @@
 app.materialView = Backbone.View.extend({
 
+    beforeClose : function() {
+        if ( this.current_edits_polling_timeout ) {
+            clearTimeout( this.current_edits_polling_timeout );
+        }
+        $('.back-button').off('click');
+    },
+
     initialize: function(options) {
-        options.model.on('change', this.render, this);
-        options.edit_collection.on('change', this.render, this);
-        options.edit_collection.on('remove', this.render, this);
-        options.edit_collection.on('add', this.render, this);
-        options.edit_collection.on('remove', function() { options.model.fetch() }, this);
+        var that = this;
 
-        // Start polling for new edit versions
+        this.model.on('change', this.render, this);
 
-        this.edit_collection = options.edit_collection;
-        this.edits_polling();
+        $('.back-button').on('click', function(e) {
+            e.preventDefault();
+            that.set_material_edits( false );
 
-        // Open panel
-        $('div.main-div').swipeleft(function(){
-            $( "#edit-material-panel" ).panel( "open" );
-        });
+            var parts = that.model.id.split(":");
+            AppGyver.switchContext('meetingPage', { id : parts[0] }, { pop : true } );
+        } );
+    },
 
-        // Close panel with click
-        $('div.ui-panel-content-wrap,div.ui-panel-dismiss').live('click', function(){
-            $( "#edit-material-panel" ).panel( "close" );
-        });
+    set_material_edits : function( edits ) {
+        this.material_edits = edits;
 
+        if ( ! edits ) return;
+
+        this.material_edits.on('change', this.render, this);
+        this.material_edits.on('remove', this.render, this);
+        this.material_edits.on('add', this.render, this);
+        this.material_edits.on('remove', function() { this.model.fetch() }, this);
+
+        this.edits_polling();        
+    },
+
+    render: function() {
+        var current_edit = this.material_edits ? this.material_edits.at(0) : false;
+
+        this.$el.html( templatizer.materialView( {
+            model : this.model.toJSON(),
+            current_edit : current_edit ? current_edit.toJSON() : false,
+            auth_user_id : app.auth.user
+        } ) );
+
+        this.initDownloadLink();
+        this.initScribd();
+
+        this.$el.trigger('create');
+        app.showContent();
+
+        return this;
+    },
+
+    events : {
+        'click .open-continued-material-edit' : 'continueEditing'
     },
 
     current_edits_polling_timeout: false,
     edits_polling: function() {
-        this.edit_collection.fetch( { update : true });
+        if ( ! this.material_edits ) return;
+
+        this.material_edits.fetch( { update : true });
 
         if ( this.current_edits_polling_timeout ) {
             clearTimeout( this.current_edits_polling_timeout );
@@ -34,22 +68,6 @@ app.materialView = Backbone.View.extend({
 
         var that = this;
         this.current_edits_polling_timeout = setTimeout( function() { that.edits_polling() }, 5000 );
-    },
-
-    render: function() {
-        var current_edit = this.edit_collection.at(0);
-        this.$el.html( templatizer.materialView( {
-            model : this.model.toJSON(),
-            current_edit : current_edit ? current_edit.toJSON() : false,
-            auth_user_id : app.auth.user
-        } ) );
-        this.initDownloadLink();
-        this.initScribd();
-        return this;
-    },
-
-    events : {
-        'click .open-continued-material-edit' : 'continueEditing'
     },
 
     continueEditing : function(e) {

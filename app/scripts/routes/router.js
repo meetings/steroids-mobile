@@ -368,46 +368,52 @@ app.router = Backbone.Router.extend({
         var commentsFetched = $.Deferred();
         var materialFetched = $.Deferred();
 
-        var id = params.id || 0;
-
         $.when(commentsFetched, materialFetched).then(function(){
             app.showContent();
         });
 
-        if (app.options.build !== 'web') {
-            // Cleanup zombie events
-            AppGyver.cleanBackboneZombieEvents();
-        }
+        var id = params.id;
 
-        // Setup header
-        app.views.header = new app.headerView({ el : '#material' });
-
-        app.models.material = new app.materialModel();
+        app.models.material = app.models.material || new app.materialModel();
         app.models.material.url = app.defaults.api_host + '/v1/meeting_materials/' + id;
 
-        app.collections.material_edits = new app.materialEditCollection( [], { material_id : id } );
-
-        app.views.material = new app.materialView({
-            model : app.models.material,
-            edit_collection : app.collections.material_edits,
-            el : $('#material_content')
-        });
-
-        // Setup edit panel
-        app.views.editPanel = new app.editMaterialPanelView({ el : '#edit-material-panel', materialId : id, model : app.models.material });
-
-        app.models.material.fetch({ success : function(){
-            materialFetched.resolve();
-        }});
-
-        app.collections.comments = new app.commentCollection();
+        app.collections.comments = app.collections.comments || new app.commentCollection();
         app.collections.comments.url = app.defaults.api_host + '/v1/meeting_materials/' + id + '/comments';
-        app.views.comments = new app.commentListView({
+
+        app.models.material_edits = new app.materialEditCollection( [], { material_id : id } );
+
+        app.views.comments = app.views.comments || new app.commentListView({
             el : $('#comments'),
             collection : app.collections.comments,
             childViewTagName : 'li',
             childViewConstructor : app.commentInListView
         });
+       
+        app.views.material = app.views.material || new app.materialView({
+            el : $('#material_content'),
+            model : app.models.material
+        });
+
+        app.views.material.set_material_edits( app.models.material_edits );
+
+        if ( ! app.views.edit_material_panel ) {
+            app.views.edit_material_panel = new app.editMaterialPanelView({
+                el : $('#edit-material-panel'),
+                model : app.models.material
+            });
+
+            $('div.main-div').swipeleft(function(){
+                $('#edit-material-panel').panel( "open" );
+            });
+
+            $('div.ui-panel-content-wrap,div.ui-panel-dismiss').on('click', function(){
+                $('#edit-material-panel').panel( "close" );
+            });
+        }
+
+        app.models.material.fetch({ success : function(){
+            materialFetched.resolve();
+        }});
 
         app.collections.comments.fetch({ success : function(){
             commentsFetched.resolve();

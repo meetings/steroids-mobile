@@ -10,10 +10,7 @@ app.editMaterialPanelView = Backbone.View.extend({
 
     render : function() {
         this.$el.html( templatizer.editMaterialPanel( this.model.toJSON() ));
-
-        if ( app.options.build !== 'web' ) {
-            this.$el.trigger('create');
-        }
+        this.$el.trigger('create');
     },
 
     events : {
@@ -31,7 +28,7 @@ app.editMaterialPanelView = Backbone.View.extend({
     editMaterial : function(e){
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext( 'editMaterialPage', { id : this.materialId } );
+        AppGyver.switchContext( 'editMaterialPage', { id : this.model.id } );
     },
     renameMaterial : function(e){
         e.preventDefault();

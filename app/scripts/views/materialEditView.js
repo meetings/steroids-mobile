@@ -103,11 +103,13 @@ app.materialEditView = Backbone.View.extend({
 
     editMaterialSave : function(e){
         e.preventDefault();
-        var save_url = app.defaults.api_host + '/v1/meeting_materials/' + this.model.get('material_id');
+        var that = this;
+
+        var save_url = app.defaults.api_host + '/v1/meeting_materials/' + this.model.id;
         var params = {
             edit_id : this.model.id,
             content : this.model.get('content') || '',
-            old_content : this.model.old_content || '',
+            old_content : this.model.get('old_content') || '',
             user_id : app.auth.user,
             dic : app.auth.token
         };
@@ -117,7 +119,7 @@ app.materialEditView = Backbone.View.extend({
             url : save_url,
             data : params,
             success : function( response ) {
-                AppGyver.popContext();
+                AppGyver.switchContext('materialPage', { id : that.model.meeting_id }, { pop : 1 } );
             }
         } );
     }
