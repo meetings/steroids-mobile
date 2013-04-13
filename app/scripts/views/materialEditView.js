@@ -7,7 +7,7 @@ app.materialEditView = Backbone.View.extend({
             clearTimeout( this.current_lock_ensure_timeout );
         }
     },
-
+    material_id : null,
     initialize: function(options) {
         var that = this;
 
@@ -17,6 +17,9 @@ app.materialEditView = Backbone.View.extend({
 
         this.ready_to_render = false;
         this.rendered_once = false;
+
+        // Save reference to material id, if edit is locked, the model has no id
+        this.material_id = options.material_id;
 
         var start_url = options.continue_edit ?
             app.defaults.api_host + '/v1/meeting_materials/' + options.material_id + '/continue_edit' :
@@ -96,9 +99,9 @@ app.materialEditView = Backbone.View.extend({
         });
     },
 
-    editMaterialCancel : function(e){
+    editMaterialCancel : function(e) {
         e.preventDefault();
-        AppGyver.switchContext( 'materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
+        AppGyver.switchContext( 'materialPage', { id : this.material_id }, { pop : 1 } );
     },
 
     editMaterialSave : function(e){
