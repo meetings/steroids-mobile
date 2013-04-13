@@ -527,7 +527,7 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
                     } else {
                         buf.push('<span class="placeholder-20"></span>');
                     }
-                    if (begin_epoch == "") {
+                    if (dateString == "") {
                         buf.push("<!-- Time not set-->");
                     } else if (participant.rsvp_status === "yes") {
                         buf.push('<span class="rsvp yes"></span>');

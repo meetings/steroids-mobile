@@ -31,6 +31,7 @@ app.materialView = Backbone.View.extend({
         this.material_edits.on('add', this.render, this);
         this.material_edits.on('remove', function() { this.model.fetch() }, this);
 
+        this.render();
         this.edits_polling();        
     },
 

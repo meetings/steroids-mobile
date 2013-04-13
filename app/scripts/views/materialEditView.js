@@ -101,7 +101,36 @@ app.materialEditView = Backbone.View.extend({
 
     editMaterialCancel : function(e) {
         e.preventDefault();
-        AppGyver.switchContext( 'materialPage', { id : this.material_id }, { pop : 1 } );
+
+        if(this.model && this.model.id) {
+            var cancel = confirm('Cancel editing?');
+
+            if(cancel) {
+                var delete_url = app.defaults.api_host + '/v1/meeting_material_edits/' + this.model.id;
+
+                var params = {
+                    user_id : app.auth.user,
+                    dic : app.auth.token
+                };
+
+                var me = this;
+
+                $.ajax({
+                    url: delete_url,
+                    type: 'DELETE',
+                    data : params,
+                    success : function( response ) {
+                        console.log(delete_url);
+                        console.log(me.model.id);
+                        console.log(me.material_id);
+                        me.openMaterialPage();
+                    }
+                });
+            }
+        }
+        else {
+            this.openMaterialPage();
+        }
     },
 
     editMaterialSave : function(e){
@@ -122,8 +151,12 @@ app.materialEditView = Backbone.View.extend({
             url : save_url,
             data : params,
             success : function( response ) {
-                AppGyver.switchContext('materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
+                that.openMaterialPage();
             }
         } );
+    },
+
+    openMaterialPage: function() {
+        AppGyver.switchContext('materialPage', { id : this.material_id }, { pop : 1 } );
     }
 });
