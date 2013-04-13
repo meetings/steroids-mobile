@@ -1,8 +1,9 @@
 h3=title
-- if (date_string)
+- var dateString = DateFormat.dateAndTimeString(begin_epoch, end_epoch)
+- if (dateString)
     p.mtngs-calendar
         i.icon-calendar
-        = date_string + ', ' + time_string + ' ' + timezone_string
+        = dateString
 - else
     p.mtngs-calendar
         i.icon-calendar
@@ -47,7 +48,7 @@ ul(data-role='listview',data-inset='true')
                                 img(src=participant.image, width='30', height='30')
                             - else
                                 span.placeholder-30
-                            - if( date_string == "" )
+                            - if( dateString == "" )
                                 // Time not set
                             - else if( participant.rsvp_status === 'yes' )
                                 span.rsvp.yes
