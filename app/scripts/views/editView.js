@@ -156,11 +156,6 @@ app.editView = Backbone.View.extend({
     saveEditStepDateAndTime: function(e) {
         e.preventDefault();
 
-        if(!this.model.get('id')) {
-            this.model.set('begin_date', '');
-            this.model.set('begin_time', '');
-        }
-
         this.finalizeMeetingCreation();
     },
 
@@ -175,12 +170,10 @@ app.editView = Backbone.View.extend({
         $('#headerTitle').text('Set date & time');
 
         if(!this.model.get('id')) {
-            var now = moment();
-            this.model.set('begin_date', now.format('YYYY-MM-DD'));
-            this.model.set('begin_time', now.format('HH:00'));
+            var now = moment().minutes(0).seconds(0);
 
-            this.model.set('end_date', now.format('YYYY-MM-DD'));
-            this.model.set('end_time', now.add('hours', 1).format('HH:00'));
+            this.model.set('begin_epoch', now.unix());
+            this.model.set('end_epoch', now.unix());
         }
 
         this.$el.html( templatizer.editStepDateAndTimeSetupView( this.model.toJSON() ) );
@@ -200,10 +193,8 @@ app.editView = Backbone.View.extend({
             $('#meeting-end-date').val(begin_date.format('YYYY-MM-DDTHH:mm'));
         }
         else {
-            this.model.set('begin_date', begin_date.format('YYYY-MM-DD'));
-            this.model.set('begin_time', begin_date.format('HH:mm'));
-            this.model.set('end_date', end_date.format('YYYY-MM-DD'));
-            this.model.set('end_time', end_date.format('HH:mm'));
+            this.model.set('begin_epoch', begin_date.unix());
+            this.model.set('end_epoch', end_date.unix());
 
             this.finalizeMeetingCreation();
         }

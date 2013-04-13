@@ -4,6 +4,8 @@ app.meetingModel = Backbone.Model.extend({
         "id" : null,
         "title": "",
         "date_string" : "",
+        "begin_epoch": 0,
+        "end_epoch" : 0,
         "time_string": "",
         "location": "",
         "participants": [],

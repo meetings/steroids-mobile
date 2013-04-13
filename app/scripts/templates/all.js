@@ -55,7 +55,7 @@ exports.commentInListView = function anonymous(locals, attrs, escape, rethrow, m
         var __val__ = user_name;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</h3><p class="info">');
-        var __val__ = date_ago;
+        var __val__ = moment.unix(date_epoch).fromNow();
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</p><p>");
         var __val__ = content;
@@ -143,7 +143,7 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
             "data-theme": "b",
             type: "datetime-local",
             name: "meeting-begin-date",
-            value: begin_date + "T" + begin_time,
+            value: moment.unix(begin_epoch).format("YYYY-MM-DDTHH:ss"),
             placeholder: "Starts"
         }, {
             "data-theme": true,
@@ -158,7 +158,7 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
             "data-theme": "b",
             type: "datetime-local",
             name: "meeting-end-date",
-            value: end_date + "T" + end_time,
+            value: moment.unix(end_epoch).format("YYYY-MM-DDTHH:ss"),
             placeholder: "Ends"
         }, {
             "data-theme": true,
@@ -396,7 +396,7 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
         buf.push("</h3>");
         if (author_name !== "") {
             buf.push("<p>");
-            var __val__ = "By " + author_name + " " + time_ago;
+            var __val__ = "By " + author_name + " " + moment.unix(created_epoch).fromNow();
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
@@ -486,13 +486,24 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
         buf.push("</h3><p>");
         var __val__ = location;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</p><div class="top-bar"><span class="left">');
-        var __val__ = date_string || "Scheduling in progress";
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</span><span class="right">');
-        var __val__ = time_string;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</span></div>");
+        buf.push('</p><div class="top-bar">');
+        var dateString = DateFormat.dateString(begin_epoch, end_epoch);
+        var timeString = DateFormat.timeString(begin_epoch, end_epoch);
+        if (dateString) {
+            buf.push('<span class="left">');
+            var __val__ = dateString;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push('</span><span class="right">');
+            var __val__ = timeString;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</span>");
+        } else {
+            buf.push('<span class="left">');
+            var __val__ = "Scheduling in progress";
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</span>");
+        }
+        buf.push("</div>");
         if (participants.length) {
             buf.push('<div class="participants">');
             participants = _.sortBy(participants, function(p) {
@@ -516,7 +527,7 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
                     } else {
                         buf.push('<span class="placeholder-20"></span>');
                     }
-                    if (date_string == "") {
+                    if (begin_epoch == "") {
                         buf.push("<!-- Time not set-->");
                     } else if (participant.rsvp_status === "yes") {
                         buf.push('<span class="rsvp yes"></span>');
@@ -548,9 +559,10 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
         var __val__ = title;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</h3>");
-        if (date_string) {
+        var dateString = DateFormat.dateAndTimeString(begin_epoch, end_epoch);
+        if (dateString) {
             buf.push('<p class="mtngs-calendar"><i class="icon-calendar"></i>');
-            var __val__ = date_string + ", " + time_string + " " + timezone_string;
+            var __val__ = dateString;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         } else {
@@ -618,7 +630,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                     } else {
                         buf.push('<span class="placeholder-30"></span>');
                     }
-                    if (date_string == "") {
+                    if (dateString == "") {
                         buf.push("<!-- Time not set-->");
                     } else if (participant.rsvp_status === "yes") {
                         buf.push('<span class="rsvp yes"></span>');
@@ -684,11 +696,13 @@ exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, me
         buf.push("<li>");
         var c = user.proposal_answers[proposal.id] ? user.proposal_answers[proposal.id] : "no";
         if (mode === "choose") c = "choose";
+        var dateString = DateFormat.dateString(proposal.begin_epoch, proposal.end_epoch);
+        var timeString = DateFormat.timeString(proposal.begin_epoch, proposal.end_epoch);
         buf.push("<a");
         buf.push(attrs({
             href: "#",
             "data-option-id": proposal.id,
-            "data-time": proposal.date_string + " " + proposal.time_string,
+            "data-time": dateString + " " + timeString,
             "class": "option-" + c
         }, {
             href: true,
@@ -697,12 +711,12 @@ exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, me
             "data-time": true
         }));
         buf.push('><div class="top-bar"><span class="left">');
-        var __val__ = proposal.date_string;
+        var __val__ = dateString;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</span><span class="right">');
-        var __val__ = proposal.time_string;
+        var __val__ = timeString;
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</span></div><!--span.right=time_string-->");
+        buf.push("</span></div><!--span.right=timeString-->");
         if (participants.length) {
             buf.push('<div class="participants">');
             participants = _.sortBy(participants, function(p) {

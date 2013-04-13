@@ -1,11 +1,13 @@
 li
     - var c = user.proposal_answers[proposal.id] ? user.proposal_answers[proposal.id] : 'no';
     - if ( mode === 'choose' ) c = 'choose';
-    a(href="#",data-option-id=proposal.id,class="option-"+c,data-time=proposal.date_string + ' ' + proposal.time_string)
+    - var dateString = DateFormat.dateString(proposal.begin_epoch, proposal.end_epoch)
+    - var timeString = DateFormat.timeString(proposal.begin_epoch, proposal.end_epoch)
+    a(href="#",data-option-id=proposal.id,class="option-"+c,data-time=dateString + ' ' + timeString)
         div.top-bar
-            span.left=proposal.date_string
-            span.right=proposal.time_string
-        //span.right=time_string
+            span.left=dateString
+            span.right=timeString
+        //span.right=timeString
         - if ( participants.length)
             div.participants
                 - participants = _.sortBy( participants, function(p){ if( p.proposal_answers && p.proposal_answers[proposal.id] === 'yes' ) return 1; else if( p.proposal_answers && p.proposal_answers[proposal.id] === 'no' ) return 3; else return 2; });
