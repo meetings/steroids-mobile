@@ -408,6 +408,20 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
     return buf.join("");
 };
 
+// materialRenameView.jade compiled template
+exports.materialRenameView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="rename-material-cancel">Cancel</a><h1>Rename Material</h1></div><div data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><p>TODO: ADD field and save button </p></div></div></div>');
+    }
+    return buf.join("");
+};
+
 // materialView.jade compiled template
 exports.materialView = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;

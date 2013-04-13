@@ -11,6 +11,7 @@ app.router = Backbone.Router.extend({
         "participants.html" : "participants",
         "materials.html" : "materials",
         "editMaterial.html" : "editMaterial",
+        "renameMaterial.html" : "renameMaterial",
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
@@ -428,12 +429,19 @@ app.router = Backbone.Router.extend({
         if ( app.views.editMaterial ) app.views.editMaterial.close();
 
         app.views.editMaterial = new app.materialEditView({
-            el : $('#material .view-container'),
+            el : $('#page .view-container'),
             material_id : params.id,
             continue_edit : params.continue_edit
         });
     },
+    renameMaterial : function(params) {
+        if ( app.views.renameMaterial ) app.views.renameMaterial.close();
 
+        app.views.renameMaterial = new app.materialRenameView({
+            el : $('#page .view-container'),
+            material_id : params.id
+        });
+    },
     edit : function(params) {
 
         // Render panel

@@ -3,24 +3,25 @@
 
     window.AppGyver = {
         contexts : [
-            { file : 'index.html', id : 'meetingsPage', load_before_init : true },
-            { file : 'login.html', id : 'loginPage', load_before_init : true, open_in_modal : false },
+            { file : 'index.html', id : 'meetingsPage', no_preload : true },
+            { file : 'login.html', id : 'loginPage', load_before_init : true },
             { file : 'profile.html', id : 'profilePage', load_before_init : true },
             { file : 'meeting.html', id : 'meetingPage' },
             { file : 'participants.html', id : 'participantsPage' },
-            { file : 'participant.html', id : 'participantPage', open_in_modal : false },
+            { file : 'participant.html', id : 'participantPage' },
             { file : 'materials.html', id : 'materialsPage' },
             { file : 'material.html', id : 'materialPage' },
-            { file : 'scheduling.html', id : 'schedulingPage', open_in_modal : false },
+            { file : 'scheduling.html', id : 'schedulingPage' },
             { file : 'addParticipant.html', id : 'addParticipantPage' },
             { file : 'edit.html', id : 'editPage' },
             { file : 'edit.html', id : 'singleEditPage' },
-            { file : 'editMaterial.html', id : 'editMaterialPage', open_in_modal : false },
+            { file : 'editMaterial.html', id : 'editMaterialPage', shared_file : 'init.html', shared_id : 'init' },
+            { file : 'renameMaterial.html', id : 'renameMaterialPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'signup.html', id : 'signupPage' }
         ],
 
         init: function(){
-            var path = app.options.build === 'ios' ? 'http://localhost:13101' : '';
+            var that = this;
 
             // open target blank links, material contents and profile linkedn  in safari
             $(document).on("click", "a[target='_blank'], li#material_content > a, p.mtngs-linkedin > a", function(e){
@@ -30,30 +31,22 @@
 
             // handle preloading on app start
             if (/index\.html/.test(window.location.href)) {
+
                 steroids.on("ready", function(){
-                    var before_init_deferreds = [];
-
-                    for ( var i in AppGyver.contexts ) {
-                        var context = AppGyver.contexts[i];
-                        if( context.id === 'meetingsPage' ) continue;
-                        var deferred = context.load_before_init ? $.Deferred() : false;
-                        if ( deferred ) before_init_deferreds.push( deferred );
-                        var preload_path = "/" + context.file + '?steroids_preload_id=' + context.id;
-                        AppGyver.preload( path + preload_path, context.id, deferred );
-                    }
-
-                  //  $.when.apply( $, before_init_deferreds ).then(function(){
-                        setTimeout(function(){
-                            app.init();
-                        }, 2000);
-                   // });
+                    that.ensure_preloads('only_preloads_before_init');
+                    setTimeout(function(){
+                        app.init();
+                        that.ensure_preloads();
+                    }, 2000 );
                 });
 
+                AppGyver.current_context_id = 'meetingsPage';
                 AppGyver.current_context = this.getContextForID( 'meetingsPage' );
             }
             else {
                 var id_parts = /[\?\&]steroids_preload_id=([^\&]*)/.exec( window.location.href );
                 if ( id_parts[1] ) {
+                    AppGyver.current_context_id = id_parts[1];
                     AppGyver.current_context = this.getContextForID( id_parts[1] );
                 }
                 else {
@@ -62,11 +55,43 @@
             }
 
             window.addEventListener("message", function(event) {
-                if ( event.data.preloadId !== AppGyver.current_context.id ) return;
-                AppGyver.refreshPreload( AppGyver.current_context, event.data.urlParams );
+                if ( AppGyver.current_context ) {
+                    if ( event.data.preloadId == AppGyver.current_context_id ) {
+                        AppGyver.refreshPreload( AppGyver.current_context, event.data.urlParams );
+                    }
+                }
+                else {
+                    var context = that.getContextForID( event.data.preloadId );
+                    if ( context && context.shared_id == AppGyver.current_context_id ) {
+                        AppGyver.refreshPreload( context, event.data.urlParams );
+                    }
+                }
             } );
         },
 
+        preloaded_ids : {},
+
+        ensure_preloads : function( only_preloads_before_init ) {
+            var path = app.options.build === 'ios' ? 'http://localhost:13101' : '';
+
+            var context, preload_path, i, id, file;
+
+            for ( i in AppGyver.contexts ) {
+                context = AppGyver.contexts[i];
+
+                if ( context.no_preload ) continue;
+                if ( only_preloads_before_init && ! context.load_before_init ) continue;
+
+                id = context.shared_id || context.id;
+                file = context.shared_id ? context.shared_file : context.file;
+
+                if ( this.preloaded_ids[id] ) continue;
+
+                this.preloaded_ids[ id ] = true;
+                preload_path = "/" + file + '?steroids_preload_id=' + id;
+                AppGyver.preload( path + preload_path, id );
+            }
+        },
         preload: function(url, id, deferred ){
             (new steroids.views.WebView(url)).preload({id: id}, { onSuccess : function(){
                 if( deferred ) deferred.resolve();
@@ -75,12 +100,11 @@
 
         // TODO: support different animations
         openPreload: function(context, params, opts ) {
-            var preloadId = context.id;
-            var urlParams = params;
             var openInModal = context.open_in_modal;
             var animation = context.animation;
 
-            window.postMessage({urlParams: urlParams, preloadId: preloadId}, "*");
+            console.log("requesting refresh for preload " + context.id);
+            window.postMessage( { urlParams: params, preloadId: context.id }, "*");
 
             var removeActive = function() {
                 $(".ui-btn-active").removeClass("ui-btn-active");
@@ -91,7 +115,7 @@
 
             var options = {
                 view: {
-                    id: preloadId,
+                    id: context.shared_id || context.id,
                     keepLoading: true
                 },
                 navigationBar: false
@@ -120,7 +144,7 @@
                 if ( opts && opts.pop ) {
                     steroids.layers.pop();
                 }
-                else if( preloadId === 'meetingsPage' ){
+                else if( context.id === 'meetingsPage' ){
                     steroids.layers.popAll();
                 }
                 else{
@@ -128,8 +152,17 @@
                 }
             }
         },
-        // this could actually be implemented using backbone model changing etc.
+
+        previous_refresh_date : false,
+
         refreshPreload: function( context, params ){
+            if ( this.previous_refresh_date && this.previous_refresh_date.getTime() + 500 > new Date().getTime() ) {
+                console.log("skipped duplicate reload request for " + context.id );
+                return;
+            }
+
+            this.previous_refresh_date = new Date();
+
             if ( app.options.build === 'web' ) {
                 alert("unexpectedly ran refreshPreload in web!");
             }
@@ -137,17 +170,15 @@
             var url = this.formContextURL( context, params, 'randomize' );
             console.log("change to url: ", url);
 
+            history.replaceState({}, document.title, url);
+
             if (typeof window.router === "undefined") {
-                history.replaceState({}, document.title, url);
                 app.init();
             }
             else {
                 AppGyver.hideContent();
                 app.initializeAuthFromCookie();
-                history.replaceState({}, document.title, url);
                 Backbone.history.checkUrl();
-
-//                router.navigate( url, { trigger : true, replace : true } );
             }
         },
 
@@ -165,6 +196,16 @@
             });
         },
 
+        scheduleCleaning: function() {
+            var path = app.options.build === 'ios' ? 'http://localhost:13101' : '';
+            var that = this;
+            setTimeout( function() {
+                if ( AppGyver.current_context_id == 'init' ) {
+                    window.location = path + '/init.html?steroids_preload_id=init';
+                }
+            }, 500 );
+        },
+
         switchContext: function( context_id, params, options ) {
             params = params || {};
 
@@ -175,14 +216,8 @@
 
             if ( app.options.build !== 'web' ) {
                 AppGyver.openPreload( context, params, options );
-
-                var that = this;
-                setTimeout( function() {
-                    if ( 0 && window.location.href.toString().indexOf('index.html') < 0 ) {
-                        window.location = that.formContextURL( AppGyver.current_context, {}, 'randomize', 'preload_id' );
-                    }
-                }, 1000 );
-            }
+                this.scheduleCleaning();
+             }
             else {
                 window.location = this.formContextURL( context, params );
             }
@@ -190,6 +225,7 @@
         popContext : function() {
             if ( app.options.build !== 'web' ) {
                 steroids.layers.pop();
+                this.scheduleCleaning();
             }
             else if ( $('.back-button').length && $('.back-button').attr('href') !== '#' ){
                 window.location = $('.back-button').attr('href');

@@ -1,16 +1,10 @@
 app.materialEditView = Backbone.View.extend({
-
-    beforeClose : function() {
-        this.$el.parent().append( $('<div class="view-container"></div>') );
-
-        if ( this.current_lock_ensure_timeout ) {
-            clearTimeout( this.current_lock_ensure_timeout );
-        }
-    },
     material_id : null,
     initialize: function(options) {
         var that = this;
 
+        this.header = new app.headerView({ el : options.el }); // hooks pre-load back button for now
+        
         this.model = new app.materialEditModel();
 
         _(this).bindAll('editMaterialCancel','editMaterialSave');
@@ -99,7 +93,8 @@ app.materialEditView = Backbone.View.extend({
         });
     },
 
-    editMaterialCancel : function(e) {
+    editMaterialCancel : function(e){
+        var that = this;
         e.preventDefault();
 
         if(this.model && this.model.id) {
@@ -113,17 +108,12 @@ app.materialEditView = Backbone.View.extend({
                     dic : app.auth.token
                 };
 
-                var me = this;
-
                 $.ajax({
                     url: delete_url,
                     type: 'DELETE',
                     data : params,
                     success : function( response ) {
-                        console.log(delete_url);
-                        console.log(me.model.id);
-                        console.log(me.material_id);
-                        me.openMaterialPage();
+                        that.openMaterialPage();
                     }
                 });
             }
@@ -134,8 +124,8 @@ app.materialEditView = Backbone.View.extend({
     },
 
     editMaterialSave : function(e){
-        e.preventDefault();
         var that = this;
+        e.preventDefault();
 
         var save_url = app.defaults.api_host + '/v1/meeting_materials/' + this.model.get('material_id');
         var params = {
