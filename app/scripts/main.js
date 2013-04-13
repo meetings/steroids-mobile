@@ -93,8 +93,7 @@ window.app = {
         Backbone.history.start({pushState: true});
     },
     initializeAuthFromCookie : function() {
-        auth_cookie = this._readAuthCookie();
-
+        var auth_cookie = this._readAuthCookie() || '';
         var user_and_token = auth_cookie.split(/_(.+)?/,2);
         app.auth.user = user_and_token[0];
         app.auth.token = user_and_token[1];

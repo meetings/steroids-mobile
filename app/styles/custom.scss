@@ -701,7 +701,8 @@ div.bar-container{
     border-radius: 4px;
     border:2px solid #999;
     padding:3px;
-    height:20px;
+    height:30px;
+    box-sizing:border-box;
 }
 div.bar-container .bar{
     position:absolute;
@@ -1106,6 +1107,25 @@ h3.mtngs-firsth3{
 // material list text closer to icons
 ul#material_list li a{
     padding-left:80px;
+}
+
+// Photo uploading
+div.photo-upload{
+    div.file-save-form{
+        display:none;
+        height:50px;
+        div.left{
+            float:left;
+            width:68%;
+            div.ui-input-text{
+                margin-top:9px;
+            }
+        }
+        div.right{
+            float:right;
+            width:30%;
+        }
+    }
 }
 
 // Commenting

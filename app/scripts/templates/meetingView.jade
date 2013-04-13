@@ -20,19 +20,17 @@ h3=title
 div#next-action-bar
     
 // Skype button
-- if (skype_url)
+- if (locals.skype_url)
     a#skype_button(href=skype_url,data-role='button',data-icon='mtngs-skype',data-theme='b') Join Skype conference
 
 div#progress-bar
 
 // Participants
-
 - if(is_draft)
     - if(participants.length <= 1)
         a.open-add-participant-view(href="#", data-theme="b", data-role="button") Add participants
     - else
         a.open-send-invites-view(href="#", data-theme="b", data-role="button") Send invites
-
 ul(data-role='listview',data-inset='true')
     li
         a(href="#").open-participant-view
@@ -65,18 +63,20 @@ ul#materials_list(data-role="listview",data-inset="true",data-theme="a")
 
 #materialsPopup(data-role="popup", data-overlay-theme="a", data-theme="c", class="ui-corner-all")
     div(data-role="content", data-theme="d", class="ui-corner-bottom ui-content")
-        h3(class="ui-title") Choose source        
+        h3(class="ui-title") Choose source
         a.add-photo-material(href="#", data-role="button", data-theme="a") Camera
         a(href="#", data-role="button", data-theme="a") Existing photo
         a(href="#", data-role="button", data-rel="back", data-theme="c") Cancel
 
 - if( app.options.build !== 'web' )
-    a.add-photo-material(href='#',data-role="button") Add photo
-    img#myImage
-    div#upload_progress
-    div.file-save-form(style="display:none;")
-        input#file-upload-name(type="text",placeholder="Type filename here...")
-        input#file-upload-id(type="hidden")
-        a.save-photo-material(href='#',data-role="button",style="display:none;") Add to meeting
-    div.save-text(style="display:none;")
-        p Saving material...
+    div.photo-upload
+        a.add-photo-material(href='#',data-role="button") Add photo
+        div#upload_progress
+        div.file-save-form
+            div.left
+                    input#file-upload-id(type="hidden")
+                    input#file-upload-name(type="text",placeholder="Filename...",data-theme="b")
+            div.right
+                    a.save-photo-material.ui-disabled(href='#',data-role="button") Save
+        div.save-text(style="display:none;")
+            p Saving material...

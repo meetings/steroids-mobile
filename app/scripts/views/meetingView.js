@@ -153,25 +153,30 @@ app.meetingView = Backbone.View.extend({
 
     savePhotoMaterial : function(e){
         e.preventDefault();
+        if( $('.save-photo-material').hasClass('ui-disabled') ) return;
+
         $('.save-text').show();
         $('.file-save-form').hide();
+        $('.save-photo-material').addClass('ui-disabled');
+
         var that = this;
         var data = {
             upload_id : $('#file-upload-id').val(),
             meeting_id : this.model.get('id'),
             material_name : $('#file-upload-name').val(),
-            user_id : app.auth.user
+            user_id : app.auth.user,
+            dic : app.auth.token
         };
-        //alert('posting to: '+ app.defaults.api_host + '/v1/meetings/' + this.model.get('id') + '/materials' );
+
         $.post(app.defaults.api_host + '/v1/meetings/' + this.model.get('id') + '/materials', data, function(res){
-            app.collections.materials.fetch({ success : function(){
-                $('.add-photo-material',that.el).show();
+            app.collections.materials.fetch({ silent : true, success : function(c){
+                that.subviews.materials.reset(c);
+                $('.add-photo-material').show();
                 $('#upload_progress').html('');
-                $('.save-text',that.el).hide();
-                $('.save-photo-material',that.el).hide();
-                $('#file-upload-name',that.el).val('');
+                $('.save-text').hide();
+                $('#file-upload-name').val('');
             }, error : function(err){
-                alert('error in fetch');
+                alert('Could not update material list.');
             }});
         });
     },
@@ -179,22 +184,18 @@ app.meetingView = Backbone.View.extend({
     addPhotoMaterial : function(e){
         e.preventDefault();
         navigator.camera.getPicture( function(imageURI){
-
             var that = this;
-            // Show filename field
+            // Show filename field and focus
+            $('.file-save-form').show();
+            $('.add-photo-material').hide();
+            $('.save-photo-material').addClass('ui-disabled');
+
+            setTimeout( function(){
+                $('#file-upload-name').focus();
+            },100);
+
+            // Setup File transfer and progress bar
             var ft = new FileTransfer();
-
-            var options = new FileUploadOptions();
-            var filename = imageURI.substr(imageURI.lastIndexOf('/')+1);
-            options.fileKey='file';
-            options.fileName=filename;
-            options.params = {
-                user_id : app.auth.user,
-                dic : app.auth.token,
-                filename : filename
-            };
-            options.chunkedMode = false;
-
             ft.onprogress = function( progressEvent ){
                 if (progressEvent.lengthComputable) {
                     percentLoaded = Math.round(100 * (progressEvent.loaded / progressEvent.total));
@@ -203,22 +204,28 @@ app.meetingView = Backbone.View.extend({
                 }
             };
 
-            $('.file-save-form',that.el).show();
-            setTimeout( function(){
-                $('#file-upload-name').focus();
-            },100);
-            $('.add-photo-material',that.el).hide();
+            var options = new FileUploadOptions();
+            var filename = imageURI.substr(imageURI.lastIndexOf('/')+1);
+            options.fileKey='file';
+            options.fileName=filename;
+            options.chunkedMode = false;
+            options.params = {
+                user_id : app.auth.user,
+                dic : app.auth.token,
+                filename : filename
+            };
+
             ft.upload(imageURI, encodeURI(app.defaults.api_host + "/v1/uploads"), function(res){
                 var resp = $.parseJSON(res.response);
                 $('#file-upload-id').val(resp.result.upload_id);
-                $('.save-photo-material',that.el).show();
+                $('.save-photo-material').removeClass('ui-disabled');
             }, function(error){
-                alert('error with upload');
+                alert('Error uploadin file.');
             }, options);
 
         }, function(err){
             setTimeout(function(){
-                alert(err);
+                alert('Error uploading file.');
             },100);
         } , { quality : 49, destinationType : Camera.DestinationType.FILE_URI } );
     },
