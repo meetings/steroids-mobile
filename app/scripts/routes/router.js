@@ -221,10 +221,12 @@ app.router = Backbone.Router.extend({
 
         if( ! app.models.currentUser ) app.models.currentUser = new app.userModel( { id : 'me' } );
 
+        var context = params && params.context_after_tos_accept || null;
+        
         // TODO: remove and recreate
         app.views.profile = new app.profileView({
             el : $('#profile-page'),
-            context_after_tos_accept : params.context_after_tos_accept,
+            context_after_tos_accept : context,
             model : app.models.currentUser
         });
 
