@@ -18,7 +18,7 @@ a(href='meeting.html?id='+id)
                         img(src=participant.image, width='20', height='20')
                     - else
                         span.placeholder-20
-                    - if( begin_epoch == "" )
+                    - if( dateString == "" )
                         // Time not set
                     - else if( participant.rsvp_status === 'yes' )
                         span.rsvp.yes
