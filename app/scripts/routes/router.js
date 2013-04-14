@@ -71,7 +71,7 @@ app.router = Backbone.Router.extend({
 
         // Create collections && set urls
         if( ! app.collections.future_meetings ) app.collections.future_meetings = new app.meetingCollection();
-        app.collections.future_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/meetings';
+        app.collections.future_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/meetings_and_suggestions';
 
         if( ! app.collections.unscheduled_meetings ) app.collections.unscheduled_meetings = new app.meetingCollection({},{ override_endpoint : 'unscheduled_meetings' });
         app.collections.unscheduled_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/unscheduled_meetings';

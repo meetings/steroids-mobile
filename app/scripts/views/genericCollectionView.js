@@ -128,7 +128,7 @@ app.genericCollectionView = Backbone.View.extend({
 
         if (this._rendered) {
 
-            $(viewToRemove.el).remove();
+            this.render();
 
             if (this.onRender !== null && this.onRender !== undefined) {
                 this.onRender();
