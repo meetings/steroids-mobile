@@ -161,6 +161,12 @@ app.genericCollectionView = Backbone.View.extend({
             this.$el.html( this.emptyString );
         }
 
+        // Hide / show view element, if hideIfEmpty is set
+        if( this.options.hideIfEmpty ){
+            if( ! l ) this.$el.hide();
+            else this.$el.show();
+        }
+
         this.$el.delay(100).listview().listview("refresh");
 
         // Show loader if there was 10 meeitngs returned

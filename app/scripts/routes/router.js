@@ -99,7 +99,8 @@ app.router = Backbone.Router.extend({
             emptyString : '<li class="end">No more upcoming meetings.</li>',
             infiniScroll : true,
             infiniScrollDirection : 'down',
-            infiniScrollExtraParams : { start_min : today, sort : "asc" }
+            infiniScrollExtraParams : { start_min : today, sort : "asc" },
+            hideIfEmpty : true
         });
 
         if( ! app.views.today ) app.views.today = new app.todayMeetingsView({
@@ -107,7 +108,8 @@ app.router = Backbone.Router.extend({
             childViewConstructor : app.meetingInListView,
             childViewTagName : 'li',
             el : $('#today'),
-            infiniScroll : false
+            infiniScroll : false,
+            hideIfEmpty : true
         });
 
         if( ! app.views.unscheduled ) app.views.unscheduled = new app.unscheduledMeetingsView({
@@ -115,7 +117,8 @@ app.router = Backbone.Router.extend({
             childViewConstructor : app.meetingInListView,
             childViewTagName : 'li',
             el : '#unscheduled',
-            infiniScroll : false
+            infiniScroll : false,
+            hideIfEmpty : true
         });
 
         if( ! app.views.past ) app.views.past = new app.genericCollectionView({
@@ -127,7 +130,8 @@ app.router = Backbone.Router.extend({
             infiniScroll : true,
             infiniScrollDirection : 'up',
             infiniScrollExtraParams : { start_max : today, sort : "desc" },
-            mode : "addtotop"
+            mode : "addtotop",
+            hideIfEmpty : true
         });
 
         if( ! app.views.highlights ) app.views.highlights = new app.highlightedMeetingsView({
@@ -135,7 +139,8 @@ app.router = Backbone.Router.extend({
             childViewConstructor : app.highlightedMeetingInListView,
             childViewTagName : 'li',
             el : '#highlights',
-            infiniScroll : false
+            infiniScroll : false,
+            hideIfEmpty : true
         });
 
         // Fetch things
@@ -151,7 +156,6 @@ app.router = Backbone.Router.extend({
             });
             app.collections.today.reset( today_meetings );
 
-
             // Create new collection of upcoming meetings
             var upcoming_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
                 return ( o['begin_epoch'] > today_end );
@@ -160,51 +164,18 @@ app.router = Backbone.Router.extend({
 
             futureFetch.resolve(); // Resolve the deferred
 
-            // Hide empty views / show views that have stuff
-            // TODO: do this in collection view perhaps?
-            if( app.collections.future_meetings.length === 0 ){
-                app.views.future.$el.hide();
-            }
-            else{
-                app.views.future.$el.show();
-            }
-            if( app.collections.today.length === 0 ){
-                app.views.today.$el.hide();
-            }
-            else{
-                app.views.today.$el.show();
-            }
         },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
 
         app.collections.unscheduled_meetings.fetch({ success : function(col,res){
             unscheduledFetch.resolve();
-            if( app.collections.unscheduled_meetings.length === 0 ){
-                app.views.unscheduled.$el.hide();
-            }
-            else{
-                app.views.unscheduled.$el.show();
-            }
         }, data : { include_draft : 1 }});
 
         app.collections.past_meetings.fetch({ success : function(col,res){
             pastFetch.resolve();
-
-            if( app.collections.past_meetings.length === 0 ){
-                app.views.past.$el.hide();
-            }
-            else{
-                app.views.past.$el.show();
-            }
         },  data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
 
         app.collections.highlights.fetch({ success : function(col,res){
             highlightsFetch.resolve();
-            if( app.collections.highlights.length === 0 ){
-                app.views.highlights.$el.hide();
-            }
-            else{
-                app.views.highlights.$el.show();
-            }
         }});
     },
 
@@ -223,7 +194,7 @@ app.router = Backbone.Router.extend({
         if( ! app.models.currentUser ) app.models.currentUser = new app.userModel( { id : 'me' } );
 
         var context = params && params.context_after_tos_accept || null;
-        
+
         // TODO: remove and recreate
         app.views.profile = new app.profileView({
             el : $('#profile-page'),
