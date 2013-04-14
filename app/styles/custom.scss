@@ -1262,6 +1262,44 @@ div#signup-form {
         -webkit-border-top-right-radius: 0px;
     }
 
+    .ui-grid-a .ui-block-a { 
+        width: 30%;
+    }
+
+    .ui-grid-a .ui-block-b { 
+        width: 70%; 
+    }
+
+    div#profile-image {
+        background-position: top left;
+        background-color:transparent;
+        background-repeat: no-repeat;
+        background-color: #fff;
+        width:70px;
+        height:70px;
+    }
+
+    div#image-placeholder {
+        visibility: hidden;
+        background-position: 50% 8px;
+        background-color:transparent;
+        background-repeat: no-repeat;
+        width:70px;
+        height:70px;
+        display:inline-block;
+        @include retina-bg('/images/default_user_30', 'png', 30px, 30px);
+
+        text-align: center;
+
+        p {
+            margin-top: 50px;
+            font-size: 11px;
+            color: #666;
+            font-weight: bold;
+        }
+
+    }
+
     .tos-disclaimer {
         font-size:13px;
         color: #666;

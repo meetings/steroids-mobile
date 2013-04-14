@@ -1023,38 +1023,90 @@ exports.profileView = function anonymous(locals, attrs, escape, rethrow, merge) 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="signup-form" data-role="fieldcontain" class="form-full-width"><p><input');
-        buf.push(attrs({
-            id: "user-firstname",
-            "data-theme": "b",
-            type: "text",
-            name: "user-firstname",
-            value: first_name,
-            placeholder: "First name"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push("/></p><p><input");
-        buf.push(attrs({
-            id: "user-lastname",
-            "data-theme": "b",
-            type: "text",
-            name: "user-firstname",
-            value: last_name,
-            placeholder: "Last name",
-            "class": "corners-bottom"
-        }, {
-            "data-theme": true,
-            type: true,
-            name: true,
-            value: true,
-            placeholder: true
-        }));
-        buf.push("/></p><p><input");
+        buf.push('<div id="signup-form" data-role="fieldcontain" class="form-full-width">');
+        if (true || app.options.build !== "web") {
+            buf.push('<div class="ui-grid-a"><div class="ui-block-a"><div');
+            buf.push(attrs({
+                id: "profile-image",
+                style: "background-image:url(" + image + ")",
+                "class": "mtngs-profile-image"
+            }, {
+                style: true
+            }));
+            buf.push("><div");
+            buf.push(attrs({
+                id: "image-placeholder",
+                style: "visibility:" + (image ? "hidden" : "visible")
+            }, {
+                style: true
+            }));
+            buf.push('><p>Set picture</p></div></div></div><div class="ui-block-b"><div class="input-top"><input');
+            buf.push(attrs({
+                id: "user-firstname",
+                "data-theme": "b",
+                type: "text",
+                name: "user-firstname",
+                value: first_name,
+                placeholder: "First name"
+            }, {
+                "data-theme": true,
+                type: true,
+                name: true,
+                value: true,
+                placeholder: true
+            }));
+            buf.push('/></div><div class="input-bottom"><input');
+            buf.push(attrs({
+                id: "user-lastname",
+                "data-theme": "b",
+                type: "text",
+                name: "user-firstname",
+                value: last_name,
+                placeholder: "Last name",
+                "class": "corners-bottom"
+            }, {
+                "data-theme": true,
+                type: true,
+                name: true,
+                value: true,
+                placeholder: true
+            }));
+            buf.push("/></div></div></div>");
+        } else {
+            buf.push("<p><input");
+            buf.push(attrs({
+                id: "user-firstname",
+                "data-theme": "b",
+                type: "text",
+                name: "user-firstname",
+                value: first_name,
+                placeholder: "First name"
+            }, {
+                "data-theme": true,
+                type: true,
+                name: true,
+                value: true,
+                placeholder: true
+            }));
+            buf.push("/></p><p><input");
+            buf.push(attrs({
+                id: "user-lastname",
+                "data-theme": "b",
+                type: "text",
+                name: "user-firstname",
+                value: last_name,
+                placeholder: "Last name",
+                "class": "corners-bottom"
+            }, {
+                "data-theme": true,
+                type: true,
+                name: true,
+                value: true,
+                placeholder: true
+            }));
+            buf.push("/></p>");
+        }
+        buf.push("<p><input");
         buf.push(attrs({
             id: "user-organization",
             "data-theme": "b",

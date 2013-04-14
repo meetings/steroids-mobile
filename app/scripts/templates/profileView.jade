@@ -1,8 +1,20 @@
 div#signup-form.form-full-width(data-role="fieldcontain")
-    p
-        input#user-firstname(data-theme="b",type="text",name="user-firstname",value=first_name,placeholder="First name")
-    p
-        input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=last_name,placeholder="Last name")
+    - if( app.options.build !== 'web' )
+        .ui-grid-a
+            .ui-block-a
+                div#profile-image.mtngs-profile-image(style="background-image:url(" + image + ")")
+                    div#image-placeholder(style="visibility:" + (image ? 'hidden' : 'visible'))
+                        p Set picture
+            .ui-block-b
+                div.input-top
+                    input#user-firstname(data-theme="b",type="text",name="user-firstname",value=first_name,placeholder="First name")
+                div.input-bottom
+                    input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=last_name,placeholder="Last name")
+    - else
+        p
+            input#user-firstname(data-theme="b",type="text",name="user-firstname",value=first_name,placeholder="First name")
+        p
+            input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=last_name,placeholder="Last name")
     p
         input#user-organization(data-theme="b",type="text",name="user-organization",value=organization,placeholder="Organization")    
     p
