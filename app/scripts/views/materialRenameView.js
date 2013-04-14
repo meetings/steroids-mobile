@@ -33,11 +33,10 @@ app.materialRenameView = Backbone.View.extend({
         var that = this;
         e.preventDefault();
 
-        // TODO:
-        this.model.set('title', $('#jotain').value() );
+        this.model.set('title', $('#material-title').val() );
 
-        this.model.save( { success : function() {
-            AppGyver.switchContext('matetialPage', { id : that.model.get('material_id') }, { pop : 1 } );
+        this.model.save( {}, { success : function() {
+            AppGyver.switchContext('materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
         } } );
     }
 });

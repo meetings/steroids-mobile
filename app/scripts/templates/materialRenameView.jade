@@ -7,4 +7,7 @@ div.main-div(data-role="content")
         span.loader
     div.content
         div.content
-            p TODO: ADD field and save button 
+            div#edit-form.form-full-width(data-role="fieldcontain")
+                input#material-title(data-theme="b",type="text",name="material-title",value=model.title,placeholder="Title")
+                div.controls
+                    a.rename-material-save(data-theme="b", type="button") Save

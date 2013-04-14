@@ -91,7 +91,7 @@ exports.editMaterialPanel = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li>');
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Rename</a></li>');
         if (locals.download_url) {
             buf.push('<li><a id="nav-download" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Download</a></li>');
         }
@@ -417,7 +417,22 @@ exports.materialRenameView = function anonymous(locals, attrs, escape, rethrow, 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="rename-material-cancel">Cancel</a><h1>Rename Material</h1></div><div data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><p>TODO: ADD field and save button </p></div></div></div>');
+        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="rename-material-cancel">Cancel</a><h1>Rename Material</h1></div><div data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
+        buf.push(attrs({
+            id: "material-title",
+            "data-theme": "b",
+            type: "text",
+            name: "material-title",
+            value: model.title,
+            placeholder: "Title"
+        }, {
+            "data-theme": true,
+            type: true,
+            name: true,
+            value: true,
+            placeholder: true
+        }));
+        buf.push('/><div class="controls"><a data-theme="b" type="button" class="rename-material-save">Save</a></div></div></div></div></div>');
     }
     return buf.join("");
 };
