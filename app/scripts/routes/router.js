@@ -41,19 +41,19 @@ app.router = Backbone.Router.extend({
             app.showContent();
             if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0 || app.collections.unscheduled_meetings.length > 0){
                 var offset;
-                if( $('#today').length > 0 ){
+                if( $('#today').is(":visible") ){
                     offset = $('#today').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
-                else if( $('#future').length > 0 ){
-                    offset = $('#future').offset();
-                    window.scrollTo(0, offset.top - 50);
-                }
-                else if( $('#highlights').length > 0 ){
+                else if( $('#highlights').is(":visible") ){
                     offset = $('#highlights').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
-                else if( $('#unscheduled').length > 0 ){
+                else if( $('#future').is(":visible") ){
+                    offset = $('#future').offset();
+                    window.scrollTo(0, offset.top - 50);
+                }
+                else if( $('#unscheduled').is(":visible") ){
                     offset = $('#unscheduled').offset();
                     window.scrollTo(0, offset.top - 50);
                 }
