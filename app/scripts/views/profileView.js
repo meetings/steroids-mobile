@@ -53,22 +53,27 @@ app.profileView = Backbone.View.extend({
         e.preventDefault();
         var that = this;
         navigator.camera.getPicture( function(imageURI){
+            // Reset picture in ui
+            $('#profile-image').css('background-image', '');
+            $('#image-placeholder').css('visibility', 'visible');
+            $('#status-text').text('');
 
             // Setup File transfer and progress bar
             var ft = new FileTransfer();
             ft.onprogress = function( progressEvent ){
                 if (progressEvent.lengthComputable) {
                     percentLoaded = Math.round(100 * (progressEvent.loaded / progressEvent.total));
-                    var progress_text = percentLoaded + "%";
-                    //$('#upload_progress').html( templatizer.progressBar({ progress : percentLoaded, progress_text : progress_text }) );
+                    
+                    $('#status-text').text( percentLoaded + "%" );
                 }
             };
 
             var options = new FileUploadOptions();
             var filename = imageURI.substr(imageURI.lastIndexOf('/')+1);
-            options.fileKey='file';
-            options.fileName=filename;
+            options.fileKey = 'file';
+            options.fileName = filename;
             options.chunkedMode = false;
+
             options.params = {
                 user_id : app.auth.user,
                 dic : app.auth.token,
@@ -78,24 +83,23 @@ app.profileView = Backbone.View.extend({
                 height : 70
             };
 
-            $('#profile-image').css('background-image', '');
-            $('#image-placeholder').hide();
-
             ft.upload(imageURI, encodeURI(app.defaults.api_host + "/v1/uploads"), function(res){
                 var resp = $.parseJSON(res.response);
+
+                // update pic in ui, set model without render so we don't lose form state
+                $('#image-placeholder').css('visibility', 'hidden');
+                $('#profile-image').css('background-image', 'url(' + resp.result.upload_thumbnail_url + ')');
 
                 that.model.set({
                     image : resp.result.upload_thumbnail_url,
                     upload_id : resp.result.upload_id
-                });
+                }, {silent : true});
             }, function(error){
                 alert('Error uploadin file.');
             }, options);
 
         }, function(err){
-            setTimeout(function(){
-                alert('Error uploading file.');
-            },100);
+            
         } , { quality : 49, destinationType : Camera.DestinationType.FILE_URI } );
     },
 

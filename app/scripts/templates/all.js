@@ -1040,7 +1040,7 @@ exports.profileView = function anonymous(locals, attrs, escape, rethrow, merge) 
             }, {
                 style: true
             }));
-            buf.push('><p>Set picture</p></div></div></div><div class="ui-block-b"><div class="input-top"><input');
+            buf.push('><p id="status-text">Set picture</p></div></div></div><div class="ui-block-b"><div class="input-top"><input');
             buf.push(attrs({
                 id: "user-firstname",
                 "data-theme": "b",
