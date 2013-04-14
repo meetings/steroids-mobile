@@ -98,9 +98,10 @@ app.materialEditView = Backbone.View.extend({
         e.preventDefault();
 
         if(this.model && this.model.id) {
-            var cancel = confirm('Cancel editing?');
+            // Check if content has changed
+            var askConfirmation = this.model.get('content') != this.model.get('old_content');
 
-            if(cancel) {
+            if(!askConfirmation || askConfirmation && confirm('Cancel editing?')) {
                 var delete_url = app.defaults.api_host + '/v1/meeting_material_edits/' + this.model.id;
 
                 var params = {
