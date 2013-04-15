@@ -20,6 +20,20 @@ exports.addParticipantView = function anonymous(locals, attrs, escape, rethrow, 
     return buf.join("");
 };
 
+// calendarAllowAccessView.jade compiled template
+exports.calendarAllowAccessView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><h1> </h1><a href="#" data-theme="b" class="allow-access-done ui-btn-right">Done</a></div><div id="calendar-sync" data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><h3>Please allow calendar access</h3><p>In order to sync meetings with your iPhone, you should enable calendar access by following the steps below.</p><ol id="calendar-access-steps"><li class="step-settings">Open iPhone Settings</li><li class="step-privacy">Tap Privacy</li><li class="step-calendar">Tap Calendars</li><li class="step-meetings">Set "Meetin.gs" to ON</li></ol></div></div></div>');
+    }
+    return buf.join("");
+};
+
 // commentForm.jade compiled template
 exports.commentForm = function anonymous(locals, attrs, escape, rethrow, merge) {
     attrs = attrs || jade.attrs;

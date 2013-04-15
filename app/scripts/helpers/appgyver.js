@@ -18,6 +18,7 @@
             { file : 'editMaterial.html', id : 'editMaterialPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'renameMaterial.html', id : 'renameMaterialPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'connectAccounts.html', id : 'connectAccountsPage', shared_file : 'init.html', shared_id : 'init' },
+            { file : 'connectCalendar.html', id : 'connectCalendarPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'signup.html', id : 'signupPage' }
         ],
 

@@ -16,6 +16,7 @@ app.meetingsView = Backbone.View.extend({
 
     phoneConnect : function(e){
         e.preventDefault();
+        /*
         window.plugins.calendarPlugin.initialize(function() {
 
                 today = new Date();
@@ -33,6 +34,8 @@ app.meetingsView = Backbone.View.extend({
         },function() {
             console.log('User did not give permiszion');
         });
+        */
+        AppGyver.switchContext('connectCalendarPage', {} );
     },
     googleConnect : function(e){
         e.preventDefault();

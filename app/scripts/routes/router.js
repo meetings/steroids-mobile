@@ -14,6 +14,7 @@ app.router = Backbone.Router.extend({
         "editMaterial.html" : "editMaterial",
         "renameMaterial.html" : "renameMaterial",
         "connectAccounts.html" : "connectAccounts",
+        "connectCalendar.html" : "connectCalendar",
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
@@ -494,6 +495,17 @@ app.router = Backbone.Router.extend({
             }, 1000 );
         }
 
+    },
+    connectCalendar : function(params) {
+        if ( app.views.connectCalendar ) app.views.connectCalendar.close();
+
+        app.views.connectCalendar = new app.connectCalendarView({
+            el : $('#page .view-container')
+        });
+
+        setTimeout( function() {
+            app.views.connectCalendar.render();
+        }, 100 );
     },
     edit : function(params) {
 
