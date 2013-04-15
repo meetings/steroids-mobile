@@ -20,7 +20,9 @@ window.app = {
         api_host : 'https://api-dev.meetin.gs',
         //api_host : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://api-dev.meetin.gs' : 'https://api.meetin.gs',
         desktop_link : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://dev.meetin.gs/meetings_global/detect' : 'https://meetin.gs/meetings_global/detect',
-        return_host : 'http://' + location.host
+        return_host : 'http://' + location.host,
+        version : '1',
+        version_check_url : 'http://versions.meetin.gs/ios/current.json'
     },
     options: {
         // Appmode will be web, ios or android
@@ -209,6 +211,22 @@ window.app = {
     _removeIosNav : function(){
         /mobile/i.test(navigator.userAgent) && !location.hash &&
             setTimeout(function () { window.scrollBy(0, 1); }, 3000);
+    },
+    _versionCheck : function(){
+        $.getJSON( app.defaults.version_check_url , function(response){
+            if( response.version !== app.defaults.version ){
+                app._redirectToUpdate(response.url);
+            }
+        });
+    },
+    _redirectToUpdate : function(url){
+        setTimeout(function(){
+            alert('You have an old version of the app. You need to update!');
+            setTimeout( function(){
+                steroids.openURL(url);
+            },100);
+            app._redirectToUpdate(url);
+        },1000);
     },
     openUrlSchemeLink : function(appurl,normurl){
         if( app.options.build === 'web' ) {

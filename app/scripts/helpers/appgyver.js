@@ -47,6 +47,11 @@
 
                 AppGyver.current_context_id = 'meetingsPage';
                 AppGyver.current_context = this.getContextForID( 'meetingsPage' );
+
+                // Check version
+                setTimeout( function(){
+                    app._versionCheck();
+                }, 5000);
             }
             else {
                 var id_parts = /[\?\&]steroids_preload_id=([^\&]*)/.exec( window.location.href );
@@ -74,7 +79,7 @@
             } );
 
             var start_parts = /[\?\&]start_refresh=([^\&]*)/.exec( window.location.href );
-            
+
             if ( start_parts && start_parts[1] ) {
                 var start = JSON.parse( decodeURIComponent( start_parts[1] ) );
                 var context = that.getContextForID( start[0] );
@@ -280,7 +285,7 @@
         },
         formContextRedirectUrl : function( context, params ) {
             var redirect_info = [ context, params ];
-            
+
             return '/contextRedirect.html?redirect_info=' + encodeURIComponent( JSON.stringify( redirect_info ) );
         },
         _formQueryString : function( params, randomize ) {
@@ -296,7 +301,7 @@
             var query_string = query_options.length ? '?' : '';
             query_string = query_string + query_options.join('&');
 
-            return query_string; 
+            return query_string;
         },
         getContextForID : function( id ){
             for (var i = 0; i < this.contexts.length; i++) {
