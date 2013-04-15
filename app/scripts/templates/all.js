@@ -123,7 +123,7 @@ exports.editStepCommunicationsView = function anonymous(locals, attrs, escape, r
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><p>Choose live communication tool:</p><div class="controls ui-grid-a"><div class="ui-block-a"><a id="submitStepCommunicationsSkype" data-theme="b" data-role="button" data-icon="mtngs-skype-white">Skype</a></div><div class="ui-block-b"><a id="submitStepCommunications" data-theme="b" data-role="button" data-icon="mtngs-cross-white">None</a></div></div></div>');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><p>Choose live communication tool:</p><div class="controls ui-grid-a"><div class="ui-block-a"><a id="submitStepCommunicationsSkype" data-theme="b" data-role="button"><i class="icon-teleconf"></i>Skype</a></div><div class="ui-block-b"><a id="submitStepCommunications" data-theme="b" data-role="button"><i class="icon-cross"></i>None</a></div></div></div>');
     }
     return buf.join("");
 };
