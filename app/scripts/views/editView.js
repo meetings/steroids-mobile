@@ -270,4 +270,4 @@ app.editView = Backbone.View.extend({
         'click #submitStepDateAndTimeFinish' : 'saveEditStepDateAndTimeFinish'
     }
 });
-_.extend(app.editView.prototype, app.mixins.connectivity);
+//_.extend(app.editView.prototype, app.mixins.connectivity);

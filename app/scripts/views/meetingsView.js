@@ -16,7 +16,23 @@ app.meetingsView = Backbone.View.extend({
 
     phoneConnect : function(e){
         e.preventDefault();
-        alert("somebody needs to implement this :P");
+        window.plugins.calendarPlugin.initialize(function() {
+
+                today = new Date();
+                nextWeek = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
+                start = "" + today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                end = "" + nextWeek.getFullYear() + "-" + (nextWeek.getMonth()+1) + "-" + nextWeek.getDate() + " " + nextWeek.getHours() + ":" + nextWeek.getMinutes() + ":" + nextWeek.getSeconds();
+
+                console.log('calendar inited, tryinh to fetch shits');
+                window.plugins.calendarPlugin.findEvent(null,null,null,start, end, function(result) {
+                    alert("Found " + result.length + " events!");
+                }, function(err) {
+                    if( err === 'No results') console.log('no results');
+                    else console.log('User did not give permiszion');
+                });
+        },function() {
+            console.log('User did not give permiszion');
+        });
     },
     googleConnect : function(e){
         e.preventDefault();

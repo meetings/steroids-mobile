@@ -42,7 +42,7 @@
                     setTimeout(function(){
                         app.init();
                         that.ensure_preloads();
-                    }, 2000 );
+                    }, 4000 );
                 });
 
                 AppGyver.current_context_id = 'meetingsPage';

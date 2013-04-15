@@ -66,6 +66,8 @@
 		<string>CDVBarcodeScanner</string>
 		<key>MapKitView</key>
 		<string>MapKitView</string>
+        <key>calendarPlugin</key>
+        <string>calendarPlugin</string>
 	</dict>
 </dict>
 </plist>
