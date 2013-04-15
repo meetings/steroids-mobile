@@ -474,10 +474,16 @@ app.router = Backbone.Router.extend({
             return app.startGoogleConnecting( 'connectAccountsPage', { google_connected : 1 } );
         }
         else if ( params.google_connected ) {
-            setTimeout( function() {
-                alert( "TODO: store data with these params: " + JSON.stringify( params ) );
-                AppGyver.switchContext('meetingsPage');
-            }, 1000 );
+            var redirect_params = JSON.parse( params.redirect_params );
+            var user = new app.userModel( { id : app.auth.user } );
+            user.fetch( { success : function() {
+                user.save( {
+                    google_code : redirect_params.code,
+                    google_redirect_uri : redirect_params.redirect_uri
+                }, { success : function() {
+                    AppGyver.switchContext('meetingsPage');
+                } } );
+            } } );
         }
         else {
             setTimeout( function() {

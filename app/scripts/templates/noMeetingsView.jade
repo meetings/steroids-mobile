@@ -1,4 +1,5 @@
 a.open-add-meeting-view(href="#", data-theme="b", data-icon="mtngs-add-meeting", data-role="button") Add a meeting
 a.phone-connect-meeting-view(href="#", data-theme="b", data-icon="icon-google", data-role="button") Sync with phone calendar
-a.google-connect-meeting-view(href="#", data-theme="b", data-icon="icon-google", data-role="button") Sync with Google Calendar
+- if ( ! model.google_connected )
+    a.google-connect-meeting-view(href="#", data-theme="b", data-icon="icon-google", data-role="button") Sync with Google Calendar
 

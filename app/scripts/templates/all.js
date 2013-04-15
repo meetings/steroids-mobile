@@ -702,7 +702,10 @@ exports.noMeetingsView = function anonymous(locals, attrs, escape, rethrow, merg
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<a href="#" data-theme="b" data-icon="mtngs-add-meeting" data-role="button" class="open-add-meeting-view">Add a meeting</a><a href="#" data-theme="b" data-icon="icon-google" data-role="button" class="phone-connect-meeting-view">Sync with phone calendar</a><a href="#" data-theme="b" data-icon="icon-google" data-role="button" class="google-connect-meeting-view">Sync with Google Calendar</a>');
+        buf.push('<a href="#" data-theme="b" data-icon="mtngs-add-meeting" data-role="button" class="open-add-meeting-view">Add a meeting</a><a href="#" data-theme="b" data-icon="icon-google" data-role="button" class="phone-connect-meeting-view">Sync with phone calendar</a>');
+        if (!model.google_connected) {
+            buf.push('<a href="#" data-theme="b" data-icon="icon-google" data-role="button" class="google-connect-meeting-view">Sync with Google Calendar</a>');
+        }
     }
     return buf.join("");
 };
