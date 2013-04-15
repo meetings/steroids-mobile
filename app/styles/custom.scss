@@ -767,32 +767,32 @@ h3.today {
     mrgin-top:10px !important;
     @include retina-bg('/images/today' , 'png', 20px, 20px);
     padding-left:25px;
-    padding-top:4px;
+    padding-top:3px;
     background-repeat:no-repeat;
 }
 h3.upcoming {
     margin-top:10px !important;
     @include retina-bg('/images/upcomingyellow' , 'png', 20px, 20px);
     padding-left:25px;
-    padding-top:4px;
+    padding-top:3px;
     background-repeat:no-repeat;
 }
 h3.past {
     @include retina-bg('/images/past' , 'png', 20px, 20px);
     padding-left:25px;
-    padding-top:4px;
+    padding-top:3px;
     background-repeat:no-repeat;
 }
 h3.schedule {
     @include retina-bg('/images/schedule' , 'png', 20px, 20px);
     padding-left:25px;
-    padding-top:4px;
+    padding-top:3px;
     background-repeat:no-repeat;
 }
 h3.tasks {
     @include retina-bg('/images/tasks' , 'png', 20px, 20px);
     padding-left:25px;
-    padding-top:4px;
+    padding-top:3px;
     background-repeat:no-repeat;
 }
 .ui-icon-mtngs-panel {
