@@ -6,17 +6,31 @@ app.loginView = Backbone.View.extend({
             app.views.login.render();
             $('#login-page').trigger('create');
             $('#login-page').css('padding-top','0px');
-        })
+        });
+
+        this.google_uid = options.google_uid;
+        this.google_rt = options.google_rt;
     },
     render: function() {
         this.$el.html( templatizer.loginView() );
         this.$el.trigger('create');
         if( app.options.build !== 'web' ) this.$el.addClass('app-mode');
+        if ( this.google_uid ) {
+            $('#login-header').fadeIn();
+            $('a#facebook-login,a#google-login,p.separator,div.logo,#email').fadeOut('fast');
+            $('a#facebook-login,a#google-login,p.separator,div.logo,#email').promise().done(function(){
+                $('#login-page').css('padding-top','41px');
+                $('div#google-connect-form').fadeIn();
+                $('body').scrollTop(0);
+            });            
+        }
     },
     events: {
         'click .login_or_register' : 'loginOrRegister',
         'click #no-mobile' : 'nomobile',
-        'click #facebook-login' : 'nomobile',
+        'click #facebook-login' : 'facebookLogin',
+        'click #google-login' : 'googleLogin',
+        'click #google-connect' : 'googleConnect',
         'focus #email' : 'focusEmail',
         'click .check-pin' : 'checkPin'
     },
@@ -26,8 +40,8 @@ app.loginView = Backbone.View.extend({
         // TODO: FIX THJIS HIT
         // http://stackoverflow.com/questions/12879857/window-resize-due-to-virtual-keyboard-causes-issues-with-jquery-mobile
         $('#login-header').fadeIn();
-        $('a#facebook-login,p.separator,div.logo').fadeOut('fast');
-        $('a#facebook-login,p.separator,div.logo').promise().done(function(){
+        $('a#facebook-login,a#google-login,p.separator,div.logo').fadeOut('fast');
+        $('a#facebook-login,a#google-login,p.separator,div.logo').promise().done(function(){
             $('#login-page').css('padding-top','41px');
             $('div.controls').fadeIn();
             $('body').scrollTop(0);
@@ -106,6 +120,45 @@ app.loginView = Backbone.View.extend({
                $form.append( $('<p class="error">Sorry,there was an error processing your request. Try again!</p>').delay(5000).fadeOut() );
             }
         }, 'json');
+    },
+    googleConnect : function(e) {
+        var that = this;
+        e.preventDefault();
+        var $form = $('#google-connect-form');
+        var $button = $(e.target);
+        var $mail_field = $('#google-connect-email');
+        if( ! $mail_field.val() ){
+             $form.append( $('<p class="error">Oops, you forgot to type in an email.</p>').delay(5000).fadeOut() );
+             return;
+        }
+        $button.html('Sending...');
+        $.post( app.defaults.api_host + '/v1/login', { include_pin : 1, email : $mail_field.val(), return_host : app.defaults.return_host, allow_register : 1, google_uid : that.google_uid, google_rt : that.google_rt }, function( response ){
+            if( response.result === 1 ){
+                $form.fadeOut( function(){
+                    $('#login-page').prepend('<p class="login-message">We\'ve sent you a PIN code to this address: ' + $mail_field.val() + '</p>').fadeIn();
+                    $('#pin-form').fadeIn(function(){
+                        setTimeout(function(){
+                            document.getElementById("pin").focus();
+                        },100);
+                        //$('#pin').focus();
+                    });
+                });
+            }
+            else{
+               $button.html('Send');
+               $form.append( $('<p class="error">Sorry,there was an error processing your request. Try again!</p>').delay(5000).fadeOut() );
+            }
+        }, 'json');
+    },
+    facebookLogin : function(e) {
+        e.preventDefault();
+        var redirect_uri = 'https://dev.meetin.gs/meetings_global/facebook_redirect';
+        var url = 'https://www.facebook.com/dialog/oauth?client_id=181390985231333&redirect_uri='+ encodeURIComponent( redirect_uri ) +'&state=' + encodeURIComponent( JSON.stringify( { to : window.location.protocol + '//' + window.location.host + window.location.pathname +'?fb_login=1', redirect_uri : redirect_uri } ) );
+        window.location = url;
+    },
+    googleLogin : function(e) {
+        e.preventDefault();
+        app.startGoogleConnecting( [ { key : 'google_login', value : 1 } ] );
     },
     nomobile : function(e){
         e.preventDefault();

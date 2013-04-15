@@ -16,6 +16,7 @@ window.app = {
         cookievalid : 14 // in days
     },
     defaults : {
+        url_scheme : 'steroids-scanner://',
         api_host : 'https://api-dev.meetin.gs',
         //api_host : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://api-dev.meetin.gs' : 'https://api.meetin.gs',
         desktop_link : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://dev.meetin.gs/meetings_global/detect' : 'https://meetin.gs/meetings_global/detect',
@@ -37,9 +38,12 @@ window.app = {
             $('body').html( templatizer.updateBrowser() );
             return;
         }
+
         // Login & redirects
-        if( this._requireLogin() ){
-            this._doRedirects();
+        if ( ! ( /contextRedirect\.html/.test( window.location.href ) ) ) {
+            if( this._requireLogin() ){
+                this._doRedirects();
+            }
         }
 
         // Remove navigation bar on IOS
@@ -220,6 +224,54 @@ window.app = {
                 document.location = normurl;
             }
         }, 300);
+    },
+
+    launchURLForwarder : function() {
+        document.removeEventListener("resume", app.launchURLForwarder, false);
+
+        var redirect_uri = "" + steroids.app.getLaunchURL();
+        var inapp_url =  redirect_uri.replace( /^[^\:]+\:\/\//, '' );
+
+        if ( inapp_url ) {
+            window.location = inapp_url;
+        }
+    },
+
+    startGoogleConnecting: function( context, redirect_params ) {
+        var redirect_uri = 'https://dev.meetin.gs/meetings_global/redirect_mobile/0';
+        var host = window.location.protocol + '//' + window.location.host;
+
+        if ( app.options.build !== 'web' ) {
+            host = app.defaults.url_scheme;
+        }
+
+        var to_url = host + AppGyver.formContextRedirectUrl( context, redirect_params );
+        var params = [
+            { key : "client_id", value : "584216729178.apps.googleusercontent.com" },
+            { key : "response_type", value : "code" },
+            { key : "access_type", value : "offline" },
+            { key : "scope", value : "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.google.com/calendar/feeds/ https://www.google.com/m8/feeds" },
+            { key : "state", value : JSON.stringify( { to : to_url, redirect_uri : redirect_uri } ) },
+            { key : "approval_prompt", value : 'force' },
+            { key : "redirect_uri", value : redirect_uri }
+        ];
+
+        var string_params = [];
+        var i;
+
+        for ( i = 0; i < params.length; i++ ) {
+            string_params.push( encodeURIComponent( params[i].key ) + '=' + encodeURIComponent( params[i].value ) );
+        }
+
+        var url = "https://accounts.google.com/o/oauth2/auth?" + string_params.join("&");
+
+        if( app.options.build === 'web' ) {
+            window.location = url;
+        }
+        else {
+            document.addEventListener("resume", app.launchURLForwarder, false);
+            steroids.openURL( url );
+        }
     },
     showContent: function(){
         $('div.content').show();

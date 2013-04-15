@@ -17,11 +17,16 @@
             { file : 'edit.html', id : 'singleEditPage' },
             { file : 'editMaterial.html', id : 'editMaterialPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'renameMaterial.html', id : 'renameMaterialPage', shared_file : 'init.html', shared_id : 'init' },
+            { file : 'connectAccounts.html', id : 'connectAccountsPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'signup.html', id : 'signupPage' }
         ],
 
         init: function(){
             var that = this;
+
+            if (/contextRedirect\.html/.test(window.location.href)) {
+                return app.init();
+            }
 
             // open target blank links, material contents and profile linkedn  in safari
             $(document).on("click", "a[target='_blank'], li#material_content > a, p.mtngs-linkedin > a", function(e){
@@ -67,6 +72,14 @@
                     }
                 }
             } );
+
+            var start_parts = /[\?\&]start_refresh=([^\&]*)/.exec( window.location.href );
+            
+            if ( start_parts && start_parts[1] ) {
+                var start = JSON.parse( decodeURIComponent( start_parts[1] ) );
+                var context = that.getContextForID( start[0] );
+                AppGyver.refreshPreload( context, start[1] );
+            }
         },
 
         preloaded_ids : {},
@@ -83,13 +96,11 @@
                 if ( only_preloads_before_init && ! context.load_before_init ) continue;
 
                 id = context.shared_id || context.id;
-                file = context.shared_id ? context.shared_file : context.file;
 
                 if ( this.preloaded_ids[id] ) continue;
-
                 this.preloaded_ids[ id ] = true;
-                preload_path = "/" + file + '?steroids_preload_id=' + id;
-                AppGyver.preload( path + preload_path, id );
+
+                AppGyver.preload( path + this.formSharedContextURL( context ), id );
             }
         },
         preload: function(url, id, deferred ){
@@ -222,6 +233,25 @@
                 window.location = this.formContextURL( context, params );
             }
         },
+
+        refreshContext: function( context_id, params, options ) {
+            params = params || {};
+
+            var context = this.getContextForID( context_id );
+            if ( ! context ) {
+                alert( "unknown context refresh: " + context_id );
+            }
+
+            if ( app.options.build !== 'web' ) {
+                var start_refresh = JSON.stringify( [ context_id, params ] );
+
+                window.location = this.formSharedContextURL( context, { start_refresh : start_refresh } );
+             }
+            else {
+                window.location = this.formContextURL( context, params );
+            }
+        },
+
         popContext : function() {
             if ( app.options.build !== 'web' ) {
                 steroids.layers.pop();
@@ -234,8 +264,27 @@
                 history.go(-1);
             }
         },
-        formContextURL : function( context, params, randomize, preload_id ) {
+        formSharedContextURL : function( context, params, randomize ) {
             params = params || {};
+            params.steroids_preload_id = context.shared_id || context.id;
+            var query_string = this._formQueryString( params, randomize );
+            var file = context.shared_file || context.file;
+            return '/' + file + query_string;
+        },
+        formContextURL : function( context, params, randomize ) {
+            params = params || {};
+            params.steroids_preload_id = context.id;
+            var query_string = this._formQueryString( params, randomize );
+
+            return '/' + context.file + query_string;
+        },
+        formContextRedirectUrl : function( context, params ) {
+            var redirect_info = [ context, params ];
+            
+            return '/contextRedirect.html?redirect_info=' + encodeURIComponent( JSON.stringify( redirect_info ) );
+        },
+        _formQueryString : function( params, randomize ) {
+            if ( randomize ) params.m_rand = Math.random();
 
             var query_options=[];
             var param;
@@ -243,14 +292,11 @@
             for ( param in params ) {
                 query_options.push( encodeURIComponent(param) + '=' + encodeURIComponent( params[param] ) );
             }
-            
-            if ( randomize ) query_options.push( 'm_rand=' + Math.random() );
-            if ( preload_id ) query_options.push( 'steroids_preload_id=' + context.id );
 
             var query_string = query_options.length ? '?' : '';
             query_string = query_string + query_options.join('&');
 
-            return '/' + context.file + query_string;
+            return query_string; 
         },
         getContextForID : function( id ){
             for (var i = 0; i < this.contexts.length; i++) {

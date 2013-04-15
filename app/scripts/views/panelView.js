@@ -69,7 +69,7 @@ app.panelView = Backbone.View.extend({
     logout : function(e){
         e.preventDefault();
         app._removeAuthCookie();
-        AppGyver.switchContext("loginPage", { reset : true });
+        AppGyver.switchContext("loginPage", { reset : 1 });
     },
     switchNormal : function(e){
         e.preventDefault();

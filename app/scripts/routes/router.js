@@ -3,6 +3,7 @@ app.router = Backbone.Router.extend({
     },
     routes : {
         "" : "meetings",
+        "contextRedirect.html" : "contextRedirect",
         "login.html" : "login",
         "profile.html" : "profile",
         "index.html" : "meetings",
@@ -12,11 +13,21 @@ app.router = Backbone.Router.extend({
         "materials.html" : "materials",
         "editMaterial.html" : "editMaterial",
         "renameMaterial.html" : "renameMaterial",
+        "connectAccounts.html" : "connectAccounts",
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
         "edit.html" : "edit",
         "addParticipant.html" : "addParticipant"
+    },
+    contextRedirect : function( params ) {
+        var redirect_info_json = params.redirect_info;
+        var redirect_info = JSON.parse( redirect_info_json );
+
+        delete params['redirect_info'];
+        redirect_info[1].redirect_params = JSON.stringify( params );
+
+        AppGyver.refreshContext( redirect_info[0], redirect_info[1] );
     },
     meetings : function() {
 
@@ -31,40 +42,37 @@ app.router = Backbone.Router.extend({
         var today = Math.floor( moment().sod() / 1000 );
 
         // Deferreds for fetches
-        var futureFetch = $.Deferred(),
-        pastFetch = $.Deferred(),
-        unscheduledFetch = $.Deferred(),
-        highlightsFetch = $.Deferred();
+        var futureFetch = $.Deferred();
+        var pastFetch = $.Deferred();
+        var unscheduledFetch = $.Deferred();
+        var highlightsFetch = $.Deferred();
+        var userFetch = $.Deferred();
 
         // wait for ajax requests to succeed, defer show content until that
-        $.when(futureFetch, unscheduledFetch, pastFetch, highlightsFetch).then(function(){
+        $.when(futureFetch, unscheduledFetch, pastFetch, highlightsFetch, userFetch).then(function(){
+
             app.showContent();
-            if( app.collections.future_meetings.length > 0 || app.collections.past_meetings.length > 0 || app.collections.unscheduled_meetings.length > 0){
-                var offset;
-                if( $('#today').is(":visible") ){
-                    offset = $('#today').offset();
-                    window.scrollTo(0, offset.top - 50);
-                }
-                else if( $('#highlights').is(":visible") ){
-                    offset = $('#highlights').offset();
-                    window.scrollTo(0, offset.top - 50);
-                }
-                else if( $('#future').is(":visible") ){
-                    offset = $('#future').offset();
-                    window.scrollTo(0, offset.top - 50);
-                }
-                else if( $('#unscheduled').is(":visible") ){
-                    offset = $('#unscheduled').offset();
-                    window.scrollTo(0, offset.top - 50);
-                }
-                else{
-                    offset = $('#past').offset();
-                    window.scrollTo(0, offset.bottom);
-                }
+
+            var offset;
+            if( $('#today').is(":visible") ){
+                offset = $('#today').offset();
+                window.scrollTo(0, offset.top - 50);
+            }
+            else if( $('#highlights').is(":visible") ){
+                offset = $('#highlights').offset();
+                window.scrollTo(0, offset.top - 50);
+            }
+            else if( $('#future').is(":visible") ){
+                offset = $('#future').offset();
+                window.scrollTo(0, offset.top - 50);
+            }
+            else if( $('#unscheduled').is(":visible") ){
+                offset = $('#unscheduled').offset();
+                window.scrollTo(0, offset.top - 50);
             }
             else{
-                $('.main-div').html(templatizer.noMeetingsView());
-                $('.main-div').trigger("create");
+                offset = $('#meetings-buttons').offset();
+                window.scrollTo(0, offset.bottom);
             }
         });
 
@@ -90,7 +98,15 @@ app.router = Backbone.Router.extend({
         if( ! app.collections.highlights ) app.collections.highlights = new app.meetingCollection({},{ override_endpoint : 'highlighted_meetings' });
         app.collections.highlights.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/highlighted_meetings';
 
+        app.models.user = app.models.user || new app.userModel();
+        app.models.user.set( 'id', app.auth.user );
+
         // Create views
+        app.views.meetingsView = app.views.meetingsView || new app.meetingsView({
+            el : '#meetings-buttons',
+            model : app.models.user
+        });
+
         if( ! app.views.future ) app.views.future = new app.upcomingMeetingsView({
             collection : app.collections.upcoming,
             childViewConstructor : app.meetingInListView,
@@ -145,6 +161,10 @@ app.router = Backbone.Router.extend({
 
         // Fetch things
 
+        app.models.user.fetch({ success : function() {
+            userFetch.resolve();
+        }});
+
         app.collections.future_meetings.fetch({ success : function(col,res){
             // Get times
             var today = Math.floor ( moment().utc().sod() / 1000 );
@@ -179,10 +199,45 @@ app.router = Backbone.Router.extend({
         }});
     },
 
-    login : function() {
-        if ( ! app.views.login ) {
-            app.views.login = new app.loginView({ el : $('#login-page') });
+    login : function(params) {
+        var that = this;
+        if ( params && params.fb_login ) {
+            var params = { fb_code : params.code, fb_redirect_uri : params.redirect_uri };
+            $.post( app.defaults.api_host + '/v1/login', params, function( response ){
+                if( response.result && response.result.user_id ){
+                    app._loginWithParams( response.result.user_id, response.result.token );
+                    AppGyver.switchContext('meetingsPage');
+                }
+                else {
+                    that._render_login( 'Failed to connect with Facebook' );
+                }
+            }, 'json' );
         }
+        else if ( params && params.google_login ) {
+            var params = { google_code : params.code, google_redirect_uri : params.redirect_uri };
+            $.post( app.defaults.api_host + '/v1/login', params, function( response ){
+                if( response.result ){
+                    if ( response.result.user_id ) {
+                        app._loginWithParams( response.result.user_id, response.result.token );
+                        AppGyver.switchContext('meetingsPage');
+                    }
+                    else if ( response.result.google_uid ) {
+                        app.views.login = new app.loginView({ el : $('#login-page'), google_uid : google_uid, google_rt : google_rt });
+                        app.views.login.render();
+                        app.showContent();
+                    }
+                    else {
+                        that._render_login( 'Failed to connect with Google' );
+                    }
+                }
+            }, 'json' );
+        }
+        else {
+            that._render_login();
+        }
+    },
+    _render_login : function( error ) {
+        app.views.login = app.views.login || new app.loginView({ el : $('#login-page'), error : error });
         app.views.login.render();
         app.showContent();
     },
@@ -412,6 +467,25 @@ app.router = Backbone.Router.extend({
             el : $('#page .view-container'),
             material_id : params.id
         });
+    },
+    connectAccounts : function(params) {
+        app.views.header = new app.headerView({ el : '#page .view-container' });
+        if ( params.google_calendar ) {
+            return app.startGoogleConnecting( 'connectAccountsPage', { google_connected : 1 } );
+        }
+        else if ( params.google_connected ) {
+            setTimeout( function() {
+                alert( "TODO: store data with these params: " + JSON.stringify( params ) );
+                AppGyver.switchContext('meetingsPage');
+            }, 1000 );
+        }
+        else {
+            setTimeout( function() {
+                alert( "you should not be here.. :(" );
+                AppGyver.popContext();
+            }, 1000 );
+        }
+
     },
     edit : function(params) {
 

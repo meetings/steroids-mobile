@@ -342,7 +342,15 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div class="logo"><h1 class="meetings-logo"></h1></div><div id="login-form" data-role="fieldcontain"><a id="facebook-login" style="display:none;"></a><p style="display:none;" class="separator">OR</p><input id="email" data-theme="b" type="text" name="email" value="" placeholder="Enter your email address..."/><div class="controls"><a data-theme="b" type="button" class="login_or_register">Send</a></div></div><div id="pin-form" data-role="fieldcontain" class="pin-entry"><div data-role="field-contain"><table style="width:100%;"><tr><td style="width:20%;"><label for="pin">PIN:</label></td><td style="width:60%;"><input id="pin" data-theme="b" type="text" name="pin" value="" placeholder="PIN..."/></td></tr></table><a data-theme="b" type="button" class="check-pin">Continue</a></div></div><div id="profile-form" data-role="field-contain"><p>Profile form here</p></div><div class="no-mobile-link"><a id="no-mobile" href="#">Switch to normal website</a></div>');
+        buf.push('<div class="logo"><h1 class="meetings-logo"></h1></div><div id="login-form" data-role="fieldcontain">');
+        if (0) {
+            buf.push('<a id="google-login" hre="#" data-role="button">Connect with Google</a><p class="separator">OR</p><a id="facebook-login"></a><p class="separator">OR</p>');
+        }
+        buf.push('<input id="email" data-theme="b" type="text" name="email" value="" placeholder="Enter your email address..."/><div class="controls"><a data-theme="b" type="button" class="login_or_register">Send</a></div></div><div id="pin-form" data-role="fieldcontain" class="pin-entry"><div data-role="field-contain"><table style="width:100%;"><tr><td style="width:20%;"><label for="pin">PIN:</label></td><td style="width:60%;"><input id="pin" data-theme="b" type="text" name="pin" value="" placeholder="PIN..."/></td></tr></table><a data-theme="b" type="button" class="check-pin">Continue</a></div></div>');
+        if (0) {
+            buf.push('<div id="google-connect-form" data-role="fieldcontain" style="display:none" class="connect-entry"><div data-role="field-contain"><table style="width:100%;"><tr><td style="width:20%;"><label for="google-connect-email">Email:</label></td><td style="width:60%;"><input id="google-connect-email" data-theme="b" type="text" name="pin" value="" placeholder="your@email.com..."/></td></tr></table><a id="google-connect" data-theme="b" type="button">Continue</a></div></div>');
+        }
+        buf.push('<div id="profile-form" data-role="field-contain"><p>Profile form here</p></div><div class="no-mobile-link"><a id="no-mobile" href="#">Switch to normal website</a></div>');
     }
     return buf.join("");
 };
@@ -694,7 +702,7 @@ exports.noMeetingsView = function anonymous(locals, attrs, escape, rethrow, merg
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<p>Click the button to add a meeting.</p><a href="#" data-theme="b" data-icon="mtngs-add-meeting" data-role="button" class="open-add-meeting-view">Add a meeting</a>');
+        buf.push('<a href="#" data-theme="b" data-icon="mtngs-add-meeting" data-role="button" class="open-add-meeting-view">Add a meeting</a><a href="#" data-theme="b" data-icon="icon-google" data-role="button" class="phone-connect-meeting-view">Sync with phone calendar</a><a href="#" data-theme="b" data-icon="icon-google" data-role="button" class="google-connect-meeting-view">Sync with Google Calendar</a>');
     }
     return buf.join("");
 };
@@ -1024,7 +1032,7 @@ exports.profileView = function anonymous(locals, attrs, escape, rethrow, merge) 
     with (locals || {}) {
         var interp;
         buf.push('<div id="signup-form" data-role="fieldcontain" class="form-full-width">');
-        if (true || app.options.build !== "web") {
+        if (app.options.build !== "web") {
             buf.push('<div class="ui-grid-a"><div class="ui-block-a"><div');
             buf.push(attrs({
                 id: "profile-image",
