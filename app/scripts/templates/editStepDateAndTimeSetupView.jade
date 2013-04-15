@@ -4,12 +4,14 @@ div#edit-form.form-full-width(data-role="fieldcontain")
             .ui-grid-a
                 .ui-block-a Starts
                 .ui-block-b 
-                    input#meeting-begin-date(data-theme="b",type="datetime-local",name="meeting-begin-date",value=moment.unix(begin_epoch).format('YYYY-MM-DDTHH:ss'),placeholder="Starts")
+                    - var beginString = DateFormat.dateTimeInputString(begin_epoch)
+                    input#meeting-begin-date(data-theme="b",type="datetime-local",name="meeting-begin-date",value=beginString,placeholder="Starts")
         li(data-icon="false")
             .ui-grid-a
                 .ui-block-a Ends
                 .ui-block-b 
-                    input#meeting-end-date(data-theme="b",type="datetime-local",name="meeting-end-date",value=moment.unix(end_epoch).format('YYYY-MM-DDTHH:ss'),placeholder="Ends")
+                    - var endString = DateFormat.dateTimeInputString(end_epoch)
+                    input#meeting-end-date(data-theme="b",type="datetime-local",name="meeting-end-date",value=endString,placeholder="Ends")
 
     div.controls
         a#submitStepDateAndTimeFinish(data-theme="b", type="button")

@@ -137,13 +137,15 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><ul id="date-selection" data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> <input');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><ul id="date-selection" data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> ');
+        var beginString = DateFormat.dateTimeInputString(begin_epoch);
+        buf.push("<input");
         buf.push(attrs({
             id: "meeting-begin-date",
             "data-theme": "b",
             type: "datetime-local",
             name: "meeting-begin-date",
-            value: moment.unix(begin_epoch).format("YYYY-MM-DDTHH:ss"),
+            value: beginString,
             placeholder: "Starts"
         }, {
             "data-theme": true,
@@ -152,13 +154,15 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
             value: true,
             placeholder: true
         }));
-        buf.push('/></div></div></li><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Ends</div><div class="ui-block-b"> <input');
+        buf.push('/></div></div></li><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Ends</div><div class="ui-block-b"> ');
+        var endString = DateFormat.dateTimeInputString(end_epoch);
+        buf.push("<input");
         buf.push(attrs({
             id: "meeting-end-date",
             "data-theme": "b",
             type: "datetime-local",
             name: "meeting-end-date",
-            value: moment.unix(end_epoch).format("YYYY-MM-DDTHH:ss"),
+            value: endString,
             placeholder: "Ends"
         }, {
             "data-theme": true,

@@ -23,7 +23,12 @@ app.editView = Backbone.View.extend({
             this.renderEditStepLocation();
         }
         else if(this.startStep == 'time') {
-            this.renderEditStepDateAndTimeSetup();
+            if(parseInt(this.model.get('begin_epoch'))) {
+                this.renderEditStepDateAndTimeSetup();
+            }
+            else {
+                this.renderEditStepDateAndTime();
+            }
         }
         else {
             this.renderEditStepTitle();
@@ -169,11 +174,14 @@ app.editView = Backbone.View.extend({
     renderEditStepDateAndTimeSetup: function() {
         $('#headerTitle').text('Set date & time');
 
-        if(!this.model.get('id')) {
-            var now = moment().minutes(0).seconds(0);
+        var newMeeting = this.model.get('id') == null;
+
+        if(newMeeting || !newMeeting && parseInt(this.model.get('begin_epoch')) == 0) {
+            // default start time is the next starting hour, end time = start + 1h
+            var now = moment().add('hours', 1).minutes(0).seconds(0);
 
             this.model.set('begin_epoch', now.unix());
-            this.model.set('end_epoch', now.unix());
+            this.model.set('end_epoch', now.add('hours', 1).unix());
         }
 
         this.$el.html( templatizer.editStepDateAndTimeSetupView( this.model.toJSON() ) );

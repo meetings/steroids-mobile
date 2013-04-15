@@ -65,6 +65,16 @@
             }
 
             return dateString;
+        },
+
+        dateTimeInputString: function(epoch) {
+            epoch = parseInt(epoch);
+
+            if(!epoch) {
+                return "";
+            }
+
+            return moment.unix(epoch).format('YYYY-MM-DDTHH:ss');
         }
     }
 })(window);
