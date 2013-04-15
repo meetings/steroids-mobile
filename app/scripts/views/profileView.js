@@ -2,7 +2,6 @@ app.profileView = Backbone.View.extend({
 
     initialize: function(options) {
         this.context_after_tos_accept = options.context_after_tos_accept;
-        this.model.on('change', this.render, this);
     },
     render: function() {
         this.$el.html( templatizer.profileView( this.model.toJSON() ) ); // Render template
@@ -10,6 +9,10 @@ app.profileView = Backbone.View.extend({
         if(this.model.get('tos_accepted') != 1) {
             $('.back-button').hide();
             $('#headerTitle').text('Welcome');
+        }
+        else {
+            $('.back-button').show();
+            $('#headerTitle').text('Profile');
         }
 
         this.$el.trigger('create'); // Call JQM
@@ -86,14 +89,14 @@ app.profileView = Backbone.View.extend({
             ft.upload(imageURI, encodeURI(app.defaults.api_host + "/v1/uploads"), function(res){
                 var resp = $.parseJSON(res.response);
 
-                // update pic in ui, set model without render so we don't lose form state
+                // update pic in ui
                 $('#image-placeholder').css('visibility', 'hidden');
                 $('#profile-image').css('background-image', 'url(' + resp.result.upload_thumbnail_url + ')');
 
                 that.model.set({
                     image : resp.result.upload_thumbnail_url,
                     upload_id : resp.result.upload_id
-                }, {silent : true});
+                });
             }, function(error){
                 alert('Error uploadin file.');
             }, options);

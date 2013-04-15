@@ -258,7 +258,9 @@ app.router = Backbone.Router.extend({
         });
 
         app.models.currentUser.fetch({ success : function() {
+            app.views.profile.render();
             app.showContent();
+
         }, data : { image_size : 70 }});
     },
 
