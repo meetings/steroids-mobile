@@ -6,29 +6,30 @@ ul#side-bar(data-role="listview",data-theme="c")
             | Meetings
     li(data-role="list-divider",data-theme="c") GET TIPS FOR BETTER MEETINGS
     li
-        a#nav-facebook(href="settings.html",data-transition="fade")
+        a#nav-facebook(href="#",data-transition="fade")
             span.ui-icon.menu-icon-facebook
             | Like us on Facebook
     li
-        a#nav-twitter(href="settings.html",data-transition="fade")
+        a#nav-twitter(href="#",data-transition="fade")
             span.ui-icon.menu-icon-twitter
             | Follow us on Twitter
     li(data-role="list-divider",data-theme="c") OTHER
     li
-        a#nav-support(href="settings.html",data-transition="fade")
+        a#nav-support(href="#",data-transition="fade")
             span.ui-icon.menu-icon-support
             | Support
-    li
-        a#nav-tos(href="settings.html",data-transition="fade")
-            span.ui-icon.menu-icon-tos
-            | Terms of Service
+    - if( app.options.build === 'web' )
+        li
+            a#nav-tos(href="#",data-transition="fade")
+                span.ui-icon.menu-icon-tos
+                | Terms of Service
 
     li
         a#nav-edit-profile(href="profile.html",data-transition="fade")
             span.ui-icon.menu-icon-edit-profile
             | Edit profile
     li
-        a#nav-logout(href="settings.html",data-transition="fade")
+        a#nav-logout(href="#",data-transition="fade")
             span.ui-icon.menu-icon-logout
             | Logout
 - if( app.options.build === 'web' )

@@ -358,6 +358,7 @@ app.router = Backbone.Router.extend({
         app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
 
         // Setup views
+        // TODO: Panel view needs to know what rights the user has
         if( ! app.views.panel ) {
             app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
             app.views.panel.render();
@@ -367,7 +368,6 @@ app.router = Backbone.Router.extend({
 
         if( ! app.views.editPanel ){
             app.views.editPanel = new app.editMeetingPanelView({ el : '#edit-meeting-panel', model : app.models.meeting });
-            app.views.editPanel.render();
         }
 
         if( ! app.views.meeting ) app.views.meeting = new app.meetingView({
@@ -379,16 +379,14 @@ app.router = Backbone.Router.extend({
         // with subviews for info and materials
         app.models.meeting.fetch({ success : function(){
             meetingFetch.resolve();
+            app.views.editPanel.render();
             app.collections.materials.fetch({ success : function(){
                 materialsFetch.resolve(); // Resolve deferred
-            }, silent : true }); // Silent as we wan't to render when both fetches are done
+            }, silent : true }); // Silent as we want to render when both fetches are done
         }, timeout : 5000, silent : true });
     },
 
     scheduling : function(params) {
-        if (app.options.build !== 'web') {
-            //AppGyver.cleanBackboneZombieEvents();
-        }
 
         // Get url params
         var id = params.id || 0;
@@ -406,6 +404,7 @@ app.router = Backbone.Router.extend({
             model : app.models.meeting,
             mode : mode
         } );
+        app.views.scheduling.mode = mode;
 
         app.models.meeting.fetch({ success : function(){
             // Init current meeting user

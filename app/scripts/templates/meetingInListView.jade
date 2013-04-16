@@ -5,7 +5,12 @@ a(href='meeting.html?id='+id)
         - var dateString = DateFormat.dateString(begin_epoch, end_epoch)
         - var timeString = DateFormat.timeString(begin_epoch, end_epoch)
         - if(dateString)
-            span.left=dateString
+            span.left
+                =dateString
+                - if( locals.source === 'google' )
+                    i.icon-google(style="margin-left:14px;font-size:12px;position:relative;top:1px;")
+                - else if ( locals.source === 'phone' )
+                    i.icon-mobile(style="margin-left:14px;font-size:12px;position:relative;top:1px;")
             span.right=timeString
         -else
             span.left='Scheduling in progress'

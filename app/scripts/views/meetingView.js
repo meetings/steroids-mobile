@@ -3,6 +3,7 @@ app.meetingView = Backbone.View.extend({
     progressBarStarted : false,
     inviteView : false,
     subviews : {},
+
     initialize: function(options) {
 
         // Bind error and success handlers
@@ -21,6 +22,17 @@ app.meetingView = Backbone.View.extend({
         $('div.ui-panel-content-wrap,div.ui-panel-dismiss').live('click', function(){
             $( "#edit-meeting-panel" ).panel( "close" );
         });
+    },
+
+    events: {
+        'click .open-material-view' : 'openMaterialView',
+        'click .open-participant-view' : 'openParticipantView',
+        'click .add-photo-material' : 'addPhotoMaterial',
+        'click .save-photo-material' : 'savePhotoMaterial',
+        'click .open-map-link' : 'openMapLink',
+        'click .open-add-participant-view' : 'openAddParticipantView',
+        'click .open-send-invites-view' : 'openSendInvitesView',
+        'click .save-meeting-invite' : 'saveMeetingInvite'
     },
 
     render: function() {
@@ -117,7 +129,7 @@ app.meetingView = Backbone.View.extend({
             parent.reloadMeeting();
         }).error(function() {
             $('.save-meeting-invite').button('enable');
-            alert('error in sending invites');
+            alert('Error in sending invites');
         });
     },
 
@@ -128,19 +140,7 @@ app.meetingView = Backbone.View.extend({
     navigateBack: function(e) {
         e.preventDefault();
         e.stopPropagation();
-
         this.renderMeeting();
-    },
-
-    events: {
-        'click .open-material-view' : 'openMaterialView',
-        'click .open-participant-view' : 'openParticipantView',
-        'click .add-photo-material' : 'addPhotoMaterial',
-        'click .save-photo-material' : 'savePhotoMaterial',
-        'click .open-map-link' : 'openMapLink',
-        'click .open-add-participant-view' : 'openAddParticipantView',
-        'click .open-send-invites-view' : 'openSendInvitesView',
-        'click .save-meeting-invite' : 'saveMeetingInvite'
     },
 
     openMapLink : function(e){
@@ -220,12 +220,12 @@ app.meetingView = Backbone.View.extend({
                 $('#file-upload-id').val(resp.result.upload_id);
                 $('.save-photo-material').removeClass('ui-disabled');
             }, function(error){
-                alert('Error uploadin file.');
+                console.log('Error uploading photo.');
             }, options);
 
         }, function(err){
             setTimeout(function(){
-                alert('Error uploading file.');
+                console.log('Error uploading photo.');
             },100);
         } , { quality : 49, destinationType : Camera.DestinationType.FILE_URI } );
     },

@@ -3,6 +3,13 @@ app.profileView = Backbone.View.extend({
     initialize: function(options) {
         this.context_after_tos_accept = options.context_after_tos_accept;
     },
+
+    events : {
+        'click .save-profile-data' : 'saveProfileData',
+        'click .open-tos-page' : 'openTos',
+        'click #profile-image' : 'uploadPhoto'
+    },
+
     render: function() {
         this.$el.html( templatizer.profileView( this.model.toJSON() ) ); // Render template
 
@@ -66,7 +73,6 @@ app.profileView = Backbone.View.extend({
             ft.onprogress = function( progressEvent ){
                 if (progressEvent.lengthComputable) {
                     percentLoaded = Math.round(100 * (progressEvent.loaded / progressEvent.total));
-                    
                     $('#status-text').text( percentLoaded + "%" );
                 }
             };
@@ -98,17 +104,11 @@ app.profileView = Backbone.View.extend({
                     upload_id : resp.result.upload_id
                 });
             }, function(error){
-                alert('Error uploadin file.');
+                console.log('Profile upload failed.')
             }, options);
 
         }, function(err){
-            
+            console.log('Profile upload failed.')
         } , { quality : 49, destinationType : Camera.DestinationType.FILE_URI } );
-    },
-
-    events : {
-        'click .save-profile-data' : 'saveProfileData',
-        'click .open-tos-page' : 'openTos',
-        'click #profile-image' : 'uploadPhoto'
     }
 });

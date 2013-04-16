@@ -109,6 +109,9 @@ exports.editMaterialPanel = function anonymous(locals, attrs, escape, rethrow, m
         if (locals.download_url) {
             buf.push('<li><a id="nav-download" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Download</a></li>');
         }
+        if (locals.creator_id === app.auth.user) {
+            buf.push('<li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li>');
+        }
         buf.push("</ul>");
     }
     return buf.join("");
@@ -123,7 +126,11 @@ exports.editMeetingPanel = function anonymous(locals, attrs, escape, rethrow, me
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit-title" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit title</a></li><li><a id="nav-edit-location" href="#" data-transition="fade"><span class="ui-icon menu-icon-editlocation"></span>Edit location</a></li><li><a id="nav-edit-time" href="#" data-transition="fade"><span class="ui-icon menu-icon-edittime"></span>Edit time</a></li><!--li--><!--    a#nav-remove(href="#",data-transition="fade")--><!--        span.ui-icon.menu-icon-remove--><!--        | Remove--></ul>');
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit-title" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Edit title</a></li><li><a id="nav-edit-location" href="#" data-transition="fade"><span class="ui-icon menu-icon-editlocation"></span>Edit location</a></li><li><a id="nav-edit-time" href="#" data-transition="fade"><span class="ui-icon menu-icon-edittime"></span>Edit time</a></li>');
+        if (locals.creator_id === app.auth.user) {
+            buf.push('<li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li>');
+        }
+        buf.push("</ul>");
     }
     return buf.join("");
 };
@@ -364,7 +371,7 @@ exports.loginView = function anonymous(locals, attrs, escape, rethrow, merge) {
         if (0) {
             buf.push('<a id="google-login" hre="#" data-role="button">Connect with Google</a><p class="separator">OR</p><a id="facebook-login"></a><p class="separator">OR</p>');
         }
-        buf.push('<input id="email" data-theme="b" type="text" name="email" value="" placeholder="Enter your email address..."/><div class="controls"><a data-theme="b" type="button" class="login_or_register">Send</a></div></div><div id="pin-form" data-role="fieldcontain" class="pin-entry"><div data-role="field-contain"><table style="width:100%;"><tr><td style="width:20%;"><label for="pin">PIN:</label></td><td style="width:60%;"><input id="pin" data-theme="b" type="text" name="pin" value="" placeholder="PIN..."/></td></tr></table><a data-theme="b" type="button" class="check-pin">Continue</a></div></div>');
+        buf.push('<input id="email" data-theme="b" type="text" name="email" value="" placeholder="Enter your email address..."/><div class="controls"><a data-theme="b" type="button" class="login_or_register">Send</a></div></div><div id="pin-form" data-role="fieldcontain" class="pin-entry"><div data-role="field-contain"><table style="width:100%;"><tr><td style="width:20%;"><label for="pin">PIN:</label></td><td style="width:60%;"><input id="pin" data-theme="b" type="tel" name="pin" value="" placeholder="PIN..."/></td></tr></table><a data-theme="b" type="button" class="check-pin">Continue</a></div></div>');
         if (0) {
             buf.push('<div id="google-connect-form" data-role="fieldcontain" style="display:none" class="connect-entry"><div data-role="field-contain"><table style="width:100%;"><tr><td style="width:20%;"><label for="google-connect-email">Email:</label></td><td style="width:60%;"><input id="google-connect-email" data-theme="b" type="text" name="pin" value="" placeholder="your@email.com..."/></td></tr></table><a id="google-connect" data-theme="b" type="button">Continue</a></div></div>');
         }
@@ -548,6 +555,11 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
             buf.push('<span class="left">');
             var __val__ = dateString;
             buf.push(escape(null == __val__ ? "" : __val__));
+            if (locals.source === "google") {
+                buf.push('<i style="margin-left:14px;font-size:12px;position:relative;top:1px;" class="icon-google"></i>');
+            } else if (locals.source === "phone") {
+                buf.push('<i style="margin-left:14px;font-size:12px;position:relative;top:1px;" class="icon-mobile"></i>');
+            }
             buf.push('</span><span class="right">');
             var __val__ = timeString;
             buf.push(escape(null == __val__ ? "" : __val__));
@@ -837,7 +849,11 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
             "data-theme": true,
             "class": true
         }));
-        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li><li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li><li><a id="nav-facebook" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li><li><a id="nav-twitter" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li><li data-role="list-divider" data-theme="c">OTHER</li><li><a id="nav-support" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li><li><a id="nav-tos" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li><li><a id="nav-edit-profile" href="profile.html" data-transition="fade"><span class="ui-icon menu-icon-edit-profile"></span>Edit profile</a></li><li><a id="nav-logout" href="settings.html" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li></ul>');
+        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><span class="ui-icon menu-icon-meetings"></span>Meetings</a></li><li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li><li><a id="nav-facebook" href="#" data-transition="fade"><span class="ui-icon menu-icon-facebook"></span>Like us on Facebook</a></li><li><a id="nav-twitter" href="#" data-transition="fade"><span class="ui-icon menu-icon-twitter"></span>Follow us on Twitter</a></li><li data-role="list-divider" data-theme="c">OTHER</li><li><a id="nav-support" href="#" data-transition="fade"><span class="ui-icon menu-icon-support"></span>Support</a></li>');
+        if (app.options.build === "web") {
+            buf.push('<li><a id="nav-tos" href="#" data-transition="fade"><span class="ui-icon menu-icon-tos"></span>Terms of Service</a></li>');
+        }
+        buf.push('<li><a id="nav-edit-profile" href="profile.html" data-transition="fade"><span class="ui-icon menu-icon-edit-profile"></span>Edit profile</a></li><li><a id="nav-logout" href="#" data-transition="fade"><span class="ui-icon menu-icon-logout"></span>Logout</a></li></ul>');
         if (app.options.build === "web") {
             buf.push('<a href="#" class="no-mobile">Switch to normal website</a>');
         }

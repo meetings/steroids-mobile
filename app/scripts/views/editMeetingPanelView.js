@@ -1,14 +1,13 @@
 app.editMeetingPanelView = Backbone.View.extend({
     initialize : function(options) {
         _(this).bindAll('editMeetingTitle','editMeetingLocation','editMeetingTime');
+        //this.listenTo( this.model, 'change', this.render );
     },
 
     render : function() {
-        this.$el.html( templatizer.editMeetingPanel() );
+        this.$el.html( templatizer.editMeetingPanel( this.model.toJSON() ) );
 
-        if ( app.options.build !== 'web' ) {
-            this.$el.trigger('create');
-        }
+        this.$el.trigger('create');
     },
 
     events : {
@@ -20,24 +19,25 @@ app.editMeetingPanelView = Backbone.View.extend({
 
     editMeetingTitle : function(e){
         e.preventDefault();
-        console.log('hir')
         this.$el.panel('close');
         AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'title'});
     },
     editMeetingLocation : function(e){
         e.preventDefault();
-        console.log('edit loc')
         this.$el.panel('close');
         AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'location'});
     },
     editMeetingTime : function(e) {
         e.preventDefault();
-        console.log('dir')
         this.$el.panel('close');
         AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'time'});
     },
     removeMeeting : function(e){
         e.preventDefault();
-        alert('removeMeeting');
+        this.$el.panel('close');
+        AppGyver.hideContent();
+        this.model.destroy({ success : function(){
+            AppGyver.switchContext("meetingsPage", null, { pop : true } );
+        }});
     }
 });

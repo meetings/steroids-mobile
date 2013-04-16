@@ -51,7 +51,7 @@ app.schedulingView = Backbone.View.extend({
     },
 
     renderChoose : function(){
-        this.$el.html('<h3>' + this.model.escape('title') + '</h3><p class="mtngs-location">' + this.model.escape('location') + '</p><p>Tap the time you want to choose:</p>');
+        this.$el.html('<h3>' + this.model.escape('title') + '</h3><p class="mtngs-location"><i class="icon-location"></i>' + this.model.escape('location') + '</p><p>Tap the time you want to choose:</p>');
         var prop_container = $('<ul id="proposals" data-theme="a" data-inset="true" data-role="listview"></ul>');
         this.$el.append( prop_container );
 
@@ -136,7 +136,6 @@ app.schedulingView = Backbone.View.extend({
 
         // Save the answers
         $('#save-options span span').html('Saving...');
-        console.log( app.models.meeting_user.url )
         app.models.meeting_user.save({'proposal_answers': answers},{ success : function(res){
             $('#save-options span span').html('Done.');
             AppGyver.switchContext('meetingPage', { id : app.models.meeting.id }, { pop : true} );

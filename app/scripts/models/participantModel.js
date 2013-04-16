@@ -12,7 +12,7 @@ app.participantModel = Backbone.Model.extend({
     },
     set_url_for_id : function() {
         if ( this.id ) {
-            this.url = app.defaults.api_host + '/v1/meeting_materials/' + this.id;
+            this.url = app.defaults.api_host + '/v1/meeting_participants/' + this.id;
         }
     }
 });

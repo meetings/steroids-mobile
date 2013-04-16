@@ -37,6 +37,11 @@ app.editMaterialPanelView = Backbone.View.extend({
     },
     removeMaterial : function(e){
         e.preventDefault();
-        alert('remove');
+        this.$el.panel('close');
+        AppGyver.hideContent();
+        var meeting_id = this.model.get('meeting_id');
+        this.model.destroy({ success : function(){
+            AppGyver.switchContext("meetingPage", { id : meeting_id }, { pop : true } );
+        }});
     }
 });

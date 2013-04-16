@@ -102,9 +102,15 @@ app.addParticipantView = Backbone.View.extend({
         me.model.save({}, {
             success : function() {
                 me.openMeetingView();
+
+                // Set header text back to normal
+                setTimeout(function(){
+                    $('#headerTitle').text('Add participant');
+                },1000);
             },
             error: function() {
-                alert('adding participant failed.');
+                alert('Adding participant failed.');
+                $('#headerTitle').text('Add participant');
             }
         });
     },
