@@ -190,13 +190,13 @@ app.router = Backbone.Router.extend({
             },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
         };
 
-        if ( 0 && app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') ) {
+        if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') ) {
             var now = new Date();
-            var nextMonth = new Date(today.getTime() + (32 * 24 * 60 * 60 * 1000));
+            var nextMonth = new Date(now.getTime() + (32 * 24 * 60 * 60 * 1000));
             var start = "" + now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate() + " 00:00:00";
-            var end = start;
-//           var end = "" + nextMonth.getFullYear() + "-" + (nextMonth.getMonth()+1) + "-" + nextMonth.getDate() + " 00:00:00";
+            var end = "" + nextMonth.getFullYear() + "-" + (nextMonth.getMonth()+1) + "-" + nextMonth.getDate() + " 00:00:00";
 
+            var now, nextMonth, start, end;
             window.plugins.calendarPlugin.initialize(function() {
                 window.plugins.calendarPlugin.findEvent(null,null,null,start, end, function(result) {
                     var batch = that._formSuggestionBatchFromCalendarResult( result );
@@ -206,7 +206,7 @@ app.router = Backbone.Router.extend({
                             dic : app.auth.token,
                             batch : JSON.stringify( batch )
                         };
-                        $.post( app.defaults.api_host + '/v1/suggested_meetings', params )
+                        $.post( app.defaults.api_host + '/v1/users/'+ app.auth.user +'/suggested_meetings/batch_insert', params )
                             .done( fetchFutureMeetings )
                             .fail( fetchFutureMeetings );
                     }
@@ -234,7 +234,8 @@ app.router = Backbone.Router.extend({
     },
     _sentSuggestions : {},
     _formSuggestionBatchFromCalendarResult : function( result ) {
-        return _.map( result, function( r ) {
+        console.log( result );
+        var results = _.map( result, function( r ) {
             var participant_list = _.map([], function( participant ) {
                 return ''; // proper email
             } );
@@ -254,14 +255,6 @@ app.router = Backbone.Router.extend({
                 organizer : ''
             };
 
-            var stripped = {};
-
-            for ( var key in r ) {
-                if ( r[key] ) {
-                    stripped[key] = r[key];
-                }
-            }
-
             var stamp = JSON.stringify( stripped );
 
             if ( this._sentSuggestions[ stamp ] ) return {};
@@ -269,6 +262,8 @@ app.router = Backbone.Router.extend({
 
             return stripped;
         }, this );
+
+        return _.filter( results, function( item ) { item.begin_epoch } );
     },
 
     login : function(params) {
