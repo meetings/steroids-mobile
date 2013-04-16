@@ -246,13 +246,15 @@ exports.editStepLocationView = function anonymous(locals, attrs, escape, rethrow
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width">');
+        var l = location === "Location not known" ? "" : location;
+        buf.push("<input");
         buf.push(attrs({
             id: "meeting-location",
             "data-theme": "b",
             type: "text",
             name: "meeting-location",
-            value: location,
+            value: l,
             placeholder: "Meeting location"
         }, {
             "data-theme": true,
@@ -316,13 +318,15 @@ exports.editStepTitleView = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
+        buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width">');
+        var t = title === "Untitled meeting" ? "" : title;
+        buf.push("<input");
         buf.push(attrs({
             id: "meeting-title",
             "data-theme": "b",
             type: "text",
             name: "meeting-title",
-            value: title,
+            value: t,
             placeholder: "Meeting title"
         }, {
             "data-theme": true,

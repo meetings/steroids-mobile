@@ -1,5 +1,6 @@
 div#edit-form.form-full-width(data-role="fieldcontain")
-    input#meeting-location(data-theme="b",type="text",name="meeting-location",value=location,placeholder="Meeting location")
+    - var l = location === 'Location not known' ? '' : location
+    input#meeting-location(data-theme="b",type="text",name="meeting-location",value=l,placeholder="Meeting location")
     div.controls
         a#submitStepLocation(data-theme="b", type="button") 
             - if(id != null)

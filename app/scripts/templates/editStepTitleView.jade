@@ -1,5 +1,6 @@
 div#edit-form.form-full-width(data-role="fieldcontain")
-    input#meeting-title(data-theme="b",type="text",name="meeting-title",value=title,placeholder="Meeting title")
+    - var t = title === 'Untitled meeting' ? '' : title
+    input#meeting-title(data-theme="b",type="text",name="meeting-title",value=t,placeholder="Meeting title")
     div.controls
         a#submitStepTitle(data-theme="b", type="button") 
             - if(id != null)
