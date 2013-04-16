@@ -129,11 +129,13 @@ app.materialEditView = Backbone.View.extend({
         var that = this;
         e.preventDefault();
 
-        var save_url = app.defaults.api_host + '/v1/meeting_materials/' + this.model.get('material_id');
+        that.model.update_edit_content( tinyMCE.get(0).getContent() );
+
+        var save_url = app.defaults.api_host + '/v1/meeting_materials/' + that.model.get('material_id');
         var params = {
-            edit_id : this.model.id,
-            content : this.model.get('content') || '',
-            old_content : this.model.get('old_content') || '',
+            edit_id : that.model.id,
+            content : that.model.get('content') || '',
+            old_content : that.model.get('old_content') || '',
             user_id : app.auth.user,
             dic : app.auth.token
         };
