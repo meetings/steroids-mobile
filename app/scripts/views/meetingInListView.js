@@ -39,7 +39,20 @@ app.meetingInListView = Backbone.View.extend({
         // Handle suggestions from Gcal & phone calendar
         if( this.model.get('source') ){
             var $popupEl = $('#suggestion-popup');
+
+            // Set calendar name to popup
+            var source_arr = this.model.get('source').split(':');
+            var cal_name = source_arr[1] ? source_arr[1] : 'Your calendar';
+            $('#calendar-name').text('Calendar: '+cal_name);
+
+            // Hide or show  remove all button
+            if( cal_name === 'Your calendar' ) $('.remove-all',$popupEl).hide();
+            else $('.remove-all',$popupEl).show();
+
+            // Open popup
             $popupEl.popup('open');
+
+            // Set handlers
             $popupEl.on('click', '.remove-suggestion', function(e){
                 e.preventDefault();
                 that.removeSuggestion();
@@ -57,6 +70,17 @@ app.meetingInListView = Backbone.View.extend({
                 $popupEl.off('click');
                 $popupEl.popup('close');
             });
+            $popupEl.on('click', '.remove-all', function(e){
+                e.preventDefault();
+                $popupEl.off('click');
+                $popupEl.popup('close');
+                app.models.user.get('hidden_sources').push(cal_name);
+                app.models.user.save({}, {success : function(){
+                    AppGyver.hideContent();
+                    Backbone.history.loadUrl();
+                }});
+            });
+
         }
         else{
             AppGyver.switchContext("meetingPage", {id: this.model.id});

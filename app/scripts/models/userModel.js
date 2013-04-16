@@ -7,5 +7,8 @@ app.userModel = Backbone.Model.extend({
             this.url = app.defaults.api_host + '/v1/users/' + ( this.id || 'me' );
         }, this );
     },
+    defaults : {
+        hidden_sources : []
+    },
     idAttribute : 'id'
 });
