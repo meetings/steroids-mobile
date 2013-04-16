@@ -37,7 +37,7 @@ app.meetingInListView = Backbone.View.extend({
         var that = this;
 
         // Handle suggestions from Gcal & phone calendar
-        if( this.model.get('source') === 'google' ){
+        if( this.model.get('source') ){
             var $popupEl = $('#suggestion-popup');
             $popupEl.popup('open');
             $popupEl.on('click', '.remove-suggestion', function(e){
@@ -49,6 +49,11 @@ app.meetingInListView = Backbone.View.extend({
             $popupEl.on('click', '.create-meeting', function(e){
                 e.preventDefault();
                 that.createFromSuggestion();
+                $popupEl.off('click');
+                $popupEl.popup('close');
+            });
+            $popupEl.on('click', '.cancel', function(e){
+                e.preventDefault();
                 $popupEl.off('click');
                 $popupEl.popup('close');
             });

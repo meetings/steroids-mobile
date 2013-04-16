@@ -33,6 +33,12 @@ window.app = {
     views : {},
     router : null,
     mixins : {},
+    helpers : {
+        validEmail : function(emailAddress) {
+            var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
+            return pattern.test(emailAddress);
+        }
+    },
     init : function() {
 
         // Check that history is supported
@@ -265,13 +271,13 @@ window.app = {
 
         var to_url = host + AppGyver.formContextRedirectUrl( context, redirect_params );
         var params = [
-            { key : "client_id", value : "584216729178.apps.googleusercontent.com" },
-            { key : "response_type", value : "code" },
-            { key : "access_type", value : "offline" },
+            { key : "client_id", "value" : "584216729178.apps.googleusercontent.com" },
+            { key : "response_type", "value" : "code" },
+            { key : "access_type", "value" : "offline" },
             { key : "scope", value : "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.google.com/calendar/feeds/ https://www.google.com/m8/feeds" },
             { key : "state", value : JSON.stringify( { to : to_url, redirect_uri : redirect_uri } ) },
-            { key : "approval_prompt", value : 'force' },
-            { key : "redirect_uri", value : redirect_uri }
+            { key : "approval_prompt", "value" : "force" },
+            { key : "redirect_uri", "value" : redirect_uri }
         ];
 
         var string_params = _.map( params,
@@ -290,7 +296,32 @@ window.app = {
     },
     showContent: function(){
         $('div.content').show();
+        $('div.connectivity').hide();
         $('div.loader').hide();
+    },
+
+    hasInternet : function(){
+        if( app.options.build !== 'web' ){
+            if(navigator.connection.type === Connection.NONE ){
+                app.showConnectivityError('nointernet');
+                return false;
+            }
+        }
+        return true;
+    },
+
+    showConnectivityError : function(type){
+        var $el = $('.connectivity').html( templatizer.connectivityError({ type : type }) ).show();
+        $('div.content').hide();
+        $('div.loader').hide();
+        $el.trigger('create');
+        $el.on('click', '.reconnect', function(e){
+            e.preventDefault();
+            $el.off('click');
+            $el.html('');
+            AppGyver.hideContent();
+            Backbone.history.loadUrl();
+        });
     }
 };
 

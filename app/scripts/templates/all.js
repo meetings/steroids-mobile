@@ -29,7 +29,7 @@ exports.calendarAllowAccessView = function anonymous(locals, attrs, escape, reth
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><h1> </h1><a href="#" data-theme="b" class="allow-access-done ui-btn-right">Done</a></div><div id="calendar-sync" data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><h3>Please allow calendar access</h3><p>In order to sync meetings with your iPhone, you should enable calendar access by following the steps below.</p><ol id="calendar-access-steps"><li class="step-settings">Open iPhone Settings</li><li class="step-privacy">Tap Privacy</li><li class="step-calendar">Tap Calendars</li><li class="step-meetings">Set "Meetin.gs" to ON</li></ol></div></div></div>');
+        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><h1> </h1><a href="#" data-theme="b" class="allow-access-done ui-btn-right">Done</a></div><div id="calendar-sync" data-role="content" class="main-div"><div class="connectivity"></div><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><h3>Please allow calendar access</h3><p>In order to sync meetings with your iPhone, you should enable calendar access by following the steps below.</p><ol id="calendar-access-steps"><li class="step-settings">Open iPhone Settings</li><li class="step-privacy">Tap Privacy</li><li class="step-calendar">Tap Calendars</li><li class="step-meetings">Set "Meetin.gs" to ON</li></ol></div></div></div>');
     }
     return buf.join("");
 };
@@ -92,6 +92,26 @@ exports.confirmSchedulingChoose = function anonymous(locals, attrs, escape, reth
         var __val__ = "Choose " + time + " for the meeting. We will immediately notify all participants.";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</p><a id="confirm-option" data-theme="b" type="button">Save and notify</a><a data-theme="a" type="button" class="reset">Cancel</a>');
+    }
+    return buf.join("");
+};
+
+// connectivityError.jade compiled template
+exports.connectivityError = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push('<div id="connectivity-error">');
+        if (locals.type === "nointernet") {
+            buf.push('<h1>No connectivity</h1><p>Please, check your internet connection.</p><a href="#" data-role="button" class="reconnect">Retry</a>');
+        } else {
+            buf.push('<h1>Connection timed out</h1><p>Your action seems to take longer than it should. Please, try again.</p><a href="#" data-role="button" class="reconnect">Reload</a>');
+        }
+        buf.push("</div>");
     }
     return buf.join("");
 };
@@ -389,7 +409,7 @@ exports.materialEditView = function anonymous(locals, attrs, escape, rethrow, me
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="edit-material-cancel">Cancel</a><h1>Edit Material</h1><a href="#" data-theme="b" class="edit-material-save">Save</a></div><div data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="material_content">');
+        buf.push('<div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="edit-material-cancel">Cancel</a><h1>Edit Material</h1><a href="#" data-theme="b" class="edit-material-save">Save</a></div><div data-role="content" class="main-div"><div class="connectivity"></div><div class="loader"><span class="loader"></span></div><div class="content"><div class="material_content">');
         if (error_message) {
             buf.push("<p>");
             var __val__ = error_message;
@@ -450,7 +470,7 @@ exports.materialRenameView = function anonymous(locals, attrs, escape, rethrow, 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="rename-material-cancel">Cancel</a><h1>Rename Material</h1></div><div data-role="content" class="main-div"><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
+        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="rename-material-cancel">Cancel</a><h1>Rename Material</h1></div><div data-role="content" class="main-div"><div class="connectivity"></div><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
         buf.push(attrs({
             id: "material-title",
             "data-theme": "b",

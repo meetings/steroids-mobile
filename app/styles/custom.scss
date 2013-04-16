@@ -110,7 +110,7 @@ div#scheduling{
     }
 }
 // Login page stuff
-div#login-page.app-mode{
+div#login.app-mode{
     background-repeat:repeat-y;
     background-size:100% auto;
     @include retina-bg('/images/login_bg_large', 'png', 640px, 45px);
@@ -118,7 +118,7 @@ div#login-page.app-mode{
         display:none;
     }
 }
-div#login-page{
+div#login{
     position:absolute;
     top:0px;
     bottom:0px;

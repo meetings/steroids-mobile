@@ -99,6 +99,7 @@
             <a id="create-meeting" class="open-add-meeting-view" href="edit.html" data-theme="b"><i class="icon-add"></i></a>
         </div>
         <div class="main-div" data-role="content" >
+            <div class="connectivity"></div>
             <div class="loader">
                 <span class="loader"></span>
             </div>
@@ -115,14 +116,12 @@
                 </ul>
                 <div id="meetings-buttons"></div>
             </div>
-            <div data-role="popup" id="suggestion-popup" data-theme="a" class="ui-corner-all" data-dismissible="false">
-                <form>
-                    <div style="padding:10px 20px;">
-                        <p>This meeting is from your calendar.</p>
-                        <button class="remove-suggestion" type="submit" data-theme="b">Remove suggestion</button>
-                        <button class="create-meeting" type="submit" data-theme="b">Create meeting</button>
-                    </div>
-                </form>
+            <div data-role="popup" id="suggestion-popup" data-overlay-theme="a" data-theme="c" data-dismissible="false" class="ui-corner-all">
+                <div style="padding:10px 20px;">
+                    <a href="#" class="remove-suggestion" type="submit" data-theme="b">Remove suggestion</a>
+                    <a href="#" class="create-meeting" type="submit" data-theme="b">Create meeting</a>
+                    <a href="#" class="cancel" type="submit" data-theme="b">Cancel</a>
+                </div>
             </div>
         </div><!-- /content -->
         <div data-role="panel" data-position-fixed="true" id="left-panel" data-theme="c">

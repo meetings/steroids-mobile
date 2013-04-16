@@ -1,4 +1,5 @@
 app.loginView = Backbone.View.extend({
+    // TODO: Fix mystery problem of having weird white bottom
     initialize: function(options) {
         $('#login-header > a.back-button').on('click', function(e){
             e.preventDefault();
@@ -14,7 +15,7 @@ app.loginView = Backbone.View.extend({
     render: function() {
         this.$el.html( templatizer.loginView() );
         this.$el.trigger('create');
-        if( app.options.build !== 'web' ) this.$el.addClass('app-mode');
+        if( app.options.build !== 'web' ) $('#login').addClass('app-mode');
         if ( this.google_uid ) {
             $('#login-header').fadeIn();
             $('a#facebook-login,a#google-login,p.separator,div.logo,#email').fadeOut('fast');
@@ -22,7 +23,7 @@ app.loginView = Backbone.View.extend({
                 $('#login-page').css('padding-top','41px');
                 $('div#google-connect-form').fadeIn();
                 $('body').scrollTop(0);
-            });            
+            });
         }
     },
     events: {
@@ -37,12 +38,9 @@ app.loginView = Backbone.View.extend({
 
     focusEmail : function(e){
         e.preventDefault();
-        // TODO: FIX THJIS HIT
-        // http://stackoverflow.com/questions/12879857/window-resize-due-to-virtual-keyboard-causes-issues-with-jquery-mobile
         $('#login-header').fadeIn();
         $('a#facebook-login,a#google-login,p.separator,div.logo').fadeOut('fast');
         $('a#facebook-login,a#google-login,p.separator,div.logo').promise().done(function(){
-            $('#login-page').css('padding-top','41px');
             $('div.controls').fadeIn();
             $('body').scrollTop(0);
         });
@@ -53,16 +51,18 @@ app.loginView = Backbone.View.extend({
         var $button = $(e.target);
         var $pin_field = $('#pin');
         $button.html('Checking...');
+
         if( ! $pin_field.val() ){
              $button.html('Continue');
              $form.append( $('<p class="error">Oops, looks like you skipped the PIN.</p>').delay(5000).fadeOut() );
              return;
         }
+
+        if( ! app.hasInternet() ) return;
         $.post( app.defaults.api_host + '/v1/login', { pin : $pin_field.val(), email : $('#email').val() }, function( response ){
             if( response.result ){
                 // Login
                 app._loginWithParams( response.result.user_id, response.result.token );
-
 
                 if ( response.result.tos_accepted ) {
                     AppGyver.switchContext( 'meetingsPage' );
@@ -98,11 +98,14 @@ app.loginView = Backbone.View.extend({
         var $form = $('#login-form');
         var $button = $(e.target);
         var $mail_field = $('#email');
-        if( ! $mail_field.val() ){
-             $form.append( $('<p class="error">Oops, you forgot to type in an email.</p>').delay(5000).fadeOut() );
+        var mail = $mail_field.val();
+        if( ! app.helpers.validEmail( mail ) ){
+             $form.append( $('<p class="error">Oops, you need to type in a valid email.</p>').delay(5000).fadeOut() );
              return;
         }
         $button.html('Sending...');
+
+        if( ! app.hasInternet() ) return;
         $.post( app.defaults.api_host + '/v1/login', { include_pin : 1, email : $mail_field.val(), return_host : app.defaults.return_host, allow_register : 1 }, function( response ){
             if( response.result === 1 ){
                 $form.fadeOut( function(){

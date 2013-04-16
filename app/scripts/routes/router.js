@@ -1,5 +1,14 @@
 app.router = Backbone.Router.extend({
     initialize : function(){
+        // Check internet on mobile device
+        if( app.options.build !== 'web' ){
+            this.bind('all', function (trigger, args) {
+                var routeData = trigger.split(":");
+                if (routeData[0] === "route") { // routeData[1] has route name
+                    app.checkInternet();
+                }
+            });
+        }
     },
     routes : {
         "" : "meetings",
@@ -195,7 +204,6 @@ app.router = Backbone.Router.extend({
             var nextMonth = new Date(now.getTime() + (32 * 24 * 60 * 60 * 1000));
             var start = "" + now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate() + " 00:00:00";
             var end = "" + nextMonth.getFullYear() + "-" + (nextMonth.getMonth()+1) + "-" + nextMonth.getDate() + " 00:00:00";
-
             var now, nextMonth, start, end;
             window.plugins.calendarPlugin.initialize(function() {
                 window.plugins.calendarPlugin.findEvent(null,null,null,start, end, function(result) {
@@ -206,7 +214,6 @@ app.router = Backbone.Router.extend({
                             dic : app.auth.token,
                             batch : JSON.stringify( batch )
                         };
-
                         $.post( app.defaults.api_host + '/v1/users/'+ app.auth.user +'/suggested_meetings/batch_insert', params )
                             .done( fetchFutureMeetings )
                             .fail( fetchFutureMeetings );
