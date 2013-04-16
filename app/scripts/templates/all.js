@@ -125,12 +125,12 @@ exports.editMaterialPanel = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Rename</a></li>');
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><i class="icon-rename"></i>Rename</a></li>');
         if (locals.download_url) {
-            buf.push('<li><a id="nav-download" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Download</a></li>');
+            buf.push('<li><a id="nav-download" href="#" data-transition="fade"><i class="icon-download"></i>Download</a></li>');
         }
         if (locals.creator_id === app.auth.user) {
-            buf.push('<li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li>');
+            buf.push('<li><a id="nav-remove" href="#" data-transition="fade"><i class="icon-delete"></i>Remove</a></li>');
         }
         buf.push("</ul>");
     }
