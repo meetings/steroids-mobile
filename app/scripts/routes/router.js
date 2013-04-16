@@ -5,7 +5,7 @@ app.router = Backbone.Router.extend({
             this.bind('all', function (trigger, args) {
                 var routeData = trigger.split(":");
                 if (routeData[0] === "route") { // routeData[1] has route name
-                    app.checkInternet();
+                    app.hasInternet();
                 }
             });
         }
@@ -199,7 +199,7 @@ app.router = Backbone.Router.extend({
             },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
         };
 
-        if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') ) {
+        if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') && window.plugins.calendarPlugin ) {
             var now = new Date();
             var nextMonth = new Date(now.getTime() + (32 * 24 * 60 * 60 * 1000));
             var start = "" + now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate() + " 00:00:00";
