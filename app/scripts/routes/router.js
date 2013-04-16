@@ -31,6 +31,7 @@ app.router = Backbone.Router.extend({
         AppGyver.refreshContext( redirect_info[0], redirect_info[1] );
     },
     meetings : function() {
+        var that = this;
 
         // Render panel & setup header
         if( ! app.views.panel ) {
@@ -166,26 +167,58 @@ app.router = Backbone.Router.extend({
             userFetch.resolve();
         }});
 
-        app.collections.future_meetings.fetch({ success : function(col,res){
-            // Get times
-            var today = Math.floor ( moment().utc().sod() / 1000 );
-            var today_end = Math.floor ( moment().utc().eod() / 1000 );
+        var fetchFutureMeetings = function() {
+            app.collections.future_meetings.fetch({ success : function(col,res){
+                // Get times
+                var today = Math.floor ( moment().utc().sod() / 1000 );
+                var today_end = Math.floor ( moment().utc().eod() / 1000 );
 
-            // Create a new collection of todays meetings
-            var today_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
-                return ( o['begin_epoch'] >= today && o['begin_epoch'] <= today_end );
-            });
-            app.collections.today.reset( today_meetings );
+                // Create a new collection of todays meetings
+                var today_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
+                    return ( o['begin_epoch'] >= today && o['begin_epoch'] <= today_end );
+                });
+                app.collections.today.reset( today_meetings );
 
-            // Create new collection of upcoming meetings
-            var upcoming_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
-                return ( o['begin_epoch'] > today_end );
-            });
-            app.collections.upcoming.reset( upcoming_meetings );
+                // Create new collection of upcoming meetings
+                var upcoming_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
+                    return ( o['begin_epoch'] > today_end );
+                });
+                app.collections.upcoming.reset( upcoming_meetings );
 
-            futureFetch.resolve(); // Resolve the deferred
+                futureFetch.resolve(); // Resolve the deferred
 
-        },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
+            },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
+        };
+
+        if ( 0 && app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') ) {
+            var now = new Date();
+            var nextMonth = new Date(today.getTime() + (32 * 24 * 60 * 60 * 1000));
+            var start = "" + now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate() + " 00:00:00";
+            var end = start;
+//           var end = "" + nextMonth.getFullYear() + "-" + (nextMonth.getMonth()+1) + "-" + nextMonth.getDate() + " 00:00:00";
+
+            window.plugins.calendarPlugin.initialize(function() {
+                window.plugins.calendarPlugin.findEvent(null,null,null,start, end, function(result) {
+                    var batch = that._formSuggestionBatchFromCalendarResult( result );
+                    if ( batch.length ) {
+                        var params = {
+                            user_id : app.auth.user,
+                            dic : app.auth.token,
+                            batch : JSON.stringify( batch )
+                        };
+                        $.post( app.defaults.api_host + '/v1/suggested_meetings', params )
+                            .done( fetchFutureMeetings )
+                            .fail( fetchFutureMeetings );
+                    }
+                    else {
+                        fetchFutureMeetings();
+                    }
+                }, function( err ) { fetchFutureMeetings(); });
+            }, function( err ) { fetchFutureMeetings(); });
+        }
+        else {
+            fetchFutureMeetings();
+        }
 
         app.collections.unscheduled_meetings.fetch({ success : function(col,res){
             unscheduledFetch.resolve();
@@ -193,11 +226,49 @@ app.router = Backbone.Router.extend({
 
         app.collections.past_meetings.fetch({ success : function(col,res){
             pastFetch.resolve();
-        },  data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
+        }, data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
 
         app.collections.highlights.fetch({ success : function(col,res){
             highlightsFetch.resolve();
         }});
+    },
+    _sentSuggestions : {},
+    _formSuggestionBatchFromCalendarResult : function( result ) {
+        return _.map( result, function( r ) {
+            var participant_list = _.map([], function( participant ) {
+                return ''; // proper email
+            } );
+
+            var begin_epoch = '';
+            if ( ! begin_epoch ) return {};
+
+            var r = {
+                title : '',
+                begin_epoch : '',
+                end_epoch : '',
+                uid : '',
+                description : '',
+                "location" : '',
+                source : 'phone',
+                participant_list : participant_list.join(", "),
+                organizer : ''
+            };
+
+            var stripped = {};
+
+            for ( var key in r ) {
+                if ( r[key] ) {
+                    stripped[key] = r[key];
+                }
+            }
+
+            var stamp = JSON.stringify( stripped );
+
+            if ( this._sentSuggestions[ stamp ] ) return {};
+            this._sentSuggestions[ stamp ] = 1;
+
+            return stripped;
+        }, this );
     },
 
     login : function(params) {

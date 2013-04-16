@@ -5,7 +5,21 @@ app.meetingsView = Backbone.View.extend({
     },
 
     render: function() {
-        $('#meetings-buttons').html(templatizer.noMeetingsView({ model : this.model.toJSON() }));
+        var that = this;
+        if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') ) {
+            window.plugins.calendarPlugin.initialize(function() {
+                that._render( { showPhoneConnect : 0 } );
+            },function() {
+                that._render( { showPhoneConnect : 1 } );
+            });
+        }
+        else {
+            that._render( { showPhoneConnect : ( app.options.build !== 'web' ? 1 : 0 ) } );
+        }        
+    },
+    _render : function(params) {
+        params.model = this.model.toJSON();
+        $('#meetings-buttons').html(templatizer.noMeetingsView( params ));
         $('#meetings-buttons').trigger("create");
     },
 
@@ -16,26 +30,14 @@ app.meetingsView = Backbone.View.extend({
 
     phoneConnect : function(e){
         e.preventDefault();
-        /*
+        if ( app.options.build !== 'web' ) {
+            localStorage.setItem('phoneCalendarConnected', '1');
+        }
         window.plugins.calendarPlugin.initialize(function() {
-
-                today = new Date();
-                nextWeek = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
-                start = "" + today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate() + " " + today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-                end = "" + nextWeek.getFullYear() + "-" + (nextWeek.getMonth()+1) + "-" + nextWeek.getDate() + " " + nextWeek.getHours() + ":" + nextWeek.getMinutes() + ":" + nextWeek.getSeconds();
-
-                console.log('calendar inited, tryinh to fetch shits');
-                window.plugins.calendarPlugin.findEvent(null,null,null,start, end, function(result) {
-                    alert("Found " + result.length + " events!");
-                }, function(err) {
-                    if( err === 'No results') console.log('no results');
-                    else console.log('User did not give permiszion');
-                });
+            AppGyver.refreshContext('meetingsPage');
         },function() {
-            console.log('User did not give permiszion');
+            AppGyver.switchContext('connectCalendarPage');
         });
-        */
-        AppGyver.switchContext('connectCalendarPage', {} );
     },
     googleConnect : function(e){
         e.preventDefault();
