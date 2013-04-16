@@ -206,6 +206,7 @@ app.router = Backbone.Router.extend({
                             dic : app.auth.token,
                             batch : JSON.stringify( batch )
                         };
+
                         $.post( app.defaults.api_host + '/v1/users/'+ app.auth.user +'/suggested_meetings/batch_insert', params )
                             .done( fetchFutureMeetings )
                             .fail( fetchFutureMeetings );
@@ -234,36 +235,61 @@ app.router = Backbone.Router.extend({
     },
     _sentSuggestions : {},
     _formSuggestionBatchFromCalendarResult : function( result ) {
-        console.log( result );
+        var that = this;
         var results = _.map( result, function( r ) {
-            var participant_list = _.map([], function( participant ) {
-                return ''; // proper email
-            } );
+            if ( r.allDay == 'true' ) return {};
 
-            var begin_epoch = '';
+            var begin_epoch = r.startDateEpoch || '0';
+            var end_epoch = r.endDateEpoch || '0';
+
+            begin_epoch = begin_epoch.replace(/\.0+$/,'');
+            end_epoch = end_epoch.replace(/\.0+$/,'');
+
             if ( ! begin_epoch ) return {};
 
-            var r = {
-                title : '',
-                begin_epoch : '',
-                end_epoch : '',
-                uid : '',
-                description : '',
-                "location" : '',
-                source : 'phone',
+            var participant_list = _.map( r.attendees || [], function( p ) {
+                var name = p.name ? "" + p.name : '';
+                var email = p.email ? "" + p.email : '';
+                if ( p.url && ! email ) {
+                    var u = p.url ? "" + p.url : '';
+                    email = u.replace(/mailto\:/, '');
+                }
+                if ( ! email ) return '';
+                if ( ! name ) return email;
+
+                name = name.replace( /\"/g, '' );
+
+                return '"' + name + '" <' + email + '>';
+            } );
+
+            participant_list = _.filter( participant_list, function(p) { return p ? true : false } );
+
+            var UUID = r.UUID || '';
+            if ( /^'.*'$/.test(UUID)) {
+                UUID = UUID.replace(/^'.*'$/, UUID);
+            }
+
+            var suggestion = {
+                title : r.title,
+                begin_epoch : begin_epoch,
+                end_epoch : end_epoch,
+                uid : UUID,
+                description : r.message,
+                "location" : r["location"],
+                source : 'phone:' + ( r.calendar || ''),
                 participant_list : participant_list.join(", "),
-                organizer : ''
+//                organizer : ''
             };
 
-            var stamp = JSON.stringify( stripped );
+            var stamp = JSON.stringify( suggestion );
 
             if ( this._sentSuggestions[ stamp ] ) return {};
             this._sentSuggestions[ stamp ] = 1;
 
-            return stripped;
+            return suggestion;
         }, this );
 
-        return _.filter( results, function( item ) { item.begin_epoch } );
+        return _.filter( results, function( item ) { return item.begin_epoch ? true : false } );
     },
 
     login : function(params) {
