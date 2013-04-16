@@ -84,6 +84,7 @@ app.materialEditView = Backbone.View.extend({
             theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,bullist,numlist,|,removeformat",
             theme_advanced_buttons2 : "forecolor,backcolor,|,formatselect",
             theme_advanced_toolbar_align : "center",
+            theme_advanced_statusbar_location : "none",
 
             onchange_callback : function( instance ) {
                 that.model.update_edit_content( instance.getContent() );
