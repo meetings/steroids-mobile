@@ -581,7 +581,7 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
             buf.push(escape(null == __val__ ? "" : __val__));
             if (locals.source === "google") {
                 buf.push('<i style="margin-left:14px;font-size:12px;position:relative;top:1px;" class="icon-google"></i>');
-            } else if (locals.source === "phone") {
+            } else if (locals.source && locals.source.indexOf("phone") !== -1) {
                 buf.push('<i style="margin-left:14px;font-size:12px;position:relative;top:1px;" class="icon-mobile"></i>');
             }
             buf.push('</span><span class="right">');
