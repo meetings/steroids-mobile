@@ -196,7 +196,7 @@ app.router = Backbone.Router.extend({
 
                 futureFetch.resolve(); // Resolve the deferred
 
-            },  data : { include_draft : 1, start_min : today, limit : 10, sort : "asc"} } );
+            },  data : { include_draft : 1, start_min : today, limit : 50, sort : "asc"} } );
         };
 
         if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') && window.plugins.calendarPlugin ) {
