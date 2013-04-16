@@ -274,12 +274,9 @@ window.app = {
             { key : "redirect_uri", value : redirect_uri }
         ];
 
-        var string_params = [];
-        var i;
-
-        for ( i = 0; i < params.length; i++ ) {
-            string_params.push( encodeURIComponent( params[i].key ) + '=' + encodeURIComponent( params[i].value ) );
-        }
+        var string_params = _.map( params,
+            function( p ) { return encodeURIComponent( p.key ) + '=' + encodeURIComponent( p.value ); }
+        );
 
         var url = "https://accounts.google.com/o/oauth2/auth?" + string_params.join("&");
 

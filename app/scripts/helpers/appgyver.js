@@ -5,11 +5,10 @@
         contexts : [
             { file : 'index.html', id : 'meetingsPage', no_preload : true },
             { file : 'login.html', id : 'loginPage', load_before_init : true },
-            { file : 'profile.html', id : 'profilePage', load_before_init : true },
+            { file : 'profile.html', id : 'profilePage' },
             { file : 'meeting.html', id : 'meetingPage' },
             { file : 'participants.html', id : 'participantsPage' },
             { file : 'participant.html', id : 'participantPage' },
-            { file : 'materials.html', id : 'materialsPage' },
             { file : 'material.html', id : 'materialPage' },
             { file : 'scheduling.html', id : 'schedulingPage' },
             { file : 'addParticipant.html', id : 'addParticipantPage' },
@@ -39,11 +38,13 @@
             if (/index\.html/.test(window.location.href)) {
 
                 steroids.on("ready", function(){
-                    that.ensure_preloads('only_preloads_before_init');
-                    setTimeout(function(){
-                        app.init();
-                        that.ensure_preloads();
-                    }, 4000 );
+                    that.ensure_preloads(
+                        function(){
+                            app.init();
+                            that.ensure_preloads();
+                        },
+                        'first'
+                    );
                 });
 
                 AppGyver.current_context_id = 'meetingsPage';
@@ -66,6 +67,7 @@
             }
 
             window.addEventListener("message", function(event) {
+                if ( event.data.type != 'refreshPreload' ) return;
                 if ( AppGyver.current_context ) {
                     if ( event.data.preloadId == AppGyver.current_context_id ) {
                         AppGyver.refreshPreload( AppGyver.current_context, event.data.urlParams );
@@ -79,6 +81,8 @@
                 }
             } );
 
+            window.postMessage( { type : 'preloadReady', readyPreloadId : AppGyver.current_context_id }, "*");
+
             var start_parts = /[\?\&]start_refresh=([^\&]*)/.exec( window.location.href );
 
             if ( start_parts && start_parts[1] ) {
@@ -86,27 +90,43 @@
                 var context = that.getContextForID( start[0] );
                 AppGyver.refreshPreload( context, start[1] );
             }
+
         },
 
         preloaded_ids : {},
 
-        ensure_preloads : function( only_preloads_before_init ) {
+        ensure_preloads : function( all_ready_handler, before_load ) {
             var path = app.options.build === 'ios' ? 'http://localhost:13101' : '';
 
-            var context, preload_path, i, id, file;
+            var deferreds = [];
 
-            for ( i in AppGyver.contexts ) {
-                context = AppGyver.contexts[i];
+            _.each( AppGyver.contexts, function( context ) {
+                if ( context.no_preload ) return;
 
-                if ( context.no_preload ) continue;
-                if ( only_preloads_before_init && ! context.load_before_init ) continue;
+                var id = context.shared_id || context.id;
 
-                id = context.shared_id || context.id;
+                if ( before_load && ! context.load_before_init ) return;
 
-                if ( this.preloaded_ids[id] ) continue;
+                if ( this.preloaded_ids[id] ) return;
                 this.preloaded_ids[ id ] = true;
 
+                var readyDeferred = $.Deferred();
+                var readyListener = function( event ) {
+                    if ( event.data.type != 'preloadReady' ) return;
+                    if ( event.data.readyPreloadId != id ) return;
+                    readyDeferred.resolve();
+                    window.removeEventListener("message", readyListener );
+                };
+
+                window.addEventListener("message", readyListener );
+                
+                deferreds.push( readyDeferred );
+
                 AppGyver.preload( path + this.formSharedContextURL( context ), id );
+            }, this );
+
+            if ( all_ready_handler ) {
+                $.when.apply( $, deferreds ).then( all_ready_handler );
             }
         },
         preload: function(url, id, deferred ){
@@ -121,7 +141,7 @@
             var animation = context.animation;
 
             console.log("requesting refresh for preload " + context.id);
-            window.postMessage( { urlParams: params, preloadId: context.id }, "*");
+            window.postMessage( { type : 'refreshPreload', urlParams: params, preloadId: context.id }, "*");
 
             var removeActive = function() {
                 $(".ui-btn-active").removeClass("ui-btn-active");
