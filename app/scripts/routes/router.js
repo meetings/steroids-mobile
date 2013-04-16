@@ -221,7 +221,10 @@ app.router = Backbone.Router.extend({
                     else {
                         fetchFutureMeetings();
                     }
-                }, function( err ) { fetchFutureMeetings(); });
+                }, function( err ) {
+                    fetchFutureMeetings();
+                    localStorage.setItem('phoneCalendarConnected', "0");
+                });
             }, function( err ) { fetchFutureMeetings(); });
         }
         else {
@@ -600,10 +603,6 @@ app.router = Backbone.Router.extend({
         app.views.connectCalendar = new app.connectCalendarView({
             el : $('#page .view-container')
         });
-
-        setTimeout( function() {
-            app.views.connectCalendar.render();
-        }, 100 );
     },
     edit : function(params) {
 

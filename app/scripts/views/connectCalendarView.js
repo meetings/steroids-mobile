@@ -2,10 +2,10 @@ app.connectCalendarView = Backbone.View.extend({
     initialize: function(options) {
         var that = this;
 
-        //this.model = new app.materialModel( { id : 23 } );
-        //this.model.fetch( { success : function() { that.render() } } );
-        this.header = new app.headerView({ el : options.el }); // hooks pre-load back button for now
-        //this.render();
+        setTimeout( function() {
+            that.header = new app.headerView({ el : options.el }); // hooks pre-load back button for now
+            that.render();
+        }, 200 );
     },
 
     render: function() {
