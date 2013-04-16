@@ -2,8 +2,8 @@ app.connectCalendarView = Backbone.View.extend({
     initialize: function(options) {
         var that = this;
 
+        that.header = new app.headerView({ el : options.el }); // hooks pre-load back button for now
         setTimeout( function() {
-            that.header = new app.headerView({ el : options.el }); // hooks pre-load back button for now
             that.render();
         }, 200 );
     },

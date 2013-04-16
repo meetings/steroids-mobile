@@ -260,7 +260,12 @@
             }
         },
 
-        refreshContext: function( context_id, params, options ) {
+        refreshContext: function() {
+            AppGyver.hideContent();
+            Backbone.history.loadUrl();
+        },
+
+        reloadContext: function( context_id, params, options ) {
             params = params || {};
 
             var context = this.getContextForID( context_id );

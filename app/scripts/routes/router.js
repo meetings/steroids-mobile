@@ -37,7 +37,7 @@ app.router = Backbone.Router.extend({
         delete params['redirect_info'];
         redirect_info[1].redirect_params = JSON.stringify( params );
 
-        AppGyver.refreshContext( redirect_info[0], redirect_info[1] );
+        AppGyver.reloadContext( redirect_info[0], redirect_info[1] );
     },
     meetings : function() {
         var that = this;
