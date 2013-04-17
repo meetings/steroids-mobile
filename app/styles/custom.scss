@@ -112,8 +112,8 @@ div#scheduling{
 // Login page stuff
 div#login.app-mode{
     background-repeat:repeat-y;
-    background-size:100% auto;
-    @include retina-bg('/images/login_bg_large', 'png', 640px, 45px);
+    background-size:100% 41px;
+    @include retina-bg('/images/login_bg_large', 'jpg', 100%, 41px);
     div.no-mobile-link{
         display:none;
     }

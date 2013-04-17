@@ -413,7 +413,7 @@ exports.materialEditView = function anonymous(locals, attrs, escape, rethrow, me
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="edit-material-cancel">Cancel</a><h1>Edit Material</h1><a href="#" data-theme="b" class="edit-material-save">Save</a></div><div data-role="content" class="main-div"><div class="connectivity"></div><div class="loader"><span class="loader"></span></div><div class="content"><div class="material_content">');
+        buf.push('<div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="edit-material-cancel">Cancel</a><h1>Edit material</h1><a href="#" data-theme="b" class="edit-material-save">Save</a></div><div data-role="content" class="main-div"><div class="connectivity"></div><div class="loader"><span class="loader"></span></div><div class="content"><div class="material_content">');
         if (error_message) {
             buf.push("<p>");
             var __val__ = error_message;
@@ -474,7 +474,7 @@ exports.materialRenameView = function anonymous(locals, attrs, escape, rethrow, 
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="rename-material-cancel">Cancel</a><h1>Rename Material</h1></div><div data-role="content" class="main-div"><div class="connectivity"></div><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
+        buf.push('<div data-role="header" data-id="header" data-position="fixed" data-theme="d" data-tap-toggle="false"><a href="#" data-theme="b" class="rename-material-cancel">Cancel</a><h1>Rename material</h1></div><div data-role="content" class="main-div"><div class="connectivity"></div><div class="loader"><span class="loader"></span></div><div class="content"><div class="content"><div id="edit-form" data-role="fieldcontain" class="form-full-width"><input');
         buf.push(attrs({
             id: "material-title",
             "data-theme": "b",
@@ -661,7 +661,10 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
         }
         if (location) {
             if (location === "On Skype" || location === "Online" || location === "Location not known") {
-                buf.push('<p class="mtngs-location"><i class="icon-location"></i>location</p>');
+                buf.push('<p class="mtngs-location"><i class="icon-location"></i>');
+                var __val__ = location;
+                buf.push(escape(null == __val__ ? "" : __val__));
+                buf.push("</p>");
             } else {
                 buf.push('<p class="mtngs-location"><i class="icon-location"></i><a href="#" class="open-map-link">');
                 var __val__ = location;
