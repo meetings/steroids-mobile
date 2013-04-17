@@ -185,14 +185,16 @@ app.meetingView = Backbone.View.extend({
         e.preventDefault();
         navigator.camera.getPicture( function(imageURI){
             var that = this;
-            // Show filename field and focus
+
+            // Show filename name field and submit
             $('.file-save-form').show();
             $('.add-photo-material').hide();
             $('.save-photo-material').addClass('ui-disabled');
 
+            // Focus on name field
             setTimeout( function(){
                 $('#file-upload-name').focus();
-            },100);
+            },300);
 
             // Setup File transfer and progress bar
             var ft = new FileTransfer();
@@ -219,6 +221,7 @@ app.meetingView = Backbone.View.extend({
                 var resp = $.parseJSON(res.response);
                 $('#file-upload-id').val(resp.result.upload_id);
                 $('.save-photo-material').removeClass('ui-disabled');
+                $('#upload_progress .text').html('Done. Type in name and save.');
             }, function(error){
                 console.log('Error uploading photo.');
             }, options);
