@@ -21,7 +21,7 @@ window.app = {
         //api_host : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://api-dev.meetin.gs' : 'https://api.meetin.gs',
         desktop_link : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://dev.meetin.gs/meetings_global/detect' : 'https://meetin.gs/meetings_global/detect',
         return_host : 'http://' + location.host,
-        version : '1',
+        version : 1,
         version_check_url : 'http://versions.meetin.gs/ios/current.json'
     },
     options: {
@@ -220,7 +220,8 @@ window.app = {
     },
     _versionCheck : function(){
         $.getJSON( app.defaults.version_check_url , function(response){
-            if( response.version !== app.defaults.version ){
+            // Force update if the current.json value is larger than client version
+            if( parseInt(response.version, 10) > app.defaults.version ){
                 app._redirectToUpdate(response.url);
             }
         });
