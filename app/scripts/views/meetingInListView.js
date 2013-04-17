@@ -87,7 +87,7 @@ app.meetingInListView = Backbone.View.extend({
                 if ( ! app.models.user.get('hidden_sources') ) {
                      app.models.user.set('hidden_sources', []);
                 }
-                app.models.user.get('hidden_sources').push(cal_name);
+                app.models.user.get('hidden_sources').push(that.model.get('source'));
                 app.models.user.save({}, {success : function(){
                     AppGyver.hideContent();
                     Backbone.history.loadUrl();
