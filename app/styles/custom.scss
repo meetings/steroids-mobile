@@ -631,6 +631,7 @@ ul#material{
 body{
     max-width:720px;
     background-color:#e6e6e6 !important;
+    -webkit-touch-callout:none; // Disable callout
 }
 .ui-body-overlay-a{
     border:none;
