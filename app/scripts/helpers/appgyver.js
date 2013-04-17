@@ -256,7 +256,9 @@
 
             if ( app.options.build !== 'web' ) {
                 AppGyver.openPreload( context, params, options );
-                this.scheduleCleaning();
+                if ( context_id == 'meetingsPage' || ( options && options.pop ) ) {
+                    this.scheduleCleaning();
+                }
              }
             else {
                 window.location = this.formContextURL( context, params );
