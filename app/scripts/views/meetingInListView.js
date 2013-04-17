@@ -27,7 +27,8 @@ app.meetingInListView = Backbone.View.extend({
         // TODO: Handle url stuff in the model
         this.model.url = app.defaults.api_host + '/v1/suggested_meetings/' + this.model.get('id');
         this.model.save({'disabled':1},{ success : function(){
-            that.model.collection.remove( that.model );
+            AppGyver.hideContent();
+            Backbone.history.loadUrl();
         }});
     },
 
