@@ -42,6 +42,10 @@ app.editView = Backbone.View.extend({
 
         this.$el.html( templatizer.editStepTitleView( this.model.toJSON() ) );
         this.$el.trigger("create");
+        setTimeout(function(){
+            $('#meeting-title').focus();
+        },200);
+
     },
 
     saveEditStepTitle: function(e) {

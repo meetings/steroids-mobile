@@ -88,19 +88,27 @@
             </div>
             <div class="edit-panel" data-role="panel" id="edit-material-panel" data-position="right" data-position-fixed="true" data-theme="c">
             <!-- panel content goes here -->
+        </div>
+        <div data-role="popup" id="confirm-delete" data-overlay-theme="a" data-theme="b" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
+            <div data-role="content" data-theme="a">
+                <h3 class="ui-title">Are you sure you want to remove this material?</h3>
+                <p>This action cannot be undone.</p>
+                <a class="cancel" href="#" data-role="button" data-inline="true" data-theme="c">Cancel</a>
+                <a class="confirm" href="#" data-role="button" data-inline="true" data-theme="b">Remove</a>
             </div>
-        </div><!-- /page -->
-<script type="text/javascript" charset="utf-8">
+        </div>
+    </div><!-- /page -->
+    <script type="text/javascript" charset="utf-8">
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount','UA-3314001-23']);
 _gaq.push(['_trackPageview']);
 (function() {
- var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
- ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
- var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
- })();
-        </script>
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+    </script>
     </body>
-</html>
+    </html>
 
 

@@ -43,11 +43,15 @@ app.meetingInListView = Backbone.View.extend({
 
             // Set calendar name to popup
             var source_arr = this.model.get('source').split(':');
-            var cal_name = source_arr[1] ? source_arr[1] : 'Your calendar';
-            $('#calendar-name').text('Calendar: '+cal_name);
+            if( source_arr[1] ){
+                $('#calendar-name').text('From calendar: '+source_arr[1]);
+            }
+            else{
+                $('#calendar-name').text('From Google calendar');
+            }
 
             // Hide or show  remove all button
-            if( cal_name === 'Your calendar' ) $('.remove-all',$popupEl).hide();
+            if( source_arr[1] ) $('.remove-all',$popupEl).hide();
             else $('.remove-all',$popupEl).show();
 
             // Open popup
@@ -65,7 +69,7 @@ app.meetingInListView = Backbone.View.extend({
                 $popupEl.popup('close');
                 $clickEl.removeClass('ui-btn-active');
                 $("body").unbind("touchmove");
-            }
+            };
 
             // Set handlers
             $popupEl.on('click', '.remove-suggestion', function(e){

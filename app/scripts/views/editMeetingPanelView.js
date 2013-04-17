@@ -34,10 +34,34 @@ app.editMeetingPanelView = Backbone.View.extend({
     },
     removeMeeting : function(e){
         e.preventDefault();
+
+        var that = this;
+        var meeting_id = this.model.get('meeting_id');
+
+        $popupEl = $('#confirm-delete');
+        $popupEl.popup('open');
+        $("body").on("touchmove", false);
         this.$el.panel('close');
-        AppGyver.hideContent();
-        this.model.destroy({ success : function(){
-            AppGyver.switchContext("meetingsPage", null, { pop : true } );
-        }});
+
+        // Close popup helper
+        var popupClose = function(){
+            $popupEl.off('click');
+            $popupEl.popup('close');
+            $("body").unbind("touchmove");
+        };
+
+        // Set handlers
+        $popupEl.on('click', '.confirm', function(e){
+            e.preventDefault();
+            AppGyver.hideContent();
+            that.model.destroy({ success : function(){
+                AppGyver.switchContext("meetingsPage", null, { pop : true } );
+            }});
+            popupClose();
+        });
+        $popupEl.on('click', '.cancel', function(e){
+            e.preventDefault();
+            popupClose();
+        });
     }
 });
