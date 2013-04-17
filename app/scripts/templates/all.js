@@ -125,7 +125,11 @@ exports.editMaterialPanel = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><i class="icon-rename"></i>Rename</a></li>');
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c">');
+        if (locals.fetch_type === "page") {
+            buf.push('<li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li>');
+        }
+        buf.push('<li><a id="nav-rename" href="#" data-transition="fade"><i class="icon-rename"></i>Rename</a></li>');
         if (locals.download_url) {
             buf.push('<li><a id="nav-download" href="#" data-transition="fade"><i class="icon-download"></i>Download</a></li>');
         }

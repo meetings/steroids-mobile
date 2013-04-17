@@ -1,8 +1,9 @@
 ul#side-bar(data-role="listview",data-theme="c")
-    li
-        a#nav-edit(href="#", data-transition="fade")
-            i.icon-edit
-            | Edit
+    - if ( locals.fetch_type === 'page' )
+        li
+            a#nav-edit(href="#", data-transition="fade")
+                i.icon-edit
+                | Edit
     li
         a#nav-rename(href="#",data-transition="fade")
             i.icon-rename
