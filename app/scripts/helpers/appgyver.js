@@ -290,7 +290,14 @@
 
         popContext : function() {
             if ( app.options.build !== 'web' ) {
-                steroids.layers.pop();
+                if ( AppGyver.back_context ) {
+                    AppGyver.switchContext( AppGyver.back_context[0], AppGyver.back_context[1], { pop : 1 } );
+                    AppGyver.back_context = false;
+                }
+                else {
+                    steroids.layers.pop();
+                }
+
                 this.scheduleCleaning();
             }
             else if ( $('.back-button').length && $('.back-button').attr('href') !== '#' ){
