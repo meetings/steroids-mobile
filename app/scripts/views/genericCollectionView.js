@@ -101,7 +101,7 @@ app.genericCollectionView = Backbone.View.extend({
         if( this.options.mode === 'addtotop'){
             var incoming_h = 102 * this.addHtmlBuffer.length;
             var cur_h = this.$el.height();
-            this.$el.css('height', cur_h + incoming_h );
+            //this.$el.css('height', cur_h + incoming_h );
             window.scrollBy(0, incoming_h );
             $loader.after($(this.addHtmlBuffer));
         }
