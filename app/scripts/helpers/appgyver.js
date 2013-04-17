@@ -240,6 +240,9 @@
                 if ( AppGyver.current_context_id == 'init' ) {
                     window.location = path + '/init.html?steroids_preload_id=init';
                 }
+                else {
+                    AppGyver.hideContent();
+                }
             }, 500 );
         },
 

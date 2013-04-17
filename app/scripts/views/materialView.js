@@ -48,7 +48,6 @@ app.materialView = Backbone.View.extend({
         this.initScribd();
 
         this.$el.trigger('create');
-        app.showContent();
 
         return this;
     },
