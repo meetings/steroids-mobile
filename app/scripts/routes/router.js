@@ -471,6 +471,7 @@ app.router = Backbone.Router.extend({
             // Setup links to add participants
             $('a.addParticipant').click(function(e) {
                 e.preventDefault();
+                AppGyver.back_context = ["meetingPage", { id : id } ];
                 AppGyver.switchContext("addParticipantPage", { id : id } );
             });
 
