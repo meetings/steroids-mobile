@@ -510,7 +510,8 @@ app.router = Backbone.Router.extend({
         var id = params.id;
 
         app.models.material = app.models.material || new app.materialModel();
-        app.models.material.url = app.defaults.api_host + '/v1/meeting_materials/' + id;
+        app.models.material.clear();
+        app.models.material.set( "id", id );
 
         app.collections.comments = app.collections.comments || new app.commentCollection();
         app.collections.comments.url = app.defaults.api_host + '/v1/meeting_materials/' + id + '/comments';
