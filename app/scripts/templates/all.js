@@ -670,7 +670,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             }
         }
         buf.push('<div id="next-action-bar"></div><!-- Skype button-->');
-        if (locals.skype_url) {
+        if (locals.skype_url && !is_draft) {
             buf.push("<a");
             buf.push(attrs({
                 id: "skype_button",
