@@ -643,9 +643,12 @@ body{
 .ui-listview-filter-inset{border:none !important; background:none !important}
 
 // Hack some border colors only inside content so as not to affect panel
-div.ui-content ul li.ui-li{
+div.ui-content ul li.ui-li:last-child{
     border-bottom:1px solid #ccc;
-    border-top:none;
+}
+div.ui-content ul li.ui-li{
+    border-bottom:none;
+    border-top:1px solid #ccc;
 }
 div.ui-content ul li.ui-corner-top{
     border-top:1px solid #ccc;
