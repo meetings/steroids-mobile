@@ -247,6 +247,7 @@ app.router = Backbone.Router.extend({
     _sentSuggestions : {},
     _formSuggestionBatchFromCalendarResult : function( result ) {
         var that = this;
+        var count = 0;
         var results = _.map( result, function( r ) {
             if ( r.allDay == 'true' ) return {};
 
@@ -257,6 +258,10 @@ app.router = Backbone.Router.extend({
             end_epoch = end_epoch.replace(/\.0+$/,'');
 
             if ( ! begin_epoch ) return {};
+
+            count++;
+
+            if ( count > 50 ) return {};
 
             var participant_list = _.map( r.attendees || [], function( p ) {
                 var name = p.name ? "" + p.name : '';
