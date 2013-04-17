@@ -69,7 +69,7 @@ ul#materials_list(data-role="listview",data-inset="true",data-theme="a")
         a(href="#", data-role="button", data-theme="a") Existing photo
         a(href="#", data-role="button", data-rel="back", data-theme="c") Cancel
 
-- if( app.options.build === 'web' )
+- if( app.options.build !== 'web' )
     div.photo-upload
         a.add-photo-material(href='#',data-role="button",data-theme="b") Take photo
         div#upload_progress
