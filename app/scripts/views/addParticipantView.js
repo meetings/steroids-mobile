@@ -9,13 +9,71 @@ app.addParticipantView = Backbone.View.extend({
     },
 
     render : function() {
+        var that = this;
+
         this.$el.html( templatizer.addParticipantView( this.model.toJSON() ) ); // Render template
         this.$el.trigger('create'); // Call JQM
 
+        var $name = $('#participant-name');
+        var $email = $('#participant-email');
+
+        $email.on('keypress', function() {
+            setTimeout( function() {
+                if ( $email.val() ) {
+                    $('#submitAddParticipant .ui-btn-text').text( 'Add ' + $email.val() );
+                }
+                else {
+                    $('#submitAddParticipant .ui-btn-text').text( 'Add participant' );
+                }
+
+                if ( navigator.contacts && !$name.is(':visible') ) {
+                    var fields = ["displayName","emails"];
+                    var success = function( contacts ) {
+                        $('.suggestions').html('');
+                        var i = 1;
+                        _.each(contacts, function(c) {
+                            if ( i++ > 9 ) return;
+
+                            var n = c.displayName;
+                            var e = c.emails ? c.emails[0] ? c.emails[0].value || '' : '' : '';
+    
+                            var $link = $('<a href="#"></a>');
+                            $link.text( "Add "+ n );
+
+                            $link.on('click', function() {
+                                var emailstring = e || n;
+                                if ( n && e ) {
+                                    var sn = n.replace(/\"/gm, '');
+                                    emailstring = '"' + sn + '" <' + e + '>';
+                                }
+                                $email.val( emailstring );
+                                $('#submitAddParticipant .ui-btn-text').text( 'Add participant' );
+                                that.saveParticipant();
+                            } );
+    
+                            var $container = $('<li></li>');
+                            $container.append( $link );
+    
+                            $('.suggestions').append( $container );
+                        } );
+                        $('.suggestions').listview().listview('refresh');
+                    };
+                    var error = function() { $('.suggestions').html(''); };
+                    var filter = { filter : $email.val(), multiple : true }
+
+                    navigator.contacts.find( fields, success, error, filter );
+
+                    //success( [ { displayName : 'Antti Vähäkotamäki', emails : [ 'antti@dicole.com' ] }, { displayName : 'Jussi Kaijalainen', emails : [ 'jussi@dicole.com', 'väärä@osoite.com' ] }, { displayName: 'Ilman mailia' } ] );
+
+                }
+            }, 100 );
+
+        } );
         return this;
     },
 
     saveParticipant : function() {
+        $('.suggestions').html('');
         var $name = $('#participant-name');
         var $email = $('#participant-email');
 
