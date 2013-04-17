@@ -223,10 +223,12 @@ app.router = Backbone.Router.extend({
                         fetchFutureMeetings();
                     }
                 }, function( err ) {
-                    localStorage.setItem('phoneCalendarConnected', "0");
                     fetchFutureMeetings();
                 });
-            }, function( err ) { fetchFutureMeetings(); });
+            }, function( err ) {
+                localStorage.setItem('phoneCalendarConnected', "0");
+                fetchFutureMeetings();
+            });
         }
         else {
             fetchFutureMeetings();
