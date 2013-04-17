@@ -7,19 +7,21 @@ $(document).bind("mobileinit", function(){
     $.mobile.ajaxLinksEnabled = false;
 });
 
+window.production_mode = false;
+
 window.app = {
     auth : {
         user : null,
         token : null,
         tos_verify_required : false,
         cookiename : 'mtngs_mobile_auth',
-        cookievalid : 14 // in days
+        cookievalid : 3 * 365 // in days
     },
     defaults : {
-        url_scheme : 'steroids-scanner://',
-        api_host : 'https://api-dev.meetin.gs',
+        url_scheme : /^1\./.test( window.AG_CLIENT_VERSION || '1.0.0' ) ? 'meetings://' : 'steroids-scanner://',
+        api_host : window.production_mode ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
         //api_host : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://api-dev.meetin.gs' : 'https://api.meetin.gs',
-        desktop_link : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://dev.meetin.gs/meetings_global/detect' : 'https://meetin.gs/meetings_global/detect',
+        desktop_link : window.production_mode ? 'https://meetin.gs/meetings_global/detect' : 'https://dev.meetin.gs/meetings_global/detect',
         return_host : 'http://' + location.host,
         version : 1,
         version_check_url : 'http://versions.meetin.gs/ios/current.json'
@@ -41,7 +43,6 @@ window.app = {
         }
     },
     init : function() {
-
         // Check that history is supported
         if( ! Modernizr.history ){
             $('body').html( templatizer.updateBrowser() );
