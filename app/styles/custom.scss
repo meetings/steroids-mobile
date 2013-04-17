@@ -21,7 +21,7 @@
 }
 
 // Add grid background
-div.ui-page{
+div.ui-page, div.ui-body-a{
     background-color:transparent;
     @include retina-bg('/images/mobile_bg', 'png', 3px, 3px);
     background-repeat:repeat;
