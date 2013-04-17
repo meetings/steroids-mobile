@@ -294,7 +294,7 @@ exports.editStepSkypeNameView = function anonymous(locals, attrs, escape, rethro
             type: "text",
             name: "skype-account",
             value: skype_account,
-            placeholder: "Skype name"
+            placeholder: "Skype account to call"
         }, {
             "data-theme": true,
             type: true,
