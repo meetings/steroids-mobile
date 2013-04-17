@@ -84,6 +84,9 @@ app.meetingInListView = Backbone.View.extend({
             $popupEl.on('click', '.remove-all', function(e){
                 e.preventDefault();
                 popupClose();
+                if ( ! app.models.user.get('hidden_sources') ) {
+                     app.models.user.set('hidden_sources', []);
+                }
                 app.models.user.get('hidden_sources').push(cal_name);
                 app.models.user.save({}, {success : function(){
                     AppGyver.hideContent();
