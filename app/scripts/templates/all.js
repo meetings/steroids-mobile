@@ -660,7 +660,7 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push('<p class="mtngs-calendar"><i class="icon-calendar"></i>Scheduling in progress</p>');
         }
         if (location) {
-            if (location === "On Skype" || location === "Online" || location === "Location not known") {
+            if (/skype/i.test(location) || location === "Online" || location === "Location not known") {
                 buf.push('<p class="mtngs-location"><i class="icon-location"></i>');
                 var __val__ = location;
                 buf.push(escape(null == __val__ ? "" : __val__));

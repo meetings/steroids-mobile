@@ -9,7 +9,7 @@ h3=title
         i.icon-calendar
         | Scheduling in progress
 - if ( location )
-    - if( location === 'On Skype' || location === 'Online' || location === 'Location not known' )
+    - if( /skype/i.test(location) || location === 'Online' || location === 'Location not known' )
         p.mtngs-location
             i.icon-location
             = location
