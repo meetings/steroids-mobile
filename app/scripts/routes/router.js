@@ -261,8 +261,6 @@ app.router = Backbone.Router.extend({
 
             if ( ! begin_epoch ) return {};
 
-            count++;
-
             if ( count > 50 ) return {};
 
             var participant_list = _.map( r.attendees || [], function( p ) {
@@ -303,6 +301,8 @@ app.router = Backbone.Router.extend({
 
             if ( this._sentSuggestions[ stamp ] ) return {};
             this._sentSuggestions[ stamp ] = 1;
+
+            count++;
 
             return suggestion;
         }, this );
