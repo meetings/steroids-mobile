@@ -50,10 +50,6 @@ app.meetingInListView = Backbone.View.extend({
                 $('#calendar-name').text('From Google calendar');
             }
 
-            // Hide or show  remove all button
-            if( source_arr[1] ) $('.remove-all',$popupEl).hide();
-            else $('.remove-all',$popupEl).show();
-
             // Open popup
             $popupEl.popup('open');
 
