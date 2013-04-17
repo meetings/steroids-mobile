@@ -7,13 +7,10 @@ app.meetingsView = Backbone.View.extend({
     render: function() {
         var that = this;
 
-        var connected = localStorage.getItem('phoneCalendarConnected');
-        if ( connected == "0" ) connected = false;
-
-        if ( app.options.build !== 'web' && connected && window.plugins.calendarPlugin ) {
-            window.plugins.calendarPlugin.initialize(function() {
+        if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') && localStorage.getItem('phoneCalendarConnected') !== "0" && connected && window.plugins.calendarPlugin ) {
+            window.plugins.calendarPlugin.initialize(function(err) {
                 that._render( { showPhoneConnect : 0 } );
-            },function() {
+            },function(err) {
                 that._render( { showPhoneConnect : 1 } );
             });
         }

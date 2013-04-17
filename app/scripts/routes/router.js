@@ -62,6 +62,7 @@ app.router = Backbone.Router.extend({
         // wait for ajax requests to succeed, defer show content until that
         $.when(futureFetch, unscheduledFetch, pastFetch, highlightsFetch, userFetch).then(function(){
 
+            app.views.meetingsView.render();
             app.showContent();
 
             var offset;
@@ -199,7 +200,7 @@ app.router = Backbone.Router.extend({
             },  data : { include_draft : 1, start_min : today, limit : 50, sort : "asc"} } );
         };
 
-        if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') && window.plugins.calendarPlugin ) {
+        if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') && localStorage.getItem('phoneCalendarConnected') !== "0" && window.plugins.calendarPlugin ) {
             var now = new Date();
             var nextMonth = new Date(now.getTime() + (32 * 24 * 60 * 60 * 1000));
             var start = "" + now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate() + " 00:00:00";
@@ -222,8 +223,8 @@ app.router = Backbone.Router.extend({
                         fetchFutureMeetings();
                     }
                 }, function( err ) {
-                    fetchFutureMeetings();
                     localStorage.setItem('phoneCalendarConnected', "0");
+                    fetchFutureMeetings();
                 });
             }, function( err ) { fetchFutureMeetings(); });
         }
