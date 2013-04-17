@@ -210,10 +210,10 @@ app.editView = Backbone.View.extend({
 
     finalizeMeetingCreation: function() {
         if(this.model.get('id')) {
-            $('#headerTitle').text('Saving meeting...');
+            $('#headerTitle').text('Saving..');
         }
         else {
-            $('#headerTitle').text('Creating meeting...');
+            $('#headerTitle').text('Creating..');
         }
 
         // empty views stack and send the meeting to server
