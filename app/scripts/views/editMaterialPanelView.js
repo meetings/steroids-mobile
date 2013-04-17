@@ -3,8 +3,7 @@ app.editMaterialPanelView = Backbone.View.extend({
         this.menu_active = options.active;
         this.materialId = options.materialId;
 
-        // Bind error and success handlers
-         options.model.bind('change', this.render, this);
+         this.listenTo(this.model, 'change', this.render);
         _(this).bindAll('render');
     },
 

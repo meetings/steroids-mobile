@@ -125,12 +125,12 @@ exports.editMaterialPanel = function anonymous(locals, attrs, escape, rethrow, m
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><span class="ui-icon menu-icon-edit"></span>Rename</a></li>');
+        buf.push('<ul id="side-bar" data-role="listview" data-theme="c"><li><a id="nav-edit" href="#" data-transition="fade"><i class="icon-edit"></i>Edit</a></li><li><a id="nav-rename" href="#" data-transition="fade"><i class="icon-rename"></i>Rename</a></li>');
         if (locals.download_url) {
-            buf.push('<li><a id="nav-download" href="#" data-transition="fade"><span class="ui-icon menu-icon-rename"></span>Download</a></li>');
+            buf.push('<li><a id="nav-download" href="#" data-transition="fade"><i class="icon-download"></i>Download</a></li>');
         }
         if (locals.creator_id === app.auth.user) {
-            buf.push('<li><a id="nav-remove" href="#" data-transition="fade"><span class="ui-icon menu-icon-remove"></span>Remove</a></li>');
+            buf.push('<li><a id="nav-remove" href="#" data-transition="fade"><i class="icon-delete"></i>Remove</a></li>');
         }
         buf.push("</ul>");
     }
@@ -740,8 +740,8 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
             buf.push('<a href="#materialsPopup" data-rel="popup" data-theme="b" type="button">Add materials</a>');
         }
         buf.push('<div id="materialsPopup" data-role="popup" data-overlay-theme="a" data-theme="c" class="ui-corner-all"><div data-role="content" data-theme="d" class="ui-corner-bottom ui-content"><h3 class="ui-title">Choose source</h3><a href="#" data-role="button" data-theme="a" class="add-photo-material">Camera</a><a href="#" data-role="button" data-theme="a">Existing photo</a><a href="#" data-role="button" data-rel="back" data-theme="c">Cancel</a></div></div>');
-        if (app.options.build !== "web") {
-            buf.push('<div class="photo-upload"><a href="#" data-role="button" class="add-photo-material">Add photo</a><div id="upload_progress"></div><div class="file-save-form"><div class="left"><input id="file-upload-id" type="hidden"/><input id="file-upload-name" type="text" placeholder="Filename..." data-theme="b"/></div><div class="right"><a href="#" data-role="button" class="save-photo-material ui-disabled">Save</a></div></div><div style="display:none;" class="save-text"><p>Saving material...</p></div></div>');
+        if (app.options.build === "web") {
+            buf.push('<div class="photo-upload"><a href="#" data-role="button" data-theme="b" class="add-photo-material">Take photo</a><div id="upload_progress"></div><div class="file-save-form"><div class="left"><input id="file-upload-id" type="hidden"/><input id="file-upload-name" type="text" placeholder="Filename..." data-theme="b"/></div><div class="right"><a href="#" data-role="button" data-theme="blue" class="save-photo-material ui-disabled">Save</a></div></div><div style="display:none;" class="save-text"><p>Saving material...</p></div></div>');
         }
     }
     return buf.join("");

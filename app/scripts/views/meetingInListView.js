@@ -52,28 +52,38 @@ app.meetingInListView = Backbone.View.extend({
             // Open popup
             $popupEl.popup('open');
 
+            // Disable scroll
+            $("body").on("touchmove", false);
+
+            // Unset the button
+            $clickEl = $(e.currentTarget);
+
+            // Close popup helper
+            var popupClose = function(){
+                $popupEl.off('click');
+                $popupEl.popup('close');
+                $clickEl.removeClass('ui-btn-active');
+                $("body").unbind("touchmove");
+            }
+
             // Set handlers
             $popupEl.on('click', '.remove-suggestion', function(e){
                 e.preventDefault();
                 that.removeSuggestion();
-                $popupEl.off('click');
-                $popupEl.popup('close');
+                popupClose();
             });
             $popupEl.on('click', '.create-meeting', function(e){
                 e.preventDefault();
                 that.createFromSuggestion();
-                $popupEl.off('click');
-                $popupEl.popup('close');
+                popupClose();
             });
             $popupEl.on('click', '.cancel', function(e){
                 e.preventDefault();
-                $popupEl.off('click');
-                $popupEl.popup('close');
+                popupClose();
             });
             $popupEl.on('click', '.remove-all', function(e){
                 e.preventDefault();
-                $popupEl.off('click');
-                $popupEl.popup('close');
+                popupClose();
                 app.models.user.get('hidden_sources').push(cal_name);
                 app.models.user.save({}, {success : function(){
                     AppGyver.hideContent();
