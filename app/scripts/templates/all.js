@@ -761,10 +761,10 @@ exports.noMeetingsView = function anonymous(locals, attrs, escape, rethrow, merg
         var interp;
         buf.push('<a href="#" data-theme="b" data-role="button" class="open-add-meeting-view"><i class="icon-add"> </i>Add a meeting</a>');
         if (showPhoneConnect) {
-            buf.push('<a href="#" data-theme="b" data-role="button" class="phone-connect-meeting-view"> <i class="icon-calendar"></i>Sync with phone calendar</a>');
+            buf.push('<a href="#" data-theme="b" data-role="button" class="phone-connect-meeting-view"> <i class="icon-calendar"></i>Sync from phone calendar</a>');
         }
         if (!model.google_connected) {
-            buf.push('<a href="#" data-theme="b" data-role="button" class="google-connect-meeting-view"><i class="icon-google"></i>Sync with Google Calendar</a>');
+            buf.push('<a href="#" data-theme="b" data-role="button" class="google-connect-meeting-view"><i class="icon-google"></i>Sync from Google Calendar</a>');
         }
     }
     return buf.join("");
