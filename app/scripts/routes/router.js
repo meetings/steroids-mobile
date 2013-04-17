@@ -506,6 +506,8 @@ app.router = Backbone.Router.extend({
         var materialFetched = $.Deferred();
 
         $.when(commentsFetched, materialFetched).then(function(){
+            if( app.models.material.get('fetch_type') === 'chat' ) $('#open-right-panel').hide();
+            else $('#open-right-panel').show();
             app.showContent();
         });
 
