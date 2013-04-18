@@ -1,0 +1,10 @@
+- if( locals.image !== '' )
+    img(src=locals.image, width='30', height='30')
+- else
+    span.placeholder-30
+- if( locals.rsvp_status === 'yes' )
+    span.rsvp.yes
+- else if( locals.rsvp_status === 'no' )
+    span.rsvp.no
+- else
+    span.rsvp.unknown

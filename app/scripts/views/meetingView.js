@@ -63,8 +63,9 @@ app.meetingView = Backbone.View.extend({
         this.initProgressBar();
 
         // Setup next action view
-        var data = this.model.getMeetingUserByID( app.auth.user );
-        var user = new app.participantModel( data, { meeting_id : this.model.get('id') } );
+        var user = app.collections.participants.find(function(item) {
+            return item.get('user_id') == app.auth.user;
+        });
 
         // Show next action bar for the user
         this.subviews.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : user });
@@ -78,6 +79,18 @@ app.meetingView = Backbone.View.extend({
             childViewConstructor : app.materialInListView
         });
         this.subviews.materials.render();
+
+        // Setup participants view
+        this.subviews.participants = new app.genericCollectionView({
+            el : '#participants',
+            collection : app.collections.participants,
+            childViewTagName : 'div',
+            childViewConstructor : app.participantInMeetingView
+        });
+
+        this.subviews.participants.render();
+        
+        $('#participants').removeClass('ui-listview');
 
         return this;
     },

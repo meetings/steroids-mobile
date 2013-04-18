@@ -624,7 +624,8 @@ exports.meetingInListView = function anonymous(locals, attrs, escape, rethrow, m
                     }
                     if (dateString == "") {
                         buf.push("<!-- Time not set-->");
-                    } else if (participant.rsvp_status === "yes") {
+                    }
+                    if (participant.rsvp_status === "yes") {
                         buf.push('<span class="rsvp yes"></span>');
                     } else if (participant.rsvp_status === "no") {
                         buf.push('<span class="rsvp no"></span>');
@@ -701,48 +702,10 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                 buf.push('<a href="#" data-theme="b" data-role="button" class="open-send-invites-view">Send invites</a>');
             }
         }
-        buf.push('<ul data-role="listview" data-inset="true"><li><a href="#" class="open-participant-view"><h3>');
+        buf.push('<ul id="participant-list" data-role="listview" data-inset="true"><li><a href="#" class="open-participant-view"><h3>');
         var __val__ = "Participants";
         buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push('</h3><div class="participant-list"></div>');
-        if (participants.length) {
-            buf.push('<div class="participants">');
-            participants = _.sortBy(participants, function(p) {
-                if (p.is_creator) return 0; else if (p.rsvp_status === "yes") return 1; else if (p.rsvp_status === "no") return 3; else return 2;
-            });
-            participants.forEach(function(participant) {
-                {
-                    buf.push('<div class="wrap">');
-                    if (participant.image !== "") {
-                        buf.push("<img");
-                        buf.push(attrs({
-                            src: participant.image,
-                            width: "30",
-                            height: "30"
-                        }, {
-                            src: true,
-                            width: true,
-                            height: true
-                        }));
-                        buf.push("/>");
-                    } else {
-                        buf.push('<span class="placeholder-30"></span>');
-                    }
-                    if (dateString == "") {
-                        buf.push("<!-- Time not set-->");
-                    } else if (participant.rsvp_status === "yes") {
-                        buf.push('<span class="rsvp yes"></span>');
-                    } else if (participant.rsvp_status === "no") {
-                        buf.push('<span class="rsvp no"></span>');
-                    } else {
-                        buf.push('<span class="rsvp unknown"></span>');
-                    }
-                    buf.push("</div>");
-                }
-            });
-            buf.push("</div>");
-        }
-        buf.push('</a></li></ul><!-- Materials--><ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul>');
+        buf.push('</h3><div id="participants" class="participants"></div></a></li></ul><!-- Materials--><ul id="materials_list" data-role="listview" data-inset="true" data-theme="a"></ul>');
         if (0) {
             buf.push('<a href="#materialsPopup" data-rel="popup" data-theme="b" type="button">Add materials</a>');
         }
@@ -947,6 +910,41 @@ exports.participantInListView = function anonymous(locals, attrs, escape, rethro
             buf.push("</p>");
         }
         buf.push("</a>");
+    }
+    return buf.join("");
+};
+
+// participantInMeetingView.jade compiled template
+exports.participantInMeetingView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        if (locals.image !== "") {
+            buf.push("<img");
+            buf.push(attrs({
+                src: locals.image,
+                width: "30",
+                height: "30"
+            }, {
+                src: true,
+                width: true,
+                height: true
+            }));
+            buf.push("/>");
+        } else {
+            buf.push('<span class="placeholder-30"></span>');
+        }
+        if (locals.rsvp_status === "yes") {
+            buf.push('<span class="rsvp yes"></span>');
+        } else if (locals.rsvp_status === "no") {
+            buf.push('<span class="rsvp no"></span>');
+        } else {
+            buf.push('<span class="rsvp unknown"></span>');
+        }
     }
     return buf.join("");
 };

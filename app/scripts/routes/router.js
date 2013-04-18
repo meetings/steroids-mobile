@@ -381,10 +381,11 @@ app.router = Backbone.Router.extend({
 
         // Setup deferreds
         var meetingFetch = $.Deferred(),
-        materialsFetch = $.Deferred();
+        materialsFetch = $.Deferred(),
+        participantsFetch = $.Deferred();
 
         // wait for ajax requests to succeed, defer show content until that
-        $.when(meetingFetch, materialsFetch).then(function(){
+        $.when(meetingFetch, materialsFetch, participantsFetch).then(function(){
             app.views.meeting.render();
             app.showContent();
         });
@@ -392,6 +393,10 @@ app.router = Backbone.Router.extend({
         // Setup models & collections
         if( ! app.collections.materials ) app.collections.materials = new app.materialCollection( [], { meeting_id : id } );
         app.collections.materials.url = app.defaults.api_host + '/v1/meetings/' + id + '/materials';
+
+        // Setup models & collections
+        if( ! app.collections.participants ) app.collections.participants = new app.participantCollection( [], { meeting_id : id } );
+        app.collections.participants.url = app.defaults.api_host + '/v1/meetings/' + id + '/participants';
 
         if( ! app.models.meeting ) app.models.meeting = new app.meetingModel();
         app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
@@ -418,11 +423,16 @@ app.router = Backbone.Router.extend({
         // with subviews for info and materials
         app.models.meeting.fetch({ success : function(){
             meetingFetch.resolve();
-            app.views.editPanel.render();
-            app.collections.materials.fetch({ success : function(){
-                materialsFetch.resolve(); // Resolve deferred
-            }, silent : true }); // Silent as we want to render when both fetches are done
+            app.views.editPanel.render();            
         }, timeout : 5000, silent : true });
+        
+        app.collections.materials.fetch({ success : function(){
+            materialsFetch.resolve(); // Resolve deferred
+        }, timeout : 5000, silent : true }); // Silent as we want to render when both fetches are done
+        
+        app.collections.participants.fetch({ success : function(){
+            participantsFetch.resolve(); // Resolve deferred
+        }, timeout : 5000, silent : true }); // Silent as we want to render when both fetches are done
     },
 
     scheduling : function(params) {

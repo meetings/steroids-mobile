@@ -25,7 +25,7 @@ a(href='meeting.html?id='+id)
                         span.placeholder-20
                     - if( dateString == "" )
                         // Time not set
-                    - else if( participant.rsvp_status === 'yes' )
+                    - if( participant.rsvp_status === 'yes' )
                         span.rsvp.yes
                     - else if( participant.rsvp_status === 'no' )
                         span.rsvp.no

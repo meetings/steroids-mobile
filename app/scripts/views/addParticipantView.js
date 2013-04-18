@@ -3,7 +3,7 @@ app.addParticipantView = Backbone.View.extend({
 
     initialize: function(options) {
         this.model.bind('change', this.render, this);
-        this.meeting_model = options.meetingModel;
+        this.meetingModel = options.meetingModel;
         this.return_context = options.returnContext;
         _(this).bindAll('openMeetingView');
     },
@@ -174,7 +174,7 @@ app.addParticipantView = Backbone.View.extend({
     },
 
     openMeetingView : function(){
-        AppGyver.switchContext(this.return_context, {id: this.meeting_model.get('id')}, { pop : true });
+        AppGyver.switchContext(this.return_context, {id: this.meetingModel.get('id')}, { pop : true });
     },
 
     events: {
