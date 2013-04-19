@@ -265,42 +265,41 @@ module.exports = function( grunt ) {
       });
   };
 
-  grunt.registerTask('ios_build', 'Processes html build comments', function() {
-      var done = this.async();
-      grunt.file.expand('dist/*.html').forEach(function(path){
+  var buildifyExpandForTarget = function( expand_dir, build_target ) {
+      grunt.file.expand( expand_dir ).forEach(function(path){
           var fullPath = __dirname + '/' + path;
           var preBuildContent = grunt.file.read(fullPath);
-          grunt.file.write(fullPath, buildifyFile("ios", preBuildContent));
+          grunt.file.write(fullPath, buildifyFile(build_target, preBuildContent));
       });
-      mvFiles(function(){
-          var fullPath = __dirname + '/' +'agapp/config/application.coffee';
-          var preBuildContent = grunt.file.read(fullPath);
-          grunt.file.write(fullPath, buildifyFile("ios", preBuildContent));
-          done();
+  }
+  grunt.registerTask('steroids_prepare', 'templatizer comassizer' );
+
+  grunt.registerTask('steroids_ios', 'Processes html build comments in steroids for ios and cleans breaking scss files', function() {
+      buildifyExpandForTarget('steroids/dist/*.html', 'ios' );
+      var done = this.async();
+      var exec = require('child_process').exec;
+      exec('rm -Rf '+ __dirname +'/steroids/dist/styles/*.scss', function(){
+        done();
       });
   });
 
-  grunt.registerTask('android_build', 'Processes html build comments', function() {
+  grunt.registerTask('ios_build', 'Processes html build comments for ios', function() {
       var done = this.async();
-      grunt.file.expand('dist/*.html').forEach(function(path){
-          var fullPath = __dirname + '/' + path;
-          var preBuildContent = grunt.file.read(fullPath);
-          grunt.file.write(fullPath, buildifyFile("android", preBuildContent));
-      });
+      buildifyExpandForTarget('dist/*.html', 'ios' );
       mvFiles(function(){
-          var fullPath = __dirname + '/' +'agapp/config/application.coffee';
-          var preBuildContent = grunt.file.read(fullPath);
-          grunt.file.write(fullPath, buildifyFile("android", preBuildContent));
+          done();
+      });
+  });
+  grunt.registerTask('android_build', 'Processes html build comments for android', function() {
+      var done = this.async();
+      buildifyExpandForTarget('dist/*.html', 'android' );
+      mvFiles(function(){
           done();
       });
   });
 
   grunt.registerTask('web_build', 'Processes html build comments', function() {
-      grunt.file.expand('dist/*.html').forEach(function(path){
-          var fullPath = __dirname + '/' + path;
-          var preBuildContent = grunt.file.read(fullPath);
-          grunt.file.write(fullPath, buildifyFile("web", preBuildContent));
-    });
+      buildifyExpandForTarget('dist/*.html', 'web' );
   });
 
   // Do the nesessary modifications
@@ -308,8 +307,14 @@ module.exports = function( grunt ) {
       var templatizer = require('templatizer');
       templatizer(__dirname + '/app/scripts/templates', __dirname + '/app/scripts/templates/all.js');
   });
-  grunt.registerTask('templatizer', 'Builds the templates', function() {
-      var templatizer = require('templatizer');
-      templatizer(__dirname + '/app/scripts/templates', __dirname + '/app/scripts/templates/all.js');
+  grunt.registerTask('comassizer', 'Builds the css files', function() {
+      var done = this.async();
+      var exec = require('child_process').exec;
+      exec('compass compile --sass-dir ' + __dirname +'/app/styles/ --css-dir ' + __dirname + '/app/styles/', function(){
+        done();
+      });
   });
+
+  grunt.renameTask('server', 'old-server');
+  grunt.registerTask('server', 'templatizer old-server');  
 };

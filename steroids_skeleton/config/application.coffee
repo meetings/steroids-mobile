@@ -42,12 +42,7 @@ steroids.config.name = "New Application"
 #   - http://localhost/ (serves files locally from www, f.e. http://localhost/index.html would serve index.html)
 #   - http://www.google.com (directly from internet)
 
-<!-- start build include: ios -->
 steroids.config.location = "http://localhost/index.html"
-<!-- stop build include -->
-<!-- start build include: android -->
-steroids.config.location = "index.html"
-<!-- stop build include -->
 
 # -- Tabs --
 #
