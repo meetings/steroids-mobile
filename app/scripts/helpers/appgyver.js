@@ -96,7 +96,7 @@
         preloaded_ids : {},
 
         ensure_preloads : function( all_ready_handler, before_load ) {
-            var path = app.options.build === 'ios' ? 'http://localhost:13101' : '';
+            var path = app.options.build === 'ios' ? 'http://localhost' : '';
 
             var deferreds = [];
 
@@ -234,7 +234,7 @@
         },
 
         scheduleCleaning: function() {
-            var path = app.options.build === 'ios' ? 'http://localhost:13101' : '';
+            var path = app.options.build === 'ios' ? 'http://localhost' : '';
             var that = this;
             setTimeout( function() {
                 if ( AppGyver.current_context_id == 'init' ) {

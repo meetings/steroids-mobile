@@ -1116,7 +1116,7 @@ OAuth2Flow = (function() {
 
   function OAuth2Flow(options) {
     this.options = options != null ? options : {};
-    this.options.callbackUrl = "http://localhost:13101/" + this.options.callbackPath;
+    this.options.callbackUrl = "http://localhost/" + this.options.callbackPath;
   }
 
   OAuth2Flow.prototype.authenticate = function() {

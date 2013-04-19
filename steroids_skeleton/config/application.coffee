@@ -18,14 +18,14 @@
 #      "id": 1818,
 #      "position": 0,
 #      "title": "Meetings",
-#      "target_url": "http://localhost:13101/index.html",
+#      "target_url": "http://localhost/index.html",
 #      "image_path": "meetings.png"
 #    },
 #    {
 #      "id": 1817,
 #      "position": 1,
 #      "title": "Settings",
-#      "target_url": "http://localhost:13101/settings.html",
+#      "target_url": "http://localhost/settings.html",
 #      "image_path": "settings.png"
 #    }
 #  ]
