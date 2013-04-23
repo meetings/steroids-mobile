@@ -15,6 +15,7 @@ app.editView = Backbone.View.extend({
         });
 
         this.viewStack = new Array();
+        
     },
 
     render: function(field) {
@@ -190,8 +191,35 @@ app.editView = Backbone.View.extend({
             this.model.set('end_epoch', now.add('hours', 1).unix());
         }
 
+
         this.$el.html( templatizer.editStepDateAndTimeSetupView( this.model.toJSON() ) );
         this.$el.trigger("create");
+        
+        $("#meeting-begin-date").focus(function(e) { 
+          currentField = this;
+          myNewDate = new Date();
+          tempDate = new Date();
+
+          window.plugins.datePicker.show({
+            date : myNewDate,
+            mode : 'date',
+            allowOldDates : true
+          }, function (returnDate) {
+            tempDate = new Date(parseInt(returnDate));
+            window.plugins.datePicker.show({
+              date : myNewDate,
+              mode: 'time',
+              allowOldDates : true
+            }, function (returnTime) {
+              tempTime = new Date(parseInt(returnTime));
+              tempDate.setHours(tempTime.getHours());
+              tempDate.setMinutes(tempTime.getMinutes());
+              this.val(moment(tempDate).format('MMMM Do YYYY, h:mm a')); // does not work :(
+              currentField.blur();
+            });
+          });
+          currentField.blur();
+        });
     },
 
     saveEditStepDateAndTimeFinish: function(e) {
