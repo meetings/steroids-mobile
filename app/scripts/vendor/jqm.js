@@ -98,7 +98,7 @@
 		orientationChangeEnabled: true,
 
 		buttonMarkup: {
-			hoverDelay: 200
+			hoverDelay: 10000
 		},
 
 		// define the window and the document objects
