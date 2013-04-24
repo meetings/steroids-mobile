@@ -183,7 +183,7 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
     with (locals || {}) {
         var interp;
         buf.push('<div id="edit-form" data-role="fieldcontain" class="form-full-width"><ul id="date-selection" data-role="listview" data-inset="true"><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Starts</div><div class="ui-block-b"> ');
-        var beginString = moment.unix(parseInt(begin_epoch)).format("MMMM Do YYYY, h:mm a");
+        var beginString = moment.unix(parseInt(begin_epoch)).format("MMM DD YYYY HH:mm a");
         buf.push("<input");
         buf.push(attrs({
             id: "meeting-begin-date",
@@ -200,7 +200,7 @@ exports.editStepDateAndTimeSetupView = function anonymous(locals, attrs, escape,
             placeholder: true
         }));
         buf.push('/></div></div></li><li data-icon="false"><div class="ui-grid-a"><div class="ui-block-a">Ends</div><div class="ui-block-b"> ');
-        var endString = moment.unix(parseInt(end_epoch)).format("MMMM Do YYYY, h:mm a");
+        var endString = moment.unix(parseInt(end_epoch)).format("MMM DD YYYY HH:mm a");
         buf.push("<input");
         buf.push(attrs({
             id: "meeting-end-date",

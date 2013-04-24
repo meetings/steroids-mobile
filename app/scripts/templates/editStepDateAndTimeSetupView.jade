@@ -4,13 +4,13 @@ div#edit-form.form-full-width(data-role="fieldcontain")
             .ui-grid-a
                 .ui-block-a Starts
                 .ui-block-b 
-                    - var beginString = moment.unix(parseInt(begin_epoch)).format('MMMM Do YYYY, h:mm a')
+                    - var beginString = moment.unix(parseInt(begin_epoch)).format('MMM DD YYYY HH:mm a')
                     input#meeting-begin-date(data-theme="b",type="text",name="meeting-begin-date",value=beginString,placeholder="Starts")
         li(data-icon="false")
             .ui-grid-a
                 .ui-block-a Ends
                 .ui-block-b 
-                    - var endString = moment.unix(parseInt(end_epoch)).format('MMMM Do YYYY, h:mm a')
+                    - var endString = moment.unix(parseInt(end_epoch)).format('MMM DD YYYY HH:mm a')
                     input#meeting-end-date(data-theme="b",type="text",name="meeting-end-date",value=endString,placeholder="Ends")
 
     div.controls
