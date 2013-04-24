@@ -197,45 +197,36 @@ app.editView = Backbone.View.extend({
         this.$el.html( templatizer.editStepDateAndTimeSetupView( this.model.toJSON() ) );
         this.$el.trigger("create");
         
-        var begin_active = false;
-        var end_active = false;
         
         //refactor as two separate functions
         $("#meeting-begin-date").focus(function(e) {
-          begin_active = true;
-          currentField = $("#meeting-begin-date");
-          myNewDate = new Date(parseInt(moment($("#meeting-being-date")).unix())*1000);
+          myNewDate = new Date(parseInt(moment($("#meeting-begin-date").val(), 'MMM DD YYYY HH:mm a').unix())*1000);
           tempDate = new Date();
 
-          if (true) {
-            begin_active = false;
+          window.plugins.datePicker.show({
+            date : myNewDate,
+            mode : 'date',
+            allowOldDates : true
+          }, function (returnDate) {
+            tempDate = new Date(parseInt(returnDate));
             window.plugins.datePicker.show({
               date : myNewDate,
-              mode : 'date',
+              mode: 'time',
               allowOldDates : true
-            }, function (returnDate) {
-              tempDate = new Date(parseInt(returnDate));
-              window.plugins.datePicker.show({
-                date : myNewDate,
-                mode: 'time',
-                allowOldDates : true
-              }, function (returnTime) {
-                tempTime = new Date(parseInt(returnTime));
-                tempDate.setHours(tempTime.getHours());
-                tempDate.setMinutes(tempTime.getMinutes());
-                $("#meeting-begin-date").val(moment(tempDate).format('MMM DD YYYY HH:mm a'));
-                currentField.blur();
-              });
+            }, function (returnTime) {
+              tempTime = new Date(parseInt(returnTime));
+              tempDate.setHours(tempTime.getHours());
+              tempDate.setMinutes(tempTime.getMinutes());
+              $("#meeting-begin-date").val(moment(tempDate).format('MMM DD YYYY HH:mm a'));
+              $("#meeting-begin-date").blur();
             });
-            currentField.blur();
-          }
+          });
+          $("#meeting-begin-date").blur();
         });
+
         
         $("#meeting-end-date").focus(function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          currentField = this;
-          myNewDate = new Date(parseInt(moment($("#meeting-end-date")).unix())*1000);
+          myNewDate = new Date(parseInt(moment($("#meeting-end-date").val(), 'MMM DD YYYY HH:mm a').unix())*1000);
           tempDate = new Date();
 
           window.plugins.datePicker.show({
@@ -253,10 +244,10 @@ app.editView = Backbone.View.extend({
               tempDate.setHours(tempTime.getHours());
               tempDate.setMinutes(tempTime.getMinutes());
               $("#meeting-end-date").val(moment(tempDate).format('MMM DD YYYY HH:mm a'));
-              currentField.blur();
+              $("#meeting-end-date").blur();
             });
           });
-          currentField.blur();
+          $("#meeting-end-date").blur();
         });
         
 
