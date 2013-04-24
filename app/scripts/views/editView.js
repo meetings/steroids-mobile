@@ -198,8 +198,20 @@ app.editView = Backbone.View.extend({
         this.$el.trigger("create");
         
         
+        $("#meeting-begin-date").bind("click focus", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $("#meeting-begin-date").blur();
+        });
+        
+        $("#meeting-end-date").bind("click focus", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $("#meeting-end-date").blur();
+        });
+        
         //refactor as two separate functions
-        $("#meeting-begin-date").focus(function(e) {
+        $("#meeting-begin-date").bind("touchstart", function(e) {
           myNewDate = new Date(parseInt(moment($("#meeting-begin-date").val(), 'MMM DD YYYY HH:mm a').unix())*1000);
           tempDate = new Date();
 
@@ -225,7 +237,7 @@ app.editView = Backbone.View.extend({
         });
 
         
-        $("#meeting-end-date").focus(function(e) {
+        $("#meeting-end-date").bind("touchstart", function(e) {
           myNewDate = new Date(parseInt(moment($("#meeting-end-date").val(), 'MMM DD YYYY HH:mm a').unix())*1000);
           tempDate = new Date();
 
