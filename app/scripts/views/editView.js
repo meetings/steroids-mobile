@@ -304,7 +304,8 @@ app.editView = Backbone.View.extend({
 
         that.model.save({}, {
             success : function() {
-                that.openMeetingView(is_old);
+                console.log("Calling openMeetingView...");
+                setTimeout(function() { that.openMeetingView(is_old); }, 500);
             },
             error: function() {
                 alert('meeting creation failed.');
@@ -314,6 +315,7 @@ app.editView = Backbone.View.extend({
 
     openMeetingView : function(is_old){
         this.viewStack = [];
+        console.log("calling AppGyver.switchContext");
         AppGyver.switchContext("meetingPage", {id: this.model.get('id')}, { pop : is_old });
     },
 
