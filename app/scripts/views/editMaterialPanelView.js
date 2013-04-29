@@ -21,7 +21,11 @@ app.editMaterialPanelView = Backbone.View.extend({
 
     downloadMaterial : function(e){
         e.preventDefault();
-        window.location = this.model.get('download_url');
+        if ( app.options.build === 'web' ) {
+          window.location = this.model.get('download_url');
+        } else {
+          steroids.openURL(this.model.get('download_url'));
+        }
     },
 
     editMaterial : function(e){
