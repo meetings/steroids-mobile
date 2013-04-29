@@ -159,7 +159,7 @@ app.meetingView = Backbone.View.extend({
     openMapLink : function(e){
         e.preventDefault();
         var location = this.model.get('location');
-        var appurl = "maps:q="+location;
+        var appurl = "geo:0,0?q="+location;  //maps: on iOS
         var normurl = "https://maps.google.com/maps?daddr="+location;
         app.openUrlSchemeLink( appurl, normurl );
     },
