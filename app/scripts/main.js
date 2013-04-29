@@ -237,20 +237,23 @@ window.app = {
             app._redirectToUpdate(url);
         },1000);
     },
-    openUrlSchemeLink : function(appurl,normurl){
+    openUrlSchemeLink : function(appurl, normurl){
         if( app.options.build === 'web' ) {
             var win=window.open(normurl, '_blank');
             win.focus();
             return;
         }
-        document.location = appurl;
-        var time = (new Date()).getTime();
-        setTimeout(function(){
-            var now = (new Date()).getTime();
-            if((now-time) < 400) {
-                document.location = normurl;
-            }
-        }, 300);
+        
+        steroids.openURL({
+          url: appurl
+        },{
+          onSuccess: function(parameters) {
+            // do nothing, hooray!
+          },
+          onFailure: function(error) {
+            steroids.openURL(normurl); // normurl is always http(s):// so always succeeds
+          }
+        });
     },
 
     launchURLForwarder : function() {

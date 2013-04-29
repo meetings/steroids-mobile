@@ -55,8 +55,7 @@ app.profileView = Backbone.View.extend({
 
     openTos : function(e){
         e.preventDefault();
-        var win=window.open('http://meetin.gs/meetings/terms_of_service', '_blank');
-        win.focus();
+        app.openUrlSchemeLink('http://meetin.gs/meetings/terms_of_service','http://meetin.gs/meetings/terms_of_service');
     },
 
     uploadPhoto : function(e){

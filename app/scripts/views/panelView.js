@@ -39,28 +39,19 @@ app.panelView = Backbone.View.extend({
     },
     redirectFacebook : function(e){
         e.preventDefault();
-        if( app.options.build !== 'web' ) {
-            app.openUrlSchemeLink('fb://profile/182909251746386','https://www.facebook.com/www.meetin.gs', 'Facebook' );
-        }
-        else{
-            var win=window.open('https://www.facebook.com/www.meetin.gs', '_blank');
-            win.focus();
-        }
+        app.openUrlSchemeLink('fb://profile/182909251746386','https://www.facebook.com/www.meetin.gs');
     },
     redirectTwitter : function(e){
         e.preventDefault();
-        var win=window.open('https://twitter.com/meetin_gs', '_blank');
-        win.focus();
+        app.openUrlSchemeLink('https://twitter.com/meetin_gs','https://twitter.com/meetin_gs');
     },
     openSupport : function(e){
         e.preventDefault();
-        var win=window.open('https://getsatisfaction.com/meetings', '_blank');
-        win.focus();
+        app.openUrlSchemeLink('https://getsatisfaction.com/meetings','https://getsatisfaction.com/meetings');
     },
     openTos : function(e){
         e.preventDefault();
-        var win=window.open('http://meetin.gs/meetings/terms_of_service', '_blank');
-        win.focus();
+        app.openUrlSchemeLink('http://meetin.gs/meetings/terms_of_service','http://meetin.gs/meetings/terms_of_service');
     },
     openProfile : function(e) {
         e.preventDefault();
