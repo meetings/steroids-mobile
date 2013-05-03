@@ -35,10 +35,10 @@
             var begin = moment.unix(begin_epoch);
             var end = moment.unix(end_epoch);
 
-            var dateString = begin.format('h A');            
+            var dateString = begin.minutes() ? begin.format('h:mm A') : begin.format('h A');
 
             if(begin.format('YYYY-MM-DD') == end.format('YYYY-MM-DD') && begin.hours() != end.hours()) {
-                dateString += " - " + end.format('h A');
+                dateString += " - " + ( end.minutes() ? end.format('h:mm A') : end.format('h A') );
             }
 
             return dateString;
@@ -55,13 +55,13 @@
             var begin = moment.unix(begin_epoch);
             var end = moment.unix(end_epoch);
 
-            var dateString = begin.format('ddd MMM DD, h A');            
+            var dateString = begin.minutes() ? begin.format('ddd MMM DD, h:mm A') : begin.format('ddd MMM DD, h A');
 
             if(begin.format('YYYY-MM-DD') != end.format('YYYY-MM-DD')) {
                 dateString += " - " + end.format('ddd MMM DD, h A');
             }
             else if(begin.hours() != end.hours()) {
-                dateString += " - " + end.format('h A');
+                dateString += " - " + ( end.minutes() ? end.format('h:mm A') : end.format('h A') );
             }
 
             return dateString;
@@ -74,7 +74,7 @@
                 return "";
             }
 
-            return moment.unix(epoch).format('YYYY-MM-DDTHH:ss');
+            return moment.unix(epoch).format('YYYY-MM-DDTHH:mm');
         }
     }
 })(window);

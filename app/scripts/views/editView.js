@@ -337,6 +337,32 @@ app.editView = Backbone.View.extend({
         }
     },
 
+    adjustEndTime : function(){
+
+        // If begin time changed
+        var begin_date = moment($('#meeting-begin-date').val());
+        var $end = $('#meeting-end-date');
+        var end_date = moment( $end.val() );
+        if( this.model.get('begin_epoch') !== begin_date.unix() ){
+
+            // Get the difference in millis
+            var change =  begin_date.unix() - this.model.get('begin_epoch');
+
+            // New end epoch
+            var new_end_epoch = end_date.unix() + change;
+
+            // New end date
+            var new_end_date = moment( new_end_epoch * 1000 );
+
+            // Set both
+            this.model.set('begin_epoch', begin_date.unix());
+            this.model.set('end_epoch', new_end_date.unix());
+
+            // Set end field value
+            $end.val(new_end_date.format('YYYY-MM-DDTHH:mm'));
+        }
+    },
+
     events: {
         'click #submitStepTitle' : 'saveEditStepTitle',
         'click #submitStepLocation' : 'saveEditStepLocation',
@@ -346,7 +372,8 @@ app.editView = Backbone.View.extend({
         'click #submitStepSkypeName' : 'saveEditStepSkypeName',
         'click #submitStepDateAndTime' : 'saveEditStepDateAndTime',
         'click #submitStepDateAndTimeSetup' : 'saveEditStepDateAndTimeSetup',
-        'click #submitStepDateAndTimeFinish' : 'saveEditStepDateAndTimeFinish'
+        'click #submitStepDateAndTimeFinish' : 'saveEditStepDateAndTimeFinish',
+        'blur #meeting-begin-date' : 'adjustEndTime'
     }
 });
 //_.extend(app.editView.prototype, app.mixins.connectivity);
