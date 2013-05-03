@@ -49,6 +49,12 @@
 
                 AppGyver.current_context_id = 'meetingsPage';
                 AppGyver.current_context = this.getContextForID( 'meetingsPage' );
+                
+                window.addEventListener("visibilitychange", function() {
+                    if (document.visibilityState == "visible") {
+                        AppGyver.refreshPreload( AppGyver.current_context, {} );
+                    }
+                });
 
                 // Check version
                 setTimeout( function(){
