@@ -230,6 +230,7 @@ app.editView = Backbone.View.extend({
               tempDate.setHours(tempTime.getHours());
               tempDate.setMinutes(tempTime.getMinutes());
               $("#meeting-begin-date").val(moment(tempDate).format('MMM DD YYYY HH:mm a'));
+              page.adjustEndTime();
               $("#meeting-begin-date").blur();
             });
           });
@@ -340,9 +341,9 @@ app.editView = Backbone.View.extend({
     adjustEndTime : function(){
 
         // If begin time changed
-        var begin_date = moment($('#meeting-begin-date').val());
+        var begin_date = moment($('#meeting-begin-date').val(), 'MMM DD YYYY HH:mm a');
         var $end = $('#meeting-end-date');
-        var end_date = moment( $end.val() );
+        var end_date = moment($end.val(), 'MMM DD YYYY HH:mm a')
         if( this.model.get('begin_epoch') !== begin_date.unix() ){
 
             // Get the difference in millis
@@ -357,9 +358,10 @@ app.editView = Backbone.View.extend({
             // Set both
             this.model.set('begin_epoch', begin_date.unix());
             this.model.set('end_epoch', new_end_date.unix());
+            
 
             // Set end field value
-            $end.val(new_end_date.format('YYYY-MM-DDTHH:mm'));
+            $end.val(new_end_date.format('MMM DD YYYY HH:mm a'));
         }
     },
 
@@ -372,8 +374,7 @@ app.editView = Backbone.View.extend({
         'click #submitStepSkypeName' : 'saveEditStepSkypeName',
         'click #submitStepDateAndTime' : 'saveEditStepDateAndTime',
         'click #submitStepDateAndTimeSetup' : 'saveEditStepDateAndTimeSetup',
-        'click #submitStepDateAndTimeFinish' : 'saveEditStepDateAndTimeFinish',
-        'blur #meeting-begin-date' : 'adjustEndTime'
+        'click #submitStepDateAndTimeFinish' : 'saveEditStepDateAndTimeFinish'
     }
 });
 //_.extend(app.editView.prototype, app.mixins.connectivity);
