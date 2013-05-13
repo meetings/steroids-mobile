@@ -131,7 +131,7 @@ app.addParticipantView = Backbone.View.extend({
         this.$el.html( templatizer.sendInvitesView( this.meetingModel.toJSON() ) ); // Render template
         this.$el.trigger("create");
 
-        $('#headerTitle').text('Invitation message');
+        $('#headerTitle').text('Invitation');
 
         // textarea doesn't grow automatically with pre-filled data so help it out a bit
         $('#invite-message').keyup();
