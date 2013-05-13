@@ -727,10 +727,10 @@ exports.noMeetingsView = function anonymous(locals, attrs, escape, rethrow, merg
     with (locals || {}) {
         var interp;
         buf.push('<a href="#" data-theme="b" data-role="button" class="open-add-meeting-view"><i class="icon-add"> </i>Add a meeting</a>');
-        if (false) {
+        if (showPhoneConnect) {
             buf.push('<a href="#" data-theme="b" data-role="button" class="phone-connect-meeting-view"> <i class="icon-calendar"></i>Sync from phone calendar</a>');
         }
-        if (false) {
+        if (!model.google_connected) {
             buf.push('<a href="#" data-theme="b" data-role="button" class="google-connect-meeting-view"><i class="icon-google"></i>Sync from Google Calendar</a>');
         }
     }

@@ -253,8 +253,8 @@ app.router = Backbone.Router.extend({
         var results = _.map( result, function( r ) {
             if ( r.allDay == 'true' ) return {};
 
-            var begin_epoch = r.startDateEpoch || '0';
-            var end_epoch = r.endDateEpoch || '0';
+            var begin_epoch = JSON.stringify((parseInt(r.startDateEpoch)/1000)) || '0';
+            var end_epoch = JSON.stringify((parseInt(r.endDateEpoch)/1000)) || '0';
 
             begin_epoch = begin_epoch.replace(/\.0+$/,'');
             end_epoch = end_epoch.replace(/\.0+$/,'');
@@ -280,10 +280,12 @@ app.router = Backbone.Router.extend({
 
             participant_list = _.filter( participant_list, function(p) { return p ? true : false } );
 
-            var UUID = r.UUID || '';
-            if ( /^'.*'$/.test(UUID)) {
-                UUID = UUID.replace(/^'.*'$/, UUID);
-            }
+            // var UUID = r.UUID || '';
+            // if ( /^'.*'$/.test(UUID)) {
+            //     UUID = UUID.replace(/^'.*'$/, UUID);
+            // }
+            
+            var UUID = ""; //hardcoded empty UUID since Android doesn't give true UUID
 
             var suggestion = {
                 title : r.title,
