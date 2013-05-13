@@ -19,15 +19,18 @@ app.editView = Backbone.View.extend({
         
         // pop layer if new meeting has been created
         document.addEventListener("visibilitychange", function() {
-            if ( me.popOnView && document.visibilityState === "visible" ) {
-                me.popOnView = false;
-                steroids.layers.pop();
-            }
+            setTimeout(function() {
+                if ( me.popOnView && document.visibilityState === "visible" ) {
+                    me.popOnView = false;
+                    steroids.layers.pop();
+                }
+            }, 10);
         });
         
     },
 
     render: function(field) {
+        this.popOnView = false;
         this.startStep = field;
         if(this.startStep == 'location') {
             this.renderEditStepLocation();
