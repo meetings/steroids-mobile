@@ -25,6 +25,8 @@ app.loginView = Backbone.View.extend({
                 $('body').scrollTop(0);
             });
         }
+        // prime index.html to pop itself, unprimed after successful login or TOS accept
+        window.postMessage( { type: "primePopIndexOnView" }, "*");
     },
     events: {
         'click .login_or_register' : 'loginOrRegister',
@@ -65,6 +67,7 @@ app.loginView = Backbone.View.extend({
                 app._loginWithParams( response.result.user_id, response.result.token );
 
                 if ( response.result.tos_accepted ) {
+                    window.postMessage( {type: "unprimePopIndexOnView" }); // tell index.html to not pop to home screen after returning there
                     AppGyver.switchContext( 'meetingsPage' );
                 }
                 else {

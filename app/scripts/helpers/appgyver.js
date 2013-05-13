@@ -54,7 +54,23 @@
                     if (document.visibilityState == "visible") {
                         AppGyver.refreshPreload( AppGyver.current_context, {} );
                     }
+                    
+                    // on Android, index.html is primed for poppin' until after login.
+                    if (document.visibilityState == "visible" && that.popIndexOnView) {
+                        that.popIndexOnView = false;
+                        steroids.layers.pop();
+                    }
                 });
+                
+                window.addEventListener("message", function(event){
+                    if (event.data.type == "unprimePopIndexOnView") {
+                        that.popIndexOnView = false;
+                    }
+                    
+                    if (event.data.type == "primePopIndexOnView") {
+                        that.popIndexOnView = true;
+                    }
+                })
 
                 // Check version
                 setTimeout( function(){

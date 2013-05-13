@@ -45,6 +45,7 @@ app.profileView = Backbone.View.extend({
 
         this.model.save({}, {
             success : function() {
+                window.postMessage( {type: "unprimePopIndexOnView" }); // tell index.html to not pop to home screen after returning there
                 AppGyver.switchContext.apply( AppGyver, JSON.parse( that.context_after_tos_accept || '["meetingsPage"]' ) );
             },
             error: function() {
