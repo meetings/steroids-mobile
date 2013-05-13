@@ -19,7 +19,7 @@ var DatePicker = (function (gap) {
 					+ (options.date.getHours()) + "/" + (options.date.getMinutes());
 		}
 		var defaults = {
-			mode : '',
+			mode : 'date',
 			date : '',
 			allowOldDates : true
 		};
@@ -57,8 +57,8 @@ var DatePicker = (function (gap) {
             window.plugins.datePicker = new DatePicker();
         }
     });
-	
+
 	return DatePicker;
-	
-	
+
+
 })(window.cordova || window.Cordova || window.PhoneGap);
