@@ -1,5 +1,6 @@
 app.editView = Backbone.View.extend({
     startStep : null,
+    popOnView : false,
 
     initialize: function(options) {
         var me = this;
@@ -15,6 +16,14 @@ app.editView = Backbone.View.extend({
         });
 
         this.viewStack = new Array();
+        
+        // pop layer if new meeting has been created
+        document.addEventListener("visibilitychange", function() {
+            if ( me.popOnView && document.visibilityState === "visible" ) {
+                me.popOnView = false;
+                steroids.layers.pop();
+            }
+        });
         
     },
 
@@ -305,6 +314,9 @@ app.editView = Backbone.View.extend({
 
         that.model.save({}, {
             success : function() {
+                if (!is_old) { // only set popOnView for new meetings
+                    that.popOnView = true;  // utilized by init function event listener
+                }
                 console.log("Calling openMeetingView...");
                 setTimeout(function() { that.openMeetingView(is_old); }, 500);
             },
