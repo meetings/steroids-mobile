@@ -5,7 +5,7 @@ a.open-add-meeting-view(href="#", data-theme="b", data-role="button")
     a.phone-connect-meeting-view(href="#", data-theme="b", data-role="button") 
         i.icon-calendar
         | Sync from phone calendar
-- if ( false ) // ! model.google_connected 
+- if ( ! model.google_connected ) // ! model.google_connected 
     a.google-connect-meeting-view(href="#", data-theme="b", data-role="button")
         i.icon-google
         | Sync from Google Calendar

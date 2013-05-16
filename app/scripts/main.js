@@ -18,7 +18,7 @@ window.app = {
         cookievalid : 3 * 365 // in days
     },
     defaults : {
-        url_scheme : /^1\./.test( window.AG_CLIENT_VERSION || '1.0.0' ) ? 'meetings://' : 'steroids-scanner://',
+        url_scheme : window.production_mode ? 'meetings://' : 'steroids-scanner://',
         api_host : window.production_mode ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
         //api_host : (location.host.indexOf('dev') !== -1 || location.host.indexOf('localhost') !== -1) ? 'https://api-dev.meetin.gs' : 'https://api.meetin.gs',
         desktop_link : window.production_mode ? 'https://meetin.gs/meetings_global/detect' : 'https://dev.meetin.gs/meetings_global/detect',
@@ -257,13 +257,15 @@ window.app = {
     },
 
     launchURLForwarder : function() {
-        document.removeEventListener("resume", app.launchURLForwarder, false);
+        if (!document.hidden) {
+            document.removeEventListener("visibilitychange", app.launchURLForwarder);
+            
+            var redirect_uri = "" + steroids.app.getLaunchURL();
+            var inapp_url =  redirect_uri.replace( /^[^\:]+\:\/\//, '' );
 
-        var redirect_uri = "" + steroids.app.getLaunchURL();
-        var inapp_url =  redirect_uri.replace( /^[^\:]+\:\/\//, '' );
-
-        if ( inapp_url ) {
-            window.location = inapp_url;
+            if ( inapp_url ) {
+                window.location = inapp_url;
+            }
         }
     },
 
@@ -296,7 +298,7 @@ window.app = {
             window.location = url;
         }
         else {
-            document.addEventListener("resume", app.launchURLForwarder, false);
+            document.addEventListener("visibilitychange", app.launchURLForwarder);
             steroids.openURL( url );
         }
     },
