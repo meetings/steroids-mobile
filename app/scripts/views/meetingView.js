@@ -102,7 +102,7 @@ app.meetingView = Backbone.View.extend({
         this.$el.html( templatizer.sendInvitesView( this.model.toJSON() ) ); // Render template
         this.$el.trigger("create");
 
-        $('#headerTitle').text('Invitation message');
+        $('#headerTitle').text('Invitation');
 
         // hook back button and hide edit meeting button
         var me = this;
