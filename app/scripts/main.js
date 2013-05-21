@@ -257,7 +257,7 @@ window.app = {
     },
 
     launchURLForwarder : function() {
-        if (!document.hidden) {
+        if (steroids.app.getLaunchURL() != undefined) {
             document.removeEventListener("visibilitychange", app.launchURLForwarder);
             
             var redirect_uri = "" + steroids.app.getLaunchURL();
