@@ -11,6 +11,12 @@
 
 @import "jqm","theme","icomoon";
 
+/* Fix for side drawers not moving the navigation bar when opened on some Android devices */
+
+#side-bar {
+  margin-top:41px;
+}
+
 /* H3 and UL close to the top of the content */
 .ui-content h3:first-child, .ui-content ul:first-child{
     margin-top:0px;
