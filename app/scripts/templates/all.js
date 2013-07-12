@@ -1823,7 +1823,10 @@ exports.underConstructionView = function anonymous(locals, attrs, escape, rethro
         var interp;
         buf.push("<h2>A friendly warning</h2>");
         if (message) {
-            var p = message;
+            buf.push("<p>");
+            var __val__ = message;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</p>");
         } else {
             buf.push("<p>The requested feature is not yet fully compliant with mobile devices. We advice you to proceed on a desktop computer. Thank you for your patience!</p>");
         }

@@ -31,6 +31,9 @@ app.nextActionView = Backbone.View.extend({
         // Matchmaking
         else if( app.models.meeting.get('matchmaking_accepted') === 0) {
             this.$el.html( templatizer.meetmeAcceptView({ user : this.model.toJSON(), meeting : app.models.meeting.toJSON(), mm_mode : this.mm_mode }) );
+
+            // Hide participants & material
+            $('#participant-list,#materials_list').hide();
         }
 
         this.$el.trigger('create');
@@ -45,8 +48,11 @@ app.nextActionView = Backbone.View.extend({
 
     dismissMatchmakingNotice : function(e) {
         e.preventDefault();
+
+        // Hide participants & material
+        $('#participant-list,#materials_list').show();
+
         app.models.meeting.save({ 'matchmaking_accepted' : 1 }, { success : function(res) {
-            console.log(res);
         }});
     },
 

@@ -22,6 +22,7 @@ app.meetmeCalendarView = Backbone.View.extend({
         'click .cancel-slot' : 'cancelSlot',
         'click .confirm-slot' : 'confirmSlot',
         'change input[name=offset]' : 'changeTimezone',
+        'click .open-tos-page' : 'openTos',
         'click .choose-timezone' : 'chooseTimezone'
     },
 
@@ -307,6 +308,12 @@ app.meetmeCalendarView = Backbone.View.extend({
             alert('Reservation expired, please try again!');
             window.location.reload();
         },900000 );
+    },
+
+    openTos : function(e){
+        e.preventDefault();
+        var win=window.open('http://meetin.gs/meetings/terms_of_service', '_blank');
+        win.focus();
     }
 });
 

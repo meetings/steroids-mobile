@@ -41,7 +41,8 @@ window.app = {
     no_login_pages : [
         'meetme',
         'matchmaker_fragment',
-        'underConstruction'
+        'underConstruction',
+        'under_construction_url'
     ],
 
     defaults : {
@@ -73,7 +74,7 @@ window.app = {
 
         dateString : function(time, offset) {
             var o = offset || 0;
-            return moment.utc(time + o * 1000).format('dddd, MMM DD');
+            return moment.utc(time + o * 1000).format('ddd, MMM DD');
         },
 
         dayString : function(time, offset) {
@@ -222,7 +223,7 @@ window.app = {
 
         // Show scheduling answering
         else if( under_construction_url ) {
-            chosen_redirect = [ 'underConstruction', { url : under_construction_url, message : under_construction_message || '' } ];
+            chosen_redirect = [ 'underConstruction', { url : under_construction_url, message : under_construction_message } ];
         }
 
         // Show scheduling answering
