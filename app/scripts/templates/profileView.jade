@@ -1,5 +1,10 @@
 div#signup-form.form-full-width(data-role="fieldcontain")
-    - if( app.options.build !== 'web' )
+    if( locals.new_user )
+        h3 Profile info
+        p Fill in your info so the person receiving the meeting invite knows who you are.
+        p
+            input#user-email(data-theme="b",type="text",name="user-email",placeholder="Your email")
+    if( app.options.build !== 'web' )
         .ui-grid-a
             .ui-block-a
                 div#profile-image.mtngs-profile-image(style="background-image:url(" + image + ")")
@@ -7,25 +12,25 @@ div#signup-form.form-full-width(data-role="fieldcontain")
                         p#status-text Set picture
             .ui-block-b
                 div.input-top
-                    input#user-firstname(data-theme="b",type="text",name="user-firstname",value=first_name,placeholder="First name")
+                    input#user-firstname(data-theme="b",type="text",name="user-firstname",value=locals.first_name,placeholder="First name")
                 div.input-bottom
-                    input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=last_name,placeholder="Last name")
-    - else
+                    input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=locals.last_name,placeholder="Last name")
+    else
         p
-            input#user-firstname(data-theme="b",type="text",name="user-firstname",value=first_name,placeholder="First name")
+            input#user-firstname(data-theme="b",type="text",name="user-firstname",value=locals.first_name,placeholder="First name")
         p
-            input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=last_name,placeholder="Last name")
+            input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=locals.last_name,placeholder="Last name")
     p
-        input#user-organization(data-theme="b",type="text",name="user-organization",value=organization,placeholder="Organization")    
+        input#user-organization(data-theme="b",type="text",name="user-organization",value=locals.organization,placeholder="Organization")    
     p
-        input#user-title(data-theme="b",type="text",name="user-title",value=organization_title, placeholder="Title")
+        input#user-title(data-theme="b",type="text",name="user-title",value=locals.organization_title, placeholder="Title")
     p
-        input#user-phone(data-theme="b",type="text",name="user-phone",value=phone,placeholder="Phone")
+        input#user-phone(data-theme="b",type="text",name="user-phone",value=locals.phone,placeholder="Phone")
     p
-        input#user-skype(data-theme="b",type="text",name="user-skype",value=skype,placeholder="Skype")
+        input#user-skype(data-theme="b",type="text",name="user-skype",value=locals.skype,placeholder="Skype")
     div.controls
         a.save-profile-data(data-theme="b", type="button") Save
-    - if(tos_accepted != 1)
+    if(locals.tos_accepted != 1)
         p.tos-disclaimer By proceeding you accept the 
             a.open-tos-page(href="#") Terms of service
             | .

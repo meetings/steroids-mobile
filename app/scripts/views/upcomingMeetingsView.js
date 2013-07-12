@@ -1,8 +1,8 @@
 app.upcomingMeetingsView = app.genericCollectionView.extend({
     renderExtras : function(){
         // Check if the first meeting is today or further in the future
-        var today = Math.floor ( moment().utc().sod() / 1000 );
-        var today_end = Math.floor ( moment().utc().eod() / 1000 );
+        var today = Math.floor ( moment().utc().startOf('day') / 1000 );
+        var today_end = Math.floor ( moment().utc().endOf('day') / 1000 );
         if( this.collection.length > 0 && this.collection.at(0).get('begin_epoch') >= today && this.collection.at(0).get('begin_epoch') <= today_end ){
             // Add header
             this.$el.prepend('<div><h3 class="today">Today</h3></div>');

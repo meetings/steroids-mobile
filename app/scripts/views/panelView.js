@@ -23,6 +23,8 @@ app.panelView = Backbone.View.extend({
         'click #nav-tos' : 'openTos',
         'click #nav-edit-profile' : 'openProfile',
         'click #nav-logout' : 'logout',
+        'click #nav-meetme' : 'openMeetmeConfig',
+        'click #nav-calconfig' : 'openCalconfig',
         'click #no-mobile' : 'switchNormal'
     },
 
@@ -37,6 +39,7 @@ app.panelView = Backbone.View.extend({
             window.location = '/index.html';
         }
     },
+
     redirectFacebook : function(e){
         e.preventDefault();
         if( app.options.build !== 'web' ) {
@@ -47,30 +50,46 @@ app.panelView = Backbone.View.extend({
             win.focus();
         }
     },
+
     redirectTwitter : function(e){
         e.preventDefault();
         var win=window.open('https://twitter.com/meetin_gs', '_blank');
         win.focus();
     },
+
     openSupport : function(e){
         e.preventDefault();
         var win=window.open('https://getsatisfaction.com/meetings', '_blank');
         win.focus();
     },
+
     openTos : function(e){
         e.preventDefault();
         var win=window.open('http://meetin.gs/meetings/terms_of_service', '_blank');
         win.focus();
     },
+
     openProfile : function(e) {
         e.preventDefault();
-        AppGyver.switchContext('profilePage')
+        AppGyver.switchContext('profilePage');
     },
+
+    openMeetmeConfig : function(e) {
+        e.preventDefault();
+        AppGyver.switchContext('meetmeConfig');
+    },
+
+    openCalconfig : function(e) {
+        e.preventDefault();
+        AppGyver.switchContext('calconfigPage');
+    },
+
     logout : function(e){
         e.preventDefault();
         app._removeAuthCookie();
         AppGyver.switchContext("loginPage", { reset : 1 });
     },
+
     switchNormal : function(e){
         e.preventDefault();
         window.location = app.defaults.desktop_link;

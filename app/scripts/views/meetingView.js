@@ -7,9 +7,12 @@ app.meetingView = Backbone.View.extend({
     initialize: function(options) {
 
         // Bind error and success handlers
-         this.model.bind('error', this.errorHandler, this);
-         this.model.bind('success', this.successHandler, this);
-         this.model.bind('change', this.render, this);
+        this.model.bind('error', this.errorHandler, this);
+        this.model.bind('success', this.successHandler, this);
+        this.model.bind('change', this.render, this);
+
+        // Matchmaking mode
+        if( options ) this.mm_mode = options.mm_mode || false;
 
         _(this).bindAll('openMaterialView', 'openParticipantView');
 
@@ -68,7 +71,7 @@ app.meetingView = Backbone.View.extend({
         });
 
         // Show next action bar for the user
-        this.subviews.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : user });
+        this.subviews.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : user, mm_mode : this.mm_mode });
         this.subviews.next_action_view.render();
 
         // Setup materials view
@@ -89,7 +92,7 @@ app.meetingView = Backbone.View.extend({
         });
 
         this.subviews.participants.render();
-        
+
         $('#participants').removeClass('ui-listview');
 
         return this;

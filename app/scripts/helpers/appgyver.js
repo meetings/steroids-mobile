@@ -12,6 +12,10 @@
             { file : 'material.html', id : 'materialPage' },
             { file : 'scheduling.html', id : 'schedulingPage' },
             { file : 'addParticipant.html', id : 'addParticipantPage' },
+            { file : 'calconfig.html', id : 'calconfigPage' },
+            { file : 'meetme.html', id : 'meetmeCover' },
+            { file : 'meetmeCalendar.html', id : 'meetmeCalendar' },
+            { file : 'meetmeConfig.html', id : 'meetmeConfig' },
             { file : 'edit.html', id : 'editPage' },
             { file : 'edit.html', id : 'singleEditPage' },
             { file : 'editMaterial.html', id : 'editMaterialPage', shared_file : 'init.html', shared_id : 'init' },
@@ -119,7 +123,7 @@
                 };
 
                 window.addEventListener("message", readyListener );
-                
+
                 deferreds.push( readyDeferred );
 
                 AppGyver.preload( path + this.formSharedContextURL( context ), id );

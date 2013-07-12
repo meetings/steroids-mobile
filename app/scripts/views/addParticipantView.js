@@ -36,7 +36,7 @@ app.addParticipantView = Backbone.View.extend({
 
                             var n = c.displayName;
                             var e = c.emails ? c.emails[0] ? c.emails[0].value || '' : '' : '';
-    
+
                             var $link = $('<a href="#"></a>');
                             $link.text( "Add "+ n );
 
@@ -50,10 +50,10 @@ app.addParticipantView = Backbone.View.extend({
                                 $('#submitAddParticipant .ui-btn-text').text( 'Add participant' );
                                 that.saveParticipant();
                             } );
-    
+
                             var $container = $('<li></li>');
                             $container.append( $link );
-    
+
                             $('.suggestions').append( $container );
                         } );
                         $('.suggestions').listview().listview('refresh');

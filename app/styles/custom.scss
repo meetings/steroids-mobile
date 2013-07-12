@@ -11,6 +11,44 @@
 
 @import "jqm","theme","icomoon";
 
+// General colors
+$red:#ec3838;
+$footer-color:#282828;
+$footer-text-color:#fafafa;
+$p-color:#4c4b4b;
+$p-color-hover:lighten($p-color, 10%);
+$p-color-light:lighten($p-color, 20%);
+$color-background:#c9c9c9;
+$ui-darker-color:#D6D5D5;
+$ui-dark-color:#e7e7e7;
+$ui-border-color:#DBDBDB;
+
+// ---- Universal colors ----
+$color-red:#fd4e37;
+$color-red-error:#f9260a;
+$color-orange:#f57b23;
+$color-green:#68bd04;
+$color-gray:#999;
+$color-gray-light:#ccc;
+$color-gray-dark:#6c6c6c;
+$color-gray-darker:#4c4b4b;
+$color-gray-border:#dcd9d9;
+$color-pink:#db4cb6;
+$color-pink-hover:#a82e89;
+$color-error-text:#ea2a2a;
+
+// Select color
+$color-select:#b6e2f4;
+
+// Main color (y-repeating bg)
+$color-main:#199acf;
+$color-main-hover:darken($color-main, 10%);
+$color-main-light:lighten($color-main, 40%);
+
+span.bold{
+    font-weight:700;
+}
+
 /* H3 and UL close to the top of the content */
 .ui-content h3:first-child, .ui-content ul:first-child{
     margin-top:0px;
@@ -54,14 +92,15 @@ html.disable-touch-select {
 .meeting-navbar .ui-btn .ui-icon { width: 30px!important; height: 22px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
 // RSVP answers on meeting page
 div.rsvp-answer{
+    line-height:40px;
+}
+div.rsvp-answer,div.next-action{
     span.text{
         display:block;
         height:32px;
         margin-left:7px;
     }
-    height:80px;
-    line-height:40px;
-    a{
+    a.accept-green{
         line-height:normal;
         text-align:center;
         margin:0px 0px 0px 8px;
@@ -86,7 +125,21 @@ div.rsvp-answer{
         background-attachment:fixed;
         background-repeat: no-repeat;
     }
-    a.not-attending{
+    a.cancel-red{
+        line-height:normal;
+        text-align:center;
+        margin:0px 0px 0px 8px;
+        padding:10px;
+        height:18px;
+        display:inline-block;
+        text-decoration:none;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        background: #009f01;
+        font-weight: bold;
+        color: #ffffff !important;
+        text-shadow: 0px 1px 0px #50a4c3;
         border:1px solid #9f0d07;
         background-image: -webkit-gradient(linear, left top, left bottom, from( #ed2310 ), to( #c90d00 ));
         background-image: -webkit-linear-gradient( #ed2310 , #c90d00 );
@@ -94,6 +147,8 @@ div.rsvp-answer{
         background-image:     -ms-linear-gradient( #ed2310 , #c90d00 );
         background-image:      -o-linear-gradient( #ed2310 , #c90d00 );
         background-image:linear-gradient( #ed2310 , #c90d00 );
+        background-attachment:fixed;
+        background-repeat: no-repeat;
     }
 }
 
@@ -569,6 +624,423 @@ ul#participants_list{
 
     }
 }
+// Meetme config
+div#meetme-config{
+
+    // Url section
+    div.url{
+        p{
+            span.handle{
+                font-weight:500;
+            }
+            a.change-url{
+                color:$color-main;
+                text-decoration:underline;
+                padding:0 20px;
+            }
+        }
+        p.finding-url,p.your-url{
+            display:none;
+        }
+    }
+
+    // Calendar section
+    div.calendar{
+
+        div.timezone{
+            margin-bottom:35px;
+            font-family:"museo-sans-n3", "museo-sans", Helvetica, Arial, sans-serif;
+            font-size:15px;
+            font-weight:300;
+            color:$p-color;
+            .chzn-container{
+                margin-left:28px;
+            }
+        }
+        div.time{
+            margin-bottom:35px;
+            font-family:"museo-sans-n3", "museo-sans", Helvetica, Arial, sans-serif;
+            font-size:15px;
+            font-weight:300;
+            color:$p-color;
+            i{
+                padding-right:14px;
+                font-size:20px;
+                position:relative;
+                top:3px;
+            }
+            div#timeslider,div#pauseslider{
+                display:inline-block;
+                margin-right:28px;
+            }
+            span.time-container{
+                width:60px;
+                display:inline-block;
+                text-align:center;
+            }
+        }
+        p{
+            margin-bottom:35px;
+            i{
+                padding-right:14px;
+                font-size:20px;
+                position:relative;
+                top:5px;
+            }
+            input#matchmaker-location{
+                width:240px;
+                padding-left:14px;
+                margin-left:7px;
+            }
+            a.open-calendar{
+                color:$color-main;
+                text-decoration:underline;
+            }
+            a.connect-google{
+                display:inline-block;
+                position:relative;
+                top:9px;
+                margin-left:14px;
+            }
+        }
+        div.pick-slots{
+            a.open-calendar{
+                padding-left:14px;
+            }
+            p.sources-info{
+                margin-bottom:14px;
+            }
+            div.calendar-container{
+                display:none;
+
+                // Override calendar defaults
+                .btd-scrollable-grid{
+                    background-color:transparent;
+                    .btd-day-column{
+                        background-color:#fff;
+                        .btd-cal-event{
+                            -webkit-border-radius: 0px;
+                            -moz-border-radius: 0px;
+                            border-radius: 0px;
+                            background:#91da60;
+                            background:rgba(145,218,96,0.4);
+
+                        }
+                        .btd-event-hovering{
+                            -webkit-border-radius: 0px;
+                            -moz-border-radius: 0px;
+                            border-radius: 0px;
+                            background:darken(#81da60, 10%);
+                            background:rgba(145,218,96,0.6);
+                        }
+                    }
+                }
+                .btd-header,.btd-header td{
+                    text-transform:uppercase;
+                    background:transparent;
+                }
+                .btd-grid-timeslot-header{
+                    background-color:transparent;
+                    .btd-hour-header {
+                        border-bottom:none;
+                        margin-bottom:1px; // Fix removed border
+                    }
+                }
+            }
+        }
+    }
+    // Page section
+    div.page{
+        div.left{
+            vertical-align:top;
+            width:439px;
+            display:inline-block;
+
+            div.bubble{
+                position:relative;
+                width:400px;
+                border:1px solid #ccc;
+                background:#fff;
+                padding:14px;
+                margin:14px 0 28px 0;
+                textarea{
+                    border:none;
+                    resize:none;
+                    width:398px;
+                    margin:0px;
+                    padding:0px;
+                    font-family:"museo-sans-n3", "museo-sans", Helvetica, Arial, sans-serif;
+                    font-size:14px;
+                    font-weight:300;
+                    color:$p-color-light;
+                    height:105px;
+                }
+                span.sqa{
+                    z-index:0;
+                    position:absolute;
+                    top:25px;
+                    left:-7px;
+                    width:0;
+                    height:0;
+                    border-top:6px solid transparent;
+                    border-bottom:6px solid transparent;
+                    border-right:6px solid #ccc;
+                }
+                span.sqb{
+                    z-index:1;
+                    position:absolute;
+                    width:0;
+                    height:0;
+                    top:26px;
+                    left:-5px;
+                    border-top:5px solid transparent;
+                    border-bottom:5px solid transparent;
+                    border-right:5px solid #fff;
+                }
+            }
+
+        }
+        div.right{
+            vertical-align:top;
+            width:390px;
+            padding-left:49px;
+            display:inline-block;
+            div.backgrounds{
+                margin-bottom:28px;
+                .background{
+                    width:47px;
+                    height:47px;
+                    display:inline-block;
+                    margin:14px 14px 0 0;
+                    background-color:#fff;
+                    border:2px solid #ccc;
+                    background-size:cover;
+                    -moz-background-size:cover;
+                    box-sizing:border-box;
+                    vertical-align:top;
+                }
+                .active{
+                    border:2px solid $color-main;
+                }
+                #own-bg .progress-bar{
+                    height:100%;
+                    width:0%;
+                    display:none;
+                    background-color:$ui-darker-color;
+                    color:$p-color;
+                    font-size:12px;
+                    text-align:center;
+                    line-height:47px;
+                }
+            }
+        }
+    }
+}
+
+// Meetme page presets
+$side-pad:35px;
+
+// Meetme coverpage
+#meetme{
+    padding:0px;
+
+    #signup-form{
+        padding:0 $side-pad;
+    }
+}
+#meetme-cover{
+    min-height:300px;
+    div.top{
+        width:100%;
+        height:95px;
+        text-align:left;
+        background-color:#f3f3f3;
+        background-color:rgba(255,255,255,0.6);
+        h1{
+            color:#333;
+            margin:0 auto;
+            text-align:left;
+            padding:7px $side-pad;
+            font-size:36px;
+            font-weight:300;
+        }
+        p{
+            color:#333;
+            text-align:left;
+            margin:0 auto;
+            padding:0px $side-pad 14px $side-pad;
+            font-size:20px;
+            font-weight:300;
+        }
+    }
+    div.middle{
+        position:relative;
+        div.border{
+            margin:28px;
+            width:140px;
+            height:140px;
+            border:3px solid #fff;
+            box-shadow:0px 0px 6px 1px rgba(0,0,0,0.5);
+            -webkit-border-radius: 140px;
+            -moz-border-radius: 140px;
+            border-radius: 140px;
+            overflow:hidden;
+            display:inline-block;
+            div.wrapper{
+                -webkit-border-radius: 140px;
+                -moz-border-radius: 140px;
+                border-radius: 140px;
+                overflow:hidden;
+                img{
+                    width:140px;
+                    height:140px;
+                }
+            }
+        }
+        a.meet-me{
+            display:inline-block;
+            position:relative;
+            top:70px;
+            vertical-align:top;
+            span.ui-btn-inner{
+                padding-left:10px;
+                i{
+                    margin-right:20px;
+                    font-size:24px
+                }
+            }
+        }
+        a.meet-me:before{
+            content: "";
+            border-left:1px solid #ccc;
+            border-left:1px solid rgba(0,0,0,0.3);
+            position:absolute;
+            top:0px;
+            left:44px;
+            height:100%;
+        }
+        div.box{
+            background-color:#fff;
+            margin:0px 28px 28px 28px;
+            padding:14px;
+            -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px;
+            border:1px solid #ccc;
+        }
+    }
+}
+
+#meetme-confirmed{
+    padding:14px;
+    background-color:#E6E6E6;
+}
+#meetme-tzconfig{
+    padding:14px;
+    background-color:#e7e7e7;
+}
+#meetme-confirm{
+    min-height:300px;
+    div.info-bar{
+        background-color:#e7e7e7;
+        margin:0 auto;
+        padding-bottom:14px;
+        p{
+            text-align:left;
+            margin:0px;
+            padding:14px $side-pad 0px $side-pad;
+            line-height:$side-pad;
+        }
+    }
+    div.form-area{
+        padding:14px;
+    }
+}
+
+#meetme-calendar{
+    min-height:300px;
+    div.top{
+        width:100%;
+        height:98px;
+        text-align:left;
+        background-color:#f3f3f3;
+        background-color:rgba(255,255,255,0.6);
+        position:relative;
+        div.border{
+            position:absolute;
+            top:14px;
+            left:$side-pad;
+            width:70px;
+            height:70px;
+            border:3px solid #fff;
+            box-shadow:0px 0px 6px 1px rgba(0,0,0,0.5);
+            -webkit-border-radius: 70px;
+            -moz-border-radius: 70px;
+            border-radius: 70px;
+            overflow:hidden;
+            div.wrapper{
+                -webkit-border-radius: 70px;
+                -moz-border-radius: 70px;
+                border-radius: 70px;
+                overflow:hidden;
+                img{
+                    width:70px;
+                    height:70px;
+                }
+            }
+        }
+        h1{
+            color:#333;
+            margin:0;
+            text-align:left;
+            padding:21px 14px 7px 119px;
+            font-size:26px;
+            font-weight:300;
+        }
+        p{
+            color:#333;
+            text-align:left;
+            margin:0 auto;
+            padding:0px 14px 14px 119px;
+            font-size:18px;
+            font-weight:300;
+        }
+    }
+    div.info-bar{
+        background-color:#e7e7e7;
+        margin:0 auto;
+        padding-bottom:14px;
+        p{
+            text-align:left;
+            margin:0px;
+            padding:14px $side-pad 0px $side-pad;
+            i:last-child{
+                margin-left:14px;
+            }
+        }
+    }
+    div.middle{
+        p{
+            margin:14px;
+        }
+    }
+    ul#slots{
+        margin:14px;
+        li{
+            a{
+                height:20px;
+                span.left{
+                    float:left;
+                }
+                span.right{
+                    float:right;
+                }
+            }
+        }
+    }
+}
+
+
 // Material list
 ul#materials_list{
     li a{
@@ -654,6 +1126,10 @@ div.ui-content ul li.ui-corner-top{
     border-top:1px solid #ccc;
 }
 
+.draft{
+    color:#EA7D7A;
+}
+
 // Loader styles
 div.loader {
     img.loader{
@@ -677,7 +1153,19 @@ div.loader {
         background-repeat:no-repeat;
         background-size:40px 40px;
     }
-
+}
+div.loader-inlist{
+    width:100%;
+    text-align:center;
+    span.loader{
+        margin-top:10px;
+        display:inline-block;
+        height:40px;
+        width:40px;
+        background-image:url("/images/ajaxloader.gif");
+        background-repeat:no-repeat;
+        background-size:40px 40px;
+    }
 }
 // Should be soon deprectaed
 li img.loader{
@@ -899,12 +1387,12 @@ h3.tasks {
 
 p.mtngs-calendar{
     position:relative;
-    padding:5px 0 0 34px;
+    padding:5px 0 0 0;
     height:20px;
 }
 p.mtngs-location{
     position:relative;
-    padding:5px 0 0 34px;
+    padding:5px 0 0 0;
     min-height:20px;
 }
 p.mtngs-email{
@@ -912,7 +1400,7 @@ p.mtngs-email{
     background-color:transparent;
     background-position:0px 50%;
     background-repeat:no-repeat;
-    padding:5px 0 0 34px;
+    padding:5px 0 0 0;
     height:20px;
 }
 p.mtngs-mobile{

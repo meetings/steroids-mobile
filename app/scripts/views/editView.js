@@ -102,7 +102,7 @@ app.editView = Backbone.View.extend({
     },
 
     renderEditStepCommunications: function() {
-        $('#headerTitle').text('Meeting communications');
+        $('#headerTitle').text('Communication');
 
         this.$el.html( templatizer.editStepCommunicationsView( this.model.toJSON() ) );
         this.$el.trigger("create");
@@ -137,7 +137,7 @@ app.editView = Backbone.View.extend({
     renderEditStepSkypeName: function() {
         $('#headerTitle').text('Skype');
 
-        this.$el.html( templatizer.editStepSkypeNameView( this.model.toJSON() ) );
+        this.$el.html( templatizer.editStepSkypeNameView( { meeting : this.model.toJSON(), user : app.models.currentUser.toJSON() } ) );
         this.$el.trigger("create");
     },
 
@@ -158,7 +158,7 @@ app.editView = Backbone.View.extend({
     },
 
     renderEditStepDateAndTime: function() {
-        $('#headerTitle').text('Meeting date & time');
+        $('#headerTitle').text('Date & time');
 
         this.$el.html( templatizer.editStepDateAndTimeView( this.model.toJSON() ) );
         this.$el.trigger("create");

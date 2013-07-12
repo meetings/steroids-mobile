@@ -10,16 +10,15 @@
         $target,
         fetchOn,
         page,
-        pageSize,
+        pageSize = 10,
         prevScrollY = 0;
-
-        pageSize = 10;
 
         self.collection = collection;
         self.options = _.defaults(options, {
             success: function(){ },
             error: function(){ },
             onFetch: function(){ },
+            queryParamsFunc: false,
             target: $(window),
             param: "until",
             untilAttr: "id",
@@ -31,13 +30,14 @@
             strict: false,
             includePage: true,
             extraParams : {},
-            direction: 'down'
+            direction: 'down',
+            initialPage: 1
         });
 
         var initialize = function() {
             $target = $(self.options.target);
             fetchOn = true;
-            page = 1;
+            page = self.options.initialPage || 1;
 
             $target.on("scroll", self.watchScroll);
         };
@@ -102,13 +102,14 @@
 
                 self.onFetch();
                 self.disableFetch();
+
                 self.collection.fetch({
                     success: self.fetchSuccess,
                     error: self.fetchError,
                     add: self.options.add,
                     update: self.options.update,
                     remove: false,
-                    data: buildQueryParams(lastModel)
+                    data: self.options.queryParamsFunc ? self.options.queryParamsFunc(page) : buildQueryParams(lastModel)
                     //silent: true
                 });
             }

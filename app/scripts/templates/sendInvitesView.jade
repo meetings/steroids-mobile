@@ -4,9 +4,10 @@ div#invite-form.form-full-width(data-role="fieldcontain")
     p
         textarea#invite-message(data-theme="b", rows="5", cols="40", name="invite-message", placeholder="Message")
             = invite_greetings['content']
-    p
-        label
-            input#invite-require-rsvp(data-theme="a", type="checkbox", name="invite-require-rsvp") 
+    if( ! locals.matchmaking_event_name )
+        p
+            label
+                input#invite-require-rsvp(data-theme="a", type="checkbox", name="invite-require-rsvp") 
             | Require RSVP
     div.controls
         button.save-meeting-invite(data-theme="b", type="button") Send

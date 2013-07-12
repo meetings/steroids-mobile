@@ -1,0 +1,33 @@
+div#meetme-calendar
+    div.top
+        // TODO: Fix default profile images
+        div.border
+            div.wrapper
+                img(src=user.image || '/images/meetings/new_profile.png')
+        h1=user.name
+        -if( user.organization && user.organization_title )
+            p=user.organization + ', '+user.organization_title
+        -if( user.organization && ! user.organization_title )
+            p=user.organization
+        -if( ! user.organization && user.organization_title )
+            p=user.organization_title
+        div.social-links
+            -if ( user.linkedin )
+                a(href=user.linkedin,target="_blank")
+                    i.ico-linkedin
+                    | Linkedin Profile
+    div.info-bar
+        p Tap the best time to meet
+        p
+            -if ( matchmaker.duration )
+                i.icon-time
+                = matchmaker.duration + ' min'
+            -if ( matchmaker.location )
+                i.icon-location
+                = matchmaker.location
+    div.middle
+        p.timezone=matchmaker.time_zone_string
+        ul#slots.btd-container
+            p Loading calendar...
+            div.loader
+

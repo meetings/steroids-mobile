@@ -29,8 +29,9 @@ app.profileView = Backbone.View.extend({
 
     saveProfileData : function(e) {
         e.preventDefault();
+        var _this = this;
 
-        this.model.set({
+        this.model.save({
             first_name : $('#user-firstname').val(),
             last_name : $('#user-lastname').val(),
             //primary_email : $('#user-email').val(),
@@ -39,13 +40,9 @@ app.profileView = Backbone.View.extend({
             organization : $('#user-organization').val(),
             title : $('#user-title').val(),
             tos_accepted : '1'
-        });
-
-        var that = this;
-
-        this.model.save({}, {
+        }, {
             success : function() {
-                AppGyver.switchContext.apply( AppGyver, JSON.parse( that.context_after_tos_accept || '["meetingsPage"]' ) );
+                AppGyver.switchContext.apply( AppGyver, JSON.parse( _this.context_after_tos_accept || '["meetingsPage"]' ) );
             },
             error: function() {
                 alert('Saving profile failed. Please try again!');
@@ -104,11 +101,11 @@ app.profileView = Backbone.View.extend({
                     upload_id : resp.result.upload_id
                 });
             }, function(error){
-                console.log('Profile upload failed.')
+                console.log('Profile upload failed.');
             }, options);
 
         }, function(err){
-            console.log('Profile upload failed.')
+            console.log('Profile upload failed.');
         } , { quality : 49, destinationType : Camera.DestinationType.FILE_URI } );
     }
 });

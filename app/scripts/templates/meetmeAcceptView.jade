@@ -1,0 +1,36 @@
+div.next-action
+    - var mm = mm_mode ? 'display:none;' : '';
+    div.meetme-action(style=mm)
+        p.icon
+            i.ico-note
+            = meeting.matchmaking_requester_name + ' '
+            | wants to meet you
+            - if( meeting.matchmaking_event_name )
+                = 'at ' + meeting.matchmaking_event_name + '. Accept or decline?'
+            - else
+                | . Accept or decline?
+        div.buttons
+            a(href="#").open-meetme-accept.accept-green
+                i.ico-check
+                | Accept
+            a(href="#").open-meetme-decline.cancel-red
+                i.ico-cross
+                | Decline
+    - var acpt = mm_mode == 'accept' ? '' : 'display:none;';
+    div.meetme-accept(style=acpt)
+        p You can now prepare the meeting page. When you are done, the page is shared and an invitation to access it will be sent to 
+            =meeting.matchmaking_requester_name + '.'
+        p Would you like to share the page and send the invitation right away?
+            div.buttons
+                a(href="#",data-role="button",data-inline="true",data-theme="b").send-invites Yes - Preview the invitation
+                a(href="#",data-role="button",data-inline="true").dismiss-matchmaking-notice  No - Check the page first
+    - var dec = mm_mode == 'decline' ? '' : 'display:none;';
+    div.meetme-decline(style=dec)
+        p A notification about the declination will be sent to 
+         = meeting.matchmaking_requester_name 
+         | . This Meeting space will be removed in the process.
+        p Leave a comment on why you had to decline the request to meet (optional):
+        textarea.decline-message(data-theme="b")
+        div.buttons
+            a(href="#",data-role="button",data-inline="true",data-theme="b").decline-request Decline
+            a(href="#",data-role="button",data-inline="true").cancel-action Cancel

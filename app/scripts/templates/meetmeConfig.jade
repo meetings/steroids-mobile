@@ -1,0 +1,21 @@
+div#meetme-config
+    p Your
+        span.bold Meet Me 
+        | page URL:
+
+    p.your-url='https://' + window.location.hostname + '/meet/'
+        span.handle.bold=user.matchmaker_fragment
+
+    ul(data-role='listview',data-inset='true')
+        li
+            a.edit-url(href='#')
+                i.icon-schedule
+                | Change your Meet Me url
+        li
+            a.edit-msg(href='#')
+                i.icon-edit
+                | Edit your greeting message
+
+    a(data-role='button',href='#', data-theme='b') Email to contact
+
+    p If you want to configure your Meet Me page in more detail, go to www.meetin.gs with your desktop browser.

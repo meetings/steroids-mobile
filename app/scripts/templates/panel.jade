@@ -2,35 +2,42 @@
 ul#side-bar(data-role="listview",data-theme="c")
     li(data-theme="c",class=a)
         a#nav-meetings(href="index.html",data-transition="fade")
-            span.ui-icon.menu-icon-meetings
+            i.icon-meetings
             | Meetings
+    li(data-theme="c",class=a)
+        a#nav-meetme(href="index.html",data-transition="fade")
+            i.icon-emblem
+            | Meetme config
+    li(data-theme="c",class=a)
+        a#nav-calconfig(href="index.html",data-transition="fade")
+            i.icon-calendar
+            | Calendar settings
     li(data-role="list-divider",data-theme="c") GET TIPS FOR BETTER MEETINGS
     li
         a#nav-facebook(href="#",data-transition="fade")
-            span.ui-icon.menu-icon-facebook
+            i.icon-facebook
             | Like us on Facebook
     li
         a#nav-twitter(href="#",data-transition="fade")
-            span.ui-icon.menu-icon-twitter
+            i.icon-twitter
             | Follow us on Twitter
     li(data-role="list-divider",data-theme="c") OTHER
     li
         a#nav-support(href="#",data-transition="fade")
-            span.ui-icon.menu-icon-support
+            i.icon-question
             | Support
     - if( app.options.build === 'web' )
         li
             a#nav-tos(href="#",data-transition="fade")
-                span.ui-icon.menu-icon-tos
+                i.icon-material_document
                 | Terms of Service
-
     li
         a#nav-edit-profile(href="profile.html",data-transition="fade")
-            span.ui-icon.menu-icon-edit-profile
+            i.icon-edit
             | Edit profile
     li
         a#nav-logout(href="#",data-transition="fade")
-            span.ui-icon.menu-icon-logout
+            i.icon-logout
             | Logout
 - if( app.options.build === 'web' )
     a.no-mobile(href="#") Switch to normal website

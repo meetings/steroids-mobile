@@ -1,0 +1,9 @@
+p Your 
+    span.bold Meet Me 
+    | URL:
+
+p.your-url='https://' + window.location.hostname + '/meet/'
+    span.handle= user.matchmaker_fragment
+    a.change-url(href="#") change
+
+a.save-url(href='#',data-role='button',data-theme='b') Save

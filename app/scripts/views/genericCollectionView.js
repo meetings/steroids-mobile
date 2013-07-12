@@ -24,16 +24,17 @@ app.genericCollectionView = Backbone.View.extend({
 
         // Setup infinite scrolling
         if (this.options.infiniScroll){
-            var that = this;
+            var _this = this;
             var direction = this.options.infiniScrollDirection || 'down';
             var extraParams = this.options.infiniScrollExtraParams || {};
             this.infiniScroll = new Backbone.InfiniScroll(this.collection, {
-                success: function(col, res){ that.scrolledMore(col, res); },
+                success: function(col, res){ _this.scrolledMore(col, res); },
                 onFetch: function(){
                 },
                 direction: direction,
                 extraParams: extraParams,
-                view: this
+                view: _this,
+                queryParamsFunc: this.options.queryParamsFunc
             });
         }
 
@@ -204,11 +205,11 @@ app.genericCollectionView = Backbone.View.extend({
             },500);
         }
     },
+
     hideLoader : function(){
         $('li.loader', this.el).hide();
         if( this.options.mode === 'addtotop'){
             window.scrollBy(0, -94);
-            this.$el.css('height', this.$el.height() - 94);
         }
     }
 });

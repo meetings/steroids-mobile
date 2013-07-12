@@ -1,8 +1,9 @@
 div#edit-form.form-full-width(data-role="fieldcontain")
-    input#meeting-skype-account(data-theme="b",type="text",name="skype-account",value=skype_account,placeholder="Skype account to call")
+    - var skype_acc = meeting.skype_account || user.skype;
+    input#meeting-skype-account(data-theme="b",type="text",name="skype-account",value=skype_acc,placeholder="Skype account to call")
     div.controls
         a#submitStepSkypeName(data-theme="b", type="button") 
-            - if(id != null)
+            - if(meeting.id != null)
                 | Save
             - else
                 | Continue

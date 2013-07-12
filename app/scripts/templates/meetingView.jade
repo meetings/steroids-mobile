@@ -4,6 +4,10 @@ h3=title
     p.mtngs-calendar
         i.icon-calendar
         = dateString
+- else if( is_draft )
+    p.mtngs-calendar
+        i.icon-calendar
+        | Time has not been set
 - else
     p.mtngs-calendar
         i.icon-calendar
@@ -26,11 +30,11 @@ div#next-action-bar
 
 div#progress-bar
 
-// Participants
+// Invite participants
 - if(is_draft)
     - if(participants.length <= 1)
         a.open-add-participant-view(href="#", data-theme="b", data-role="button") Add participants
-    - else
+    - else if( matchmaking_accepted && matchmaking_accepted !== 0 )
         a.open-send-invites-view(href="#", data-theme="b", data-role="button") Send invites
 
 ul#participant-list(data-role='listview',data-inset='true')

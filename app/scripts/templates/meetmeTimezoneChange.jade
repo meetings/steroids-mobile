@@ -1,0 +1,27 @@
+- var ua_tz = app.options.ua_time_zone.name();
+div#meetme-tzconfig
+    h3 Choose your time
+    p Which time zone would you prefer for displaying the available times?
+    fieldset(data-role="controlgroup")
+        label
+            input(type="radio",name="offset",value=uatz.name(),checked="checked")
+            | Your time 
+            span=moment.utc(d.getTime() + tz_data.data[app.options.ua_time_zone.name()].offset_value * 1000).format('hh:mm A')
+            = ' ' + tz_data.data[ua_tz].readable_name
+        label
+            input(type="radio",name="offset",value=matchmaker.time_zone) 
+            | Time set by 
+            =user.name+' '
+            span=moment.utc(d.getTime() + matchmaker.time_zone_offset * 1000).format('hh:mm A')
+            = ' ' + matchmaker.time_zone_string
+        label
+            input(type="radio",name="offset",value="custom")
+            | Choose another time zone 
+            span#user-time
+        select#timezone-select(disabled="disabled")
+            each tz, i in tz_data.choices
+                if( tz === ua_tz )
+                    option(value=tz,selected="selected")=tz_data.data[tz].readable_name
+                else
+                    option(value=tz)=tz_data.data[tz].readable_name
+    a.choose-timezone(href="#",data-role="button",data-theme="b") Continue

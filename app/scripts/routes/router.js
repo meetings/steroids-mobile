@@ -1,10 +1,10 @@
 app.router = Backbone.Router.extend({
-    initialize : function(){
+    initialize : function() {
         // Check internet on mobile device
         if( app.options.build !== 'web' ){
             this.bind('all', function (trigger, args) {
                 var routeData = trigger.split(":");
-                if (routeData[0] === "route") { // routeData[1] has route name
+                if (routeData[0] === 'route') { // routeData[1] has route name
                     app.hasInternet();
                 }
             });
@@ -28,8 +28,172 @@ app.router = Backbone.Router.extend({
         "material.html" : "material",
         "scheduling.html" : "scheduling",
         "edit.html" : "edit",
+        "meetme.html" : "meetmeCover",
+        "meetmeConfig.html" : "meetmeConfig",
+        "meetmeCalendar.html" : "meetmeCalendar",
+        "meetmeConfirm.html" : "meetmeConfirm",
+        "calconfig.html" : "calConfig",
         "addParticipant.html" : "addParticipant"
     },
+
+    meetmeCover : function( params ) {
+        var user = params.user || '';
+        var mm_name = params.cal || '';
+
+        if( ! app.collections.matchmakers ) {
+            app.collections.matchmakers = new app.matchmakerCollection();
+            app.collections.matchmakers.url = app.defaults.api_host + '/v1/matchmakers/';
+        }
+        if( ! app.models.user ){
+            app.models.user = new app.userModel();
+            app.models.user.url = app.defaults.api_host + '/v1/users/';
+        }
+
+        app.models.user.set('matchmaker_fragment', user );
+
+        app.views.current = new app.meetmeCoverView({
+            el : '.content',
+            matchmakers_collection : app.collections.matchmakers,
+            user_model : app.models.user,
+            user_fragment : user,
+            selected_matchmaker_path : mm_name
+        });
+
+        if( app.collections.matchmakers.length === 0){
+            app.collections.matchmakers.fetch({success: function(){
+                app.models.user.fetch({ data : { user_fragment : user, image_size : 140 }, success : function(){
+                    app.views.current.render();
+                    app.showContent();
+                }});
+            }, data : { user_fragment : user, matchmaker_fragment : 'default' }});
+        }
+        else{
+            app.views.current.render();
+            app.showContent();
+        }
+    },
+
+    meetmeConfig : function( params ) {
+        // Check and create models & cols where needed
+        if( ! app.collections.matchmakers ) app.collections.matchmakers = new app.matchmakerCollection();
+        if( ! app.models.user ) app.models.user = new app.userModel();
+
+        // Set urls
+        app.collections.matchmakers.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/matchmakers';
+        app.models.user.url = app.defaults.api_host + '/v1/users/me';
+        var suggestion_sources_url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/suggestion_sources';
+
+        // Create view
+        app.views.current = new app.meetmeConfigView({  el : '.content', matchmaker_collection : app.collections.matchmakers, user_model : app.models.user });
+
+        // Check if we want to fetch data
+        if( app.collections.matchmakers.length === 0){
+
+            // Setup deferreds
+            var userFetch = $.Deferred(),
+            //suggestionSourcesFetch = $.Deferred(),
+            matchmakerFetch = $.Deferred();
+
+            // wait for ajax requests to succeed, defer show content until that
+            $.when(userFetch, /* suggestionSourcesFetch,*/ matchmakerFetch).then(function() {
+                app.views.current.render();
+                app.showContent();
+            });
+
+            // Get user data
+            app.models.user.fetch({ data : { image_size : 140 } , success : function() {
+                userFetch.resolve();
+            }});
+
+            // Get matchmaker data
+            app.collections.matchmakers.fetch({ success : function() {
+                matchmakerFetch.resolve();
+            }});
+
+            // Get suggestion sources data
+            /*$.get(suggestion_sources_url, function(res){
+                app.models.user.set('suggestion_sources', res);
+                suggestionSourcesFetch.resolve();
+            });*/
+        }
+        else{
+            app.views.current.render();
+        }
+    },
+
+    meetmeCalendar : function( params ) {
+        var user = params.user || '';
+        var cal = params.cal || 'default';
+        var confirmed_lock = params.confirmed_lock_id || false;
+
+        app.views.header = app.views.header || new app.headerView({ 'el' : '#meetings' });
+
+        if(confirmed_lock) {
+            app.models.lock = new app.matchmakerLockModel();
+            app.models.lock.id = confirmed_lock;
+            app.models.matchmaker = new app.matchmakerModel();
+            app.models.lock.fetch({
+                success : function(){
+                    app.models.matchmaker.url = app.defaults.api_host + '/v1/matchmakers/' + app.models.lock.get('matchmaker_id');
+                    app.models.matchmaker.fetch({ success : function() {
+                        app.views.current = new app.meetmeConfirmedView({ el : '.content', lock : app.models.lock, matchmaker: app.models.matchmaker });
+                        app.views.current.render();
+                    }});
+                }
+            });
+            return;
+        }
+
+        if( ! app.collections.matchmakers ) {
+            app.collections.matchmakers = new app.matchmakerCollection();
+            app.collections.matchmakers.url = app.defaults.api_host + '/v1/matchmakers/';
+        }
+        if( ! app.models.user ){
+            app.models.user = new app.userModel();
+            app.models.user.url = app.defaults.api_host + '/v1/users/';
+        }
+
+        // Hack the fragment into user model
+        app.models.user.set('matchmaker_fragment', user);
+
+        app.views.current = new app.meetmeCalendarView({
+            el : '.content',
+            matchmakers_collection : app.collections.matchmakers,
+            selected_matchmaker_path : cal,
+            user_model : app.models.user
+        });
+
+
+        if( app.collections.matchmakers.length === 0 ){
+
+            // Setup deferreds
+            var userFetch = $.Deferred(),
+            matchmakerFetch = $.Deferred();
+
+            // wait for ajax requests to succeed, defer show content until that
+            $.when(userFetch, matchmakerFetch).then(function() {
+                app.views.current.render();
+                app.showContent();
+            });
+
+            app.collections.matchmakers.fetch({ data : { user_fragment : user, matchmaker_fragment : cal }, success: function() {
+                matchmakerFetch.resolve();
+            }});
+
+            app.models.user.fetch({ data : { user_fragment : user, image_size : 140 }, success : function() {
+                userFetch.resolve();
+            }});
+        }
+        else{
+            app.views.current.render();
+            app.showContent();
+        }
+    },
+
+    calConfig : function( params ) {
+
+    },
+
     contextRedirect : function( params ) {
         var redirect_info_json = params.redirect_info;
         var redirect_info = JSON.parse( redirect_info_json );
@@ -39,6 +203,7 @@ app.router = Backbone.Router.extend({
 
         AppGyver.reloadContext( redirect_info[0], redirect_info[1] );
     },
+
     meetings : function() {
         var that = this;
 
@@ -50,7 +215,7 @@ app.router = Backbone.Router.extend({
         if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
         // Get times
-        var today = Math.floor( moment().sod() / 1000 );
+        var today = Math.floor( moment().startOf('day') / 1000 );
 
         // Deferreds for fetches
         var futureFetch = $.Deferred();
@@ -180,8 +345,8 @@ app.router = Backbone.Router.extend({
         var fetchFutureMeetings = function() {
             app.collections.future_meetings.fetch({ success : function(col,res){
                 // Get times
-                var today = Math.floor ( moment().utc().sod() / 1000 );
-                var today_end = Math.floor ( moment().utc().eod() / 1000 );
+                var today = Math.floor ( moment().utc().startOf('day') / 1000 );
+                var today_end = Math.floor ( moment().utc().endOf('day') / 1000 );
 
                 // Create a new collection of todays meetings
                 var today_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
@@ -378,6 +543,7 @@ app.router = Backbone.Router.extend({
     meeting : function(params) {
         // Get url params
         var id = params.id || 0;
+        var mm_mode = params.matchmaking_response || false;
 
         // Setup deferreds
         var meetingFetch = $.Deferred(),
@@ -416,20 +582,21 @@ app.router = Backbone.Router.extend({
 
         if( ! app.views.meeting ) app.views.meeting = new app.meetingView({
             el : $('#meeting'),
-            model : app.models.meeting
+            model : app.models.meeting,
+            mm_mode : mm_mode
         });
 
         // TODO: Think how data could  be fetched in parallel here. Probably by creating top level view meeting
         // with subviews for info and materials
         app.models.meeting.fetch({ success : function(){
             meetingFetch.resolve();
-            app.views.editPanel.render();            
+            app.views.editPanel.render();
         }, timeout : 5000, silent : true });
-        
+
         app.collections.materials.fetch({ success : function(){
             materialsFetch.resolve(); // Resolve deferred
         }, timeout : 5000, silent : true }); // Silent as we want to render when both fetches are done
-        
+
         app.collections.participants.fetch({ success : function(){
             participantsFetch.resolve(); // Resolve deferred
         }, timeout : 5000, silent : true }); // Silent as we want to render when both fetches are done
@@ -635,7 +802,9 @@ app.router = Backbone.Router.extend({
         }
         if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
+        // Create user and meeting models
         if( ! app.models.meeting ) app.models.meeting = new app.meetingModel();
+        if( ! app.models.currentUser ) app.models.currentUser = new app.userModel( { id : 'me' } );
 
         if( ! app.views.editMeeting ) app.views.editMeeting = new app.editView({
             model : app.models.meeting,
@@ -648,17 +817,29 @@ app.router = Backbone.Router.extend({
         var field = params && params.field || null;
         var new_meeting = (id === null);
 
-        // If this is new meeting or editing an existing
+        // If this is new meeting
         if(new_meeting) {
             app.models.meeting.clear().set(app.models.meeting.defaults);
             app.views.editMeeting.render(false);
             app.showContent();
         }
         else {
-            app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
-            app.models.meeting.fetch({ success : function() {
+            var userFetched = $.Deferred();
+            var meetingFetched = $.Deferred();
+
+            $.when(userFetched, meetingFetched).then(function(){
                 app.views.editMeeting.render(field);
                 app.showContent();
+            });
+
+            app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
+
+            app.models.currentUser.fetch({ success : function(){
+                userFetched.resolve();
+            }});
+
+            app.models.meeting.fetch({ success : function() {
+                meetingFetched.resolve();
             }, timeout : 5000 });
         }
     },
