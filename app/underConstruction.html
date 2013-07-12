@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="disable-touch-select" lang="en" manifest="manifest.appcache">
     <head>
-        <title>Meetings | Meetin.gs</title>
+        <title> Some work left to do... | Meetin.gs</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -109,41 +109,12 @@
     <!-- Meetings listing -->
     <div data-role="page" id="meetings" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
-            <a id="open-left-panel" href="#left-panel" data-icon="mtngs-panel" data-iconpos="notext" data-theme="b"></a>
             <h1>Meetin.gs</h1>
-            <a id="create-meeting" class="open-add-meeting-view" href="edit.html" data-theme="b"><i class="icon-add"></i></a>
         </div>
         <div class="main-div" data-role="content" >
-            <div class="connectivity"></div>
-            <div class="loader">
-                <span class="loader"></span>
-            </div>
             <div class="content">
-                <ul id="past" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="today" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="highlights" class="highlight-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="unscheduled" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="future" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <div id="meetings-buttons"></div>
-            </div>
-            <div data-role="popup" id="suggestion-popup" data-overlay-theme="a" data-theme="a" data-dismissible="false" class="ui-corner-all">
-                <div style="padding:10px 20px;">
-                    <h4 id="calendar-name"></h4>
-                    <a href="#" class="create-meeting" type="submit" data-theme="b">Create meeting page</a>
-                    <a href="#" class="remove-suggestion" type="submit" data-theme="b">Hide suggestion</a>
-                    <a href="#" class="remove-all" type="submit" data-theme="b">Disable this calendar</a>
-                    <a href="#" class="cancel" type="submit" data-theme="b">Cancel</a>
-                </div>
             </div>
         </div><!-- /content -->
-        <div data-role="panel" data-position-fixed="true" id="left-panel" data-theme="c">
-            <!-- panel content goes here -->
-        </div><!-- /panel -->
     </div><!-- /page -->
     <script type="text/javascript" charset="utf-8">
 var _gaq = _gaq || [];

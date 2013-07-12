@@ -33,7 +33,20 @@ app.router = Backbone.Router.extend({
         "meetmeCalendar.html" : "meetmeCalendar",
         "meetmeConfirm.html" : "meetmeConfirm",
         "calconfig.html" : "calConfig",
+        "underConstruction.html" : "underConstruction",
         "addParticipant.html" : "addParticipant"
+    },
+
+    underConstruction : function( params ) {
+
+        app.views.current = new app.underConstructionView({
+            el : '.content',
+            message : params.message || '',
+            url : params.url
+
+        });
+        app.views.current.render();
+        app.showContent();
     },
 
     meetmeCover : function( params ) {

@@ -994,9 +994,7 @@ exports.meetmeConfirmed = function anonymous(locals, attrs, escape, rethrow, mer
     var buf = [];
     with (locals || {}) {
         var interp;
-        buf.push('<div id="meetme-confirmed">');
-        console.log(locals);
-        buf.push("<p>");
+        buf.push('<div id="meetme-confirmed"><p>');
         var __val__ = locals.accepter_name + " will now accept or decline your request. We will send you a notification when we have a response.";
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push('</p><p class="info first">');
@@ -1810,6 +1808,26 @@ exports.slotInListView = function anonymous(locals, attrs, escape, rethrow, merg
         var __val__ = time_string;
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</span></a>");
+    }
+    return buf.join("");
+};
+
+// underConstructionView.jade compiled template
+exports.underConstructionView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push("<h2>A friendly warning</h2>");
+        if (message) {
+            var p = message;
+        } else {
+            buf.push("<p>The requested feature is not yet fully compliant with mobile devices. We advice you to proceed on a desktop computer. Thank you for your patience!</p>");
+        }
+        buf.push('<a href="#" data-role="button" data-theme="b" class="proceed">Proceed anyway</a>');
     }
     return buf.join("");
 };

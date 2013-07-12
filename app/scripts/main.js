@@ -40,7 +40,8 @@ window.app = {
 
     no_login_pages : [
         'meetme',
-        'matchmaker_fragment'
+        'matchmaker_fragment',
+        'underConstruction'
     ],
 
     defaults : {
@@ -202,6 +203,8 @@ window.app = {
         var matchmaking_response = this._getUrlParamByName('matchmaking_response');
         var matchmaker_fragment = this._getUrlParamByName('matchmaker_fragment');
         var user_fragment = this._getUrlParamByName('user_fragment');
+        var under_construction_url = this._getUrlParamByName('under_construction_url');
+        var under_construction_message = this._getUrlParamByName('under_construction_message');
         //var redirect_matcmaking_expired = this._getUrlParamByName('expired_matchmaker_lock_id');
         //var redirect_matchmaking_limit = this._getUrlParamByName('limit_reached_for_matchmaking_event_id');
 
@@ -215,6 +218,11 @@ window.app = {
             app.auth.user = '';
             app.auth.token = '';
             return;
+        }
+
+        // Show scheduling answering
+        else if( under_construction_url ) {
+            chosen_redirect = [ 'underConstruction', { url : under_construction_url, message : under_construction_message || '' } ];
         }
 
         // Show scheduling answering
@@ -299,7 +307,7 @@ window.app = {
         for(var i=0;i < ca.length;i++) {
             var c = ca[i];
             while (c.charAt(0)==' ') c = c.substring(1,c.length);
-            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length,c.length);
         }
         return null;
     },
@@ -322,20 +330,20 @@ window.app = {
         }
     },
 
-    _removeIosNav : function(){
+    _removeIosNav : function() {
         /mobile/i.test(navigator.userAgent) && !location.hash &&
             setTimeout(function () { window.scrollBy(0, 1); }, 3000);
     },
 
     _versionCheck : function(){
-        $.getJSON( app.defaults.version_check_url , function(response){
+        $.getJSON( app.defaults.version_check_url , function(response) {
             // Force update if the current.json value is larger than client version
-            if( parseInt(response.version, 10) > app.defaults.version ){
+            if( parseInt(response.version, 10) > app.defaults.version ) {
                 app._redirectToUpdate(response.url);
             }
         });
     },
-    _redirectToUpdate : function(url){
+    _redirectToUpdate : function(url) {
         setTimeout(function(){
             alert('You have an old version of the app. You need to update!');
             setTimeout( function(){
@@ -344,7 +352,7 @@ window.app = {
             app._redirectToUpdate(url);
         },1000);
     },
-    openUrlSchemeLink : function(appurl,normurl){
+    openUrlSchemeLink : function(appurl,normurl) {
         if( app.options.build === 'web' ) {
             var win=window.open(normurl, '_blank');
             win.focus();
