@@ -26,7 +26,9 @@ div#next-action-bar
     
 // Skype button
 - if (locals.skype_url && ! is_draft)
-    a#skype_button(href=skype_url,data-role='button',data-icon='mtngs-skype',data-theme='b') Join Skype conference
+    a#skype_button(href=skype_url,data-role='button',data-theme='b')
+        i.icon-skype
+        | Join Skype conference
 
 div#progress-bar
 

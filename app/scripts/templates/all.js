@@ -696,15 +696,13 @@ exports.meetingView = function anonymous(locals, attrs, escape, rethrow, merge) 
                 id: "skype_button",
                 href: skype_url,
                 "data-role": "button",
-                "data-icon": "mtngs-skype",
                 "data-theme": "b"
             }, {
                 href: true,
                 "data-role": true,
-                "data-icon": true,
                 "data-theme": true
             }));
-            buf.push(">Join Skype conference</a>");
+            buf.push('><i class="icon-skype"></i>Join Skype conference</a>');
         }
         buf.push('<div id="progress-bar"></div><!-- Invite participants-->');
         if (is_draft) {
@@ -1438,7 +1436,7 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
-        buf.push('<ul data-role="listview" data-inset="true" data-theme="a"><li><p class="mtngs-email"><a');
+        buf.push('<ul data-role="listview" data-inset="true" data-theme="a"><li><p class="mtngs-email"><i class="icon-mail"></i><a');
         buf.push(attrs({
             style: "font-weight:normal;color:#555;",
             href: "mailto:" + email
@@ -1451,19 +1449,19 @@ exports.participantView = function anonymous(locals, attrs, escape, rethrow, mer
         buf.push(escape(null == __val__ ? "" : __val__));
         buf.push("</a></p>");
         if (phone) {
-            buf.push('<p class="mtngs-mobile">');
+            buf.push('<p class="mtngs-mobile"><i class="icon-mobile"></i>');
             var __val__ = phone;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (skype) {
-            buf.push('<p class="mtngs-skype">');
+            buf.push('<p class="mtngs-skype"><i class="icon-skype"></i>');
             var __val__ = skype;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
         if (linkedin) {
-            buf.push('<p class="mtngs-linkedin">');
+            buf.push('<p class="mtngs-linkedin"><i class="icon-linkedin"></i>');
             if (linkedin.indexOf("http") === -1) linkedin = "http://" + linkedin;
             buf.push("<a");
             buf.push(attrs({

@@ -23,12 +23,18 @@
 ul(data-role="listview",data-inset="true",data-theme="a")
     li
         p.mtngs-email
+            i.icon-mail
             a(style="font-weight:normal;color:#555;",href="mailto:"+email)=email
         - if (phone)
-            p.mtngs-mobile=phone
+            p.mtngs-mobile
+                i.icon-mobile
+                =phone
         - if (skype)
-            p.mtngs-skype=skype
+            p.mtngs-skype
+                i.icon-skype
+                =skype
         - if (linkedin)
             p.mtngs-linkedin
+                i.icon-linkedin
                 - if( linkedin.indexOf('http') === -1) linkedin = 'http://' + linkedin;
                 a(style="font-weight:normal;color:#555;",href=linkedin)="LinkedIn Profile"
