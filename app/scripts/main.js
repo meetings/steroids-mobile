@@ -111,6 +111,9 @@ window.app = {
             }
         }
 
+        // Add login details to desktop_link
+        if( app.auth.token ) app.defaults.desktop_link += '?dic='+app.auth.token;
+
         // Remove navigation bar on IOS
         //this._removeIosNav();
 

@@ -25,7 +25,7 @@ app.panelView = Backbone.View.extend({
         'click #nav-logout' : 'logout',
         'click #nav-meetme' : 'openMeetmeConfig',
         'click #nav-calconfig' : 'openCalconfig',
-        'click #no-mobile' : 'switchNormal'
+        'click .no-mobile' : 'switchNormal'
     },
 
     openMeetings : function(e){

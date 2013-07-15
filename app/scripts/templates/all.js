@@ -1235,23 +1235,7 @@ exports.panel = function anonymous(locals, attrs, escape, rethrow, merge) {
             "data-theme": true,
             "class": true
         }));
-        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><i class="icon-meetings"></i>Meetings</a></li><li');
-        buf.push(attrs({
-            "data-theme": "c",
-            "class": a
-        }, {
-            "data-theme": true,
-            "class": true
-        }));
-        buf.push('><a id="nav-meetme" href="index.html" data-transition="fade"><i class="icon-emblem"></i>Meetme config</a></li><li');
-        buf.push(attrs({
-            "data-theme": "c",
-            "class": a
-        }, {
-            "data-theme": true,
-            "class": true
-        }));
-        buf.push('><a id="nav-calconfig" href="index.html" data-transition="fade"><i class="icon-calendar"></i>Calendar settings</a></li><li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li><li><a id="nav-facebook" href="#" data-transition="fade"><i class="icon-facebook"></i>Like us on Facebook</a></li><li><a id="nav-twitter" href="#" data-transition="fade"><i class="icon-twitter"></i>Follow us on Twitter</a></li><li data-role="list-divider" data-theme="c">OTHER</li><li><a id="nav-support" href="#" data-transition="fade"><i class="icon-question"></i>Support</a></li>');
+        buf.push('><a id="nav-meetings" href="index.html" data-transition="fade"><i class="icon-meetings"></i>Meetings</a></li><li data-role="list-divider" data-theme="c">GET TIPS FOR BETTER MEETINGS</li><li><a id="nav-facebook" href="#" data-transition="fade"><i class="icon-facebook"></i>Like us on Facebook</a></li><li><a id="nav-twitter" href="#" data-transition="fade"><i class="icon-twitter"></i>Follow us on Twitter</a></li><li data-role="list-divider" data-theme="c">OTHER</li><li><a id="nav-support" href="#" data-transition="fade"><i class="icon-question"></i>Support</a></li>');
         if (app.options.build === "web") {
             buf.push('<li><a id="nav-tos" href="#" data-transition="fade"><i class="icon-material_document"></i>Terms of Service</a></li>');
         }

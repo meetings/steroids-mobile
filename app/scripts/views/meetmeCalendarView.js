@@ -201,7 +201,7 @@ app.meetmeCalendarView = Backbone.View.extend({
             phone : $('#user-phone').val(),
             skype : $('#user-skype').val(),
             organization : $('#user-organization').val(),
-            title : $('#user-title').val(),
+            organization_title : $('#user-title').val(),
             tos_accepted : '1'
         }, {
             success : function() {
