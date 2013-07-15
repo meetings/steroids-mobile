@@ -191,9 +191,9 @@ module.exports = function( grunt ) {
   /* previous perl script was failing at random, use this instead */
   var buildifyFile = function(buildType, html){
 
-    var startExp      = new RegExp("<!-- start build include: \\S* -->"),
+    var startExp      = new RegExp("<!-- start build include: [^\\-]* -->"),
         endExp        = new RegExp("<!-- stop build include -->"),
-        buildTypeExp  = new RegExp("<!-- start build include: (\\S*) -->"),
+        buildTypeExp  = new RegExp("<!-- start build include: ([^\\-]*) -->"),
         lines         = html.split(/\r?\n/),
         withinTag     = false,
         tagType       = undefined,
@@ -210,7 +210,7 @@ module.exports = function( grunt ) {
       // tag end
       } else if (endExp.test(line) && withinTag) {
         // when we have build we want, use that content
-        if (tagType === buildType) {
+        if (tagType.indexOf(buildType) != -1 ) {
           content = content.concat(tempContent);
 
         }
