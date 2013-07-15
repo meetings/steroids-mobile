@@ -21,7 +21,7 @@ app.meetmeConfirmedView = Backbone.View.extend({
 
 
         // Set the background
-        var bg_image = this.matchmaker.get('background_theme') == 'c' ? this.matchmaker.get('background_image_url') : app.meetme_themes[this.matchmaker.get('background_theme')];
+        var bg_image = (this.matchmaker.get('background_theme') == 'c' || this.matchmaker.get('background_theme') == 'u') ? this.matchmaker.get('background_image_url') : app.meetme_themes[this.matchmaker.get('background_theme')];
         $('.ui-body-a').css({
             'background-image' : 'url('+bg_image+')',
             'background-size' : 'cover',

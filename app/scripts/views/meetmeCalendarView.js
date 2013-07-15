@@ -48,7 +48,14 @@ app.meetmeCalendarView = Backbone.View.extend({
 
 
         // Set the background
-        var bg_image = this.active_matchmaker.get('background_theme') == 'c' ? this.active_matchmaker.get('background_image_url') : app.meetme_themes[this.active_matchmaker.get('background_theme')];
+        var bg_image = '';
+        if( this.active_matchmaker.get('background_theme') == 'c' ||  this.active_matchmaker.get('background_theme') == 'u' ) {
+            bg_image = this.active_matchmaker.get('background_image_url');
+
+        }
+        else{
+            bg_image = app.meetme_themes[this.active_matchmaker.get('background_theme')];
+        }
         $('.ui-body-a').css({
             'background-image' : 'url('+bg_image+')',
             'background-size' : 'cover',

@@ -39,7 +39,7 @@ app.meetmeCoverView = Backbone.View.extend({
 
         // Set the background
         var bg_image = '';
-        if( this.active_matchmaker.get('background_theme') == 'c'){
+        if( this.active_matchmaker.get('background_theme') == 'c' ||  this.active_matchmaker.get('background_theme') == 'u' ) {
             bg_image = this.active_matchmaker.get('background_preview_url') || this.active_matchmaker.get('background_image_url');
         }
         else{
