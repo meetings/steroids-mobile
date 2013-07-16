@@ -11,11 +11,6 @@ div#meetme-calendar
             p=user.organization
         -if( ! user.organization && user.organization_title )
             p=user.organization_title
-        div.social-links
-            -if ( user.linkedin )
-                a(href=user.linkedin,target="_blank")
-                    i.ico-linkedin
-                    | Linkedin Profile
     div.info-bar
         p Tap the best time to meet
         p

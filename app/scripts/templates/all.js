@@ -821,19 +821,7 @@ exports.meetmeCalendar = function anonymous(locals, attrs, escape, rethrow, merg
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
-        buf.push('<div class="social-links">');
-        if (user.linkedin) {
-            buf.push("<a");
-            buf.push(attrs({
-                href: user.linkedin,
-                target: "_blank"
-            }, {
-                href: true,
-                target: true
-            }));
-            buf.push('><i class="ico-linkedin"></i>Linkedin Profile</a>');
-        }
-        buf.push('</div></div><div class="info-bar"><p>Tap the best time to meet</p><p>');
+        buf.push('</div><div class="info-bar"><p>Tap the best time to meet</p><p>');
         if (matchmaker.duration) {
             buf.push('<i class="icon-time"></i>');
             var __val__ = matchmaker.duration + " min";
