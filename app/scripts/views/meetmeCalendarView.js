@@ -251,6 +251,7 @@ app.meetmeCalendarView = Backbone.View.extend({
     cancelSlot : function(e) {
         var _this = this;
 
+        $('.cancel-slot .ui-btn-text',this.el).text('Canceling...');
         this.lock.destroy({ success : function() {
             AppGyver.switchContext('meetmeCalendar', { user : _this.user_model.get('matchmaker_fragment') });
         }});
@@ -296,6 +297,8 @@ app.meetmeCalendarView = Backbone.View.extend({
         // TODO: Handle lock errors
 
         this.lock.save( data, { success : function(res) {
+
+            // Show confirm template
             _this.$el.html( templatizer.meetmeConfirm( {
                 uatz : app.options.ua_time_zone.name(),
                 uatz_offset : app.timezones.data[app.options.ua_time_zone.name()].offset_value,
@@ -306,7 +309,11 @@ app.meetmeCalendarView = Backbone.View.extend({
                 start_epoch : _this.lock.get('start_epoch'),
                 end_epoch : _this.lock.get('end_epoch')
             }) );
+
+            // Change title & hide back button
             $('.header .title').text('Confirm your choice');
+            $('.header .back-button').hide();
+
             _this.$el.trigger('create');
         }});
 

@@ -946,7 +946,7 @@ exports.meetmeConfirm = function anonymous(locals, attrs, escape, rethrow, merge
                 buf.push("</p>");
             }
         }
-        buf.push('<p>You have <span class="bold">15 minutes </span>to complete this form.</p><p>Leave a note or preliminary agenda on why you want to meet.</p></div><div class="form-area"><textarea id="meetme-agenda" data-theme="b" placeholder="Why do you want to meet and what the proposed agenda will be?"></textarea><a href="#" data-role="button" data-theme="b" class="confirm-slot">Confirm</a></div></div>');
+        buf.push('<p>You have <span class="bold">15 minutes </span>to complete this form.</p><p>Leave a note or preliminary agenda on why you want to meet.</p></div><div class="form-area"><textarea id="meetme-agenda" data-theme="b" placeholder="Why do you want to meet and what the proposed agenda will be?"></textarea><a href="#" data-role="button" data-theme="b" class="confirm-slot">Confirm</a><a href="#" data-role="button" class="cancel-slot">Cancel</a></div></div>');
     }
     return buf.join("");
 };
