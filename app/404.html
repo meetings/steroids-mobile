@@ -1,157 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="disable-touch-select" lang="en" manifest="manifest.appcache">
     <head>
+        <title>Meetings | Meetin.gs</title>
         <meta charset="utf-8">
-        <title>Page Not Found :(</title>
-        <style>
-            ::-moz-selection {
-                background: #b3d4fc;
-                text-shadow: none;
-            }
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link rel="stylesheet" href="styles/custom.css" />
 
-            ::selection {
-                background: #b3d4fc;
-                text-shadow: none;
-            }
+        <!-- start build include: ios || android -->
+        <script src="/javascripts/cordova.js"></script>
+        <script src="scripts/helpers/calendar.js"></script>
+        <script src="/components/steroids-js/steroids.js"></script>
+        <!-- stop build include -->
 
-            html {
-                padding: 30px 10px;
-                font-size: 20px;
-                line-height: 1.4;
-                color: #737373;
-                background: #f0f0f0;
-                -webkit-text-size-adjust: 100%;
-                -ms-text-size-adjust: 100%;
-            }
+        <!-- start build include: ios -->
+        <script type="text/javascript" charset="utf-8">
+            window.build_mode = 'ios';
+        </script>
+        <!-- stop build include -->
 
-            html,
-            input {
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            }
+        <!-- start build include: android -->
+        <script type="text/javascript" charset="utf-8">
+            window.build_mode = 'android';
+        </script>
+        <!-- stop build include -->
 
-            body {
-                max-width: 500px;
-                _width: 500px;
-                padding: 30px 20px 50px;
-                border: 1px solid #b3b3b3;
-                border-radius: 4px;
-                margin: 0 auto;
-                box-shadow: 0 1px 10px #a7a7a7, inset 0 1px 0 #fff;
-                background: #fcfcfc;
-            }
+        <!-- start build include: web -->
+        <script type="text/javascript" charset="utf-8">
+            window.build_mode = 'web';
+        </script>
+        <!-- stop build include -->
 
-            h1 {
-                margin: 0 10px;
-                font-size: 50px;
-                text-align: center;
-            }
 
-            h1 span {
-                color: #bbb;
-            }
-
-            h3 {
-                margin: 1.5em 0 0.5em;
-            }
-
-            p {
-                margin: 1em 0;
-            }
-
-            ul {
-                padding: 0 0 0 40px;
-                margin: 1em 0;
-            }
-
-            .container {
-                max-width: 380px;
-                _width: 380px;
-                margin: 0 auto;
-            }
-
-            /* google search */
-
-            #goog-fixurl ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-            }
-
-            #goog-fixurl form {
-                margin: 0;
-            }
-
-            #goog-wm-qt,
-            #goog-wm-sb {
-                border: 1px solid #bbb;
-                font-size: 16px;
-                line-height: normal;
-                vertical-align: top;
-                color: #444;
-                border-radius: 2px;
-            }
-
-            #goog-wm-qt {
-                width: 220px;
-                height: 20px;
-                padding: 5px;
-                margin: 5px 10px 0 0;
-                box-shadow: inset 0 1px 1px #ccc;
-            }
-
-            #goog-wm-sb {
-                display: inline-block;
-                height: 32px;
-                padding: 0 10px;
-                margin: 5px 0 0;
-                white-space: nowrap;
-                cursor: pointer;
-                background-color: #f5f5f5;
-                background-image: -webkit-linear-gradient(rgba(255,255,255,0), #f1f1f1);
-                background-image: -moz-linear-gradient(rgba(255,255,255,0), #f1f1f1);
-                background-image: -ms-linear-gradient(rgba(255,255,255,0), #f1f1f1);
-                background-image: -o-linear-gradient(rgba(255,255,255,0), #f1f1f1);
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-                *overflow: visible;
-                *display: inline;
-                *zoom: 1;
-            }
-
-            #goog-wm-sb:hover,
-            #goog-wm-sb:focus {
-                border-color: #aaa;
-                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-                background-color: #f8f8f8;
-            }
-
-            #goog-wm-qt:hover,
-            #goog-wm-qt:focus {
-                border-color: #105cb6;
-                outline: 0;
-                color: #222;
-            }
-
-            input::-moz-focus-inner {
-                padding: 0;
-                border: 0;
-            }
-        </style>
+        <!-- build:js scripts/scripts.js -->
+        <script src="scripts/vendor/jquery.min.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/helpers/appgyver.js"></script>
+        <script src="scripts/helpers/dateformat.js"></script>
+        <script src="scripts/vendor/jqm.js"></script>
+        <script src="scripts/vendor/lodash.min.js"></script>
+        <script src="scripts/vendor/jstz.min.js"></script>
+        <script src="scripts/vendor/modernizr.js"></script>
+        <script src="scripts/vendor/backbone-min.js"></script>
+        <script src="scripts/vendor/infiniscroll.js"></script>
+        <script src="scripts/vendor/fastclick.js"></script>
+        <script src="scripts/vendor/backbone-query-params.js"></script>
+        <script src="scripts/vendor/moment.js"></script>
+        <script src="scripts/views/meetingsView.js"></script>
+        <script src="scripts/views/commentInListView.js"></script>
+        <script src="scripts/views/meetingInListView.js"></script>
+        <script src="scripts/views/highlightedMeetingInListView.js"></script>
+        <script src="scripts/views/meetingView.js"></script>
+        <script src="scripts/views/participantInListView.js"></script>
+        <script src="scripts/views/materialInListView.js"></script>
+        <script src="scripts/views/materialView.js"></script>
+        <script src="scripts/views/materialEditView.js"></script>
+        <script src="scripts/views/materialRenameView.js"></script>
+        <script src="scripts/views/connectCalendarView.js"></script>
+        <script src="scripts/views/loginView.js"></script>
+        <script src="scripts/views/participantView.js"></script>
+        <script src="scripts/views/addParticipantView.js"></script>
+        <script src="scripts/views/participantInMeetingView.js"></script>
+        <script src="scripts/views/genericCollectionView.js"></script>
+        <script src="scripts/views/upcomingMeetingsView.js"></script>
+        <script src="scripts/views/unscheduledMeetingsView.js"></script>
+        <script src="scripts/views/highlightedMeetingsView.js"></script>
+        <script src="scripts/views/meetmeConfigView.js"></script>
+        <script src="scripts/views/meetmeCoverView.js"></script>
+        <script src="scripts/views/meetmeCalendarView.js"></script>
+        <script src="scripts/views/calendarConfigView.js"></script>
+        <script src="scripts/views/schedulingView.js"></script>
+        <script src="scripts/views/editView.js"></script>
+        <script src="scripts/views/todayMeetingsView.js"></script>
+        <script src="scripts/views/settingsView.js"></script>
+        <script src="scripts/views/panelView.js"></script>
+        <script src="scripts/views/editMeetingPanelView.js"></script>
+        <script src="scripts/views/commentListView.js"></script>
+        <script src="scripts/views/nextActionView.js"></script>
+        <script src="scripts/views/headerView.js"></script>
+        <script src="scripts/views/editMaterialPanelView.js"></script>
+        <script src="scripts/views/profileView.js"></script>
+        <script src="scripts/views/slotInListView.js"></script>
+        <script src="scripts/views/slotCollectionView.js"></script>
+        <script src="scripts/views/meetmeConfirmedView.js"></script>
+        <script src="scripts/views/underConstructionView.js"></script>
+        <script src="scripts/models/meetingModel.js"></script>
+        <script src="scripts/models/matchmakerModel.js"></script>
+        <script src="scripts/models/materialModel.js"></script>
+        <script src="scripts/models/materialEditModel.js"></script>
+        <script src="scripts/models/userModel.js"></script>
+        <script src="scripts/models/participantModel.js"></script>
+        <script src="scripts/models/commentModel.js"></script>
+        <script src="scripts/models/slotModel.js"></script>
+        <script src="scripts/models/matchmakerLockModel.js"></script>
+        <script src="scripts/collections/meetingCollection.js"></script>
+        <script src="scripts/collections/commentCollection.js"></script>
+        <script src="scripts/collections/materialCollection.js"></script>
+        <script src="scripts/collections/participantCollection.js"></script>
+        <script src="scripts/collections/materialEditCollection.js"></script>
+        <script src="scripts/collections/matchmakerCollection.js"></script>
+        <script src="scripts/collections/slotCollection.js"></script>
+        <script src="scripts/routes/router.js"></script>
+        <script src="scripts/templates/all.js"></script>
+        <!-- endbuild -->
     </head>
-    <body>
-        <div class="container">
-            <h1>Not found <span>:(</span></h1>
-            <p>Sorry, but the page you were trying to view does not exist.</p>
-            <p>It looks like this was the result of either:</p>
-            <ul>
-                <li>a mistyped address</li>
-                <li>an out-of-date link</li>
-            </ul>
-            <script>
-                var GOOG_FIXURL_LANG = (navigator.language || '').slice(0,2),GOOG_FIXURL_SITE = location.host;
-            </script>
-            <script src="http://linkhelp.clients.google.com/tbproxy/lh/wm/fixurl.js"></script>
+<body>
+    <!-- Meetings listing -->
+    <div data-role="page" id="meetings" data-theme="a">
+        <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
+            <h1>Page not found - Meetin.gs</h1>
         </div>
-    </body>
+        <div class="main-div" data-role="content" >
+            <p>Unfortunately we couldn't find the page you were looking for.</p>
+            <a href="index.html" data-role="button" data-theme="b">Return to meetings</a>
+        </div><!-- /content -->
+    </div><!-- /page -->
+    <script type="text/javascript" charset="utf-8">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount','UA-3314001-23']);
+_gaq.push(['_trackPageview']);
+(function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+    </script>
+</body>
 </html>

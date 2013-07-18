@@ -15,6 +15,7 @@ app.meetmeConfirmedView = Backbone.View.extend({
         // Setup template
         this.$el.html( templatizer.meetmeConfirmed( _.merge( this.matchmaker.toJSON(), this.lock.toJSON() ) ) );
 
+        $('.header .back-button').hide();
         $('.header .title').text("We've sent the request");
 
         this.$el.trigger('create');

@@ -8,7 +8,7 @@ $(document).bind("mobileinit", function(){
     $.mobile.ajaxLinksEnabled = false;
 });
 
-window.production_mode = false;
+window.production_mode = true;
 
 // TODO: Generic close function, which removes child views
 
@@ -205,7 +205,7 @@ window.app = {
         var redirect_meeting = this._getUrlParamByName('redirect_to_meeting');
         var redirect_matchmaking_confirmed = this._getUrlParamByName('confirmed_matchmaker_lock_id');
         var matchmaking_response = this._getUrlParamByName('matchmaking_response');
-        var matchmaker_fragment = this._getUrlParamByName('matchmaker_fragment');
+        var matchmaker_fragment = this._getUrlParamByName('matchmaker_fragment') || '';
         var user_fragment = this._getUrlParamByName('user_fragment');
         var under_construction_url = this._getUrlParamByName('under_construction_url');
         var under_construction_message = this._getUrlParamByName('under_construction_message');
@@ -241,12 +241,7 @@ window.app = {
 
         // Show matchmaking calendar
         else if( user_fragment ) {
-            if( matchmaker_fragment ) {
-                chosen_redirect = ['meetmeCalendar', { user : user_fragment, cal : matchmaker_fragment } ];
-            }
-            else {
-                chosen_redirect = ['meetmeCover', { user : user_fragment } ];
-            }
+            chosen_redirect = ['meetmeCover', { user : user_fragment, cal : matchmaker_fragment } ];
         }
 
         // Show matchmaking accept / decline

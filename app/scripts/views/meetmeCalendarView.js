@@ -296,7 +296,13 @@ app.meetmeCalendarView = Backbone.View.extend({
 
         // TODO: Handle lock errors
 
-        this.lock.save( data, { success : function(res) {
+        this.lock.save( data, { success : function(model, res) {
+
+            if(res.error) {
+                // TODO: DIsplay the actual error message
+                alert('Oops, cannot reserve a meeting from your self!');
+                return;
+            }
 
             // Show confirm template
             _this.$el.html( templatizer.meetmeConfirm( {

@@ -51,7 +51,7 @@ app.router = Backbone.Router.extend({
 
     meetmeCover : function( params ) {
         var user = params.user || '';
-        var mm_name = params.cal || '';
+        var mm_fragment = params.cal || '';
 
         if( ! app.collections.matchmakers ) {
             app.collections.matchmakers = new app.matchmakerCollection();
@@ -69,18 +69,25 @@ app.router = Backbone.Router.extend({
             matchmakers_collection : app.collections.matchmakers,
             user_model : app.models.user,
             user_fragment : user,
-            selected_matchmaker_path : mm_name
+            selected_matchmaker_path : mm_fragment
         });
 
-        if( app.collections.matchmakers.length === 0){
-            app.collections.matchmakers.fetch({success: function(){
-                app.models.user.fetch({ data : { user_fragment : user, image_size : 140 }, success : function(){
-                    app.views.current.render();
-                    app.showContent();
-                }});
-            }, data : { user_fragment : user, matchmaker_fragment : 'default' }});
+        if( app.collections.matchmakers.length === 0) {
+            app.collections.matchmakers.fetch({
+                data : { user_fragment : user, matchmaker_fragment : mm_fragment },
+                success: function() {
+
+                    app.models.user.fetch({ data : { user_fragment : user, image_size : 140 }, success : function() {
+                        app.views.current.render();
+                        app.showContent();
+                    }});
+                },
+                error : function() {
+                    window.location = '404.html';
+                }
+            });
         }
-        else{
+        else {
             app.views.current.render();
             app.showContent();
         }
@@ -141,6 +148,7 @@ app.router = Backbone.Router.extend({
 
         app.views.header = app.views.header || new app.headerView({ 'el' : '#meetings' });
 
+        // Handle case when we are coming back from the email
         if(confirmed_lock) {
             app.models.lock = new app.matchmakerLockModel();
             app.models.lock.id = confirmed_lock;
@@ -176,7 +184,6 @@ app.router = Backbone.Router.extend({
             user_model : app.models.user
         });
 
-
         if( app.collections.matchmakers.length === 0 ){
 
             // Setup deferreds
@@ -189,9 +196,15 @@ app.router = Backbone.Router.extend({
                 app.showContent();
             });
 
-            app.collections.matchmakers.fetch({ data : { user_fragment : user, matchmaker_fragment : cal }, success: function() {
-                matchmakerFetch.resolve();
-            }});
+            app.collections.matchmakers.fetch({
+                data : { user_fragment : user, matchmaker_fragment : cal },
+                success : function(col) {
+                    matchmakerFetch.resolve();
+                },
+                error : function() {
+                    window.location = '404.html';
+                }
+            });
 
             app.models.user.fetch({ data : { user_fragment : user, image_size : 140 }, success : function() {
                 userFetch.resolve();

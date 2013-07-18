@@ -3,15 +3,13 @@ app.meetmeCoverView = Backbone.View.extend({
     initialize : function(options) {
         _(this).bindAll('render','openCalendar','openCalendarPreview');
 
-        // Bind models
+        // Setup models & state
         this.user_model = options.user_model;
         this.matchmaker_collection = options.matchmakers_collection;
         this.user_fragment = options.user_fragment;
         this.mode = options.mode || "normal";
         this.selected_matchmaker_path = options.selected_matchmaker_path || 'default';
 
-        //this.user_model.bind('change', this.render);
-        //this.matchmaker_model.bind('change', this.render);
     },
 
     events : {
@@ -57,7 +55,7 @@ app.meetmeCoverView = Backbone.View.extend({
 
     showOptions : function(e){
         e.preventDefault();
-        AppGyver.switchContext("meetmeCalendar", { user : this.user_model.get('matchmaker_fragment') });
+        AppGyver.switchContext("meetmeCalendar", { user : this.user_fragment, cal : this.selected_matchmaker_path });
     },
 
     beforeClose : function(){
