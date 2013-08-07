@@ -7,5 +7,7 @@ a(href=)
         span.material-other.ui-li-thumb.ui-corner-tl
     h3=title
     -if ( author_name !== '' )
-        p='By ' + author_name + ' ' + moment.unix(created_epoch).fromNow()
-    span.ui-li-count=comment_count
+        //-p='By ' + author_name + ' ' + moment.unix(created_epoch).fromNow()
+        p='By ' + author_name
+    -if( comment_count )
+        span.ui-li-count=comment_count
