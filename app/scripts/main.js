@@ -41,6 +41,7 @@ window.app = {
     no_login_pages : [
         'meetme',
         'matchmaker_fragment',
+        'user_fragment',
         'underConstruction',
         'under_construction_url'
     ],
