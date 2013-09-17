@@ -6,6 +6,10 @@ Meetings Mobile
 	npm install -g yeoman phantomjs templatizer
 	bundle
 
+# Build for development
+
+  source build.sh
+
 # Building for the web
 
   nvm use 0.8
