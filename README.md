@@ -9,8 +9,9 @@ Installs yeoman
 
 	bundle
 
-Which installs compass
+# Build for development
 
+  source build.sh
 
 # Building for the web
 
