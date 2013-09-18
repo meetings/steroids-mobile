@@ -1,7 +1,7 @@
 app.meetmeCoverView = Backbone.View.extend({
 
     initialize : function(options) {
-        _(this).bindAll('render','openCalendar','openCalendarPreview');
+        _(this).bindAll('render', 'showOptions');
 
         // Setup models & state
         this.user_model = options.user_model;
