@@ -1,25 +1,39 @@
 Meetings Mobile
 ---------------
 
-# Install
+# Dependencies for build
 
-	npm install -g yeoman phantomjs templatizer
-	bundle
+	gem install compass
+
+	# Do these in order so that incompatible versions will not be installed
+
+	curl https://raw.github.com/creationix/nvm/master/install.sh | sh
+	nvm install 0.8.25
+
+        # open new shell?
+
+	nvm use 0.8.25
+
+	# nvm yeoman can't find these unless installed without -g to source dir
+	npm install findit@0.1.2
+	npm install templatizer@0.0.10
+
+	npm install -g yeoman@0.9.6
+	npm install -g phantomjs
+
 
 # Build for development
 
-  source build.sh
+	source build.sh
 
 # Building for the web
 
-  nvm use 0.8
 	yeoman web
 
 ## AppGyver builds
 
-  nvm use 0.8
 	yeoman ios
-  yeoman android
+	yeoman android
 
 Creates build desired build to agapp directory
 
