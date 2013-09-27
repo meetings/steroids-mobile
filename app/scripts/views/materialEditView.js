@@ -79,24 +79,39 @@ app.materialEditView = Backbone.View.extend({
 
         $('textarea').css('width', '100%');
 
-        tinyMCE.init({
-            theme : "advanced",
-            theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,bullist,numlist,|,removeformat",
-            theme_advanced_buttons2 : "forecolor,backcolor,|,formatselect",
-            theme_advanced_toolbar_align : "center",
-            theme_advanced_statusbar_location : "none",
+        tinymce.init({
+            selector: "textarea",
 
-            onchange_callback : function( instance ) {
-                that.model.update_edit_content( instance.getContent() );
-            },
+// this does not seem to work in tinymce 4. replaced with an interval below
+//            onchange_callback : function( instance ) {
+//                that.model.update_edit_content( instance.getContent() );
+//            },
 
-            mode:'textareas'
+            plugins: [ "autolink textcolor" ],
+
+            menubar: false,
+            toolbar1: "bold italic underline strikethrough | bullist numlist | removeformat",
+            toolbar2: "forecolor backcolor | styleselect",
+            statusbar: false
         });
+
+        this.ensure_no_interval();
+        this.update_interval = window.setInterval( function() {
+            that.model.update_edit_content( tinyMCE.get(0).getContent() );
+        }, 2000 );
+    },
+
+    ensure_no_interval : function() {
+        if ( this.update_interval ) {
+            window.clearInterval( this.update_interval );
+            this.update_interval = false;
+        }
     },
 
     editMaterialCancel : function(e){
         var that = this;
         e.preventDefault();
+        this.ensure_no_interval();
 
         if(this.model && this.model.id) {
             // Check if content has changed
@@ -128,6 +143,7 @@ app.materialEditView = Backbone.View.extend({
     editMaterialSave : function(e){
         var that = this;
         e.preventDefault();
+        this.ensure_no_interval();
 
         that.model.update_edit_content( tinyMCE.get(0).getContent() );
 

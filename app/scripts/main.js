@@ -9,6 +9,7 @@ $(document).bind("mobileinit", function(){
 });
 
 window.production_mode = true;
+
 // TODO: Generic close function, which removes child views
 
 window.app = {

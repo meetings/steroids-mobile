@@ -50,5 +50,22 @@ Creates build desired build to agapp directory
 
 When you want to push new build to steroids scanner, run 'yeoman ios || android' again and trigger steroids connects update (press enter in terminal that runs steroids connect)
 
+# Updating tinymce
 
+Download the latest production version from http://www.tinymce.com/download/download.php.
 
+As an example run this in your source root:
+
+	curl -s http://download.moxiecode.com/tinymce/tinymce_4.0.6.zip > tinymce.zip
+	unzip tinymce.zip
+        cd tinymce/js/tinymce
+	mkdir plugins_valid
+        mv plugins/autolink plugins/textcolor plugins_valid/
+        rm -Rf plugins
+        mv plugins_valid plugins
+        cd ../../..
+        rm -Rf app/static/tinymce
+        mv tinymce/js/tinymce app/static/tinymce
+        rm -Rf tinymce*
+ 	
+	
