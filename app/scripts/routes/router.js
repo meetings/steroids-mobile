@@ -41,7 +41,7 @@ app.router = Backbone.Router.extend({
 
         app.views.current = new app.underConstructionView({
             el : '.content',
-            message : params.message || '',
+            message : params.message || 'The feature you are trying to access is not yet fully completed on the mobile side.',
             url : params.url
 
         });
