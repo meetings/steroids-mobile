@@ -107,9 +107,9 @@ exports.connectivityError = function anonymous(locals, attrs, escape, rethrow, m
         var interp;
         buf.push('<div id="connectivity-error">');
         if (locals.type === "nointernet") {
-            buf.push('<h1>No connectivity</h1><p>Please, check your internet connection.</p><a href="#" data-role="button" class="reconnect">Retry</a>');
+            buf.push('<h1>No connectivity</h1><p>Sorry, it looks like you are not connected to the internet.</p><a href="#" data-role="button" class="reconnect">Retry</a>');
         } else {
-            buf.push('<h1>Connection timed out</h1><p>Your action seems to take longer than it should. Please, try again.</p><a href="#" data-role="button" class="reconnect">Reload</a>');
+            buf.push('<h1>Flaky connection</h1><p>Your connection seems very slow. You can try to reload the page below!</p><a href="#" data-role="button" class="reconnect">Reload</a>');
         }
         buf.push("</div>");
     }
@@ -464,14 +464,17 @@ exports.materialInListView = function anonymous(locals, attrs, escape, rethrow, 
         buf.push("</h3>");
         if (author_name !== "") {
             buf.push("<p>");
-            var __val__ = "By " + author_name + " " + moment.unix(created_epoch).fromNow();
+            var __val__ = "By " + author_name;
             buf.push(escape(null == __val__ ? "" : __val__));
             buf.push("</p>");
         }
-        buf.push('<span class="ui-li-count">');
-        var __val__ = comment_count;
-        buf.push(escape(null == __val__ ? "" : __val__));
-        buf.push("</span></a>");
+        if (comment_count) {
+            buf.push('<span class="ui-li-count">');
+            var __val__ = comment_count;
+            buf.push(escape(null == __val__ ? "" : __val__));
+            buf.push("</span>");
+        }
+        buf.push("</a>");
     }
     return buf.join("");
 };
@@ -997,10 +1000,10 @@ exports.meetmeConfirmed = function anonymous(locals, attrs, escape, rethrow, mer
             buf.push("</p>");
         }
         if (navigator.userAgent.match(/iPad/i) != null || navigator.userAgent.match(/iPhone/i) != null) {
-            buf.push('<p>Stay up to date regarding the meeting:</p><a href="http://bit.ly/meetings-app" data-role="button" data-theme="b">Download iPhone app</a>');
+            buf.push('<p>Stay up to date regarding the meeting:</p><a href="http://bit.ly/meetings-app" target="_blank" data-role="button" data-theme="b">Download iPhone app</a>');
         }
         if (navigator.userAgent.match(/Android/i) != null) {
-            buf.push('<p>Stay up to date regarding the meeting:</p><a href="http://bit.ly/meetings-android" data-role="button" data-theme="b">Download Android app</a>');
+            buf.push('<p>Stay up to date regarding the meeting:</p><a href="http://bit.ly/meetings-android" target="_blank" data-role="button" data-theme="b">Download Android app</a>');
         }
         buf.push('<a href="/" data-role="button" data-theme="a">View my meetings</a></div>');
     }
@@ -1198,6 +1201,79 @@ exports.noticeBar = function anonymous(locals, attrs, escape, rethrow, merge) {
     with (locals || {}) {
         var interp;
         buf.push('<div class="notice"><p>Problems with the internets...</p></div>');
+    }
+    return buf.join("");
+};
+
+// optionInListView.jade compiled template
+exports.optionInListView = function anonymous(locals, attrs, escape, rethrow, merge) {
+    attrs = attrs || jade.attrs;
+    escape = escape || jade.escape;
+    rethrow = rethrow || jade.rethrow;
+    merge = merge || jade.merge;
+    var buf = [];
+    with (locals || {}) {
+        var interp;
+        buf.push("<li>");
+        var c = user.proposal_answers[proposal.id] ? user.proposal_answers[proposal.id] : "no";
+        if (mode === "choose") c = "choose";
+        var dateString = DateFormat.dateString(proposal.begin_epoch, proposal.end_epoch);
+        var timeString = DateFormat.timeString(proposal.begin_epoch, proposal.end_epoch);
+        buf.push("<a");
+        buf.push(attrs({
+            href: "#",
+            "data-option-id": proposal.id,
+            "data-time": dateString + " " + timeString,
+            "class": "option-" + c
+        }, {
+            href: true,
+            "data-option-id": true,
+            "class": true,
+            "data-time": true
+        }));
+        buf.push('><div class="top-bar"><span class="left">');
+        var __val__ = dateString;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push('</span><span class="right">');
+        var __val__ = timeString;
+        buf.push(escape(null == __val__ ? "" : __val__));
+        buf.push("</span></div><!--span.right=timeString-->");
+        if (participants.length) {
+            buf.push('<div class="participants">');
+            participants = _.sortBy(participants, function(p) {
+                if (p.proposal_answers && p.proposal_answers[proposal.id] === "yes") return 1; else if (p.proposal_answers && p.proposal_answers[proposal.id] === "no") return 3; else return 2;
+            });
+            participants.forEach(function(p) {
+                {
+                    buf.push('<div class="wrap">');
+                    if (p.image !== "") {
+                        buf.push("<img");
+                        buf.push(attrs({
+                            src: p.image,
+                            width: "20",
+                            height: "20"
+                        }, {
+                            src: true,
+                            width: true,
+                            height: true
+                        }));
+                        buf.push("/>");
+                    } else {
+                        buf.push('<span class="placeholder-20"></span>');
+                    }
+                    if (p.proposal_answers && p.proposal_answers[proposal.id] === "yes") {
+                        buf.push('<span class="rsvp yes"></span>');
+                    } else if (p.proposal_answers && p.proposal_answers[proposal.id] === "no") {
+                        buf.push('<span class="rsvp no"></span>');
+                    } else {
+                        buf.push('<span class="rsvp unknown"></span>');
+                    }
+                    buf.push("</div>");
+                }
+            });
+            buf.push("</div>");
+        }
+        buf.push("</a></li>");
     }
     return buf.join("");
 };

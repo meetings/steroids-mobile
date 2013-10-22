@@ -40,7 +40,6 @@ app.meetingView = Backbone.View.extend({
 
     render: function() {
         this.renderMeeting();
-
         return this;
     },
 
@@ -297,4 +296,3 @@ app.meetingView = Backbone.View.extend({
         }
     }
 });
-//_.extend(app.meetingView.prototype, app.mixins.connectivity);

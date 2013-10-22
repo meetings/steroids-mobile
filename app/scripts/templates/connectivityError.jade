@@ -1,9 +1,9 @@
 div#connectivity-error
     - if ( locals.type === 'nointernet' )
         h1 No connectivity
-        p Please, check your internet connection.
+        p Sorry, it looks like you are not connected to the internet.
         a.reconnect(href="#",data-role="button") Retry
     - else
-        h1 Connection timed out
-        p Your action seems to take longer than it should. Please, try again.
+        h1 Flaky connection
+        p Your connection seems very slow. You can try to reload the page below!
         a.reconnect(href="#",data-role="button") Reload

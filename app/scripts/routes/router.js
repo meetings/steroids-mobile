@@ -53,6 +53,7 @@ app.router = Backbone.Router.extend({
         var user = params.user || '';
         var mm_fragment = params.cal || '';
 
+
         if( ! app.collections.matchmakers ) {
             app.collections.matchmakers = new app.matchmakerCollection();
             app.collections.matchmakers.url = app.defaults.api_host + '/v1/matchmakers/';
@@ -73,12 +74,14 @@ app.router = Backbone.Router.extend({
         });
 
         if( app.collections.matchmakers.length === 0) {
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
             app.collections.matchmakers.fetch({
                 data : { user_fragment : user, matchmaker_fragment : mm_fragment },
                 success: function() {
 
                     app.models.user.fetch({ data : { user_fragment : user, image_size : 140 }, success : function() {
                         app.views.current.render();
+                        watcher.fetchComplete = true;
                         app.showContent();
                     }});
                 },
@@ -108,6 +111,7 @@ app.router = Backbone.Router.extend({
 
         // Check if we want to fetch data
         if( app.collections.matchmakers.length === 0){
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
 
             // Setup deferreds
             var userFetch = $.Deferred(),
@@ -117,6 +121,7 @@ app.router = Backbone.Router.extend({
             // wait for ajax requests to succeed, defer show content until that
             $.when(userFetch, /* suggestionSourcesFetch,*/ matchmakerFetch).then(function() {
                 app.views.current.render();
+                watcher.fetchComplete = true;
                 app.showContent();
             });
 
@@ -153,11 +158,13 @@ app.router = Backbone.Router.extend({
             app.models.lock = new app.matchmakerLockModel();
             app.models.lock.id = confirmed_lock;
             app.models.matchmaker = new app.matchmakerModel();
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
             app.models.lock.fetch({
                 success : function(){
                     app.models.matchmaker.url = app.defaults.api_host + '/v1/matchmakers/' + app.models.lock.get('matchmaker_id');
                     app.models.matchmaker.fetch({ success : function() {
                         app.views.current = new app.meetmeConfirmedView({ el : '.content', lock : app.models.lock, matchmaker: app.models.matchmaker });
+                        watcher.fetchComplete = true;
                         app.views.current.render();
                     }});
                 }
@@ -189,10 +196,12 @@ app.router = Backbone.Router.extend({
             // Setup deferreds
             var userFetch = $.Deferred(),
             matchmakerFetch = $.Deferred();
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
 
             // wait for ajax requests to succeed, defer show content until that
             $.when(userFetch, matchmakerFetch).then(function() {
                 app.views.current.render();
+                watcher.fetchComplete = true;
                 app.showContent();
             });
 
@@ -224,7 +233,7 @@ app.router = Backbone.Router.extend({
         var redirect_info_json = params.redirect_info;
         var redirect_info = JSON.parse( redirect_info_json );
 
-        delete params['redirect_info'];
+        delete params.redirect_info;
         redirect_info[1].redirect_params = JSON.stringify( params );
 
         AppGyver.reloadContext( redirect_info[0], redirect_info[1] );
@@ -250,10 +259,13 @@ app.router = Backbone.Router.extend({
         var highlightsFetch = $.Deferred();
         var userFetch = $.Deferred();
 
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+
         // wait for ajax requests to succeed, defer show content until that
         $.when(futureFetch, unscheduledFetch, pastFetch, highlightsFetch, userFetch).then(function(){
 
             app.views.meetingsView.render();
+            watcher.fetchComplete = true;
             app.showContent();
 
             var offset;
@@ -464,12 +476,12 @@ app.router = Backbone.Router.extend({
                 if ( ! email ) return '';
                 if ( ! name ) return email;
 
-                name = name.replace( /\"/g, '' );
+                name = name.replace( /\"/g, '' ); // " fix vim syntax higlight
 
                 return '"' + name + '" <' + email + '>';
             } );
 
-            participant_list = _.filter( participant_list, function(p) { return p ? true : false } );
+            participant_list = _.filter( participant_list, function(p) { return p ? true : false; } );
 
             var UUID = r.UUID || '';
             if ( /^'.*'$/.test(UUID)) {
@@ -482,9 +494,9 @@ app.router = Backbone.Router.extend({
                 end_epoch : end_epoch,
                 uid : UUID,
                 description : r.message,
-                "location" : r["location"],
+                location : r.location,
                 source : 'phone:' + ( r.calendar || ''),
-                participant_list : participant_list.join(", "),
+                participant_list : participant_list.join(", ")
 //                organizer : ''
             };
 
@@ -498,13 +510,13 @@ app.router = Backbone.Router.extend({
             return suggestion;
         }, this );
 
-        return _.filter( results, function( item ) { return item.begin_epoch ? true : false } );
+        return _.filter( results, function( item ) { return item.begin_epoch ? true : false; } );
     },
 
     login : function(params) {
         var that = this;
         if ( params && params.fb_login ) {
-            var params = { fb_code : params.code, fb_redirect_uri : params.redirect_uri };
+            params = { fb_code : params.code, fb_redirect_uri : params.redirect_uri };
             $.post( app.defaults.api_host + '/v1/login', params, function( response ){
                 if( response.result && response.result.user_id ){
                     app._loginWithParams( response.result.user_id, response.result.token );
@@ -516,7 +528,7 @@ app.router = Backbone.Router.extend({
             }, 'json' );
         }
         else if ( params && params.google_login ) {
-            var params = { google_code : params.code, google_redirect_uri : params.redirect_uri };
+            params = { google_code : params.code, google_redirect_uri : params.redirect_uri };
             $.post( app.defaults.api_host + '/v1/login', params, function( response ){
                 if( response.result ){
                     if ( response.result.user_id ) {
@@ -552,6 +564,8 @@ app.router = Backbone.Router.extend({
 
         var context = params && params.context_after_tos_accept || null;
 
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+
         // TODO: remove and recreate
         app.views.profile = new app.profileView({
             el : $('#profile-page'),
@@ -560,6 +574,7 @@ app.router = Backbone.Router.extend({
         });
 
         app.models.currentUser.fetch({ success : function() {
+            watcher.fetchComplete = true;
             app.views.profile.render();
             app.showContent();
 
@@ -571,6 +586,8 @@ app.router = Backbone.Router.extend({
         var id = params.id || 0;
         var mm_mode = params.matchmaking_response || false;
 
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+
         // Setup deferreds
         var meetingFetch = $.Deferred(),
         materialsFetch = $.Deferred(),
@@ -578,6 +595,7 @@ app.router = Backbone.Router.extend({
 
         // wait for ajax requests to succeed, defer show content until that
         $.when(meetingFetch, materialsFetch, participantsFetch).then(function(){
+            watcher.fetchComplete = true;
             app.views.meeting.render();
             app.showContent();
         });
@@ -648,11 +666,13 @@ app.router = Backbone.Router.extend({
         } );
         app.views.scheduling.mode = mode;
 
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
         app.models.meeting.fetch({ success : function(){
             // Init current meeting user
             var data = app.models.meeting.getMeetingUserByID( app.auth.user );
             app.models.meeting_user = new app.participantModel( data, { meeting_id : id } );
             app.views.scheduling.render();
+            watcher.fetchComplete = true;
             app.showContent();
         }, timeout : 5000 });
     },
@@ -677,14 +697,14 @@ app.router = Backbone.Router.extend({
             childViewConstructor : app.participantInListView
         });
 
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
         app.collections.participants.fetch({ success : function(){
-            // Setup links to add participants
             $('a.addParticipant').click(function(e) {
                 e.preventDefault();
                 AppGyver.back_context = ["meetingPage", { id : id } ];
                 AppGyver.switchContext("addParticipantPage", { id : id } );
             });
-
+            watcher.fetchComplete = true;
             app.showContent();
         }});
     },
@@ -706,7 +726,9 @@ app.router = Backbone.Router.extend({
             el : $('#participant_info')
         });
 
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
         app.models.participant.fetch({ success : function(){
+            watcher.fetchComplete = true;
             app.showContent();
         }});
     },
@@ -714,10 +736,12 @@ app.router = Backbone.Router.extend({
     material : function(params) {
         var commentsFetched = $.Deferred();
         var materialFetched = $.Deferred();
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
 
         $.when(commentsFetched, materialFetched).then(function(){
             if( app.models.material.get('fetch_type') === 'chat' ) $('#open-right-panel').hide();
             else $('#open-right-panel').show();
+            watcher.fetchComplete = true;
             app.showContent();
         });
 
@@ -795,11 +819,13 @@ app.router = Backbone.Router.extend({
         else if ( params.google_connected ) {
             var redirect_params = JSON.parse( params.redirect_params );
             var user = new app.userModel( { id : app.auth.user } );
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
             user.fetch( { success : function() {
                 user.save( {
                     google_code : redirect_params.code,
                     google_redirect_uri : redirect_params.redirect_uri
                 }, { success : function() {
+                    watcher.fetchComplete = true;
                     AppGyver.switchContext('meetingsPage');
                 } } );
             } } );
@@ -852,9 +878,11 @@ app.router = Backbone.Router.extend({
         else {
             var userFetched = $.Deferred();
             var meetingFetched = $.Deferred();
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
 
             $.when(userFetched, meetingFetched).then(function(){
                 app.views.editMeeting.render(field);
+                watcher.fetchComplete = true;
                 app.showContent();
             });
 
@@ -898,8 +926,10 @@ app.router = Backbone.Router.extend({
             el : $('#add-participant')
         });
 
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
         app.models.meeting.fetch({ success : function() {
             app.showContent();
+            watcher.fetchComplete = true;
             app.views.addParticipant.render();
         }});
     }

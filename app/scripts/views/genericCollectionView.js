@@ -91,7 +91,7 @@ app.genericCollectionView = Backbone.View.extend({
             }
             else this.$el.append(childView.render().el);
 
-            this.$el.delay(100).listview().listview("refresh");
+            this.$el.listview().listview("refresh");
         }
     },
 
@@ -111,7 +111,7 @@ app.genericCollectionView = Backbone.View.extend({
         }
 
         this.addHtmlBuffer = [];
-        this.$el.delay(100).listview().listview("refresh");
+        this.$el.listview().listview("refresh");
         $loader.removeClass().addClass('loader'); // Clean jqm stuff
         $('p',$loader).removeClass();
     },20),
@@ -168,7 +168,8 @@ app.genericCollectionView = Backbone.View.extend({
             else this.$el.show();
         }
 
-        this.$el.delay(100).listview().listview("refresh");
+        this.$el.listview().listview("refresh");
+        //_.delay(function($el) { $el.listview().listview("refresh"); }, 10, this.$el);
 
         // Show loader if there was 10 meeitngs returned
         if( this.options.infiniScroll && l == 10 ){
