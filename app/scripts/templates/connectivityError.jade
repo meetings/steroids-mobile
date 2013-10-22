@@ -1,9 +1,9 @@
 div#connectivity-error
     - if ( locals.type === 'nointernet' )
-        h1 No connectivity
-        p Please, check your internet connection.
+        h1 No internet connection
+        p Can't connect to Meetin.gs. Please, check your internet connection and retry.
         a.reconnect(href="#",data-role="button") Retry
     - else
-        h1 Connection timed out
-        p Your action seems to take longer than it should. Please, try again.
+        h1 Weak internet connection
+        p Your internet connection seems pretty slow at the moment. Please, wait a while or try reloading now.
         a.reconnect(href="#",data-role="button") Reload
