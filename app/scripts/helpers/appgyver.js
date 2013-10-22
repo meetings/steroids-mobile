@@ -13,9 +13,9 @@
             { file : 'scheduling.html', id : 'schedulingPage' },
             { file : 'addParticipant.html', id : 'addParticipantPage' },
             { file : 'calconfig.html', id : 'calconfigPage' },
-            { file : 'meetme.html', id : 'meetmeCover' },
-            { file : 'meetmeCalendar.html', id : 'meetmeCalendar' },
-            { file : 'meetmeConfig.html', id : 'meetmeConfig' },
+            { file : 'meetme.html', id : 'meetmeCover', no_preload : true },
+            { file : 'meetmeCalendar.html', id : 'meetmeCalendar', no_preload : true },
+            { file : 'meetmeConfig.html', id : 'meetmeConfig', no_preload : true },
             { file : 'edit.html', id : 'editPage' },
             { file : 'edit.html', id : 'singleEditPage' },
             { file : 'editMaterial.html', id : 'editMaterialPage', shared_file : 'init.html', shared_id : 'init' },
@@ -23,7 +23,7 @@
             { file : 'connectAccounts.html', id : 'connectAccountsPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'connectCalendar.html', id : 'connectCalendarPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'signup.html', id : 'signupPage' },
-            { file : 'underConstruction.html', id : 'underConstruction' }
+            { file : 'underConstruction.html', id : 'underConstruction', no_preload : true }
         ],
 
         init: function(){
