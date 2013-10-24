@@ -33,6 +33,8 @@ app.materialRenameView = Backbone.View.extend({
         var that = this;
         e.preventDefault();
 
+        $('.ui-btn-text', e.currentTarget).text('Saving...');
+
         this.model.set('title', $('#material-title').val() );
 
         this.model.save( {}, { success : function() {

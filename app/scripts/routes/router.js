@@ -74,7 +74,7 @@ app.router = Backbone.Router.extend({
         });
 
         if( app.collections.matchmakers.length === 0) {
-            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
             app.collections.matchmakers.fetch({
                 data : { user_fragment : user, matchmaker_fragment : mm_fragment },
                 success: function() {
@@ -111,7 +111,7 @@ app.router = Backbone.Router.extend({
 
         // Check if we want to fetch data
         if( app.collections.matchmakers.length === 0){
-            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
             // Setup deferreds
             var userFetch = $.Deferred(),
@@ -158,7 +158,7 @@ app.router = Backbone.Router.extend({
             app.models.lock = new app.matchmakerLockModel();
             app.models.lock.id = confirmed_lock;
             app.models.matchmaker = new app.matchmakerModel();
-            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
             app.models.lock.fetch({
                 success : function(){
                     app.models.matchmaker.url = app.defaults.api_host + '/v1/matchmakers/' + app.models.lock.get('matchmaker_id');
@@ -196,7 +196,7 @@ app.router = Backbone.Router.extend({
             // Setup deferreds
             var userFetch = $.Deferred(),
             matchmakerFetch = $.Deferred();
-            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
             // wait for ajax requests to succeed, defer show content until that
             $.when(userFetch, matchmakerFetch).then(function() {
@@ -259,7 +259,7 @@ app.router = Backbone.Router.extend({
         var highlightsFetch = $.Deferred();
         var userFetch = $.Deferred();
 
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
         // wait for ajax requests to succeed, defer show content until that
         $.when(futureFetch, unscheduledFetch, pastFetch, highlightsFetch, userFetch).then(function(){
@@ -408,7 +408,6 @@ app.router = Backbone.Router.extend({
             var nextMonth = new Date(now.getTime() + (32 * 24 * 60 * 60 * 1000));
             var start = "" + now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate() + " 00:00:00";
             var end = "" + nextMonth.getFullYear() + "-" + (nextMonth.getMonth()+1) + "-" + nextMonth.getDate() + " 00:00:00";
-            var now, nextMonth, start, end;
             window.plugins.calendarPlugin.initialize(function() {
                 window.plugins.calendarPlugin.findEvent(null,null,null,start, end, function(result) {
                     var batch = that._formSuggestionBatchFromCalendarResult( result );
@@ -564,7 +563,7 @@ app.router = Backbone.Router.extend({
 
         var context = params && params.context_after_tos_accept || null;
 
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
         // TODO: remove and recreate
         app.views.profile = new app.profileView({
@@ -586,7 +585,7 @@ app.router = Backbone.Router.extend({
         var id = params.id || 0;
         var mm_mode = params.matchmaking_response || false;
 
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
         // Setup deferreds
         var meetingFetch = $.Deferred(),
@@ -666,7 +665,7 @@ app.router = Backbone.Router.extend({
         } );
         app.views.scheduling.mode = mode;
 
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
         app.models.meeting.fetch({ success : function(){
             // Init current meeting user
             var data = app.models.meeting.getMeetingUserByID( app.auth.user );
@@ -697,7 +696,7 @@ app.router = Backbone.Router.extend({
             childViewConstructor : app.participantInListView
         });
 
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
         app.collections.participants.fetch({ success : function(){
             $('a.addParticipant').click(function(e) {
                 e.preventDefault();
@@ -726,7 +725,7 @@ app.router = Backbone.Router.extend({
             el : $('#participant_info')
         });
 
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
         app.models.participant.fetch({ success : function(){
             watcher.fetchComplete = true;
             app.showContent();
@@ -736,7 +735,7 @@ app.router = Backbone.Router.extend({
     material : function(params) {
         var commentsFetched = $.Deferred();
         var materialFetched = $.Deferred();
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
         $.when(commentsFetched, materialFetched).then(function(){
             if( app.models.material.get('fetch_type') === 'chat' ) $('#open-right-panel').hide();
@@ -819,7 +818,7 @@ app.router = Backbone.Router.extend({
         else if ( params.google_connected ) {
             var redirect_params = JSON.parse( params.redirect_params );
             var user = new app.userModel( { id : app.auth.user } );
-            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
             user.fetch( { success : function() {
                 user.save( {
                     google_code : redirect_params.code,
@@ -878,7 +877,7 @@ app.router = Backbone.Router.extend({
         else {
             var userFetched = $.Deferred();
             var meetingFetched = $.Deferred();
-            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
             $.when(userFetched, meetingFetched).then(function(){
                 app.views.editMeeting.render(field);
@@ -926,7 +925,7 @@ app.router = Backbone.Router.extend({
             el : $('#add-participant')
         });
 
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.content');
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
         app.models.meeting.fetch({ success : function() {
             app.showContent();
             watcher.fetchComplete = true;

@@ -9,7 +9,6 @@ $(document).bind("mobileinit", function(){
 });
 
 window.production_mode = true;
-
 // TODO: Generic close function, which removes child views
 
 window.app = {
@@ -54,7 +53,7 @@ window.app = {
 
     options: {
         build : window.build_mode,
-        fetchTimeout : 8000
+        fetchTimeout : 10000
     },
 
     models : {},
@@ -74,10 +73,10 @@ window.app = {
             this.fetchComplete = false;
             setTimeout( function() {
                 if( ! _this.fetchComplete ) {
-                    app.showContent();
                     $el.html( templatizer.connectivityError({}) ).trigger('create');
-                    $el.on('click', '.reconnect', function(e) {
+                    $el.one('click', '.reconnect', function(e) {
                         e.preventDefault();
+                        $($el).html('<span class="loader"></span>');
                         AppGyver.refreshContext();
                     });
                 }
@@ -370,13 +369,6 @@ window.app = {
             return;
         }
         document.location = appurl;
-        var time = (new Date()).getTime();
-        setTimeout(function(){
-            var now = (new Date()).getTime();
-            if((now-time) < 400) {
-                document.location = normurl;
-            }
-        }, 300);
     },
 
     launchURLForwarder : function() {
@@ -426,7 +418,7 @@ window.app = {
     showContent: function() {
         $('div.content').show();
         $('div.connectivity').hide();
-        $('div.loader').hide();
+        $('div.loader').hide().html('<span class="loader"></span>');
     },
 
     hasInternet : function() {

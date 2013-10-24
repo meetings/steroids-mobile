@@ -1,37 +1,5 @@
 # -- Required settings --
 
-# old application.json configs:
-#{
-#  "id": 1006,
-#  "pin_code": "9903",
-#  "identification_hash": "8ec852c914d6bb0e1229a77b7fb913767e08774680f94b2e9dfedd3740b9f88a",
-#  "name": "Meetin.gs Mobile",
-#  "framework": "0.9.2",
-#  "navigation_bar_style": "black",
-#  "status_bar_style": "black",
-#  "fullscreen": false,
-#  "fullscreen_start_url": "",
-#  "client_version": "edge",
-#  "background_eval_js_string": "",
-#  "bottom_bars": [
-#    {
-#      "id": 1818,
-#      "position": 0,
-#      "title": "Meetings",
-#      "target_url": "http://localhost:13101/index.html",
-#      "image_path": "meetings.png"
-#    },
-#    {
-#      "id": 1817,
-#      "position": 1,
-#      "title": "Settings",
-#      "target_url": "http://localhost:13101/settings.html",
-#      "image_path": "settings.png"
-#    }
-#  ]
-#}
-
-
 steroids.config.name = "New Application"
 
 # -- Location --
@@ -79,7 +47,7 @@ steroids.config.location = "http://localhost/index.html"
 # Sets status bar visible (carrier, clock, battery status)
 # Default: false
 
-steroids.config.statusBar.enabled = true
+steroids.config.statusBar.enabled = false
 
 # -- Colors --
 # Color values can be set in hex codes, eg. #ffbb20

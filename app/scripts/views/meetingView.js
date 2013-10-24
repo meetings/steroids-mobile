@@ -245,7 +245,7 @@ app.meetingView = Backbone.View.extend({
             setTimeout(function(){
                 console.log('Error uploading photo.');
             },100);
-        } , { quality : 49, destinationType : Camera.DestinationType.FILE_URI } );
+        } , { quality : 39, destinationType : Camera.DestinationType.FILE_URI,  targetWidth: 800 } );
     },
 
     openMaterialView : function(e){
