@@ -101,7 +101,8 @@ app.meetmeCalendarView = Backbone.View.extend({
         this.time_zone_checked = true;
     },
 
-    renderSlots : function() {
+    renderSlots : function(offset) {
+        var _this = this;
 
         app.collections.slots = new app.slotCollection( [], {
             duration : this.active_matchmaker.get('duration'),
@@ -112,8 +113,8 @@ app.meetmeCalendarView = Backbone.View.extend({
         app.collections.slots.url =  app.defaults.api_host + '/v1/matchmakers/'+this.active_matchmaker.get('id')+'/options';
 
 
-        // also show message, if that time is in past
-        var initial_offset = 0;
+        // TODO: show message, if that time is in past
+        var initial_offset = offset || 0;
         if( this.active_matchmaker.get('event_data') && this.active_matchmaker.get('available_timespans') && this.active_matchmaker.get('available_timespans').length ) {
 
             // Find first time
@@ -130,7 +131,7 @@ app.meetmeCalendarView = Backbone.View.extend({
                cal_in_past = true;
            }
 
-           initial_offset = Math.floor( diff / ( 1000 * 60 * 60 * 24 * 7 ) );
+           initial_offset = Math.round( diff / ( 1000 * 60 * 60 * 24 * 7 ) );
         }
 
         // Get calendar events ( adding +1 day as our week starts from monday  not sunday)
@@ -138,24 +139,29 @@ app.meetmeCalendarView = Backbone.View.extend({
         var week_end = Math.round(moment().utc().add('weeks', initial_offset).endOf('week').add('days',1).valueOf() / 1000);
         var data = { begin_epoch : week_begin - 25 * 60 * 60, end_epoch : week_end + 25 * 60 * 60 };
 
-        if( ! this.subviews.slots ) this.subviews.slots = new app.slotCollectionView({
-            collection : app.collections.slots,
-            childViewConstructor : app.slotInListView,
-            childViewTagName : 'li',
-            el : '#slots',
-            infiniScroll : true,
-            pageSize : 1,
-            infiniScrollDirection : 'down',
-            initialPage : initial_offset + 1,
-            queryParamsFunc: function(offset){
-                console.log('yohere',offset);
-                var week_begin = Math.round(moment().utc().add('weeks', offset).startOf('week').add('days',1).valueOf() / 1000);
-                var week_end = Math.round(moment().utc().add('weeks', offset).endOf('week').add('days',1).valueOf() / 1000);
-                return { begin_epoch : week_begin - 25 * 60 * 60, end_epoch : week_end + 25 * 60 * 60 };
+        app.collections.slots.fetch({ data : data , success : function(c,r) {
+            if( r && r.length === 0 ) {
+                _this.renderSlots(initial_offset + 1);
             }
-        });
-
-        app.collections.slots.fetch({ data : data });
+            else{
+                $('.load-msg').text('');
+                if( ! _this.subviews.slots ) _this.subviews.slots = new app.slotCollectionView({
+                    collection : app.collections.slots,
+                    childViewConstructor : app.slotInListView,
+                    childViewTagName : 'li',
+                    el : '#slots',
+                    infiniScroll : true,
+                    pageSize : 1,
+                    infiniScrollDirection : 'down',
+                    initialPage : initial_offset + 1,
+                    queryParamsFunc: function(offset){
+                        var week_begin = Math.round(moment().utc().add('weeks', offset).startOf('week').add('days',1).valueOf() / 1000);
+                        var week_end = Math.round(moment().utc().add('weeks', offset).endOf('week').add('days',1).valueOf() / 1000);
+                        return { begin_epoch : week_begin - 25 * 60 * 60, end_epoch : week_end + 25 * 60 * 60 };
+                    }
+                });
+            }
+        }});
 
     },
 
