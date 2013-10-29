@@ -242,6 +242,9 @@ app.router = Backbone.Router.extend({
     meetings : function() {
         var that = this;
 
+        // Prevent loading if not loggeding as it breaks app
+        if(! app.auth.user ) return;
+
         // Render panel & setup header
         if( ! app.views.panel ) {
             app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
