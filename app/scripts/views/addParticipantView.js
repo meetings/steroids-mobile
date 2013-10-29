@@ -153,6 +153,7 @@ app.addParticipantView = Backbone.View.extend({
         $('#headerTitle').text('Saving...');
 
         AppGyver.hideContent();
+        AppGyver.requireListingRefresh();
 
         // after saving, move to meeting view to finish the draft
         var me = this;

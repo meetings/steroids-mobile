@@ -33,6 +33,7 @@ app.panelView = Backbone.View.extend({
         if( app.options.build !== 'web' ){
             $('#left-panel').panel('close');
             AppGyver.hideContent();
+            AppGyver.requireListingRefresh();
             AppGyver.switchContext('meetingsPage');
         }
         else{

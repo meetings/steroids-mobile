@@ -231,6 +231,8 @@ app.editView = Backbone.View.extend({
         var that = this;
         var is_old = this.model.get('id') ? true : false;
 
+        AppGyver.requireListingRefresh();
+
         that.model.save({}, {
             success : function() {
                 that.openMeetingView(is_old);

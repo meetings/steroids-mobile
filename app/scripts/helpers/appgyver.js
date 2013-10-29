@@ -54,6 +54,11 @@
                 AppGyver.current_context_id = 'meetingsPage';
                 AppGyver.current_context = this.getContextForID( 'meetingsPage' );
 
+                window.addEventListener("message", function(event) {
+                    if ( event.data.type != 'requireListingRefresh' ) return;
+                    that.listing_requires_refresh = true;
+                } );
+
                 // Check version
                 setTimeout( function(){
                     app._versionCheck();
@@ -144,6 +149,12 @@
             }, onFailure : function() { console.log('preload failed for : ' + id ); } });
         },
 
+        requireListingRefresh : function() {
+            if ( app.options.build !== 'web' ) {
+                window.postMessage( { type : 'requireListingRefresh' }, "*");
+            }
+        },
+
         // TODO: support different animations
         openPreload: function(context, params, opts ) {
             var openInModal = context.open_in_modal;
@@ -224,6 +235,15 @@
 
             if ( app.options.build === 'web' ) {
                 alert("unexpectedly ran refreshPreload in web!");
+            }
+
+            if ( context.id == 'meetingsPage') {
+                if ( this.listing_rendered && ! this.listing_requires_refresh ) {
+                    return;
+                }
+
+                this.listing_rendered = true;
+                this.listing_requires_refresh = false;
             }
 
             var url = this.formContextURL( context, params, 'randomize' );
