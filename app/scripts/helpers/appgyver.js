@@ -43,13 +43,12 @@
             if (/index\.html/.test(window.location.href)) {
 
                 steroids.on("ready", function(){
-                    that.ensure_preloads(
-                        function(){
+                    that.ensure_preloads( function(){
                             app.init();
-                            that.ensure_preloads();
-                        },
-                        'first'
-                    );
+                            that.ensure_preloads( function() {
+                                console.log('all preloads done');
+                            });
+                    }, 'first' );
                 });
 
                 AppGyver.current_context_id = 'meetingsPage';
@@ -67,7 +66,7 @@
                     AppGyver.current_context = this.getContextForID( id_parts[1] );
                 }
                 else {
-                    alert("AppGyver init called without preload_id outside index.html!");
+                    console.log('AppGyver init called without preload_id outside index.html!');
                 }
             }
 
@@ -86,6 +85,7 @@
                 }
             } );
 
+            // TODO: Make sure we have sent the message
             window.postMessage( { type : 'preloadReady', readyPreloadId : AppGyver.current_context_id }, "*");
 
             var start_parts = /[\?\&]start_refresh=([^\&]*)/.exec( window.location.href );
@@ -99,9 +99,12 @@
         },
 
         preloaded_ids : {},
+        ready_view_ids : {},
 
         ensure_preloads : function( all_ready_handler, before_load ) {
             var path = app.options.build === 'ios' ? 'http://localhost:13101' : '';
+
+            var that = this;
 
             var deferreds = [];
 
@@ -120,6 +123,7 @@
                     if ( event.data.type != 'preloadReady' ) return;
                     if ( event.data.readyPreloadId != id ) return;
                     readyDeferred.resolve();
+                    that.ready_view_ids[id] = true;
                     window.removeEventListener("message", readyListener );
                 };
 
@@ -137,7 +141,7 @@
         preload: function(url, id, deferred ){
             (new steroids.views.WebView(url)).preload({id: id}, { onSuccess : function(){
                 if( deferred ) deferred.resolve();
-            }});
+            }, onFailure : function() { console.log('preload failed for : ' + id ); } });
         },
 
         // TODO: support different animations
@@ -145,54 +149,67 @@
             var openInModal = context.open_in_modal;
             var animation = context.animation;
 
-            console.log("requesting refresh for preload " + context.id);
-            window.postMessage( { type : 'refreshPreload', urlParams: params, preloadId: context.id }, "*");
+            var doOpen = function() {
+                window.postMessage( { type : 'refreshPreload', urlParams: params, preloadId: context.id }, "*");
 
-            var removeActive = function() {
-                $(".ui-btn-active").removeClass("ui-btn-active");
-                $("#left-panel").panel('close');
-                $("#edit-meeting-panel").panel('close');
-                $("#edit-material-panel").panel('close');
-            };
-
-            var options = {
-                view: {
-                    id: context.shared_id || context.id,
-                    keepLoading: true
-                },
-                navigationBar: false
-            };
-
-            if( animation == 'login'){
-                options.animation = {
-                    transition: "slideFromBottom",
-                    duration: 0.4,
-                    curve: "easeInOut",
-                    reversedTransition: "slideFromTop",
-                    reversedDuration: 0.4
+                var removeActive = function() {
+                    $(".ui-btn-active").removeClass("ui-btn-active");
+                    $("#left-panel").panel('close');
+                    $("#edit-meeting-panel").panel('close');
+                    $("#edit-material-panel").panel('close');
                 };
+
+                var options = {
+                    view: {
+                        id: context.shared_id || context.id,
+                        keepLoading: true
+                    },
+                    navigationBar: false
+                };
+
+                if( animation == 'login'){
+                    options.animation = {
+                        transition: "slideFromBottom",
+                        duration: 0.4,
+                        curve: "easeInOut",
+                        reversedTransition: "slideFromTop",
+                        reversedDuration: 0.4
+                    };
+                }
+
+                if (openInModal) {
+                    var modal = new steroids.views.WebView("");
+                    modal.id = preloadId;
+                    steroids.modal.show({
+                        view: modal,
+                        keepLoading: false
+                    },{
+                        onSuccess: removeActive
+                    });
+                } else {
+                    if ( opts && opts.pop ) {
+                        steroids.layers.pop();
+                    }
+                    else if( context.id === 'meetingsPage' ) {
+                        steroids.layers.popAll();
+                    }
+                    else{
+                        steroids.layers.push(options, {onSuccess: removeActive});
+                    }
+                }
+            };
+
+            // TODO: Ready_view_ids is does not actually yet guarantee reloads
+            // any more than preloaded_ids.
+            if( /index\.html/.test(window.location.href) && (! this.preloaded_ids[(context.shared_id || context.id)] || ! this.ready_view_ids[(context.shared_id || context.id)] ) ) {
+                this.ensure_preloads( function() {
+                    doOpen();
+                });
+            }
+            else{
+                doOpen();
             }
 
-            if (openInModal) {
-                var modal = new steroids.views.WebView("");
-                modal.id = preloadId;
-                steroids.modal.show({
-                    view: modal,
-                    keepLoading: false
-                },{
-                    onSuccess: removeActive
-                });
-            } else {
-                if ( opts && opts.pop ) {
-                    steroids.layers.pop();
-                }
-                else if( context.id === 'meetingsPage' ){
-                    steroids.layers.popAll();
-                }
-                else{
-                    steroids.layers.push(options, {onSuccess: removeActive});
-                }
-            }
         },
 
         previous_refresh_date : false,
@@ -252,6 +269,7 @@
         },
 
         switchContext: function( context_id, params, options ) {
+            console.log('switch context to ' + context_id);
             params = params || {};
 
             var context = this.getContextForID( context_id );
