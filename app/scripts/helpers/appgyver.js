@@ -54,6 +54,8 @@
                 AppGyver.current_context_id = 'meetingsPage';
                 AppGyver.current_context = this.getContextForID( 'meetingsPage' );
 
+                this.listing_rendered = true;
+
                 window.addEventListener("message", function(event) {
                     if ( event.data.type != 'requireListingRefresh' ) return;
                     that.listing_requires_refresh = true;
