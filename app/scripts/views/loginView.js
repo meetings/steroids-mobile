@@ -64,6 +64,7 @@ app.loginView = Backbone.View.extend({
                 // Login
                 app._loginWithParams( response.result.user_id, response.result.token );
 
+                AppGyver.requireListingRefresh();
                 if ( response.result.tos_accepted ) {
                     AppGyver.switchContext( 'meetingsPage' );
                 }

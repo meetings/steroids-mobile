@@ -243,7 +243,9 @@ app.router = Backbone.Router.extend({
         var that = this;
 
         // Prevent loading if not loggeding as it breaks app
-        if(! app.auth.user ) return;
+        if(! app.auth.user ) {
+            return;
+        }
 
         // Render panel & setup header
         if( ! app.views.panel ) {
