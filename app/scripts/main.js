@@ -48,7 +48,7 @@ window.app = {
         api_host : window.production_mode ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
         desktop_link : window.production_mode ? 'https://meetin.gs/meetings_global/detect' : 'https://dev.meetin.gs/meetings_global/detect',
         return_host : 'http://' + location.host,
-        version : 2,
+        version : 3,
         version_check_url : window.production_mode ? 'http://versions.meetin.gs/'+ window.build_mode +'/current.json' : 'http://versions.meetin.gs/'+ window.build_mode +'/current-dev.json' // affected build_modes: ios & android
     },
 
