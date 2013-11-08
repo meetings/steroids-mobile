@@ -21,6 +21,8 @@ Meetings Mobile
 	npm install -g yeoman@0.9.6
 	npm install -g phantomjs
 
+	bundle
+
 
 # Build for development
 
