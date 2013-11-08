@@ -32,7 +32,8 @@ app.meetingsView = Backbone.View.extend({
     phoneConnect : function(e){
         e.preventDefault();
         if ( app.options.build !== 'web' ) {
-            localStorage.setItem('phoneCalendarConnected', '1');
+            // Calendar is always disabled
+            localStorage.setItem('phoneCalendarConnected', '0');
         }
         window.plugins.calendarPlugin.initialize(function() {
             AppGyver.refreshContext('meetingsPage');
