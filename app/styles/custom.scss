@@ -873,10 +873,25 @@ $side-pad:35px;
             font-weight:300;
         }
     }
+    div.box{
+        background-color:#fff;
+        background-color:rgba(255,255,255,0.8);
+        margin:0px 28px 28px 28px;
+        padding:14px 0px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        border:1px solid #ccc;
+    }
+
+    div.clear{
+        clear:both;
+        margin-top:28px;
+    }
     div.middle{
+        margin-top:21px;
         position:relative;
         div.border{
-            margin:28px;
             width:140px;
             height:140px;
             border:3px solid #fff;
@@ -886,6 +901,8 @@ $side-pad:35px;
             border-radius: 140px;
             overflow:hidden;
             display:inline-block;
+            float:left;
+            margin-left:14px;
             div.wrapper{
                 -webkit-border-radius: 140px;
                 -moz-border-radius: 140px;
@@ -897,36 +914,39 @@ $side-pad:35px;
                 }
             }
         }
-        a.meet-me{
-            display:inline-block;
-            position:relative;
-            top:70px;
+        div.description{
+            min-height:140px;
             vertical-align:top;
-            span.ui-btn-inner{
-                padding-left:10px;
+            margin-left:168px;
+            p{
+                padding:0 28px 0 14px;
+                margin:0px;
+                line-height:22px;
+            }
+        }
+        @media only screen and (max-width: 500px) {
+            div.description{
+                margin-left:0px;
+                margin-top:168px;
+            }
+        }
+
+        div.mm{
+            border-top:1px solid #ccc;
+            padding:7px 14px;
+            h3{
+                margin-top:14px;
+                font-weight:normal;
+                font-size:18px;
                 i{
-                    margin-right:20px;
-                    font-size:24px
+                    margin-right:14px;
+                    font-size:32px;
+                    vertical-align:middle;
                 }
             }
         }
-        a.meet-me:before{
-            content: "";
-            border-left:1px solid #ccc;
-            border-left:1px solid rgba(0,0,0,0.3);
-            position:absolute;
-            top:0px;
-            left:44px;
-            height:100%;
-        }
-        div.box{
-            background-color:#fff;
-            margin:0px 28px 28px 28px;
-            padding:14px;
-            -webkit-border-radius: 4px;
-            -moz-border-radius: 4px;
-            border-radius: 4px;
-            border:1px solid #ccc;
+        a.meet-me{
+            display:block;
         }
     }
 }

@@ -3,13 +3,18 @@ div#meetme-cover
         h1=user.name
         - var ts = ( user.organization_title && user.organization ) ? user.organization_title + ', ' + user.organization : user.organization_title + user.organization;
         p=ts
-    div.middle
+    div.middle.box
         div.border
             div.wrapper
                 // TODO :fix def image
                 img(src=user.image || '/images/meetings/new_profile.png')
-        a.meet-me(data-role="button",data-theme="b")
-            i.icon-emblem
-            | Meet Me
-        div.box=matchmaker.description
+        div.description
+            p=user.meetme_description
+        div.clear
+        each mm in matchmakers
+            div.mm
+                h3
+                    i(class=app.meetme_types[mm.meeting_type || 0].icon_class)
+                    =mm.name
+                a.meet-me(data-role="button",data-theme="b",data-mm=mm.vanity_url_path) Schedule
 

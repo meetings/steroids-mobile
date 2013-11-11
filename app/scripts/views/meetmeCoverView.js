@@ -18,18 +18,8 @@ app.meetmeCoverView = Backbone.View.extend({
 
     render : function() {
 
-        if( ! this.active_matchmaker ) {
-            var i, l = this.matchmaker_collection.length;
-            for( i = 0; i < l; i++ ) {
-                var n = this.matchmaker_collection.at(i).get('vanity_url_path') || '';
-                if( n === this.selected_matchmaker_path || ( this.selected_matchmaker_path === 'default' && ( ! n || n === 'default' ) ) ) {
-                    this.active_matchmaker = this.matchmaker_collection.at(i);
-                }
-            }
-        }
-
         // Setup template
-        this.$el.html( templatizer.meetmeCover( { user : this.user_model.toJSON(), matchmaker : this.active_matchmaker.toJSON() }) );
+        this.$el.html( templatizer.meetmeCover( { user : this.user_model.toJSON(), matchmakers : this.matchmaker_collection.toJSON() }) );
 
         this.$el.trigger('create');
 
@@ -37,11 +27,11 @@ app.meetmeCoverView = Backbone.View.extend({
 
         // Set the background
         var bg_image = '';
-        if( this.active_matchmaker.get('background_theme') == 'c' ||  this.active_matchmaker.get('background_theme') == 'u' ) {
-            bg_image = this.active_matchmaker.get('background_preview_url') || this.active_matchmaker.get('background_image_url');
+        if( this.user_model.get('meetme_background_theme') == 'c' ||  this.user_model.get('meetme_background_theme') == 'u' ) {
+            bg_image = this.user_model.get('meetme_background_preview_url') || this.user_model.get('meetme_background_image_url');
         }
         else{
-            bg_image = app.meetme_themes[this.active_matchmaker.get('background_theme')];
+            bg_image = app.meetme_themes[this.user_model.get('meetme_background_theme')];
         }
 
         $('.ui-body-a').css({
@@ -55,7 +45,8 @@ app.meetmeCoverView = Backbone.View.extend({
 
     showOptions : function(e){
         e.preventDefault();
-        AppGyver.switchContext("meetmeCalendar", { user : this.user_fragment, cal : this.selected_matchmaker_path });
+        var mm = $(e.currentTarget).attr('data-mm') || 'default';
+        AppGyver.switchContext("meetmeCalendar", { user : this.user_fragment, cal : mm });
     },
 
     beforeClose : function(){
@@ -63,5 +54,7 @@ app.meetmeCoverView = Backbone.View.extend({
         this.matchmaker_collection.unbind();
     }
 });
+
+
 
 

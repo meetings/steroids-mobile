@@ -38,6 +38,68 @@ window.app = {
         '/static/meetme_themes/theme12.jpg'
     ],
 
+        meetme_types : [
+        {
+            icon_class : 'icon-meetings',
+            name : 'Generic'
+        },
+        {
+            icon_class : 'icon-coffee',
+            name : 'Coffee'
+        },
+        {
+            icon_class : 'icon-dinner',
+            name : 'Dinner'
+        },
+        {
+            icon_class : 'icon-drinks',
+            name : 'Drinks'
+        },
+        {
+            icon_class : 'icon-workshop',
+            name : 'Workshop'
+        },
+        {
+            icon_class : 'icon-sports',
+            name : 'Sports'
+        },
+        {
+            icon_class : 'icon-team',
+            name : 'Team'
+        },
+        {
+            icon_class : 'icon-idea',
+            name : 'Idea'
+        },
+        {
+            icon_class : 'icon-material_presentation',
+            name : 'Board'
+        },
+        {
+            icon_class : 'icon-date_picker',
+            name : 'Event'
+        },
+        {
+            icon_class : 'icon-handshake',
+            name : 'Business'
+        },
+        {
+            icon_class : 'icon-call',
+            name : 'Call'
+        },
+        {
+            icon_class : 'icon-tablet',
+            name : 'Tablet'
+        },
+        {
+            icon_class : 'icon-teleconf',
+            name : 'Telco'
+        },
+        {
+            icon_class : 'icon-onlineconf',
+            name : 'Skype'
+        }
+    ],
 
     no_login_pages : [
         'meetme',
