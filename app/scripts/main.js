@@ -31,7 +31,11 @@ window.app = {
         '/static/meetme_themes/theme5.jpg',
         '/static/meetme_themes/theme6.jpg',
         '/static/meetme_themes/theme7.jpg',
-        '/static/meetme_themes/theme8.jpg'
+        '/static/meetme_themes/theme8.jpg',
+        '/static/meetme_themes/theme9.jpg',
+        '/static/meetme_themes/theme10.jpg',
+        '/static/meetme_themes/theme11.jpg',
+        '/static/meetme_themes/theme12.jpg'
     ],
 
 
