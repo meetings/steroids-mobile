@@ -113,6 +113,7 @@ window.app = {
         url_scheme : /^1\./.test( window.AG_CLIENT_VERSION || '1.0.0' ) ? 'meetings://' : 'steroids-scanner://',
         api_host : window.production_mode ? 'https://api.meetin.gs' : 'https://api-dev.meetin.gs',
         desktop_link : window.production_mode ? 'https://meetin.gs/meetings_global/detect' : 'https://dev.meetin.gs/meetings_global/detect',
+        new_mobile_redirect_url : window.production_mode ? 'https://mobile.meetin.gs' : 'https://mobiledev.meetin.gs',
         return_host : 'http://' + location.host,
         version : 3,
         version_check_url : window.production_mode ? 'http://versions.meetin.gs/'+ window.build_mode +'/current.json' : 'http://versions.meetin.gs/'+ window.build_mode +'/current-dev.json' // affected build_modes: ios & android

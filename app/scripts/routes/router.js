@@ -518,6 +518,13 @@ app.router = Backbone.Router.extend({
     },
 
     login : function(params) {
+
+        // Go to the new site for login stuff
+        if( app.options.build === 'web' ) {
+            window.location = app.defaults.new_mobile_redirect_url;
+            return;
+        }
+
         var that = this;
         if ( params && params.fb_login ) {
             params = { fb_code : params.code, fb_redirect_uri : params.redirect_uri };
