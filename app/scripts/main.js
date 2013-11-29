@@ -8,7 +8,7 @@ $(document).bind("mobileinit", function(){
     $.mobile.ajaxLinksEnabled = false;
 });
 
-window.production_mode = true;
+window.production_mode = window.location.href.indexOf('mdev') === -1;
 
 // TODO: Generic close function, which removes child views
 
