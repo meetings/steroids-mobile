@@ -182,6 +182,7 @@ app.meetmeCalendarView = Backbone.View.extend({
         }
         else {
             this.lock.set({ agenda : $('#meetme-agenda').val() });
+            // TODO: Make it visible that only email is needed
             this.$el.html( templatizer.profileView( { new_user : true }) );
             this.$el.trigger('create');
         }
@@ -323,7 +324,7 @@ app.meetmeCalendarView = Backbone.View.extend({
             }) );
 
             // Change title & hide back button
-            $('.header .title').text('Confirm your choice');
+            $('.header .title').text('Confirm choice');
             $('.header .back-button').hide();
 
             _this.$el.trigger('create');

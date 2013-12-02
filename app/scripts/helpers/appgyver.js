@@ -23,6 +23,7 @@
             { file : 'connectAccounts.html', id : 'connectAccountsPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'connectCalendar.html', id : 'connectCalendarPage', shared_file : 'init.html', shared_id : 'init' },
             { file : 'signup.html', id : 'signupPage' },
+            { file : 'apps.html', id : 'apps', no_preload : true },
             { file : 'underConstruction.html', id : 'underConstruction', no_preload : true }
         ],
 

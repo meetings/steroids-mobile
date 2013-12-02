@@ -1,0 +1,40 @@
+div#meeting-conferencing
+    if( online_conferencing_option === 'skype' )
+        a#join-skype-call-button(data-role='button',data-theme='b',href=skype_uri)
+            if( skype_is_organizer )
+                | Open Skype to receive calls 
+            else
+                | Join Skype conference call 
+            span.double-arrow-right
+
+        p.explanation You need to have 
+            a(href='http://www.skype.com/') Skype 5.0 
+            | or greater installed.
+            if( skype_is_organizer )
+                | Make sure that under "Skype &gt; Preferences &gt; Privacy" you allow calls from anyone.
+    if( online_conferencing_option === 'teleconf' )
+        a(data-role='button',data-theme='b',href=teleconf_uri) Join the teleconference
+        p.explanation Is the button not working? Call manually 
+            =online_conferencing_data.teleconf_number + ( online_conferencing_data.teleconf_pin ? ' with pin ' + online_conferencing_data.teleconf_pin : '' ) + '.';
+    if( online_conferencing_option === 'hangout' )
+        if( locals.hangout_uri )
+            a(data-role='button',data-theme='b',href=hangout_uri, target='_blank') Open the Hangout
+            p.explanation This meeting has an active Google Hangout. Click the button above to join.
+        else if( is_manager && hangout_organizer_uri )
+            a(data-role='button',data-theme='b',href=hangout_organizer_uri, target='_blank') Open the Hangout
+            p.explanation Please open the Hangout to allow participants to join the online conference.
+        else
+            p.explanation Please wait while the organizer prepares the hangout.
+   if( online_conferencing_option === 'lync' )
+        a(data-role='button',data-theme='b',href=lync_uri, target='_blank') Open Lync
+        p.explanation='This meeting is using Microsoft Lync. Click the button above to open Lync.'
+
+    if( online_conferencing_option === 'custom' )
+        a(data-role='button',data-theme='b',href=custom_uri, target='_blank')='Join ' + (online_conferencing_data.custom_name || '');
+        p.explanation=online_conferencing_data.custom_description || 'This meeting is using a custom tool. Click the button above to join.'
+
+
+    //-a#skype_button(href=skype_url,data-role='button',data-theme='b')
+        //-i.icon-skype
+        //-| Join Skype conference
+

@@ -14,7 +14,7 @@ app.meetingView = Backbone.View.extend({
         // Matchmaking mode
         if( options ) this.mm_mode = options.mm_mode || false;
 
-        _(this).bindAll('openMaterialView', 'openParticipantView');
+        _(this).bindAll('openMaterialView', 'openParticipantView', 'doPoll');
 
         // Open panel
         $('div.main-div').swipeleft(function(){
@@ -73,6 +73,11 @@ app.meetingView = Backbone.View.extend({
         this.subviews.next_action_view = new app.nextActionView({ el : $('#next-action-bar'), model : user, mm_mode : this.mm_mode });
         this.subviews.next_action_view.render();
 
+        // Show lct bar if needed
+        this.model.set('is_manager', user.get('is_manager') && user.get('is_manager') !== '0' || false );
+        this.subviews.lct_view = new app.lctView({ el : $('#lct-bar'), model : this.model });
+        this.subviews.lct_view.render();
+
         // Setup materials view
         this.subviews.materials = new app.genericCollectionView({
             el : '#materials_list',
@@ -94,8 +99,22 @@ app.meetingView = Backbone.View.extend({
 
         $('#participants').removeClass('ui-listview');
 
+
+        if( ! this.is_polling ) {
+            this.is_polling = true;
+            setTimeout(this.doPoll,4000);
+        }
+
         return this;
     },
+
+    doPoll : function() {
+        var _this = this;
+        this.model.fetch({ success : function() {
+            setTimeout(_this.doPoll,4000);
+        }})
+    },
+
 
     renderSendInvites : function() {
         this.inviteView = true;
