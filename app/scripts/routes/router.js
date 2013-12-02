@@ -34,7 +34,16 @@ app.router = Backbone.Router.extend({
         "meetmeConfirm.html" : "meetmeConfirm",
         "calconfig.html" : "calConfig",
         "underConstruction.html" : "underConstruction",
+        "apps.html" : "apps",
         "addParticipant.html" : "addParticipant"
+    },
+
+    apps : function( params ) {
+        app.views.current = new app.appsView({
+            el : '.content'
+        });
+        app.views.current.render();
+        app.showContent();
     },
 
     underConstruction : function( params ) {
@@ -241,6 +250,8 @@ app.router = Backbone.Router.extend({
 
     meetings : function() {
         var that = this;
+
+        app.helpers.tryToSellApps();
 
         // Prevent loading if not loggeding as it breaks app
         if(! app.auth.user ) {
@@ -593,6 +604,8 @@ app.router = Backbone.Router.extend({
     },
 
     meeting : function(params) {
+        app.helpers.tryToSellApps();
+
         // Get url params
         var id = params.id || 0;
         var mm_mode = params.matchmaking_response || false;
