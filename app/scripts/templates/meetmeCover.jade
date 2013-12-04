@@ -11,7 +11,8 @@ div#meetme-cover
         div.description
             p=user.meetme_description
         div.clear
-        each mm in matchmakers
+        - var mms = _.filter( matchmakers, function(o){ return o.last_active_epoch === 0 || o.last_active_epoch * 1000 > new Date().getTime() })
+        each mm in mms
             div.mm
                 h3
                     i(class=app.meetme_types[mm.meeting_type || 0].icon_class)
