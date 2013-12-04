@@ -531,7 +531,7 @@ app.router = Backbone.Router.extend({
     login : function(params) {
 
         // Go to the new site for login stuff
-        if( app.options.build === 'web' ) {
+        if( app.options.build === 'web' && window.location.href.indexOf('localhost') === -1 ) {
             window.location = app.defaults.new_mobile_redirect_url;
             return;
         }
