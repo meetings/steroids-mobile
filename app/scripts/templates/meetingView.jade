@@ -12,15 +12,19 @@ h3=title
     p.mtngs-calendar
         i.icon-calendar
         | Scheduling in progress
-- if ( location )
-    - if( /skype/i.test(location) || location === 'Online' || location === 'Location not known' )
+- if( physical_location_string )
+    - if( physical_location_string === 'Online' || physical_location_string === 'Location not known' )
         p.mtngs-location
             i.icon-location
-            = location
+            = physical_location_string
     - else
         p.mtngs-location
             i.icon-location
-            a(href="#").open-map-link=location
+            a(href="#").open-map-link=physical_location_string
+- if( virtual_location_string )
+    p.mtngs-location
+        i.icon-teleconf
+        = virtual_location_string
 
 div#next-action-bar
 
