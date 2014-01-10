@@ -34,7 +34,8 @@ var version_check_urls = {
 
 var app_mode = (function(){
     var mode;
-    if(window.location.href.indexOf('mdev') !== -1) mode = 'dev';
+    if(window.build_mode !== 'web' ) mode = 'live';
+    else if(window.location.href.indexOf('mdev') !== -1) mode = 'dev';
     else if(window.location.href.indexOf('localhost') !== -1) mode = 'dev';
     else if(window.location.href.indexOf('mbeta') !== -1) mode = 'beta';
     else mode = 'live';
@@ -162,7 +163,7 @@ window.app = {
 
         tryToSellApps : function() {
             // Check cookie & check param from user??!
-            if(! app.options.build === 'web' ) return;
+            if( app.options.build !== 'web' ) return;
             if(! ( navigator.userAgent.match(/iPhone/i) ||  navigator.userAgent.match(/android/i) ) ) return;
             if( app.helpers.getCookie('app_install_shown') ) return;
 

@@ -251,12 +251,12 @@ app.router = Backbone.Router.extend({
     meetings : function() {
         var that = this;
 
-        app.helpers.tryToSellApps();
-
         // Prevent loading if not loggeding as it breaks app
         if(! app.auth.user ) {
             return;
         }
+
+        app.helpers.tryToSellApps();
 
         // Render panel & setup header
         if( ! app.views.panel ) {
