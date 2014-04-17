@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="disable-touch-select" lang="en" manifest="manifest.appcache">
+<html class="disable-touch-select" lang="en">
     <head>
         <title> Get our Apps | Meetin.gs</title>
         <meta charset="utf-8">
@@ -10,38 +10,11 @@
 
         <!-- iOS Smart App Banner -->
         <meta name="apple-itunes-app" content="app-id=576359348">
-        <!-- app-id=576359348, affiliate-data=myAffiliateData, app-argument=myURL -->
-        
-
-        <!-- start build include: ios || android -->
-        <script src="/cordova.js"></script>
-        <script src="scripts/helpers/calendar.js"></script>
-        <script src="/components/steroids-js/steroids.js"></script>
-        <!-- stop build include -->
-
-        <!-- start build include: ios -->
-        <script type="text/javascript" charset="utf-8">
-            window.build_mode = 'ios';
-        </script>
-        <!-- stop build include -->
-
-        <!-- start build include: android -->
-        <script type="text/javascript" charset="utf-8">
-            window.build_mode = 'android';
-        </script>
-        <!-- stop build include -->
-
-        <!-- start build include: web -->
-        <script type="text/javascript" charset="utf-8">
-            window.build_mode = 'web';
-        </script>
-        <!-- stop build include -->
-
 
         <!-- build:js scripts/scripts.js -->
         <script src="scripts/vendor/jquery.min.js"></script>
         <script src="scripts/main.js"></script>
-        <script src="scripts/helpers/appgyver.js"></script>
+
         <script src="scripts/helpers/dateformat.js"></script>
         <script src="scripts/vendor/jqm.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
@@ -112,7 +85,6 @@
         <!-- endbuild -->
     </head>
 <body>
-    <!-- Meetings listing -->
     <div data-role="page" id="apps" data-theme="a">
         <div class="main-div" data-role="content">
             <div class="content">

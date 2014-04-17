@@ -7,3 +7,6 @@ dist
 live
 .DS_Store
 /npm-debug.log
+bower_components
+.bin
+.tmp
