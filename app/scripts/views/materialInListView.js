@@ -14,6 +14,6 @@ app.materialInListView = Backbone.View.extend({
 
     openMaterial : function(e){
         e.preventDefault();
-        AppGyver.switchContext("materialPage", { id: this.model.id } );
+        app.helpers.switchContext("materialPage", { id: this.model.id } );
     }
 });

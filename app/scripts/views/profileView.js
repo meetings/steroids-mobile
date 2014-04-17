@@ -42,7 +42,7 @@ app.profileView = Backbone.View.extend({
             tos_accepted : '1'
         }, {
             success : function() {
-                AppGyver.switchContext.apply( AppGyver, JSON.parse( _this.context_after_tos_accept || '["meetingsPage"]' ) );
+                app.helpers.switchContext.apply( AppGyver, JSON.parse( _this.context_after_tos_accept || '["meetingsPage"]' ) );
             },
             error: function() {
                 alert('Saving profile failed. Please try again!');

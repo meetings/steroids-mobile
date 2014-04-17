@@ -15,6 +15,6 @@ app.highlightedMeetingInListView = Backbone.View.extend({
 
     openMeeting : function(e){
         e.preventDefault();
-        AppGyver.switchContext("meetingPage", {id: this.model.id});
+        app.helpers.switchContext("meetingPage", {id: this.model.id});
     }
 });

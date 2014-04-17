@@ -167,6 +167,6 @@ app.materialEditView = Backbone.View.extend({
     },
 
     openMaterialPage: function() {
-        AppGyver.switchContext('materialPage', { id : this.material_id }, { pop : 1 } );
+        app.helpers.switchContext('materialPage', { id : this.material_id }, { pop : 1 } );
     }
 });

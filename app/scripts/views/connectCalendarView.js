@@ -23,6 +23,6 @@ app.connectCalendarView = Backbone.View.extend({
     openMeetingsPage : function(e){
         var that = this;
         e.preventDefault();
-        AppGyver.switchContext('meetingsPage');
+        app.helpers.switchContext('meetingsPage');
     }
 });

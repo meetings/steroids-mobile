@@ -15,7 +15,6 @@ app.loginView = Backbone.View.extend({
     render: function() {
         this.$el.html( templatizer.loginView() );
         this.$el.trigger('create');
-        if( app.options.build !== 'web' ) $('#login').addClass('app-mode');
         if ( this.google_uid ) {
             $('#login-header').fadeIn();
             $('a#facebook-login,a#google-login,p.separator,div.logo,#email').fadeOut('fast');
@@ -64,12 +63,11 @@ app.loginView = Backbone.View.extend({
                 // Login
                 app._loginWithParams( response.result.user_id, response.result.token );
 
-                AppGyver.requireListingRefresh();
                 if ( response.result.tos_accepted ) {
-                    AppGyver.switchContext( 'meetingsPage' );
+                    app.helpers.switchContext( 'meetingsPage' );
                 }
                 else {
-                    AppGyver.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( ['meetingsPage'] ) } );
+                    app.helpers.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( ['meetingsPage'] ) } );
                 }
             }
             else{

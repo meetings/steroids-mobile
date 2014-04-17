@@ -18,7 +18,7 @@ app.meetingInListView = Backbone.View.extend({
         // TODO: Handle url stuff in the model
         var new_meeting = new app.meetingModel();
         new_meeting.save({ from_suggestion_id : this.model.get('id') },{ success : function(m){
-            AppGyver.switchContext("meetingPage", {id: m.id});
+            app.helpers.switchContext("meetingPage", {id: m.id});
         }});
     },
 
@@ -97,7 +97,7 @@ app.meetingInListView = Backbone.View.extend({
 
         }
         else{
-            AppGyver.switchContext("meetingPage", {id: this.model.id});
+            app.helpers.switchContext("meetingPage", {id: this.model.id});
         }
     }
 });

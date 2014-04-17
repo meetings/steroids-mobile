@@ -119,7 +119,7 @@ app.schedulingView = Backbone.View.extend({
         $('#confirm-option span span').html('Saving...');
         this.model.save({ chosen_proposal_id : this.chosen_option }, {success : function(res){
           $('#confirm-option span span').html('Done.');
-          AppGyver.switchContext('meetingPage', { id : app.models.meeting.id }, { pop : true } );
+          app.helpers.switchContext('meetingPage', { id : app.models.meeting.id }, { pop : true } );
         }});
     },
 
@@ -138,7 +138,7 @@ app.schedulingView = Backbone.View.extend({
         $('#save-options span span').html('Saving...');
         app.models.meeting_user.save({'proposal_answers': answers},{ success : function(res){
             $('#save-options span span').html('Done.');
-            AppGyver.switchContext('meetingPage', { id : app.models.meeting.id }, { pop : true} );
+            app.helpers.switchContext('meetingPage', { id : app.models.meeting.id }, { pop : true} );
         } });
     }
 });

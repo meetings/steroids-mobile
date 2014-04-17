@@ -20,17 +20,17 @@ app.editMeetingPanelView = Backbone.View.extend({
     editMeetingTitle : function(e){
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'title'});
+        app.helpers.switchContext("singleEditPage", {id: this.model.get('id'), field : 'title'});
     },
     editMeetingLocation : function(e){
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'location'});
+        app.helpers.switchContext("singleEditPage", {id: this.model.get('id'), field : 'location'});
     },
     editMeetingTime : function(e) {
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext("singleEditPage", {id: this.model.get('id'), field : 'time'});
+        app.helpers.switchContext("singleEditPage", {id: this.model.get('id'), field : 'time'});
     },
     removeMeeting : function(e){
         e.preventDefault();
@@ -56,7 +56,7 @@ app.editMeetingPanelView = Backbone.View.extend({
             AppGyver.hideContent();
             AppGyver.requireListingRefresh();
             that.model.destroy({ success : function(){
-                AppGyver.switchContext("meetingsPage", null, { pop : true } );
+                app.helpers.switchContext("meetingsPage", null, { pop : true } );
             }});
             popupClose();
         });

@@ -46,7 +46,7 @@ app.meetmeCoverView = Backbone.View.extend({
     showOptions : function(e){
         e.preventDefault();
         var mm = $(e.currentTarget).attr('data-mm') || 'default';
-        AppGyver.switchContext("meetmeCalendar", { user : this.user_fragment, cal : mm });
+        app.helpers.switchContext("meetmeCalendar", { user : this.user_fragment, cal : mm });
     },
 
     beforeClose : function(){

@@ -17,13 +17,12 @@ app.headerView = Backbone.View.extend({
 
     createMeeting : function(e){
         e.preventDefault();
-        if( app.options.build !== 'web' && ! AppGyver.ready_view_ids.editPage ) return;
-        AppGyver.switchContext('editPage', { id: '' });
+        app.helpers.switchContext('editPage', { id: '' });
     },
 
     meetingBack : function(e){
         e.preventDefault();
-        AppGyver.switchContext('meetingsPage');
+        app.helpers.switchContext('meetingsPage');
     },
 
     navigateBack : function(e){

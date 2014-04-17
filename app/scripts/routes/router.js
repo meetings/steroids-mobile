@@ -1,14 +1,5 @@
 app.router = Backbone.Router.extend({
     initialize : function() {
-        // Check internet on mobile device
-        if( app.options.build !== 'web' ){
-            this.bind('all', function (trigger, args) {
-                var routeData = trigger.split(":");
-                if (routeData[0] === 'route') { // routeData[1] has route name
-                    app.hasInternet();
-                }
-            });
-        }
     },
     routes : {
         "" : "meetings",
@@ -419,38 +410,7 @@ app.router = Backbone.Router.extend({
             },  data : { include_draft : 1, start_min : today, limit : 50, sort : "asc"} } );
         };
 
-        if ( app.options.build !== 'web' && localStorage.getItem('phoneCalendarConnected') && localStorage.getItem('phoneCalendarConnected') !== "0" && window.plugins.calendarPlugin ) {
-            var now = new Date();
-            var nextMonth = new Date(now.getTime() + (32 * 24 * 60 * 60 * 1000));
-            var start = "" + now.getFullYear() + "-" + (now.getMonth()+1) + "-" + now.getDate() + " 00:00:00";
-            var end = "" + nextMonth.getFullYear() + "-" + (nextMonth.getMonth()+1) + "-" + nextMonth.getDate() + " 00:00:00";
-            window.plugins.calendarPlugin.initialize(function() {
-                window.plugins.calendarPlugin.findEvent(null,null,null,start, end, function(result) {
-                    var batch = that._formSuggestionBatchFromCalendarResult( result );
-                    if ( batch.length ) {
-                        var params = {
-                            user_id : app.auth.user,
-                            dic : app.auth.token,
-                            batch : JSON.stringify( batch )
-                        };
-                        $.post( app.defaults.api_host + '/v1/users/'+ app.auth.user +'/suggested_meetings/batch_insert', params )
-                            .done( fetchFutureMeetings )
-                            .fail( fetchFutureMeetings );
-                    }
-                    else {
-                        fetchFutureMeetings();
-                    }
-                }, function( err ) {
-                    fetchFutureMeetings();
-                });
-            }, function( err ) {
-                localStorage.setItem('phoneCalendarConnected', "0");
-                fetchFutureMeetings();
-            });
-        }
-        else {
-            fetchFutureMeetings();
-        }
+        fetchFutureMeetings();
 
         app.collections.unscheduled_meetings.fetch({ success : function(col,res){
             unscheduledFetch.resolve();
@@ -531,7 +491,7 @@ app.router = Backbone.Router.extend({
     login : function(params) {
 
         // Go to the new site for login stuff
-        if( app.options.build === 'web' && window.location.href.indexOf('localhost') === -1 ) {
+        if( window.location.href.indexOf('localhost') === -1 ) {
             window.location = app.defaults.new_mobile_redirect_url;
             return;
         }
@@ -542,7 +502,7 @@ app.router = Backbone.Router.extend({
             $.post( app.defaults.api_host + '/v1/login', params, function( response ){
                 if( response.result && response.result.user_id ){
                     app._loginWithParams( response.result.user_id, response.result.token );
-                    AppGyver.switchContext('meetingsPage');
+                    app.helpers.switchContext('meetingsPage');
                 }
                 else {
                     that._render_login( 'Failed to connect with Facebook' );
@@ -555,7 +515,7 @@ app.router = Backbone.Router.extend({
                 if( response.result ){
                     if ( response.result.user_id ) {
                         app._loginWithParams( response.result.user_id, response.result.token );
-                        AppGyver.switchContext('meetingsPage');
+                        app.helpers.switchContext('meetingsPage');
                     }
                     else if ( response.result.google_uid ) {
                         app.views.login = new app.loginView({ el : $('#login-page'), google_uid : google_uid, google_rt : google_rt });
@@ -726,7 +686,7 @@ app.router = Backbone.Router.extend({
             $('a.addParticipant').click(function(e) {
                 e.preventDefault();
                 AppGyver.back_context = ["meetingPage", { id : id } ];
-                AppGyver.switchContext("addParticipantPage", { id : id } );
+                app.helpers.switchContext("addParticipantPage", { id : id } );
             });
             watcher.fetchComplete = true;
             app.showContent();
@@ -850,7 +810,7 @@ app.router = Backbone.Router.extend({
                     google_redirect_uri : redirect_params.redirect_uri
                 }, { success : function() {
                     watcher.fetchComplete = true;
-                    AppGyver.switchContext('meetingsPage');
+                    app.helpers.switchContext('meetingsPage');
                 } } );
             } } );
         }

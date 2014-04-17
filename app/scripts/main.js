@@ -150,10 +150,36 @@ window.app = {
         version_check_url : version_check_urls[app_mode]
     },
 
-    options: {
+    options : {
         build : window.build_mode,
         fetchTimeout : 10000
     },
+
+    contexts : [
+            { file : 'index.html', id : 'meetingsPage', no_preload : true },
+            { file : 'login.html', id : 'loginPage', load_before_init : true },
+            { file : 'profile.html', id : 'profilePage' },
+            { file : 'meeting.html', id : 'meetingPage' },
+            { file : 'edit.html', id : 'editPage' },
+            { file : 'participants.html', id : 'participantsPage' },
+            { file : 'participant.html', id : 'participantPage' },
+            { file : 'material.html', id : 'materialPage' },
+            { file : 'scheduling.html', id : 'schedulingPage' },
+            { file : 'addParticipant.html', id : 'addParticipantPage' },
+            { file : 'calconfig.html', id : 'calconfigPage' },
+            { file : 'meetme.html', id : 'meetmeCover', no_preload : true },
+            { file : 'meetmeCalendar.html', id : 'meetmeCalendar', no_preload : true },
+            { file : 'meetmeConfig.html', id : 'meetmeConfig', no_preload : true },
+            { file : 'edit.html', id : 'singleEditPage' },
+            { file : 'editMaterial.html', id : 'editMaterialPage', shared_file : 'init.html', shared_id : 'init' },
+            { file : 'renameMaterial.html', id : 'renameMaterialPage', shared_file : 'init.html', shared_id : 'init' },
+            { file : 'connectAccounts.html', id : 'connectAccountsPage', shared_file : 'init.html', shared_id : 'init' },
+            { file : 'connectCalendar.html', id : 'connectCalendarPage', shared_file : 'init.html', shared_id : 'init' },
+            { file : 'signup.html', id : 'signupPage' },
+            { file : 'apps.html', id : 'apps', no_preload : true },
+            { file : 'underConstruction.html', id : 'underConstruction', no_preload : true }
+        ],
+
 
     models : {},
     collections : {},
@@ -161,9 +187,55 @@ window.app = {
     router : null,
     helpers : {
 
+        formQueryString : function( params, randomize ) {
+            if ( randomize ) params.m_rand = Math.random();
+
+            var query_options=[];
+            var param;
+
+            for ( param in params ) {
+                query_options.push( encodeURIComponent(param) + '=' + encodeURIComponent( params[param] ) );
+            }
+
+            var query_string = query_options.length ? '?' : '';
+            query_string = query_string + query_options.join('&');
+
+            return query_string;
+        },
+
+        formContextURL : function( context, params, randomize ) {
+            params = params || {};
+            params.steroids_preload_id = context.id;
+            var query_string = app.helpers.formQueryString( params, randomize );
+
+            return '/' + context.file + query_string;
+        },
+
+
+        getContextForID : function( id ){
+            for (var i = 0; i < app.contexts.length; i++) {
+                if ( id == app.contexts[i].id ) return app.contexts[i];
+            }
+            return false;
+        },
+
+        switchContext: function( context_id, params, options ) {
+            params = params || {};
+
+            var context = app.helpers.getContextForID( context_id );
+            if ( ! context ) {
+                alert( "unknown context switch: " + context_id );
+            }
+            window.location = app.helpers.formContextURL( context, params );
+        },
+
+        hideContent: function(){
+            $('div.content').hide();
+            $('div.loader').show();
+        },
+
         tryToSellApps : function() {
             // Check cookie & check param from user??!
-            if( app.options.build !== 'web' ) return;
             if(! ( navigator.userAgent.match(/iPhone/i) ||  navigator.userAgent.match(/android/i) ) ) return;
             if( app.helpers.getCookie('app_install_shown') ) return;
 
@@ -200,7 +272,8 @@ window.app = {
                     $el.one('click', '.reconnect', function(e) {
                         e.preventDefault();
                         $($el).html('<span class="loader"></span>');
-                        AppGyver.refreshContext();
+                        app.helpers.hideContent();
+                        Backbone.history.loadUrl();
                     });
                 }
             }, timeout);
@@ -329,7 +402,7 @@ window.app = {
         else{
             // Throw the user out if no credentials
             if( window.location.toString().indexOf('login.html') === -1 ) {
-                AppGyver.switchContext("loginPage", {id : ''} );
+                app.helpers.switchContext("loginPage", {id : ''} );
                 return false;
             }
         }
@@ -402,13 +475,13 @@ window.app = {
             chosen_redirect = chosen_redirect || [ 'meetingsPage' ];
             new app.userModel({ id : 'me' }).fetch( function( response ) {
                 if ( ! ( response && response.tos_accepted ) ) {
-                    AppGyver.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( chosen_redirect ) } );
+                    app.helpers.switchContext( 'profilePage', { context_after_tos_accept : JSON.stringify( chosen_redirect ) } );
                 }
             } );
         }
 
         if ( chosen_redirect ) {
-            AppGyver.switchContext.apply( AppGyver, chosen_redirect );
+            app.helpers.switchContext( chosen_redirect );
         }
     },
 
@@ -486,12 +559,9 @@ window.app = {
         },1000);
     },
     openUrlSchemeLink : function(appurl,normurl) {
-        if( app.options.build === 'web' ) {
-            var win=window.open(normurl, '_blank');
-            win.focus();
-            return;
-        }
-        document.location = appurl;
+        var win=window.open(normurl, '_blank');
+        win.focus();
+        return;
     },
 
     launchURLForwarder : function() {
@@ -509,11 +579,7 @@ window.app = {
         var redirect_uri = 'https://dev.meetin.gs/meetings_global/redirect_mobile/0';
         var host = window.location.protocol + '//' + window.location.host;
 
-        if ( app.options.build !== 'web' ) {
-            host = app.defaults.url_scheme;
-        }
-
-        var to_url = host + AppGyver.formContextRedirectUrl( context, redirect_params );
+        var to_url = host + app.helpers.formContextRedirectUrl( context, redirect_params );
         var params = [
             { "key" : "client_id", "value" : "584216729178.apps.googleusercontent.com" },
             { "key" : "response_type", "value" : "code" },
@@ -530,13 +596,7 @@ window.app = {
 
         var url = "https://accounts.google.com/o/oauth2/auth?" + string_params.join("&");
 
-        if( app.options.build === 'web' ) {
-            window.location = url;
-        }
-        else {
-            document.addEventListener("resume", app.launchURLForwarder, false);
-            steroids.openURL( url );
-        }
+        window.location = url;
     },
     showContent: function() {
         $('div.content').show();
@@ -545,12 +605,6 @@ window.app = {
     },
 
     hasInternet : function() {
-        if( app.options.build !== 'web' ) {
-            if(navigator.connection.type === Connection.NONE ) {
-                app.showConnectivityError('nointernet');
-                return false;
-            }
-        }
         return true;
     },
 
@@ -563,7 +617,7 @@ window.app = {
             e.preventDefault();
             $el.off('click');
             $el.html('');
-            AppGyver.hideContent();
+            app.helpers.hideContent();
             Backbone.history.loadUrl();
         });
     }
@@ -583,11 +637,6 @@ $(document).ready(function() {
     // Make swiping a bit harder
     $.event.special.swipe.horizontalDistanceThreshold = 75;
 
-    // mobile app, do preloads & app inits etc.
-    if (app.options.build === 'web') {
-        app.init();
-    } else {
-        AppGyver.init();
-    }
+    app.init();
 });
 

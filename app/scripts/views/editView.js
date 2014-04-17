@@ -245,7 +245,7 @@ app.editView = Backbone.View.extend({
 
     openMeetingView : function(is_old){
         this.viewStack = [];
-        AppGyver.switchContext("meetingPage", {id: this.model.get('id')}, { pop : is_old });
+        app.helpers.switchContext("meetingPage", {id: this.model.get('id')}, { pop : is_old });
     },
 
     navigateBack: function(e) {

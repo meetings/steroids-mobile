@@ -27,12 +27,12 @@ app.editMaterialPanelView = Backbone.View.extend({
     editMaterial : function(e){
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext( 'editMaterialPage', { id : this.model.id } );
+        app.helpers.switchContext( 'editMaterialPage', { id : this.model.id } );
     },
     renameMaterial : function(e){
         e.preventDefault();
         this.$el.panel('close');
-        AppGyver.switchContext( 'renameMaterialPage', { id : this.model.id } );
+        app.helpers.switchContext( 'renameMaterialPage', { id : this.model.id } );
     },
     removeMaterial : function(e){
         e.preventDefault();
@@ -57,7 +57,7 @@ app.editMaterialPanelView = Backbone.View.extend({
             e.preventDefault();
             AppGyver.hideContent();
             that.model.destroy({ success : function(){
-                AppGyver.switchContext("meetingPage", { id : meeting_id }, { pop : true } );
+                app.helpers.switchContext("meetingPage", { id : meeting_id }, { pop : true } );
             }});
             popupClose();
         });

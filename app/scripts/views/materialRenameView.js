@@ -26,7 +26,7 @@ app.materialRenameView = Backbone.View.extend({
     renameMaterialCancel : function(e){
         var that = this;
         e.preventDefault();
-        AppGyver.switchContext( 'materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
+        app.helpers.switchContext( 'materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
     },
 
     renameMaterialSave : function(e){
@@ -38,7 +38,7 @@ app.materialRenameView = Backbone.View.extend({
         this.model.set('title', $('#material-title').val() );
 
         this.model.save( {}, { success : function() {
-            AppGyver.switchContext('materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
+            app.helpers.switchContext('materialPage', { id : that.model.get('material_id') }, { pop : 1 } );
         } } );
     }
 });

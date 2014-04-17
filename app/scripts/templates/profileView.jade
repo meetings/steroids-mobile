@@ -1,21 +1,10 @@
 div#signup-form.form-full-width(data-role="fieldcontain")
+    // TODO: CHeck if borken
     if( locals.new_user )
         h3 Profile info
         p Fill in your info so the person receiving the meeting invite knows who you are.
         p
             input#user-email(data-theme="b",type="text",name="user-email",placeholder="Your email")
-    if( app.options.build !== 'web' )
-        .ui-grid-a
-            .ui-block-a
-                div#profile-image.mtngs-profile-image(style="background-image:url(" + image + ")")
-                    div#image-placeholder(style="visibility:" + (image ? 'hidden' : 'visible'))
-                        p#status-text Set picture
-            .ui-block-b
-                div.input-top
-                    input#user-firstname(data-theme="b",type="text",name="user-firstname",value=locals.first_name,placeholder="First name")
-                div.input-bottom
-                    input#user-lastname.corners-bottom(data-theme="b",type="text",name="user-firstname",value=locals.last_name,placeholder="Last name")
-    else
         p
             input#user-firstname(data-theme="b",type="text",name="user-firstname",value=locals.first_name,placeholder="First name")
         p

@@ -260,7 +260,7 @@ app.meetmeCalendarView = Backbone.View.extend({
 
         $('.cancel-slot .ui-btn-text',this.el).text('Canceling...');
         this.lock.destroy({ success : function() {
-            AppGyver.switchContext('meetmeCalendar', { user : _this.user_model.get('matchmaker_fragment') });
+            app.helpers.switchContext('meetmeCalendar', { user : _this.user_model.get('matchmaker_fragment') });
         }});
     },
 

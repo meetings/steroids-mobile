@@ -12,6 +12,6 @@ app.participantInListView = Backbone.View.extend({
 
     openParticipant: function(e){
         e.preventDefault();
-        AppGyver.switchContext("participantPage", { id : this.model.id } );
+        app.helpers.switchContext("participantPage", { id : this.model.id } );
     }
 });

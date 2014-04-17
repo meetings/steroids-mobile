@@ -168,7 +168,7 @@ app.meetingView = Backbone.View.extend({
     },
 
     reloadMeeting : function() {
-        AppGyver.switchContext("meetingPage", {id: this.model.get('id')});
+        app.helpers.switchContext("meetingPage", {id: this.model.get('id')});
     },
 
     navigateBack: function(e) {
@@ -269,17 +269,17 @@ app.meetingView = Backbone.View.extend({
 
     openMaterialView : function(e){
         e.preventDefault();
-        AppGyver.switchContext("materialsPage", {id: this.model.get('id')});
+        app.helpers.switchContext("materialsPage", {id: this.model.get('id')});
     },
 
     openParticipantView : function(e){
         e.preventDefault();
-        AppGyver.switchContext("participantsPage", {id: this.model.get('id')});
+        app.helpers.switchContext("participantsPage", {id: this.model.get('id')});
     },
 
     openAddParticipantView : function(e) {
         e.preventDefault();
-        AppGyver.switchContext("addParticipantPage", {id: this.model.get('id'), override_return_context : 'meetingPage' });
+        app.helpers.switchContext("addParticipantPage", {id: this.model.get('id'), override_return_context : 'meetingPage' });
     },
 
     openSendInvitesView : function() {

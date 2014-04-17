@@ -17,7 +17,7 @@ app.materialView = Backbone.View.extend({
             that.set_material_edits( false );
 
             var parts = that.model.id.split(":");
-            AppGyver.switchContext('meetingPage', { id : parts[0] }, { pop : true } );
+            app.helpers.switchContext('meetingPage', { id : parts[0] }, { pop : true } );
         } );
     },
 
@@ -32,7 +32,7 @@ app.materialView = Backbone.View.extend({
         this.material_edits.on('remove', function() { this.model.fetch() }, this);
 
         this.render();
-        this.edits_polling();        
+        this.edits_polling();
     },
 
     render: function() {
@@ -73,21 +73,13 @@ app.materialView = Backbone.View.extend({
     continueEditing : function(e) {
         e.preventDefault();
 
-        AppGyver.switchContext( 'editMaterialPage', { id : this.model.id, continue_edit : 1 } );
+        app.helpers.switchContext( 'editMaterialPage', { id : this.model.id, continue_edit : 1 } );
     },
 
     initDownloadLink: function(){
         if( this.model.get('download_url')){
-
-          $('#download-link').attr('href', this.model.get('download_url'));
-
-          if( app.options.build !== 'web' ) {
-            $('#download-link').on("click", function(e){
-              e.preventDefault();
-              steroids.openURL(encodeURI($(this).attr("href")));
-            });
-          }
-        }
+            $('#download-link').attr('href', this.model.get('download_url'));
+         }
         else{
             $('#download-link').hide();
         }

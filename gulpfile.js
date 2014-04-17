@@ -43,11 +43,12 @@ gulp.task('watch', function () {
     gulp.watch(paths.fonts, ['fonts_tmp']);
     gulp.watch(paths.bower, ['bower_tmp']);
     gulp.watch(paths.styles, ['styles_tmp']);
+    gulp.watch(paths.styles, ['static_tmp']);
     gulp.watch(paths.images, ['images_tmp']);
 });
 
 // Default task = server
-gulp.task('default', ['watch', 'scripts_tmp', 'bower_tmp', 'styles_tmp', 'html_tmp', 'images_tmp', 'fonts_tmp', 'connect'], function() {
+gulp.task('default', ['watch', 'scripts_tmp', 'bower_tmp', 'styles_tmp', 'html_tmp', 'images_tmp', 'static_tmp', 'fonts_tmp', 'connect'], function() {
 });
 
 
@@ -129,6 +130,13 @@ gulp.task('scripts', function() {
 gulp.task('images_tmp', function() {
     return gulp.src('app/images/**/*')
     .pipe(gulp.dest('.tmp/images'))
+    .pipe(connect.reload());
+});
+//
+// Images
+gulp.task('static_tmp', function() {
+    return gulp.src('app/static/**/*')
+    .pipe(gulp.dest('.tmp/static'))
     .pipe(connect.reload());
 });
 

@@ -73,7 +73,7 @@ app.nextActionView = Backbone.View.extend({
                 dic : app.auth.token
             },
             success : function(res) {
-                AppGyver.switchContext("meetingsPage");
+                app.helpers.switchContext("meetingsPage");
             }
         });
     },
@@ -106,11 +106,11 @@ app.nextActionView = Backbone.View.extend({
     },
     answerScheduling : function(e) {
         e.preventDefault();
-        AppGyver.switchContext("schedulingPage", { id : app.models.meeting.get('id')});
+        app.helpers.switchContext("schedulingPage", { id : app.models.meeting.get('id')});
     },
     openChooseDate : function(e) {
         e.preventDefault();
-        AppGyver.switchContext("schedulingPage", { mode : 'choose', id : app.models.meeting.get('id')});
+        app.helpers.switchContext("schedulingPage", { mode : 'choose', id : app.models.meeting.get('id')});
     },
     getSchedulingStatus : function() {
         var status = {

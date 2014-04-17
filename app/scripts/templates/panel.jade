@@ -26,11 +26,10 @@ ul#side-bar(data-role="listview",data-theme="c")
         a#nav-support(href="#",data-transition="fade")
             i.icon-question
             | Support
-    - if( app.options.build === 'web' )
-        li
-            a#nav-tos(href="#",data-transition="fade")
-                i.icon-material_document
-                | Terms of Service
+    li
+        a#nav-tos(href="#",data-transition="fade")
+            i.icon-material_document
+            | Terms of Service
     li
         a#nav-edit-profile(href="profile.html",data-transition="fade")
             i.icon-edit
@@ -39,5 +38,4 @@ ul#side-bar(data-role="listview",data-theme="c")
         a#nav-logout(href="#",data-transition="fade")
             i.icon-logout
             | Logout
-- if( app.options.build === 'web' )
-    a.no-mobile(href="#") Switch to normal website
+a.no-mobile(href="#") Switch to normal website

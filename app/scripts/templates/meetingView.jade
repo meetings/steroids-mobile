@@ -58,15 +58,3 @@ ul#materials_list(data-role="listview",data-inset="true",data-theme="a")
         a(href="#", data-role="button", data-theme="a") Existing photo
         a(href="#", data-role="button", data-rel="back", data-theme="c") Cancel
 
-- if( app.options.build !== 'web' )
-    div.photo-upload
-        a.add-photo-material(href='#',data-role="button",data-theme="b") Add photo
-        div#upload_progress
-        div.file-save-form
-            div.left
-                    input#file-upload-id(type="hidden")
-                    input#file-upload-name(type="text",placeholder="Filename...",data-theme="b")
-            div.right
-                    a.save-photo-material.ui-disabled(href='#',data-role="button",data-theme="b") Save
-        div.save-text(style="display:none;")
-            p Saving material...

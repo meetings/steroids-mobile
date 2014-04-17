@@ -30,26 +30,13 @@ app.panelView = Backbone.View.extend({
 
     openMeetings : function(e){
         e.preventDefault();
-        if( app.options.build !== 'web' ){
-            $('#left-panel').panel('close');
-            AppGyver.hideContent();
-            AppGyver.requireListingRefresh();
-            AppGyver.switchContext('meetingsPage');
-        }
-        else{
-            window.location = '/index.html';
-        }
+        window.location = '/index.html';
     },
 
     redirectFacebook : function(e){
         e.preventDefault();
-        if( app.options.build !== 'web' ) {
-            app.openUrlSchemeLink('fb://profile/182909251746386','https://www.facebook.com/www.meetin.gs', 'Facebook' );
-        }
-        else{
             var win=window.open('https://www.facebook.com/www.meetin.gs', '_blank');
             win.focus();
-        }
     },
 
     redirectTwitter : function(e){
@@ -72,23 +59,23 @@ app.panelView = Backbone.View.extend({
 
     openProfile : function(e) {
         e.preventDefault();
-        AppGyver.switchContext('profilePage');
+        app.helpers.switchContext('profilePage');
     },
 
     openMeetmeConfig : function(e) {
         e.preventDefault();
-        AppGyver.switchContext('meetmeConfig');
+        app.helpers.switchContext('meetmeConfig');
     },
 
     openCalconfig : function(e) {
         e.preventDefault();
-        AppGyver.switchContext('calconfigPage');
+        app.helpers.switchContext('calconfigPage');
     },
 
     logout : function(e){
         e.preventDefault();
         app._removeAuthCookie();
-        AppGyver.switchContext("loginPage", { reset : 1 });
+        app.helpers.switchContext("loginPage", { reset : 1 });
     },
 
     switchNormal : function(e){
