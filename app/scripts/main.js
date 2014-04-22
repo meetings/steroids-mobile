@@ -34,8 +34,7 @@ var version_check_urls = {
 
 var app_mode = (function(){
     var mode;
-    if(window.build_mode !== 'web' ) mode = 'live';
-    else if(window.location.href.indexOf('mdev') !== -1) mode = 'dev';
+    if(window.location.href.indexOf('mdev') !== -1) mode = 'dev';
     else if(window.location.href.indexOf('localhost') !== -1) mode = 'dev';
     else if(window.location.href.indexOf('mbeta') !== -1) mode = 'beta';
     else mode = 'live';

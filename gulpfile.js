@@ -14,10 +14,13 @@ lr = require('tiny-lr'),
 connect = require('gulp-connect'),
 sass = require('gulp-sass'),
 usemin = require('gulp-usemin'),
+templatizer = require('templatizer'),
 server = lr();
 
 var paths = {
     html: 'app/**/*.html',
+    jade: 'app/scripts/templates',
+    jade_watch: 'app/scripts/templates/**/*',
     fonts: 'app/fonts/**.*',
     bower: 'app/bower_components/**/*',
     scripts: 'app/scripts/**/*',
@@ -39,6 +42,7 @@ gulp.task('connect', connect.server({
 
 gulp.task('watch', function () {
     gulp.watch(paths.html, ['html_tmp']);
+    gulp.watch(paths.jade_watch, ['jade_tmp']);
     gulp.watch(paths.scripts, ['scripts_tmp']);
     gulp.watch(paths.fonts, ['fonts_tmp']);
     gulp.watch(paths.bower, ['bower_tmp']);
@@ -47,8 +51,17 @@ gulp.task('watch', function () {
     gulp.watch(paths.images, ['images_tmp']);
 });
 
+gulp.task('jade_tmp', function() {
+    console.log('hail');
+    templatizer(paths.jade,  paths.jade + '/all.js');
+});
+gulp.task('jade', function() {
+    templatizer(paths.jade,  paths.jade + '/all.js');
+});
+
+
 // Default task = server
-gulp.task('default', ['watch', 'scripts_tmp', 'bower_tmp', 'styles_tmp', 'html_tmp', 'images_tmp', 'static_tmp', 'fonts_tmp', 'connect'], function() {
+gulp.task('default', ['clean_tmp','watch','jade_tmp','scripts_tmp','bower_tmp','styles_tmp','html_tmp','images_tmp','static_tmp','fonts_tmp','connect'], function() {
 });
 
 
@@ -168,6 +181,13 @@ gulp.task('clean', function() {
     return gulp.src(['dist/styles', 'dist/scripts', 'dist/images'], {read: false})
     .pipe(clean());
 });
+gulp.task('clean_tmp', function() {
+    //
+    // return gulp.src([paths.tmpFolder+'/*'], {read: false})
+    // .pipe(clean({ force : true  }));
+});
+
+
 
 
 // The build task

@@ -5,7 +5,7 @@
       "templatizer" : "x"
   },
   "devDependencies": {
-    "gulp": "~3.5.1",
+    "gulp": "~3.6.1",
     "gulp-rename": "~0.2.2",
     "tiny-lr": "0.0.5",
     "gulp-ruby-sass": "latest",
