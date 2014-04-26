@@ -15,7 +15,7 @@ div#meeting-conferencing
     if( online_conferencing_option === 'teleconf' )
         a(data-role='button',data-theme='b',href=teleconf_uri) Join the teleconference
         p.explanation Is the button not working? Call manually 
-            =online_conferencing_data.teleconf_number + ( online_conferencing_data.teleconf_pin ? ' with pin ' + online_conferencing_data.teleconf_pin : '' ) + '.';
+            =online_conferencing_data.teleconf_number + ( online_conferencing_data.teleconf_pin ? ' with pin ' + online_conferencing_data.teleconf_pin : '' ) + '.'
     if( online_conferencing_option === 'hangout' )
         if( locals.hangout_uri )
             a(data-role='button',data-theme='b',href=hangout_uri, target='_blank') Open the Hangout
@@ -30,7 +30,7 @@ div#meeting-conferencing
         p.explanation='This meeting is using Microsoft Lync. Click the button above to open Lync.'
 
     if( online_conferencing_option === 'custom' )
-        a(data-role='button',data-theme='b',href=custom_uri, target='_blank')='Join ' + (online_conferencing_data.custom_name || '');
+        a(data-role='button',data-theme='b',href=custom_uri, target='_blank')='Join ' + (online_conferencing_data.custom_name || '')
         p.explanation=online_conferencing_data.custom_description || 'This meeting is using a custom tool. Click the button above to join.'
 
 

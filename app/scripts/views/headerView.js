@@ -26,7 +26,7 @@ app.headerView = Backbone.View.extend({
     },
 
     navigateBack : function(e){
-        e.preventDefault();
+        //e.preventDefault();
         AppGyver.popContext();
     },
 
