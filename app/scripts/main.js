@@ -45,6 +45,7 @@ var app_mode = (function(){
 if(!window.AppGyver) {
     window.AppGyver = {
         contexts : [],
+        back_context : null,
 
         _log : function(id, args) {
             if(console) {
@@ -67,7 +68,6 @@ if(!window.AppGyver) {
         popContext : function() {
             var context = this.contexts.pop();
 
-            console.log('Destination: ' + context);
             this._log('popContext', arguments);
         },
 
