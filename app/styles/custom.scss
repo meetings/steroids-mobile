@@ -1419,28 +1419,48 @@ h3.tasks {
     box-shadow:none;
 }
 .ui-icon-mtngs-skype {
-    @include retina-bg('/images/icon_phone', 'png', 18px, 18px);
+    @include retina-bg('/images/icon_skype', 'png', 18px, 18px);
     background-color:transparent;
-    left:10px !important;
-    top:50% !important;
     background-ui-icon-mtngs-extcolor:transparent;
     box-shadow:none;
+    margin-left: 2px;
+    margin-right: 10px !important;
+    margin-bottom: -3px !important;
 }
 .ui-icon-mtngs-skype-white {
-    @include retina-bg('/images/icon_skype_white', 'png', 20px, 20px);
+    @include retina-bg('/images/icon_skype_white', 'png', 18px, 18px);
     background-color:transparent;
-    left:10px !important;
-    top:50% !important;
     background-ui-icon-mtngs-extcolor:transparent;
     box-shadow:none;
+    margin-right: 8px !important;
+    margin-bottom: -2px !important;
 }
 .ui-icon-mtngs-cross-white {
-    @include retina-bg('/images/icon_cross_white', 'png', 20px, 20px);
+    @include retina-bg('/images/icon_cross_white', 'png', 18px, 18px);
     background-color:transparent;
-    left:10px !important;
-    top:50% !important;
+    background-color:transparent;
     background-ui-icon-mtngs-extcolor:transparent;
     box-shadow:none;
+    margin-right: 8px !important;
+    margin-bottom: -2px !important;
+}
+.ui-icon-mtngs-calendar {
+    @include retina-bg('/images/icon_cal', 'png', 18px, 18px);
+    background-color:transparent;
+    background-ui-icon-mtngs-extcolor:transparent;
+    box-shadow:none;
+    margin-left: 2px;
+    margin-right: 10px !important;
+    margin-bottom: -3px !important;
+}
+.ui-icon-mtngs-location {
+    @include retina-bg('/images/icon_editlocation', 'png', 18px, 18px);
+    background-color:transparent;
+    background-ui-icon-mtngs-extcolor:transparent;
+    box-shadow:none;
+    margin-left: 2px;
+    margin-right: 10px !important;
+    margin-bottom: -3px !important;
 }
 .ui-icon-mtngs-ext {
     @include retina-bg('/images/icon_ext', 'png', 18px, 18px);

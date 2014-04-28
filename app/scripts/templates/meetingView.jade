@@ -2,28 +2,28 @@ h3=title
 - var dateString = DateFormat.dateAndTimeString(begin_epoch, end_epoch)
 - if (dateString)
     p.mtngs-calendar
-        i.icon-calendar
+        span.ui-icon.ui-icon-mtngs-calendar(style="display: inline-block;")
         = dateString
 - else if( is_draft )
     p.mtngs-calendar
-        i.icon-calendar
+        span.ui-icon.ui-icon-mtngs-calendar(style="display: inline-block;")
         | Time has not been set
 - else
     p.mtngs-calendar
-        i.icon-calendar
+        span.ui-icon.ui-icon-mtngs-calendar(style="display: inline-block;")
         | Scheduling in progress
 - if( physical_location_string )
     - if( physical_location_string === 'Online' || physical_location_string === 'Location not known' )
         p.mtngs-location
-            i.icon-location
+            span.ui-icon.ui-icon-mtngs-location(style="display: inline-block;")
             = physical_location_string
     - else
         p.mtngs-location
-            i.icon-location
+            span.ui-icon.ui-icon-mtngs-calendar(style="display: inline-block;")
             a(href="#").open-map-link=physical_location_string
 - if( virtual_location_string )
     p.mtngs-location
-        i.icon-teleconf
+        span.ui-icon.ui-icon-mtngs-skype(style="display: inline-block;")
         = virtual_location_string
 
 div#next-action-bar
