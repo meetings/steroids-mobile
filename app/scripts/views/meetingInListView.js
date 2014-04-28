@@ -27,7 +27,7 @@ app.meetingInListView = Backbone.View.extend({
         // TODO: Handle url stuff in the model
         this.model.url = app.defaults.api_host + '/v1/suggested_meetings/' + this.model.get('id');
         this.model.save({'disabled':1},{ success : function(){
-            AppGyver.hideContent();
+            app.helpers.hideContent();
             Backbone.history.loadUrl();
         }});
     },
@@ -90,7 +90,7 @@ app.meetingInListView = Backbone.View.extend({
                 }
                 app.models.user.get('hidden_sources').push(that.model.get('source'));
                 app.models.user.save({}, {success : function(){
-                    AppGyver.hideContent();
+                    app.helpers.hideContent();
                     Backbone.history.loadUrl();
                 }});
             });

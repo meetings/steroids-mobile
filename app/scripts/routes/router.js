@@ -236,7 +236,7 @@ app.router = Backbone.Router.extend({
         delete params.redirect_info;
         redirect_info[1].redirect_params = JSON.stringify( params );
 
-        AppGyver.reloadContext( redirect_info[0], redirect_info[1] );
+        app.helpers.switchContext( redirect_info[0], redirect_info[1] );
     },
 
     meetings : function() {
@@ -685,7 +685,6 @@ app.router = Backbone.Router.extend({
         app.collections.participants.fetch({ success : function(){
             $('a.addParticipant').click(function(e) {
                 e.preventDefault();
-                AppGyver.back_context = ["meetingPage", { id : id } ];
                 app.helpers.switchContext("addParticipantPage", { id : id } );
             });
             watcher.fetchComplete = true;
@@ -817,7 +816,7 @@ app.router = Backbone.Router.extend({
         else {
             setTimeout( function() {
                 alert( "you should not be here.. :(" );
-                AppGyver.popContext();
+                app.helpers.popContext();
             }, 1000 );
         }
 

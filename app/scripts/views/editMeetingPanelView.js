@@ -53,8 +53,7 @@ app.editMeetingPanelView = Backbone.View.extend({
         // Set handlers
         $popupEl.on('click', '.confirm', function(e){
             e.preventDefault();
-            AppGyver.hideContent();
-            AppGyver.requireListingRefresh();
+            app.helpers.hideContent();
             that.model.destroy({ success : function(){
                 app.helpers.switchContext("meetingsPage", null, { pop : true } );
             }});

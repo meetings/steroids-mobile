@@ -225,13 +225,11 @@ app.editView = Backbone.View.extend({
         // empty views stack and send the meeting to server
         this.viewStack = [];
 
-        AppGyver.hideContent();
+        app.helpers.hideContent();
 
         // after saving, move to meeting view to finish the draft
         var that = this;
         var is_old = this.model.get('id') ? true : false;
-
-        AppGyver.requireListingRefresh();
 
         that.model.save({}, {
             success : function() {

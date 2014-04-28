@@ -1305,8 +1305,11 @@ ul li h3.ui-li-heading{
 .ui-icon-mtngs-plus {
     @include retina-bg('/images/icon_plus', 'png', 18px, 18px);
     background-color:transparent;
-    left:7px !important;
     box-shadow:none;
+    left:5px;
+    margin-left:16px !important;
+    margin-top:5px !important;
+    border-radius:0px !important;
 }
 h3.today {
     mrgin-top:10px !important;

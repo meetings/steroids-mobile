@@ -55,7 +55,7 @@ app.editMaterialPanelView = Backbone.View.extend({
         // Set handlers
         $popupEl.on('click', '.confirm', function(e){
             e.preventDefault();
-            AppGyver.hideContent();
+            app.helpers.hideContent();
             that.model.destroy({ success : function(){
                 app.helpers.switchContext("meetingPage", { id : meeting_id }, { pop : true } );
             }});
