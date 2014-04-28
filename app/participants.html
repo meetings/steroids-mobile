@@ -42,9 +42,7 @@
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
             <a class="back-button" href="#" data-icon="mtngs-back" data-theme="b">Back</a>
             <h1>Participants</h1>
-            <a href="#" class="addParticipant" data-theme="b">
-                <i class="icon-add"></i>
-            </a>
+            <a href="#" class="addParticipant" data-icon="mtngs-plus" data-iconpos="notext" data-theme="b"></a>
         </div>
         <div data-role="content" class="main-div">
             <div class="connectivity">
@@ -55,7 +53,9 @@
             <div class="content">
                 <ul id="participants_list" data-role="listview" data-inset="true" data-theme="a">
                 </ul>
-                <a href="#" class="addParticipant" data-theme="b" data-role="button">Add participants</a>
+                <a href="#" class="addParticipant" data-theme="b" data-role="button">
+                    <span class="ui-icon ui-icon-mtngs-plus-button" style="display: inline-block"></span>
+                    Add participants</a>
             </div>
         </div>
         <div data-role="panel" data-position-fixed="true" id="left-panel" data-theme="c">
