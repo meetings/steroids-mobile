@@ -1453,6 +1453,36 @@ h3.tasks {
     margin-right: 10px !important;
     margin-bottom: -3px !important;
 }
+.ui-icon-mtngs-mobile {
+    @include retina-bg('/images/icon_mobile', 'png', 18px, 18px);
+    background-color:transparent;
+    background-ui-icon-mtngs-extcolor:transparent;
+    box-shadow:none;
+    margin-left: 2px;
+    margin-right: 10px !important;
+    margin-bottom: -3px !important;
+    border-radius:0px !important;
+}
+.ui-icon-mtngs-mail {
+    @include retina-bg('/images/icon_mail', 'png', 18px, 18px);
+    background-color:transparent;
+    background-ui-icon-mtngs-extcolor:transparent;
+    box-shadow:none;
+    margin-left: 2px;
+    margin-right: 10px !important;
+    margin-bottom: -3px !important;
+    border-radius:0px !important;
+}
+.ui-icon-mtngs-linkedin {
+    @include retina-bg('/images/icon_linkedin', 'png', 18px, 18px);
+    background-color:transparent;
+    background-ui-icon-mtngs-extcolor:transparent;
+    box-shadow:none;
+    margin-left: 2px;
+    margin-right: 10px !important;
+    margin-bottom: -3px !important;
+    border-radius:0px !important;
+}
 .ui-icon-mtngs-location {
     @include retina-bg('/images/icon_editlocation', 'png', 18px, 18px);
     background-color:transparent;

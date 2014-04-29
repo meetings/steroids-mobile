@@ -23,18 +23,18 @@
 ul(data-role="listview",data-inset="true",data-theme="a")
     li
         p.mtngs-email
-            i.icon-mail
+            span.ui-icon.ui-icon-mtngs-mail(style="display: inline-block;")
             a(style="font-weight:normal;color:#555;",href="mailto:"+email)=email
         - if (phone)
             p.mtngs-mobile
-                i.icon-mobile
+                span.ui-icon.ui-icon-mtngs-mobile(style="display: inline-block;")
                 =phone
         - if (skype)
             p.mtngs-skype
-                i.icon-skype
+                span.ui-icon.ui-icon-mtngs-skype(style="display: inline-block;")
                 =skype
         - if (linkedin)
             p.mtngs-linkedin
-                i.icon-linkedin
+                span.ui-icon.ui-icon-mtngs-linkedin(style="display: inline-block;")
                 - if( linkedin.indexOf('http') === -1) linkedin = 'http://' + linkedin;
                 a(style="font-weight:normal;color:#555;",href=linkedin)="LinkedIn Profile"
