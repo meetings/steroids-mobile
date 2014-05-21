@@ -604,10 +604,6 @@ app.router = Backbone.Router.extend({
 
         if (! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
 
-        if( ! app.views.editPanel ){
-            app.views.editPanel = new app.editMeetingPanelView({ el : '#edit-meeting-panel', model : app.models.meeting });
-        }
-
         if( ! app.views.meeting ) app.views.meeting = new app.meetingView({
             el : $('#meeting'),
             model : app.models.meeting,
@@ -618,7 +614,6 @@ app.router = Backbone.Router.extend({
         // with subviews for info and materials
         app.models.meeting.fetch({ success : function(){
             meetingFetch.resolve();
-            app.views.editPanel.render();
         }, timeout : 5000, silent : true });
 
         app.collections.materials.fetch({ success : function(){
@@ -753,7 +748,8 @@ app.router = Backbone.Router.extend({
 
         app.views.material.set_material_edits( app.models.material_edits );
 
-        if ( ! app.views.edit_material_panel ) {
+        // Hide edit functionality
+        /*if ( ! app.views.edit_material_panel ) {
             app.views.edit_material_panel = new app.editMaterialPanelView({
                 el : $('#edit-material-panel'),
                 model : app.models.material
@@ -766,7 +762,7 @@ app.router = Backbone.Router.extend({
             $('div.ui-panel-content-wrap,div.ui-panel-dismiss').on('click', function(){
                 $('#edit-material-panel').panel( "close" );
             });
-        }
+        }*/
 
         app.models.material.fetch({ success : function(){
             materialFetched.resolve();
@@ -827,58 +823,6 @@ app.router = Backbone.Router.extend({
         app.views.connectCalendar = new app.connectCalendarView({
             el : $('#page .view-container')
         });
-    },
-    edit : function(params) {
-
-        // Render panel
-        if( ! app.views.panel ){
-            app.views.panel = new app.panelView({ active : "meetings", el : '#left-panel' });
-            app.views.panel.render();
-        }
-        if( ! app.views.header ) app.views.header = new app.headerView({ el : '#meetings' });
-
-        // Create user and meeting models
-        if( ! app.models.meeting ) app.models.meeting = new app.meetingModel();
-        if( ! app.models.currentUser ) app.models.currentUser = new app.userModel( { id : 'me' } );
-
-        if( ! app.views.editMeeting ) app.views.editMeeting = new app.editView({
-            model : app.models.meeting,
-            el : $('#edit'),
-            startStep : field
-        });
-
-        // Get url params
-        var id = params && params.id || null;
-        var field = params && params.field || null;
-        var new_meeting = (id === null);
-
-        // If this is new meeting
-        if(new_meeting) {
-            app.models.meeting.clear().set(app.models.meeting.defaults);
-            app.views.editMeeting.render(false);
-            app.showContent();
-        }
-        else {
-            var userFetched = $.Deferred();
-            var meetingFetched = $.Deferred();
-            var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
-
-            $.when(userFetched, meetingFetched).then(function(){
-                app.views.editMeeting.render(field);
-                watcher.fetchComplete = true;
-                app.showContent();
-            });
-
-            app.models.meeting.url = app.defaults.api_host + '/v1/meetings/' + id;
-
-            app.models.currentUser.fetch({ success : function(){
-                userFetched.resolve();
-            }});
-
-            app.models.meeting.fetch({ success : function() {
-                meetingFetched.resolve();
-            }, timeout : 5000 });
-        }
     },
 
     addParticipant : function(params) {
