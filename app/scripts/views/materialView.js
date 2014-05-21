@@ -1,9 +1,6 @@
 app.materialView = Backbone.View.extend({
 
     beforeClose : function() {
-        if ( this.current_edits_polling_timeout ) {
-            clearTimeout( this.current_edits_polling_timeout );
-        }
         $('.back-button').off('click');
     },
 
@@ -14,34 +11,15 @@ app.materialView = Backbone.View.extend({
 
         $('.back-button').on('click', function(e) {
             e.preventDefault();
-            that.set_material_edits( false );
 
             var parts = that.model.id.split(":");
             app.helpers.switchContext('meetingPage', { id : parts[0] }, { pop : true } );
         } );
     },
 
-    set_material_edits : function( edits ) {
-        this.material_edits = edits;
-
-        if ( ! edits ) return;
-
-        this.material_edits.on('change', this.render, this);
-        this.material_edits.on('remove', this.render, this);
-        this.material_edits.on('add', this.render, this);
-        this.material_edits.on('remove', function() { this.model.fetch() }, this);
-
-        this.render();
-        this.edits_polling();
-    },
-
     render: function() {
-        var current_edit = this.material_edits ? this.material_edits.at(0) : false;
-
         this.$el.html( templatizer.materialView( {
-            model : this.model.toJSON(),
-            current_edit : current_edit ? current_edit.toJSON() : false,
-            auth_user_id : app.auth.user
+            model : this.model.toJSON()
         } ) );
 
         this.initDownloadLink();
@@ -50,30 +28,6 @@ app.materialView = Backbone.View.extend({
         this.$el.trigger('create');
 
         return this;
-    },
-
-    events : {
-        'click .open-continued-material-edit' : 'continueEditing'
-    },
-
-    current_edits_polling_timeout: false,
-    edits_polling: function() {
-        if ( ! this.material_edits ) return;
-
-        this.material_edits.fetch( { update : true });
-
-        if ( this.current_edits_polling_timeout ) {
-            clearTimeout( this.current_edits_polling_timeout );
-        }
-
-        var that = this;
-        this.current_edits_polling_timeout = setTimeout( function() { that.edits_polling() }, 5000 );
-    },
-
-    continueEditing : function(e) {
-        e.preventDefault();
-
-        app.helpers.switchContext( 'editMaterialPage', { id : this.model.id, continue_edit : 1 } );
     },
 
     initDownloadLink: function(){

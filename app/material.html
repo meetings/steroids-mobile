@@ -27,12 +27,10 @@
         <script src="scripts/views/genericCollectionView.js"></script>
         <script src="scripts/views/headerView.js"></script>
         <script src="scripts/views/commentListView.js"></script>
-        <script src="scripts/views/editMaterialPanelView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/commentModel.js"></script>
         <script src="scripts/models/materialEditModel.js"></script>
         <script src="scripts/collections/commentCollection.js"></script>
-        <script src="scripts/collections/materialEditCollection.js"></script>
         <script src="scripts/models/participantModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
         <script src="scripts/routes/router.js"></script>
@@ -46,7 +44,6 @@
             <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false" data-tap-toggle="false">
                 <a class="back-button" href="#" data-icon="mtngs-back" data-theme="b">Back</a>
                 <h1>Material</h1>
-                <!--a id="open-right-panel" href="#edit-material-panel" data-theme="b"><i class="icon-edit"></i></a-->
             </div>
             <div class="main-div" data-role="content" >
                 <div class="connectivity">
@@ -63,9 +60,6 @@
                     </ul>
                 </div>
             </div>
-            <!--div class="edit-panel" data-role="panel" id="edit-material-panel" data-position="right" data-position-fixed="true" data-theme="c"-->
-            <!-- panel content goes here -->
-            <!--/div-->
         <div data-role="popup" id="confirm-delete" data-overlay-theme="a" data-theme="b" data-dismissible="false" style="max-width:400px;" class="ui-corner-all">
             <div data-role="content" data-theme="a">
                 <h3 class="ui-title">Are you sure you want to remove this material?</h3>

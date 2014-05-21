@@ -11,14 +11,11 @@ app.router = Backbone.Router.extend({
         "meeting.html" : "meeting",
         "participants.html" : "participants",
         "materials.html" : "materials",
-        "editMaterial.html" : "editMaterial",
-        "renameMaterial.html" : "renameMaterial",
         "connectAccounts.html" : "connectAccounts",
         "connectCalendar.html" : "connectCalendar",
         "participant.html" : "participant",
         "material.html" : "material",
         "scheduling.html" : "scheduling",
-        "edit.html" : "edit",
         "meetme.html" : "meetmeCover",
         "meetmeConfig.html" : "meetmeConfig",
         "meetmeCalendar.html" : "meetmeCalendar",
@@ -732,8 +729,6 @@ app.router = Backbone.Router.extend({
         app.collections.comments = app.collections.comments || new app.commentCollection();
         app.collections.comments.url = app.defaults.api_host + '/v1/meeting_materials/' + id + '/comments';
 
-        app.models.material_edits = new app.materialEditCollection( [], { material_id : id } );
-
         app.views.comments = app.views.comments || new app.commentListView({
             el : $('#comments'),
             collection : app.collections.comments,
@@ -746,24 +741,6 @@ app.router = Backbone.Router.extend({
             model : app.models.material
         });
 
-        app.views.material.set_material_edits( app.models.material_edits );
-
-        // Hide edit functionality
-        /*if ( ! app.views.edit_material_panel ) {
-            app.views.edit_material_panel = new app.editMaterialPanelView({
-                el : $('#edit-material-panel'),
-                model : app.models.material
-            });
-
-            $('div.main-div').swipeleft(function(){
-                $('#edit-material-panel').panel( "open" );
-            });
-
-            $('div.ui-panel-content-wrap,div.ui-panel-dismiss').on('click', function(){
-                $('#edit-material-panel').panel( "close" );
-            });
-        }*/
-
         app.models.material.fetch({ success : function(){
             materialFetched.resolve();
         }});
@@ -773,23 +750,6 @@ app.router = Backbone.Router.extend({
         }});
     },
 
-    editMaterial : function(params) {
-        if ( app.views.editMaterial ) app.views.editMaterial.close();
-
-        app.views.editMaterial = new app.materialEditView({
-            el : $('#page .view-container'),
-            material_id : params.id,
-            continue_edit : params.continue_edit
-        });
-    },
-    renameMaterial : function(params) {
-        if ( app.views.renameMaterial ) app.views.renameMaterial.close();
-
-        app.views.renameMaterial = new app.materialRenameView({
-            el : $('#page .view-container'),
-            material_id : params.id
-        });
-    },
     connectAccounts : function(params) {
         app.views.header = new app.headerView({ el : '#page .view-container' });
         if ( params.google_calendar ) {
