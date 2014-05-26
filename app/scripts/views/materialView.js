@@ -22,21 +22,11 @@ app.materialView = Backbone.View.extend({
             model : this.model.toJSON()
         } ) );
 
-        this.initDownloadLink();
         this.initScribd();
 
         this.$el.trigger('create');
 
         return this;
-    },
-
-    initDownloadLink: function(){
-        if( this.model.get('download_url')){
-            $('#download-link').attr('href', this.model.get('download_url'));
-         }
-        else{
-            $('#download-link').hide();
-        }
     },
 
     initScribd: function(){
