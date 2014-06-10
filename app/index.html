@@ -42,9 +42,9 @@
         <script src="scripts/views/meetmeConfigView.js"></script>
         <script src="scripts/views/meetmeCoverView.js"></script>
         <script src="scripts/views/meetmeCalendarView.js"></script>
-        <script src="scripts/views/calendarConfigView.js"></script>
         <script src="scripts/views/schedulingView.js"></script>
         <script src="scripts/views/todayMeetingsView.js"></script>
+        <script src="scripts/views/pastMeetingsView.js"></script>
         <script src="scripts/views/settingsView.js"></script>
         <script src="scripts/views/panelView.js"></script>
         <script src="scripts/views/commentListView.js"></script>
@@ -88,19 +88,33 @@
             <div class="loader">
                 <span class="loader"></span>
             </div>
+
+            <div data-theme="a" id="navbar" class="ui-navbar ui-mini">
+                <ul class="ui-grid-a">
+                    <li class="ui-block-a"><a href="#" data-id="all-meetings" class="ui-btn-active ui-btn ui-btn-inline ui-btn-up-a" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="a" data-inline="true"><span class="ui-btn-inner"><span class="ui-btn-text">Upcoming</span></span></a></li>
+                    <li class="ui-block-b"><a href="#" data-id="past-meetings" data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="span" data-theme="a" data-inline="true" class="ui-btn ui-btn-inline ui-btn-up-a"><span class="ui-btn-inner"><span class="ui-btn-text">Past</span></span></a></li>
+                </ul>                
+            </div>
+
+                    <!-- /navbar -->
             <div class="content">
-                <ul id="past" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="today" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="highlights" class="highlight-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="unscheduled" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
-                <ul id="future" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
-                </ul>
+                <div id="all-meetings">
+                    <ul id="today" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                    </ul>
+                    <ul id="unscheduled" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                    </ul>
+                    <ul id="future" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                    </ul>
+                </div>
+                
+                <div id="past-meetings" style="display: none;">
+                    <ul id="past" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                    </ul>
+                </div>
+
                 <div id="meetings-buttons"></div>
             </div>
+
             <div data-role="popup" id="suggestion-popup" data-overlay-theme="a" data-theme="a" data-dismissible="false" class="ui-corner-all">
                 <div style="padding:10px 20px;">
                     <h4 id="calendar-name"></h4>

@@ -58,6 +58,18 @@ app.genericCollectionView = Backbone.View.extend({
         }
     },
 
+    disableInfiniteScroll: function() {
+        if(this.infiniScroll) {
+            this.infiniScroll.disableFetch();
+        }
+    },
+
+    enableInfiniteScroll: function() {
+        if(this.infiniScroll) {
+            this.infiniScroll.enableFetch();
+        }
+    },
+
     // Clean the model
     reset : function(collection, options){
         // TODO : sometimes things break so that the childviews get set but when they render they just return empty li elems
@@ -85,13 +97,9 @@ app.genericCollectionView = Backbone.View.extend({
 
         if (this._rendered) {
 
-            if( options.index === 0 || this.options.mode === 'addtotop' ) {
-                this.addHtmlBuffer.push( childView.render().el );
-                this.delayedAdd();
-            }
-            else this.$el.append(childView.render().el);
+            this.addHtmlBuffer.push( childView.render().el );
 
-            this.$el.listview().listview("refresh");
+            this.delayedAdd();
         }
     },
 

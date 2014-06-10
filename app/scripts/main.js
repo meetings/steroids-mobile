@@ -163,7 +163,6 @@ window.app = {
             { file : 'material.html', id : 'materialPage' },
             { file : 'scheduling.html', id : 'schedulingPage' },
             { file : 'addParticipant.html', id : 'addParticipantPage' },
-            { file : 'calconfig.html', id : 'calconfigPage' },
             { file : 'meetme.html', id : 'meetmeCover', no_preload : true },
             { file : 'meetmeCalendar.html', id : 'meetmeCalendar', no_preload : true },
             { file : 'meetmeConfig.html', id : 'meetmeConfig', no_preload : true },
