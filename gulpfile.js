@@ -156,8 +156,7 @@ gulp.task('static_tmp', function() {
 
 gulp.task('static', function() {
     return gulp.src('app/static/**/*')
-    .pipe(gulp.dest('dist/static'))
-    .pipe(connect.reload());
+    .pipe(gulp.dest('dist/static'));
 });
 
 gulp.task('images', function() {
@@ -165,13 +164,6 @@ gulp.task('images', function() {
     .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
     .pipe(gulp.dest('dist/images'));
 });
-
-gulp.task('static', function() {
-    return gulp.src('app/static/**/*')
-    .pipe(gulp.dest('dist/static'))
-    .pipe(notify({ message: 'Static task complete' }));
-});
-
 
 // Reload
 gulp.task('reload', function () {
