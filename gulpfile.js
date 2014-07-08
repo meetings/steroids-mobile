@@ -67,7 +67,6 @@ gulp.task('watch', function () {
 });
 
 gulp.task('jade_tmp', function() {
-    console.log('hail');
     templatizer(paths.jade,  paths.jade + '/all.js');
 });
 gulp.task('jade', function() {
