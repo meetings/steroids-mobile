@@ -154,6 +154,12 @@ gulp.task('static_tmp', function() {
     .pipe(connect.reload());
 });
 
+gulp.task('static', function() {
+    return gulp.src('app/static/**/*')
+    .pipe(gulp.dest('dist/static'))
+    .pipe(connect.reload());
+});
+
 gulp.task('images', function() {
     return gulp.src('app/images/*')
     .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
@@ -196,5 +202,5 @@ gulp.task('clean_tmp', function() {
 
 // The build task
 gulp.task('build', function() {
-    runSequence('clean','styles','images','usemin','connect');
+    runSequence('clean','jade','static','styles','images','usemin','connect');
 });
