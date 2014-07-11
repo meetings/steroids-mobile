@@ -13,8 +13,10 @@ livereload = require('gulp-livereload'),
 lr = require('tiny-lr'),
 connect = require('gulp-connect'),
 sass = require('gulp-sass'),
-usemin = require('gulp-usemin'),
+usemin = require('gulp-usemin2'),
 templatizer = require('templatizer'),
+runSequence = require('run-sequence'),
+minifyHtml = require('gulp-minify-html'),
 server = lr();
 
 var paths = {
@@ -31,20 +33,33 @@ var paths = {
 };
 
 
-gulp.task('connect', connect.server({
-    root: __dirname + '/.tmp/',
-    port: 3501,
-    livereload: true,
-    open: {
-        browser: 'Google Chrome'
-    }
-}));
+gulp.task('connect_tmp', function() {
+    connect.server({
+        root: __dirname + '/.tmp/',
+        port: 3501,
+        livereload: true,
+        open: {
+            browser: 'Google Chrome'
+        }
+    });
+});
+
+gulp.task('connect', function() {
+    connect.server({
+        root: __dirname + '/dist/',
+        port: 3501,
+        livereload: false,
+        open: {
+            browser: 'Google Chrome'
+        }
+    });
+});
+
 
 gulp.task('watch', function () {
     gulp.watch(paths.html, ['html_tmp']);
     gulp.watch(paths.jade_watch, ['jade_tmp']);
     gulp.watch(paths.scripts, ['scripts_tmp']);
-    gulp.watch(paths.fonts, ['fonts_tmp']);
     gulp.watch(paths.bower, ['bower_tmp']);
     gulp.watch(paths.styles, ['styles_tmp']);
     gulp.watch(paths.styles, ['static_tmp']);
@@ -52,7 +67,6 @@ gulp.task('watch', function () {
 });
 
 gulp.task('jade_tmp', function() {
-    console.log('hail');
     templatizer(paths.jade,  paths.jade + '/all.js');
 });
 gulp.task('jade', function() {
@@ -61,20 +75,19 @@ gulp.task('jade', function() {
 
 
 // Default task = server
-gulp.task('default', ['clean_tmp','watch','jade_tmp','scripts_tmp','bower_tmp','styles_tmp','html_tmp','images_tmp','static_tmp','fonts_tmp','connect'], function() {
+gulp.task('default', ['clean_tmp','watch','jade_tmp','scripts_tmp','bower_tmp','styles_tmp','html_tmp','images_tmp','static_tmp','connect_tmp'], function() {
 });
 
 
 gulp.task('usemin', function() {
-    gulp.src('./*.html')
-    .pipe(usemin({
-        cssmin: false,
-        htmlmin: false,
-        jsmin: false
+    gulp.src('app/*.html')
+     .pipe(usemin({
+      htmlmin: minifyHtml({empty: true}),
+      jsmin: uglify(),
+      rev: true
     }))
-    .pipe(gulp.dest('build/'));
+    .pipe(gulp.dest('dist/'));
 });
-
 
 // Styles
 gulp.task('styles_tmp', function() {
@@ -86,30 +99,19 @@ gulp.task('styles_tmp', function() {
 
 // Styles
 gulp.task('styles', function() {
-    return gulp.src(paths.styles)
-    .pipe(sass({ style: 'expanded', errLogToConsole: true }))
+    return gulp.src('app/styles/custom.scss')
+    .pipe(sass({ style: 'compressed' }))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-    .pipe(concat('main.scss'))
-    .pipe(gulp.dest('dist/styles'))
     .pipe(minifycss())
-    .pipe(rev())
-    .pipe(gulp.dest(paths.distFolder + '/styles'))
+    .pipe(gulp.dest('app/styles'))
     .pipe(notify({ message: 'Styles task complete' }));
 });
-
 // HTML
 gulp.task('html_tmp', function() {
     return gulp.src('app/**/*.html')
     .pipe(gulp.dest('.tmp'))
     .pipe(connect.reload());
 });
-
-gulp.task('fonts_tmp', function() {
-    return gulp.src('app/fonts/**/*')
-    .pipe(gulp.dest('.tmp/fonts'))
-    .pipe(connect.reload());
-});
-
 
 // Scripts
 gulp.task('scripts_tmp', function() {
@@ -145,19 +147,21 @@ gulp.task('images_tmp', function() {
     .pipe(gulp.dest('.tmp/images'))
     .pipe(connect.reload());
 });
-//
-// Images
 gulp.task('static_tmp', function() {
     return gulp.src('app/static/**/*')
     .pipe(gulp.dest('.tmp/static'))
     .pipe(connect.reload());
 });
 
+gulp.task('static', function() {
+    return gulp.src('app/static/**/*')
+    .pipe(gulp.dest('dist/static'));
+});
+
 gulp.task('images', function() {
-    return gulp.src('app/images/**/*')
+    return gulp.src('app/images/*')
     .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
-    .pipe(gulp.dest('dist/images'))
-    .pipe(notify({ message: 'Images task complete' }));
+    .pipe(gulp.dest('dist/images'));
 });
 
 // Reload
@@ -167,18 +171,18 @@ gulp.task('reload', function () {
 
 // Html
 gulp.task('html_tmp', function () {
-    gulp.src('./app/*.html')
+    return gulp.src('./app/*.html')
     .pipe(gulp.dest('.tmp/'))
     .pipe(connect.reload());
 });
 gulp.task('html', function () {
-    gulp.src('./app/*.html')
+    return gulp.src('./app/*.html')
     .pipe(connect.reload());
 });
 
 // Clean
 gulp.task('clean', function() {
-    return gulp.src(['dist/styles', 'dist/scripts', 'dist/images'], {read: false})
+    return gulp.src(['dist/styles', 'dist/scripts', 'dist/images','dist/'], {read: false})
     .pipe(clean());
 });
 gulp.task('clean_tmp', function() {
@@ -187,12 +191,7 @@ gulp.task('clean_tmp', function() {
     // .pipe(clean({ force : true  }));
 });
 
-
-
-
 // The build task
-gulp.task('build', ['clean'], function() {
-    gulp.start('styles', 'scripts', 'images');
+gulp.task('build', function() {
+    runSequence('clean','jade','static','styles','images','usemin','connect');
 });
-
-

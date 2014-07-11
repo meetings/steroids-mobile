@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="disable-touch-select" lang="en">
     <head>
-        <title> Some work left to do... | Meetin.gs</title>
+        <title>Meetings | Meetin.gs</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -17,7 +17,6 @@
         <script src="scripts/helpers/dateformat.js"></script>
         <script src="scripts/vendor/jqm.js"></script>
         <script src="scripts/vendor/lodash.min.js"></script>
-        <script src="scripts/vendor/jstz.min.js"></script>
         <script src="scripts/vendor/modernizr.js"></script>
         <script src="scripts/vendor/backbone-min.js"></script>
         <script src="scripts/vendor/infiniscroll.js"></script>
@@ -41,9 +40,6 @@
         <script src="scripts/views/upcomingMeetingsView.js"></script>
         <script src="scripts/views/unscheduledMeetingsView.js"></script>
         <script src="scripts/views/highlightedMeetingsView.js"></script>
-        <script src="scripts/views/meetmeConfigView.js"></script>
-        <script src="scripts/views/meetmeCoverView.js"></script>
-        <script src="scripts/views/meetmeCalendarView.js"></script>
         <script src="scripts/views/schedulingView.js"></script>
         <script src="scripts/views/todayMeetingsView.js"></script>
         <script src="scripts/views/settingsView.js"></script>
@@ -52,10 +48,6 @@
         <script src="scripts/views/nextActionView.js"></script>
         <script src="scripts/views/headerView.js"></script>
         <script src="scripts/views/profileView.js"></script>
-        <script src="scripts/views/slotInListView.js"></script>
-        <script src="scripts/views/slotCollectionView.js"></script>
-        <script src="scripts/views/meetmeConfirmedView.js"></script>
-        <script src="scripts/views/underConstructionView.js"></script>
         <script src="scripts/models/meetingModel.js"></script>
         <script src="scripts/models/matchmakerModel.js"></script>
         <script src="scripts/models/materialModel.js"></script>
@@ -63,14 +55,11 @@
         <script src="scripts/models/userModel.js"></script>
         <script src="scripts/models/participantModel.js"></script>
         <script src="scripts/models/commentModel.js"></script>
-        <script src="scripts/models/slotModel.js"></script>
-        <script src="scripts/models/matchmakerLockModel.js"></script>
         <script src="scripts/collections/meetingCollection.js"></script>
         <script src="scripts/collections/commentCollection.js"></script>
         <script src="scripts/collections/materialCollection.js"></script>
         <script src="scripts/collections/participantCollection.js"></script>
         <script src="scripts/collections/matchmakerCollection.js"></script>
-        <script src="scripts/collections/slotCollection.js"></script>
         <script src="scripts/routes/router.js"></script>
         <script src="scripts/templates/all.js"></script>
         <!-- endbuild -->
@@ -79,12 +68,41 @@
     <!-- Meetings listing -->
     <div data-role="page" id="meetings" data-theme="a">
         <div data-role="header" data-id="meeting-header" data-position="fixed" data-theme="d" data-tap-toggle="false">
+            <a id="open-left-panel" href="#left-panel" data-icon="mtngs-panel" data-iconpos="notext" data-theme="b"></a>
             <h1>Meetin.gs</h1>
+            <a id="create-meeting" class="open-add-meeting-view" href="edit.html" data-icon="mtngs-plus" data-iconpos="notext"  data-theme="b"></a>
         </div>
         <div class="main-div" data-role="content" >
+            <div class="connectivity"></div>
+            <div class="loader">
+                <span class="loader"></span>
+            </div>
             <div class="content">
+                <ul id="past" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                </ul>
+                <ul id="today" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                </ul>
+                <ul id="highlights" class="highlight-list" data-role="listview" data-inset="true" data-theme="a">
+                </ul>
+                <ul id="unscheduled" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                </ul>
+                <ul id="future" class="meeting-list" data-role="listview" data-inset="true" data-theme="a">
+                </ul>
+                <div id="meetings-buttons"></div>
+            </div>
+            <div data-role="popup" id="suggestion-popup" data-overlay-theme="a" data-theme="a" data-dismissible="false" class="ui-corner-all">
+                <div style="padding:10px 20px;">
+                    <h4 id="calendar-name"></h4>
+                    <a href="#" class="create-meeting" type="submit" data-theme="b">Create meeting page</a>
+                    <a href="#" class="remove-suggestion" type="submit" data-theme="b">Hide suggestion</a>
+                    <a href="#" class="remove-all" type="submit" data-theme="b">Disable this calendar</a>
+                    <a href="#" class="cancel" type="submit" data-theme="b">Cancel</a>
+                </div>
             </div>
         </div><!-- /content -->
+        <div data-role="panel" data-position-fixed="true" id="left-panel" data-theme="c">
+            <!-- panel content goes here -->
+        </div><!-- /panel -->
     </div><!-- /page -->
     <script type="text/javascript" charset="utf-8">
 var _gaq = _gaq || [];
