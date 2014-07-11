@@ -1,13 +1,12 @@
 div#meetme-confirmed
     p= locals.accepter_name + ' will now accept or decline your request. We will send you a notification when we have a response.'
-    p.info.first='Title: ' + title
+    if( title )
+        p.info.first='Title: ' + title
     p.info='When: '+ times_string
     - if( locals.location )
         p.info='Where: '+ location
     if ( navigator.userAgent.match(/iPad/i) != null || navigator.userAgent.match(/iPhone/i) != null )
         p Stay up to date regarding the meeting:
         a(href="http://bit.ly/meetings-app",target="_blank",data-role="button",data-theme="b") Download iPhone app
-    if ( navigator.userAgent.match(/Android/i) != null )
-        p Stay up to date regarding the meeting:
-        a(href="http://bit.ly/meetings-android",target="_blank",data-role="button",data-theme="b") Download Android app
-    a(href="/",data-role="button",data-theme="a") View my meetings
+    if( ! quickmeet_key )
+        a(href="/",data-role="button",data-theme="a") View my meetings

@@ -13,6 +13,7 @@ app.meetmeCalendarView = Backbone.View.extend({
         this.selected_matchmaker_path = options.selected_matchmaker_path || 'default';
         this.subviews = {};
         this.now = new Date();
+        this.quickmeet_key = options.quickmeet_key || false;
 
         app.options.ua_time_zone = jstz.determine_timezone();
     },
@@ -170,9 +171,17 @@ app.meetmeCalendarView = Backbone.View.extend({
 
         $('.ui-btn-text', e.currentTarget).text('Confirming...');
 
-        if( app.auth.user ) {
+        if( app.auth.user || this.quickmeet_key ) {
             var _this = this;
-            this.lock.save({ agenda : $('#meetme-agenda', this.el ).val() }, { success : function(res) {
+            var data = {};
+
+            if( this.quickmeet_key ) {
+                data.quickmeet_key = this.quickmeet_key;
+            } else {
+                data.agenda = $('#meetme-agenda', this.el ).val();
+            }
+
+            this.lock.save(data, { success : function(res) {
                 if( res.error ) {
                     alert('Cannot make a reservation with your self.');
                     return;
@@ -232,7 +241,7 @@ app.meetmeCalendarView = Backbone.View.extend({
 
         // TODO: Hide back button
 
-        this.$el.html( templatizer.meetmeConfirmed( _.merge( this.active_matchmaker.toJSON(), this.lock.toJSON() ) ) );
+        this.$el.html( templatizer.meetmeConfirmed( _.merge( this.active_matchmaker.toJSON(), this.lock.toJSON(), { quickmeet_key : this.quickmeet_key } ) ) );
         this.$el.trigger('create');
 
         return;
@@ -320,7 +329,8 @@ app.meetmeCalendarView = Backbone.View.extend({
                 orig_mm_tz : _this.active_matchmaker.get('time_zone_original'),
                 orig_mm_tz_offset : _this.active_matchmaker.get('time_zone_offset_original'),
                 start_epoch : _this.lock.get('start_epoch'),
-                end_epoch : _this.lock.get('end_epoch')
+                end_epoch : _this.lock.get('end_epoch'),
+                quickmeet_key : _this.quickmeet_key
             }) );
 
             // Change title & hide back button

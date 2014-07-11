@@ -8,7 +8,7 @@ app.meetmeCoverView = Backbone.View.extend({
         this.matchmaker_collection = options.matchmakers_collection;
         this.user_fragment = options.user_fragment;
         this.mode = options.mode || "normal";
-        this.selected_matchmaker_path = options.selected_matchmaker_path || 'default';
+        this.selected_calendar = options.calendar || false;
 
     },
 
@@ -18,8 +18,26 @@ app.meetmeCoverView = Backbone.View.extend({
 
     render : function() {
 
-        // Setup template
-        this.$el.html( templatizer.meetmeCover( { user : this.user_model.toJSON(), matchmakers : this.matchmaker_collection.toJSON() }) );
+        var _this = this;
+
+        if( this.selected_calendar ) {
+            // Find matchmaking calendar model
+            var calendar = _.find( app.views.current.matchmaker_collection.models, function(o) { return o.get('vanity_url_path') === _this.selected_calendar; });
+
+            // If matchmaker is not found, navigate to top level meetme page
+            if( ! calendar ) {
+                // TODO: navigate to top level page
+                alert('not found');
+                return;
+            }
+
+            var temp_col = new app.matchmakerCollection(calendar);
+            this.$el.html( templatizer.meetmeCover( { user : this.user_model.toJSON(), matchmakers : temp_col.toJSON(), mode : 'single' }) );
+        }
+
+        else {
+            this.$el.html( templatizer.meetmeCover( { user : this.user_model.toJSON(), matchmakers : this.matchmaker_collection.toJSON(), mode : this.mode }) );
+        }
 
         this.$el.trigger('create');
 

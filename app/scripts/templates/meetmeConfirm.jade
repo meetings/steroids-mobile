@@ -12,12 +12,14 @@ div#meetme-confirm
             else
                 p='Their time: ' + app.helpers.fullTimeSpanString( start_epoch, end_epoch, mm_tz, mm_tz_offset )
                 p='Your time: ' + app.helpers.fullTimeSpanString( start_epoch, end_epoch, uatz, uatz_offset )
-        p You have 
-            span.bold 15 minutes 
-            | to complete this form.
-        p Leave a note or preliminary agenda on why you want to meet.
+        if( ! quickmeet_key )
+            p You have 
+                span.bold 15 minutes 
+                | to complete this form.
+            p Leave a note or preliminary agenda on why you want to meet.
     div.form-area
-        textarea#meetme-agenda(data-theme='b',placeholder='Why do you want to meet and what the proposed agenda will be?')
+        if( ! quickmeet_key )
+            textarea#meetme-agenda(data-theme='b',placeholder='Why do you want to meet and what the proposed agenda will be?')
 
         a.confirm-slot(href='#',data-role='button', data-theme='b') Confirm
         a.cancel-slot(href='#',data-role='button') Cancel

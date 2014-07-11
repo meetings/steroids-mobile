@@ -1,3 +1,4 @@
+- var mms = _.filter( matchmakers, function(o){ return o.last_active_epoch === 0 || o.last_active_epoch * 1000 > new Date().getTime() })
 div#meetme-cover
     div.top
         h1=user.name
@@ -9,9 +10,11 @@ div#meetme-cover
                 // TODO :fix def image
                 img(src=user.image || '/images/meetings/new_profile.png')
         div.description
-            p=user.meetme_description
+            if( mode === 'single' )
+                p=mms[0].description
+            else
+                p=user.meetme_description
         div.clear
-        - var mms = _.filter( matchmakers, function(o){ return o.last_active_epoch === 0 || o.last_active_epoch * 1000 > new Date().getTime() })
         each mm in mms
             div.mm
                 h3
