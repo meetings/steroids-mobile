@@ -24,7 +24,6 @@ app.panelView = Backbone.View.extend({
         'click #nav-edit-profile' : 'openProfile',
         'click #nav-logout' : 'logout',
         'click #nav-meetme' : 'openMeetmeConfig',
-        'click #nav-calconfig' : 'openCalconfig',
         'click .no-mobile' : 'switchNormal'
     },
 
@@ -65,11 +64,6 @@ app.panelView = Backbone.View.extend({
     openMeetmeConfig : function(e) {
         e.preventDefault();
         app.helpers.switchContext('meetmeConfig');
-    },
-
-    openCalconfig : function(e) {
-        e.preventDefault();
-        app.helpers.switchContext('calconfigPage');
     },
 
     logout : function(e){

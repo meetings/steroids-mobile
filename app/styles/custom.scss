@@ -49,10 +49,10 @@ span.bold{
     font-weight:700;
 }
 
-/* H3 and UL close to the top of the content */
+/* H3 and UL close to the top of the content 
 .ui-content h3:first-child, .ui-content ul:first-child{
     margin-top:0px;
-}
+}*/
 /* Rule to not truncate stuff */
 .notruncation, ul#comments .ui-li-desc, ul#comments .ui-li-heading{
     white-space: normal !important;
@@ -494,7 +494,7 @@ span.placeholder-20{
 }
 
 // Main view lists
-ul#past,ul#future{
+ul#future{
     margin-top:0px;
     li{
         min-height:101px;

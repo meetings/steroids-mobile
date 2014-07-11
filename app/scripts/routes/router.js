@@ -20,7 +20,6 @@ app.router = Backbone.Router.extend({
         "meetmeConfig.html" : "meetmeConfig",
         "meetmeCalendar.html" : "meetmeCalendar",
         "meetmeConfirm.html" : "meetmeConfirm",
-        "calconfig.html" : "calConfig",
         "underConstruction.html" : "underConstruction",
         "apps.html" : "apps",
         "addParticipant.html" : "addParticipant"
@@ -222,10 +221,6 @@ app.router = Backbone.Router.extend({
         }
     },
 
-    calConfig : function( params ) {
-
-    },
-
     contextRedirect : function( params ) {
         var redirect_info_json = params.redirect_info;
         var redirect_info = JSON.parse( redirect_info_json );
@@ -260,39 +255,16 @@ app.router = Backbone.Router.extend({
         var futureFetch = $.Deferred();
         var pastFetch = $.Deferred();
         var unscheduledFetch = $.Deferred();
-        var highlightsFetch = $.Deferred();
         var userFetch = $.Deferred();
 
         var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
         // wait for ajax requests to succeed, defer show content until that
-        $.when(futureFetch, unscheduledFetch, pastFetch, highlightsFetch, userFetch).then(function(){
+        $.when(futureFetch, unscheduledFetch, pastFetch, userFetch).then(function(){
 
             app.views.meetingsView.render();
             watcher.fetchComplete = true;
             app.showContent();
-
-            var offset;
-            if( $('#today').is(":visible") ){
-                offset = $('#today').offset();
-                window.scrollTo(0, offset.top - 50);
-            }
-            else if( $('#highlights').is(":visible") ){
-                offset = $('#highlights').offset();
-                window.scrollTo(0, offset.top - 50);
-            }
-            else if( $('#future').is(":visible") ){
-                offset = $('#future').offset();
-                window.scrollTo(0, offset.top - 50);
-            }
-            else if( $('#unscheduled').is(":visible") ){
-                offset = $('#unscheduled').offset();
-                window.scrollTo(0, offset.top - 50);
-            }
-            else{
-                offset = $('#meetings-buttons').offset();
-                window.scrollTo(0, offset.bottom);
-            }
         });
 
 
@@ -314,68 +286,13 @@ app.router = Backbone.Router.extend({
         }
         app.collections.past_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/meetings';
 
-        if( ! app.collections.highlights ) app.collections.highlights = new app.meetingCollection({},{ override_endpoint : 'highlighted_meetings' });
-        app.collections.highlights.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/highlighted_meetings';
-
         app.models.user = app.models.user || new app.userModel();
         app.models.user.set( 'id', app.auth.user );
 
         // Create views
         app.views.meetingsView = app.views.meetingsView || new app.meetingsView({
-            el : '#meetings-buttons',
+            el : '.main-div',
             model : app.models.user
-        });
-
-        if( ! app.views.future ) app.views.future = new app.upcomingMeetingsView({
-            collection : app.collections.upcoming,
-            childViewConstructor : app.meetingInListView,
-            childViewTagName : 'li',
-            el : '#future',
-            emptyString : '<li class="end">No more upcoming meetings.</li>',
-            infiniScroll : true,
-            infiniScrollDirection : 'down',
-            infiniScrollExtraParams : { start_min : today, sort : "asc" },
-            hideIfEmpty : true
-        });
-
-        if( ! app.views.today ) app.views.today = new app.todayMeetingsView({
-            collection : app.collections.today,
-            childViewConstructor : app.meetingInListView,
-            childViewTagName : 'li',
-            el : $('#today'),
-            infiniScroll : false,
-            hideIfEmpty : true
-        });
-
-        if( ! app.views.unscheduled ) app.views.unscheduled = new app.unscheduledMeetingsView({
-            collection : app.collections.unscheduled_meetings,
-            childViewConstructor : app.meetingInListView,
-            childViewTagName : 'li',
-            el : '#unscheduled',
-            infiniScroll : false,
-            hideIfEmpty : true
-        });
-
-        if( ! app.views.past ) app.views.past = new app.genericCollectionView({
-            collection : app.collections.past_meetings,
-            childViewConstructor : app.meetingInListView,
-            childViewTagName : 'li',
-            el : '#past',
-            emptyString : '<li class="end">No more past meetings.</li>',
-            infiniScroll : true,
-            infiniScrollDirection : 'up',
-            infiniScrollExtraParams : { start_max : today, sort : "desc" },
-            mode : "addtotop",
-            hideIfEmpty : true
-        });
-
-        if( ! app.views.highlights ) app.views.highlights = new app.highlightedMeetingsView({
-            collection : app.collections.highlights,
-            childViewConstructor : app.highlightedMeetingInListView,
-            childViewTagName : 'li',
-            el : '#highlights',
-            infiniScroll : false,
-            hideIfEmpty : true
         });
 
         // Fetch things
@@ -416,11 +333,8 @@ app.router = Backbone.Router.extend({
         app.collections.past_meetings.fetch({ success : function(col,res){
             pastFetch.resolve();
         }, data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
-
-        app.collections.highlights.fetch({ success : function(col,res){
-            highlightsFetch.resolve();
-        }});
     },
+    
     _sentSuggestions : {},
     _formSuggestionBatchFromCalendarResult : function( result ) {
         var that = this;
