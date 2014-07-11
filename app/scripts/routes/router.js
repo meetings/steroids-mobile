@@ -48,8 +48,15 @@ app.router = Backbone.Router.extend({
 
     meetmeCover : function( params ) {
         var user = params.user || '';
-        var mm_fragment = params.cal || '';
+        var cal = params.cal || '';
+        var quickmeet_key = params.quickmeet_key || '';
+        var open_calendar = params.open_calendar || false;
 
+        if( open_calendar ) {
+            app.helpers.switchContext("meetmeCalendar", { user : user, cal : cal, quickmeet_key : quickmeet_key } );
+        }
+
+        // TODO: why some params are arrays?!
 
         if( ! app.collections.matchmakers ) {
             app.collections.matchmakers = new app.matchmakerCollection();
@@ -67,13 +74,13 @@ app.router = Backbone.Router.extend({
             matchmakers_collection : app.collections.matchmakers,
             user_model : app.models.user,
             user_fragment : user,
-            selected_matchmaker_path : mm_fragment
+            calendar : cal
         });
 
         if( app.collections.matchmakers.length === 0) {
             var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
             app.collections.matchmakers.fetch({
-                data : { user_fragment : user, matchmaker_fragment : mm_fragment },
+                data : { user_fragment : user, matchmaker_fragment : cal},
                 success: function() {
 
                     app.models.user.fetch({ data : { user_fragment : user, image_size : 140 }, success : function() {
@@ -83,6 +90,7 @@ app.router = Backbone.Router.extend({
                     }});
                 },
                 error : function() {
+                    return;
                     window.location = '404.html';
                 }
             });
@@ -146,6 +154,7 @@ app.router = Backbone.Router.extend({
     meetmeCalendar : function( params ) {
         var user = params.user || '';
         var cal = params.cal || 'default';
+        var quickmeet_key = params.quickmeet_key || '';
         var confirmed_lock = params.confirmed_lock_id || false;
 
         app.views.header = app.views.header || new app.headerView({ 'el' : '#meetings' });
@@ -185,6 +194,7 @@ app.router = Backbone.Router.extend({
             el : '.content',
             matchmakers_collection : app.collections.matchmakers,
             selected_matchmaker_path : cal,
+            quickmeet_key : quickmeet_key,
             user_model : app.models.user
         });
 

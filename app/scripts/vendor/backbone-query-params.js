@@ -131,7 +131,6 @@ _.extend(Backbone.Router.prototype, {
         length = length - 1;
       }
     }
-
     for (var i=0; i<length; i++) {
       if (_.isString(params[i])) {
         params[i] = Backbone.Router.decodeParams ? decodeURIComponent(params[i]) : params[i];
@@ -270,7 +269,7 @@ _.extend(Backbone.Router.prototype, {
 });
 
 function iterateQueryString(queryString, callback) {
-  var keyValues = queryString.split('&');
+  var keyValues = _.uniq(queryString.split('&')); // JFK: add uniq
   _.each(keyValues, function(keyValue) {
     var i = keyValue.indexOf('=');
     var arr = [keyValue.slice(0,i), keyValue.slice(i+1)];
