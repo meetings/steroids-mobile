@@ -430,7 +430,7 @@ window.app = {
         var matchmaker_fragment = this._getUrlParamByName('matchmaker_fragment') || '';
         var open_calendar = this._getUrlParamByName('open_calendar') || '';
         var quickmeet_key = this._getUrlParamByName('quickmeet_key') || '';
-        var ensure_user_id = this._getUrlParamByName('ensure_user_id') || '';
+        var ensure_user_id = this._getUrlParamByName('ensure_user_id') || false;
         var user_fragment = this._getUrlParamByName('user_fragment');
         var under_construction_url = this._getUrlParamByName('under_construction_url');
         var under_construction_message = this._getUrlParamByName('under_construction_message') || '';
@@ -443,10 +443,16 @@ window.app = {
         var chosen_redirect = false;
 
         // Clear user tokens
-        if ( clear == 'true') {
+        if ( clear == 'true' ) {
             app.auth.user = '';
             app.auth.token = '';
             return;
+        }
+
+        if( ensure_user_id && ensure_user_id !== app.auth.user ) {
+            this._removeAuthCookie();
+            app.auth.user = '';
+            app.auth.token = '';
         }
 
         // Show scheduling answering
