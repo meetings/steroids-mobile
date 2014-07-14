@@ -263,6 +263,21 @@ window.app = {
             window.location.href = '/apps.html';
         },
 
+        isMobile : {
+            Android: function() {
+                return /Android/i.test(navigator.userAgent);
+            },
+            BlackBerry: function() {
+                return /BlackBerry/i.test(navigator.userAgent);
+            },
+            iOS: function() {
+                return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            },
+            Windows: function() {
+                return /IEMobile/i.test(navigator.userAgent);
+            }
+        },
+
         getCookie : function(name) {
             var parts = document.cookie.split(name + "=");
             if (parts.length == 2) return parts.pop().split(";").shift();

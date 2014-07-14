@@ -344,7 +344,7 @@ app.router = Backbone.Router.extend({
             pastFetch.resolve();
         }, data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
     },
-    
+
     _sentSuggestions : {},
     _formSuggestionBatchFromCalendarResult : function( result ) {
         var that = this;
@@ -412,7 +412,7 @@ app.router = Backbone.Router.extend({
     login : function(params) {
 
         // Go to the new site for login stuff
-        if( window.location.href.indexOf('localhost') === -1 ) {
+        if( window.location.href.indexOf('localhost') === -1 && ( app.helpers.isMobile.Android() || app.helpers.isMobile.iOS() || app.helpers.isMobile.Windows() ) ) {
             window.location = app.defaults.new_mobile_redirect_url;
             return;
         }
