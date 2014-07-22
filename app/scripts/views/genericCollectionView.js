@@ -188,6 +188,7 @@ app.genericCollectionView = Backbone.View.extend({
             else{
                 this.$el.append( loader );
             }
+            this.$el.listview("refresh");
         }
 
         this._rendered = true;

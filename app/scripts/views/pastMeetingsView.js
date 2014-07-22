@@ -1,4 +1,4 @@
-app.pastMeetingsView = app.genericCollectionView.extend({
+app.pastMeetingsView = app.collectionView.extend({
     renderExtras : function(){
         this.$el.prepend('<div><h3 class="past">Past</h3></div>');
 
