@@ -78,13 +78,6 @@ app.collectionView = Backbone.View.extend({
     },
 
     fetchMore: function() {
-        // Get times
-        /*var today = Math.floor( moment().startOf('day') / 1000 );
-
-        this.collection.fetch({ success : function(col,res){
-            var x = 0;
-        }, data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );*/
-
         if ( this.fetchOn ) {
             this.$loadMore.hide();
             this.$loader.appendTo(this.$el).show();
@@ -248,11 +241,7 @@ app.collectionView = Backbone.View.extend({
             this.disableFetch();
         }
         
-        this.scrolledMore(collection, response);
-    },
-
-    scrolledMore : function(col, res) {
-        if( res.length < 10 ) {
+        if(response.length < 10) {
             this.$loader.hide();
             this.$loadMore.hide();
             this.hasMore = false;
