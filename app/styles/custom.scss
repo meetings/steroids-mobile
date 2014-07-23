@@ -1221,6 +1221,22 @@ div.loader {
         background-size:40px 40px;
     }
 }
+
+ul.meeting-list li.loader-inlist a {
+    padding-top: 0 !important;    
+}
+
+.loader-inlist a {
+    display: block;
+    color: #666;
+    text-decoration: none;
+}
+
+.loader-inlist a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
 // Should be soon deprectaed
 li img.loader{
     height:40px;

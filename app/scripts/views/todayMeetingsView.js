@@ -1,4 +1,4 @@
-app.todayMeetingsView = app.genericCollectionView.extend({
+app.todayMeetingsView = app.collectionView.extend({
     renderExtras : function(){
         this.$el.prepend('<div><h3 class="today">Today</h3></div>');
 
