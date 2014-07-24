@@ -249,7 +249,7 @@ window.app = {
 
         tryToSellApps : function() {
             // Check cookie & check param from user??!
-            if(! ( navigator.userAgent.match(/iPhone/i) ||  navigator.userAgent.match(/android/i) ) ) return;
+            if( ! navigator.userAgent.match(/iPhone/i)  ) return;
             if( app.helpers.getCookie('app_install_shown') ) return;
 
             // Set the cookie
