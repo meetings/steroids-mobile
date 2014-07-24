@@ -1,14 +1,16 @@
-// Generic Updating Collection View that offers
-// * infinite scroll
-// * filtering
-// * searching
-app.genericCollectionView = Backbone.View.extend({
+app.collectionView = Backbone.View.extend({
     defaults : {
-        infiniScroll : false,
-        mode : 'normal'
     },
-    initialize : function(options) {
 
+    fetchOn : false,
+    page : 1,
+    pageSize : 10,
+
+    events: {
+        'click .js-load-more' : 'fetchMore'
+    },
+
+    initialize : function(options) {
         // Check requirements
         if (!options.childViewConstructor) throw "no child view constructor provided";
         if (!options.childViewTagName) throw "no child view tag name provided";
@@ -21,22 +23,6 @@ app.genericCollectionView = Backbone.View.extend({
 
         // Initiate add buffer
         this.addHtmlBuffer = [];
-
-        // Setup infinite scrolling
-        if (this.options.infiniScroll){
-            var _this = this;
-            var direction = this.options.infiniScrollDirection || 'down';
-            var extraParams = this.options.infiniScrollExtraParams || {};
-            this.infiniScroll = new Backbone.InfiniScroll(this.collection, {
-                success: function(col, res){ _this.scrolledMore(col, res); },
-                onFetch: function(){
-                },
-                direction: direction,
-                extraParams: extraParams,
-                view: _this,
-                queryParamsFunc: this.options.queryParamsFunc
-            });
-        }
 
         // Setup childviews & bind events
         this._childViewConstructor = options.childViewConstructor;
@@ -56,17 +42,62 @@ app.genericCollectionView = Backbone.View.extend({
         if ( typeof options.emptyString === 'string' ) {
             this.emptyString = options.emptyString;
         }
+
+        this.options = _.defaults(options, {
+            success: function(){ },
+            error: function(){ },
+            onFetch: function(){ },
+            queryParamsFunc: false,
+            target: $(window),
+            param: "until",
+            untilAttr: "id",
+            pageSize: this.pageSize,
+            scrollOffset: 100,
+            scrollOn: true,
+            add: true,
+            update: true,
+            strict: false,
+            includePage: true,
+            extraParams : {},
+            direction: 'down',
+            initialPage: 1
+        });
+
+        this.fetchOn = true;
+        this.hasMore = false;
+        this.page = this.options.initialPage || 1;
+
+        this.$loader = $('<li class="loader-inlist" data-role="list-divider"><span class="loader"></span><p>Loading more...</p></li>');
+        this.$loadMore = $('<li class="loader-inlist" data-role="list-divider"><a href="#" class="js-load-more">Load more...</a></li>');
     },
 
     disableInfiniteScroll: function() {
-        if(this.infiniScroll) {
-            this.infiniScroll.disableFetch();
-        }
     },
 
     enableInfiniteScroll: function() {
-        if(this.infiniScroll) {
-            this.infiniScroll.enableFetch();
+    },
+
+    fetchMore: function() {
+        if ( this.fetchOn ) {
+            this.$loadMore.hide();
+            this.$loader.appendTo(this.$el).show();
+            this.$el.listview('refresh');
+
+            var lastModel = this.collection.last();
+            if (!lastModel) { return; }
+
+            this.onFetch();
+            this.disableFetch();
+
+            this.collection.fetch({
+                success: _.bind(this.fetchSuccess, this),
+                error: _.bind(this.fetchError, this),
+                add: this.options.add,
+                update: this.options.update,
+                remove: false,
+                data: this.options.queryParamsFunc ? this.options.queryParamsFunc(this.page) : _.bind(this.buildQueryParams, this)(lastModel)
+                //silent: true
+            });
         }
     },
 
@@ -92,11 +123,9 @@ app.genericCollectionView = Backbone.View.extend({
             model : model
         });
 
-        if( options.index === 0 || this.options.mode === 'addtotop' ) this._childViews.unshift(childView);
-        else this._childViews.push(childView);
+        this._childViews.push(childView);
 
-        if (this._rendered) {
-
+        if(this._rendered) {
             this.addHtmlBuffer.push( childView.render().el );
 
             this.delayedAdd();
@@ -105,23 +134,16 @@ app.genericCollectionView = Backbone.View.extend({
 
     // We want to add content to dom all at once, so underscores debounce is used to achieve this
     delayedAdd : _.debounce( function(){
-        // Make space for the incoming stuff
-        var $loader = $('li.loader',this.el);
-        if( this.options.mode === 'addtotop'){
-            var incoming_h = 102 * this.addHtmlBuffer.length;
-            var cur_h = this.$el.height();
-            //this.$el.css('height', cur_h + incoming_h );
-            window.scrollBy(0, incoming_h );
-            $loader.after($(this.addHtmlBuffer));
-        }
-        else{
-            $loader.before($(this.addHtmlBuffer));
+        this.$loader.hide();
+
+        this.$el.append(this.addHtmlBuffer);
+        this.addHtmlBuffer = [];
+        
+        if(this.hasMore) {
+            this.$loadMore.appendTo(this.$el).show();
         }
 
-        this.addHtmlBuffer = [];
-        this.$el.listview().listview("refresh");
-        $loader.removeClass().addClass('loader'); // Clean jqm stuff
-        $('p',$loader).removeClass();
+        this.$el.listview('refresh');
     },20),
 
     // Remove model from the collection
@@ -176,18 +198,15 @@ app.genericCollectionView = Backbone.View.extend({
             else this.$el.show();
         }
 
-        this.$el.listview().listview("refresh");
+        this.$el.listview("refresh");
         //_.delay(function($el) { $el.listview().listview("refresh"); }, 10, this.$el);
 
         // Show loader if there was 10 meeitngs returned
-        if( this.options.infiniScroll && l == 10 ){
-            var loader = '<li class="loader"><span class="loader" ></span><p>Loading more...</p></li>';
-            if( this.options.mode === 'addtotop'){
-                this.$el.prepend( loader );
-            }
-            else{
-                this.$el.append( loader );
-            }
+        this.hasMore = (l == 10);
+
+        if(this.hasMore){ 
+            this.$el.append(this.$loadMore.show());
+
             this.$el.listview("refresh");
         }
 
@@ -196,31 +215,73 @@ app.genericCollectionView = Backbone.View.extend({
         return this;
     },
 
-    scrolledMore : function(col, res) {
-        if( res.length < 10 ){
-            this.hideLoader();
+    destroy : function() {
+        //$target.off("scroll", this.watchScroll);
+    },
+
+    enableFetch : function() {
+        setTimeout(function(){
+            this.fetchOn = true;
+        },50);
+    },
+
+    disableFetch : function() {
+        fetchOn = false;
+    },
+
+    onFetch : function() {
+        this.options.onFetch();
+    },
+
+    fetchSuccess : function(collection, response) {
+        if ((this.options.strict && collection.length >= (this.page + 1) * this.options.pageSize) || (!this.options.strict && response.length >= this.options.pageSize)) {
+            this.enableFetch();
+            this.page += 1;
+        } else {
+            this.disableFetch();
+        }
+        
+        if(response.length < 10) {
+            this.$loader.hide();
+            this.$loadMore.hide();
+            this.hasMore = false;
+
             var msg = this.emptyString;
-            var mode = this.options.mode;
             var el = this.$el;
+            var _this = this;
 
             // Allow time for the delayed render function to complete
             setTimeout(function(){
-                if( mode === 'addtotop'){
-                    window.scrollBy(0, 30);
-                    el.prepend(msg);
-                }
-                else{
-                    el.append(msg);
-                }
+                el.append(msg);
+                _this.$el.listview("refresh");
             },500);
         }
     },
 
-    hideLoader : function(){
-        $('li.loader', this.el).hide();
-        if( this.options.mode === 'addtotop'){
-            window.scrollBy(0, -94);
+    fetchError : function(collection, response) {
+        this.enableFetch();
+        this.options.error(collection, response);
+    },
+
+    buildQueryParams : function(model) {
+        var params = { };
+
+        params[this.options.param] = typeof(model[this.options.untilAttr]) === "function" ? model[this.options.untilAttr]() : model.get(this.options.untilAttr);
+
+        if (this.options.includePage) {
+            params.offset = (this.page ) * this.options.pageSize;
+            params.limit = this.options.pageSize;
         }
+
+        if ( this.options.extraParams ){
+           params =  _.extend( this.options.extraParams, params );
+        }
+
+        if( this.options.query ){
+            params = _.extend( params, this.options.query );
+        }
+
+        return params;
     }
 });
 

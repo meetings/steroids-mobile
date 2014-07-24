@@ -1,4 +1,4 @@
-app.upcomingMeetingsView = app.genericCollectionView.extend({
+app.upcomingMeetingsView = app.collectionView.extend({
     renderExtras : function(){
         // Check if the first meeting is today or further in the future
         var today = Math.floor ( moment().utc().startOf('day') / 1000 );
