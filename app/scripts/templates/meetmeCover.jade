@@ -7,8 +7,7 @@ div#meetme-cover
     div.middle.box
         div.border
             div.wrapper
-                // TODO :fix def image
-                img(src=user.image || '/images/meetings/new_profile.png')
+                img(src=user.image || '/images/default_user_100.png')
         div.description
             if( mode === 'single' )
                 p=mms[0].description
