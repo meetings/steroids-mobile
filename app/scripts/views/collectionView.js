@@ -64,7 +64,7 @@ app.collectionView = Backbone.View.extend({
         });
 
         this.fetchOn = true;
-        this.hasMore = false;
+        this.hasMore = true;
         this.page = this.options.initialPage || 1;
 
         this.$loader = $('<li class="loader-inlist" data-role="list-divider"><span class="loader"></span><p>Loading more...</p></li>');
@@ -81,7 +81,7 @@ app.collectionView = Backbone.View.extend({
         if ( this.fetchOn ) {
             this.$loadMore.hide();
             this.$loader.appendTo(this.$el).show();
-            this.$el.listview('refresh');
+            this.$el.listview().listview('refresh');
 
             var lastModel = this.collection.last();
             if (!lastModel) { return; }
@@ -143,7 +143,7 @@ app.collectionView = Backbone.View.extend({
             this.$loadMore.appendTo(this.$el).show();
         }
 
-        this.$el.listview('refresh');
+        this.$el.listview().listview('refresh');
     },20),
 
     // Remove model from the collection
@@ -198,16 +198,13 @@ app.collectionView = Backbone.View.extend({
             else this.$el.show();
         }
 
-        this.$el.listview("refresh");
+        this.$el.listview().listview("refresh");
         //_.delay(function($el) { $el.listview().listview("refresh"); }, 10, this.$el);
-
-        // Show loader if there was 10 meeitngs returned
-        this.hasMore = (l == 10);
 
         if(this.hasMore){ 
             this.$el.append(this.$loadMore.show());
 
-            this.$el.listview("refresh");
+            this.$el.listview().listview("refresh");
         }
 
         this._rendered = true;
@@ -241,7 +238,7 @@ app.collectionView = Backbone.View.extend({
             this.disableFetch();
         }
         
-        if(response.length < 10) {
+        if(response.length < this.options.pageSize) {
             this.$loader.hide();
             this.$loadMore.hide();
             this.hasMore = false;
@@ -253,8 +250,11 @@ app.collectionView = Backbone.View.extend({
             // Allow time for the delayed render function to complete
             setTimeout(function(){
                 el.append(msg);
-                _this.$el.listview("refresh");
+                _this.$el.listview().listview("refresh");
             },500);
+        }
+        else {
+            this.hasMore = true;
         }
     },
 
