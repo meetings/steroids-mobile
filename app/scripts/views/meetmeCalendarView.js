@@ -146,7 +146,7 @@ app.meetmeCalendarView = Backbone.View.extend({
             }
             else{
                 $('.load-msg').text('');
-                if( ! _this.subviews.slots ) _this.subviews.slots = new app.slotCollectionView({
+                if( ! _this.subviews.slots ) _this.subviews.slots = new app.collectionView({
                     collection : app.collections.slots,
                     childViewConstructor : app.slotInListView,
                     childViewTagName : 'li',
@@ -161,6 +161,7 @@ app.meetmeCalendarView = Backbone.View.extend({
                         return { begin_epoch : week_begin - 25 * 60 * 60, end_epoch : week_end + 25 * 60 * 60 };
                     }
                 });
+                _this.subviews.slots.render();
             }
         }});
 
