@@ -35,7 +35,8 @@ app.meetingView = Backbone.View.extend({
         'click .open-map-link' : 'openMapLink',
         'click .open-add-participant-view' : 'openAddParticipantView',
         'click .open-send-invites-view' : 'openSendInvitesView',
-        'click .save-meeting-invite' : 'saveMeetingInvite'
+        'click .save-meeting-invite' : 'saveMeetingInvite',
+        'click .open-version-info' : 'openVersionInfo'
     },
 
     render: function() {
@@ -99,7 +100,6 @@ app.meetingView = Backbone.View.extend({
 
         $('#participants').removeClass('ui-listview');
 
-
         if( ! this.is_polling ) {
             this.is_polling = true;
             setTimeout(this.doPoll,4000);
@@ -112,9 +112,13 @@ app.meetingView = Backbone.View.extend({
         var _this = this;
         this.model.fetch({ success : function() {
             setTimeout(_this.doPoll,4000);
-        }})
+        }});
     },
 
+    openVersionInfo : function(e) {
+        e.preventDefault();
+        $('#version-info').popup('open');
+    },
 
     renderSendInvites : function() {
         this.inviteView = true;

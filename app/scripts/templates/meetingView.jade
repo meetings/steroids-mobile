@@ -38,6 +38,9 @@ div#progress-bar
         a.open-add-participant-view(href="#", data-theme="b", data-role="button") Add participants
     - else if( matchmaking_accepted && matchmaking_accepted !== 0 )
         a.open-send-invites-view(href="#", data-theme="b", data-role="button") Send invites
+if( is_manager)
+    p.note NOTE: You are using Meetin.gs in the limited compatibility mode. 
+        a.open-version-info(href='#') What does this mean?
 
 ul#participant-list(data-role='listview',data-inset='true')
     li
