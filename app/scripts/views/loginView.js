@@ -5,8 +5,7 @@ app.loginView = Backbone.View.extend({
             e.preventDefault();
             $('#login-header').hide();
             app.views.login.render();
-            $('#login-page').trigger('create');
-            $('#login-page').css('padding-top','0px');
+            $('#login-page').trigger('create').css('padding-top','0px');
         });
 
         this.google_uid = options.google_uid;

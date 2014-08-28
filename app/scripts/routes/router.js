@@ -412,10 +412,10 @@ app.router = Backbone.Router.extend({
     login : function(params) {
 
         // Go to the new site for login stuff
-        if( window.location.href.indexOf('localhost') === -1 && ( app.helpers.isMobile.Android() || app.helpers.isMobile.iOS() || app.helpers.isMobile.Windows() ) ) {
-            window.location = app.defaults.new_mobile_redirect_url;
-            return;
-        }
+        //if( window.location.href.indexOf('localhost') === -1 && ( app.helpers.isMobile.Android() || app.helpers.isMobile.iOS() || app.helpers.isMobile.Windows() ) ) {
+            //window.location = app.defaults.new_mobile_redirect_url;
+            //return;
+        //}
 
         var that = this;
         if ( params && params.fb_login ) {
