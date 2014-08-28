@@ -261,23 +261,6 @@ app.router = Backbone.Router.extend({
         // Get times
         var today = Math.floor( moment().startOf('day') / 1000 );
 
-        // Deferreds for fetches
-        var futureFetch = $.Deferred();
-        var pastFetch = $.Deferred();
-        var unscheduledFetch = $.Deferred();
-        var userFetch = $.Deferred();
-
-        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
-
-        // wait for ajax requests to succeed, defer show content until that
-        $.when(futureFetch, unscheduledFetch, pastFetch, userFetch).then(function(){
-
-            app.views.meetingsView.render();
-            watcher.fetchComplete = true;
-            app.showContent();
-        });
-
-
         // Create collections && set urls
         if( ! app.collections.future_meetings ) app.collections.future_meetings = new app.meetingCollection();
         app.collections.future_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/meetings_and_suggestions';
@@ -290,9 +273,7 @@ app.router = Backbone.Router.extend({
 
         if( ! app.collections.past_meetings ) {
             app.collections.past_meetings = new app.meetingCollection();
-            app.collections.past_meetings.comparator = function(meeting){
-                return meeting.get('begin_epoch');
-            };
+            app.collections.past_meetings.comparator = function(meeting) { return meeting.get('begin_epoch'); };
         }
         app.collections.past_meetings.url = app.defaults.api_host + '/v1/users/' + app.auth.user + '/meetings';
 
@@ -305,12 +286,23 @@ app.router = Backbone.Router.extend({
             model : app.models.user
         });
 
-        // Fetch things
+        // Deferreds for fetches
+        var futureFetch = $.Deferred();
+        var userFetch = app.models.user.fetch();
+        var unscheduledFetch = app.collections.unscheduled_meetings.fetch({ data : { include_draft : 1 }});
+        var pastFetch = app.collections.past_meetings.fetch({ data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
 
-        app.models.user.fetch({ success : function() {
-            userFetch.resolve();
-        }});
+        var watcher = new app.helpers.fetchTimeoutWatcher(app.options.fetchTimeout, '.loader');
 
+        // wait for ajax requests to succeed, defer show content until that
+        $.when(futureFetch, unscheduledFetch, pastFetch, userFetch).then(function(){
+            app.views.meetingsView.render();
+            watcher.fetchComplete = true;
+            app.showContent();
+        });
+
+
+        // Fetch future
         var fetchFutureMeetings = function() {
             app.collections.future_meetings.fetch({ success : function(col,res){
                 // Get times
@@ -319,13 +311,13 @@ app.router = Backbone.Router.extend({
 
                 // Create a new collection of todays meetings
                 var today_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
-                    return ( o['begin_epoch'] >= today && o['begin_epoch'] <= today_end );
+                    return ( o.begin_epoch >= today && o.begin_epoch <= today_end );
                 });
                 app.collections.today.reset( today_meetings );
 
                 // Create new collection of upcoming meetings
                 var upcoming_meetings = _.filter( app.collections.future_meetings.toJSON(), function(o){
-                    return ( o['begin_epoch'] > today_end );
+                    return ( o.begin_epoch > today_end );
                 });
                 app.collections.upcoming.reset( upcoming_meetings );
 
@@ -336,13 +328,6 @@ app.router = Backbone.Router.extend({
 
         fetchFutureMeetings();
 
-        app.collections.unscheduled_meetings.fetch({ success : function(col,res){
-            unscheduledFetch.resolve();
-        }, data : { include_draft : 1 }});
-
-        app.collections.past_meetings.fetch({ success : function(col,res){
-            pastFetch.resolve();
-        }, data : { include_draft : 1, start_max : today, limit : 10, sort : "desc" } } );
     },
 
     _sentSuggestions : {},

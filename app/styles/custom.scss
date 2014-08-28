@@ -496,6 +496,10 @@ span.placeholder-20{
 // Main view lists
 ul#future{
     margin-top:0px;
+    li.loader-inlist{
+        min-height:18px;
+        height:18px;
+    }
     li{
         min-height:101px;
         div.ui-btn-inner{

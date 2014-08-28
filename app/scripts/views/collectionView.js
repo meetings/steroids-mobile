@@ -138,8 +138,8 @@ app.collectionView = Backbone.View.extend({
 
         this.$el.append(this.addHtmlBuffer);
         this.addHtmlBuffer = [];
-        
-        if(this.hasMore) {
+
+        if(this.hasMore && this.options.infiniScroll) {
             this.$loadMore.appendTo(this.$el).show();
         }
 
@@ -201,7 +201,7 @@ app.collectionView = Backbone.View.extend({
         this.$el.listview().listview("refresh");
         //_.delay(function($el) { $el.listview().listview("refresh"); }, 10, this.$el);
 
-        if(this.hasMore){ 
+        if(this.hasMore && this.options.infiniScroll){
             this.$el.append(this.$loadMore.show());
 
             this.$el.listview().listview("refresh");
@@ -237,7 +237,7 @@ app.collectionView = Backbone.View.extend({
         } else {
             this.disableFetch();
         }
-        
+
         if(response.length < this.options.pageSize) {
             this.$loader.hide();
             this.$loadMore.hide();
