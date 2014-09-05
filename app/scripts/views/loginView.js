@@ -84,7 +84,7 @@ app.loginView = Backbone.View.extend({
                     $form.append( $('<p class="error">An unknown error has happened. Please go back and try again!</p>').delay(5000).fadeOut() );
                 }
             }
-        }, 'json' );
+        });
     },
     tryagain : function(e){
         e.preventDefault();
@@ -112,7 +112,6 @@ app.loginView = Backbone.View.extend({
                         setTimeout(function(){
                             document.getElementById("pin").focus();
                         },100);
-                        //$('#pin').focus();
                     });
                 });
             }
@@ -120,7 +119,7 @@ app.loginView = Backbone.View.extend({
                $button.html('Send');
                $form.append( $('<p class="error">Sorry,there was an error processing your request. Try again!</p>').delay(5000).fadeOut() );
             }
-        }, 'json');
+        });
     },
     googleConnect : function(e) {
         var that = this;
@@ -141,7 +140,6 @@ app.loginView = Backbone.View.extend({
                         setTimeout(function(){
                             document.getElementById("pin").focus();
                         },100);
-                        //$('#pin').focus();
                     });
                 });
             }
@@ -149,7 +147,7 @@ app.loginView = Backbone.View.extend({
                $button.html('Send');
                $form.append( $('<p class="error">Sorry,there was an error processing your request. Try again!</p>').delay(5000).fadeOut() );
             }
-        }, 'json');
+        });
     },
     facebookLogin : function(e) {
         e.preventDefault();

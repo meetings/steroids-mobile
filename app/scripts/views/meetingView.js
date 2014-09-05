@@ -162,8 +162,6 @@ app.meetingView = Backbone.View.extend({
         var parent = this;
 
         $.post(app.defaults.api_host + '/v1/meetings/' + this.model.get('id') + '/send_draft_participant_invites', data, function(res) {
-            console.log(res);
-
             parent.reloadMeeting();
         }).error(function() {
             $('.save-meeting-invite').button('enable');

@@ -2,7 +2,7 @@ div#meetme-confirm
     div.info-bar
         if( uatz === orig_mm_tz )
             p The reservation for 
-                = app.helpers.fullTimeSpanString( start_epoch, end_epoch)
+                = app.helpers.fullTimeSpanString( start_epoch, end_epoch, uatz, uatz_offset) 
                 | is now pending.
         else
             p The reservation below is now pending.

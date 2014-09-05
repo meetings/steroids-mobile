@@ -413,7 +413,7 @@ app.router = Backbone.Router.extend({
                 else {
                     that._render_login( 'Failed to connect with Facebook' );
                 }
-            }, 'json' );
+            });
         }
         else if ( params && params.google_login ) {
             params = { google_code : params.code, google_redirect_uri : params.redirect_uri };
@@ -432,7 +432,7 @@ app.router = Backbone.Router.extend({
                         that._render_login( 'Failed to connect with Google' );
                     }
                 }
-            }, 'json' );
+            });
         }
         else {
             that._render_login();
