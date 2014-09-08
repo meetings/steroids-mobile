@@ -41,6 +41,12 @@ app.meetmeCalendarView = Backbone.View.extend({
             }
         }
 
+        // If no active matchmaker found, go to users front page
+        if( ! this.active_matchmaker ) {
+            app.helpers.switchContext('meetmeCover', { user : _this.user_model.get('matchmaker_fragment') });
+            return;
+        }
+
         this.$el.html( templatizer.meetmeCalendar( { user : this.user_model.toJSON(), matchmaker : this.active_matchmaker.toJSON(), mode : this.mode }) );
 
         // Show header
