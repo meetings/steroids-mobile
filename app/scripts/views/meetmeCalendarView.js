@@ -178,6 +178,7 @@ app.meetmeCalendarView = Backbone.View.extend({
 
         $('.ui-btn-text', e.currentTarget).text('Confirming...');
 
+
         if( app.auth.user || this.quickmeet_key ) {
             var _this = this;
             var data = {};
@@ -189,14 +190,15 @@ app.meetmeCalendarView = Backbone.View.extend({
             }
 
             this.lock.save(data, { success : function(res) {
-                if( res.error ) {
-                    alert('Cannot make a reservation with your self.');
-                    return;
+                if( res.error && res.error.message ) return alert(res.error.message);
+
+                if( _this.lock.get('accepted_meeting_id') ) {
+                    window.location = 'meeting.html?redirect_to_meeting=' + _this.lock.get('accepted_meeting_id');
+                } else {
+                    _this.showSuccess();
                 }
-                _this.showSuccess();
             }});
-        }
-        else {
+        } else {
             this.lock.set({ agenda : $('#meetme-agenda').val() });
             // TODO: Make it visible that only email is needed
             this.$el.html( templatizer.profileView( { new_user : true }) );
@@ -231,10 +233,8 @@ app.meetmeCalendarView = Backbone.View.extend({
 
                 // TODO: handle error
                 _this.lock.save({ expected_confirmer_id : _this.new_user.id }, { success : function(res) {
-                    if( res.error ) {
-                        alert('Cannot make a reservation with your self.');
-                        return;
-                    }
+                    if( res.error && res.error.message ) return alert(res.error.message);
+
                     _this.$el.html( templatizer.meetmeConfirmationSent( _this.new_user.toJSON() ) );
                 }});
             },
@@ -321,11 +321,7 @@ app.meetmeCalendarView = Backbone.View.extend({
 
         this.lock.save( data, { success : function(model, res) {
 
-            if(res.error) {
-                // TODO: DIsplay the actual error message
-                alert('Oops, cannot reserve a meeting from your self!');
-                return;
-            }
+            if( res.error && res.error.message ) return alert(res.error.message);
 
             // Show confirm template
             _this.$el.html( templatizer.meetmeConfirm( {

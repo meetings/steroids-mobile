@@ -37,11 +37,6 @@ app.loginView = Backbone.View.extend({
     focusEmail : function(e){
         e.preventDefault();
         $('#login-header').fadeIn();
-        $('a#facebook-login,a#google-login,p.separator,div.logo').fadeOut('fast');
-        $('a#facebook-login,a#google-login,p.separator,div.logo').promise().done(function(){
-            $('div.controls').fadeIn();
-            $('body').scrollTop(0);
-        });
     },
     checkPin : function(e){
         e.preventDefault();
