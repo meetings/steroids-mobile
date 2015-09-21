@@ -1,3 +1,6 @@
+/*jslint todo: true, vars: true, eqeq: true, nomen: true, sloppy: true, white: true, unparam: true, node: true */
+
+
 var gulp = require('gulp'),
 autoprefixer = require('gulp-autoprefixer'),
 minifycss = require('gulp-minify-css'),
@@ -17,12 +20,14 @@ usemin = require('gulp-usemin2'),
 templatizer = require('templatizer'),
 runSequence = require('run-sequence'),
 minifyHtml = require('gulp-minify-html'),
+fs = require('fs'),
 server = lr();
+
 
 var paths = {
     html: 'app/**/*.html',
     jade: 'app/scripts/templates',
-    jade_watch: 'app/scripts/templates/**/*',
+    jade_watch: [ 'app/scripts/templates/**/*', '!app/scripts/templates/all*' ],
     fonts: 'app/fonts/**.*',
     bower: 'app/bower_components/**/*',
     scripts: 'app/scripts/**/*',
@@ -37,10 +42,7 @@ gulp.task('connect_tmp', function() {
     connect.server({
         root: __dirname + '/.tmp/',
         port: 3501,
-        livereload: true,
-        open: {
-            browser: 'Google Chrome'
-        }
+        livereload: true
     });
 });
 
@@ -48,10 +50,7 @@ gulp.task('connect', function() {
     connect.server({
         root: __dirname + '/dist/',
         port: 3501,
-        livereload: false,
-        open: {
-            browser: 'Google Chrome'
-        }
+        livereload: false
     });
 });
 
@@ -66,17 +65,26 @@ gulp.task('watch', function () {
     gulp.watch(paths.images, ['images_tmp']);
 });
 
+
+
 gulp.task('jade_tmp', function() {
-    templatizer(paths.jade,  paths.jade + '/all.js');
+    templatizer(paths.jade, paths.jade + '/all.common.js', function() {
+        var browserify = require('browserify');
+        var b = browserify(paths.jade + '/all.common.js', { standalone : 'templatizer' });
+        b.bundle().pipe(fs.createWriteStream(paths.jade + '/all.js'));
+    });
 });
 gulp.task('jade', function() {
-    templatizer(paths.jade,  paths.jade + '/all.js');
+    templatizer(paths.jade, paths.jade + '/all.common.js', function() {
+        var browserify = require('browserify');
+        var b = browserify(paths.jade + '/all.common.js', { standalone : 'templatizer' });
+        b.bundle().pipe(fs.createWriteStream(paths.jade + '/all.js'));
+    });
 });
 
 
 // Default task = server
-gulp.task('default', ['clean_tmp','watch','jade_tmp','scripts_tmp','bower_tmp','styles_tmp','html_tmp','images_tmp','static_tmp','connect_tmp'], function() {
-});
+gulp.task('default', ['clean_tmp','watch','jade_tmp','scripts_tmp','bower_tmp','styles_tmp','html_tmp','images_tmp','static_tmp','connect_tmp'], function() { return; });
 
 
 gulp.task('usemin', function() {
@@ -189,6 +197,7 @@ gulp.task('clean_tmp', function() {
     //
     // return gulp.src([paths.tmpFolder+'/*'], {read: false})
     // .pipe(clean({ force : true  }));
+    return;
 });
 
 // The build task

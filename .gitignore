@@ -1,4 +1,6 @@
 app/scripts/templates/all.js
+app/scripts/templates/all.common.js
+app/styles/custom.css
 node_modules
 \.sass\-cache
 agapp
