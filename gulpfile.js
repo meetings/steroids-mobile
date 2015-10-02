@@ -16,7 +16,7 @@ livereload = require('gulp-livereload'),
 lr = require('tiny-lr'),
 connect = require('gulp-connect'),
 sass = require('gulp-sass'),
-usemin = require('gulp-usemin2'),
+usemin = require('gulp-usemin'),
 templatizer = require('templatizer'),
 runSequence = require('run-sequence'),
 minifyHtml = require('gulp-minify-html'),
@@ -86,13 +86,13 @@ gulp.task('jade', function() {
 // Default task = server
 gulp.task('default', ['clean_tmp','watch','jade_tmp','scripts_tmp','bower_tmp','styles_tmp','html_tmp','images_tmp','static_tmp','connect_tmp'], function() { return; });
 
-
 gulp.task('usemin', function() {
-    gulp.src('app/*.html')
-     .pipe(usemin({
-      htmlmin: minifyHtml({empty: true}),
-      jsmin: uglify(),
-      rev: true
+  return gulp.src(['app/*.html'])
+    .pipe(usemin({
+      // this silently crashes usemin 0.3.8 -- upgrading breaks usemin completely
+      // html: [ minifyHtml({ empty: true }) ],
+      css: [ rev() ],
+      js: [ uglify(), rev() ],
     }))
     .pipe(gulp.dest('dist/'));
 });
@@ -138,13 +138,13 @@ gulp.task('bower_tmp', function() {
 
 gulp.task('scripts', function() {
     return gulp.src('app/scripts/**/*.js')
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter('default'))
+//    .pipe(jshint('.jshintrc'))
+//    .pipe(jshint.reporter('default'))
     .pipe(concat('main.js'))
     .pipe(gulp.dest('dist/scripts'))
     .pipe(uglify())
-    .pipe(rev())
-    .pipe(livereload(server))
+//    .pipe(rev())
+//    .pipe(livereload(server))
     .pipe(gulp.dest('dist/scripts'))
     .pipe(notify({ message: 'Scripts task complete' }));
 });

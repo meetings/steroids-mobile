@@ -197,7 +197,9 @@ window.app = {
 
         formContextURL : function( context, params, randomize ) {
             params = params || {};
-            params.steroids_preload_id = context.id;
+            // NOTE: this is not used anymore but if you remove it, you need to fix ajaxPrefilter, which does not seem to work if the displayed page url contains only one url parameter. This accidentally fixes it
+            params.context_id = context.id;
+
             var query_string = app.helpers.formQueryString( params, randomize );
 
             return '/' + context.file + query_string;
@@ -347,6 +349,8 @@ window.app = {
         //this._removeIosNav();
 
         $.ajaxSetup( { dataType : 'jsonp'} );
+
+        // NOTE: this expects the callback to be the first url parameter. there is probably also something else wrong with this as it breaks if there is only one url parameter in the page which is being displayed
         $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
             options.dataType = 'jsonp';
             options.url = app.defaults.api_host + '/jsonp' + options.url.slice(options.url.indexOf('?callback'));

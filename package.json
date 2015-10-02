@@ -23,7 +23,7 @@
     "gulp-rev": "latest",
     "gulp-connect": "latest",
     "gulp-watch": "latest",
-    "gulp-usemin": "latest",
+    "gulp-usemin": "0.3.8",
     "gulp-usemin2": "latest",
     "gulp-minify-html": "latest",
     "run-sequence": "latest",
