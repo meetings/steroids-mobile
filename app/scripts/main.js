@@ -42,8 +42,6 @@ var app_mode = (function(){
 })();
 
 window.app = {
-    timezones : {"data":{"America/Bogota":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Bogota ( America )","name":"America/Bogota"},"America/Whitehorse":{"offset_string":"UTC-7","offset_value":-25200,"changed_offset_string":"UTC-8","readable_name":"-7:00 Whitehorse ( America )","changed_offset_value":-28800,"name":"America/Whitehorse","dst_change_epoch":1414920504,"changed_readable_name":"-8:00 Whitehorse ( America )"},"Africa/Kinshasa":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Kinshasa ( Africa )","name":"Africa/Kinshasa"},"America/Mazatlan":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Mazatlan ( America )","changed_offset_value":-25200,"name":"America/Mazatlan","dst_change_epoch":1414311105,"changed_readable_name":"-7:00 Mazatlan ( America )"},"Antarctica/Palmer":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-3","readable_name":"-4:00 Palmer ( Antarctica )","changed_offset_value":-10800,"name":"Antarctica/Palmer","dst_change_epoch":1413086614,"changed_readable_name":"-3:00 Palmer ( Antarctica )"},"America/Indiana/Vincennes":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Vincennes ( America/Indiana )","changed_offset_value":-18000,"name":"America/Indiana/Vincennes","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Vincennes ( America/Indiana )"},"Africa/Conakry":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Conakry ( Africa )","name":"Africa/Conakry"},"Asia/Manila":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Manila ( Asia )","name":"Asia/Manila"},"America/Nassau":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Nassau ( America )","changed_offset_value":-18000,"name":"America/Nassau","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Nassau ( America )"},"Asia/Dhaka":{"offset_string":"UTC+6","offset_value":21600,"readable_name":"+6:00 Dhaka ( Asia )","name":"Asia/Dhaka"},"Europe/Belgrade":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Belgrade ( Europe )","changed_offset_value":3600,"name":"Europe/Belgrade","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Belgrade ( Europe )"},"America/Los_Angeles":{"offset_string":"UTC-7","offset_value":-25200,"changed_offset_string":"UTC-8","readable_name":"-7:00 Los Angeles ( America )","changed_offset_value":-28800,"name":"America/Los_Angeles","dst_change_epoch":1414920504,"changed_readable_name":"-8:00 Los Angeles ( America )"},"Asia/Aqtau":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Aqtau ( Asia )","name":"Asia/Aqtau"},"Asia/Dushanbe":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Dushanbe ( Asia )","name":"Asia/Dushanbe"},"Africa/Bujumbura":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Bujumbura ( Africa )","name":"Africa/Bujumbura"},"Europe/Vaduz":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Vaduz ( Europe )","changed_offset_value":3600,"name":"Europe/Vaduz","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Vaduz ( Europe )"},"Asia/Baghdad":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Baghdad ( Asia )","name":"Asia/Baghdad"},"America/Juneau":{"offset_string":"UTC-8","offset_value":-28800,"changed_offset_string":"UTC-9","readable_name":"-8:00 Juneau ( America )","changed_offset_value":-32400,"name":"America/Juneau","dst_change_epoch":1414922402,"changed_readable_name":"-9:00 Juneau ( America )"},"Asia/Beirut":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Beirut ( Asia )","changed_offset_value":7200,"name":"Asia/Beirut","dst_change_epoch":1414271239,"changed_readable_name":"+2:00 Beirut ( Asia )"},"America/St_Kitts":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 St Kitts ( America )","name":"America/St_Kitts"},"America/Inuvik":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Inuvik ( America )","changed_offset_value":-25200,"name":"America/Inuvik","dst_change_epoch":1414916707,"changed_readable_name":"-7:00 Inuvik ( America )"},"Africa/Nairobi":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Nairobi ( Africa )","name":"Africa/Nairobi"},"Asia/Pyongyang":{"offset_string":"UTC+9","offset_value":32400,"readable_name":"+9:00 Pyongyang ( Asia )","name":"Asia/Pyongyang"},"Pacific/Norfolk":{"offset_string":"UTC+11:30","offset_value":41400,"readable_name":"+11:30 Norfolk ( Pacific )","name":"Pacific/Norfolk"},"America/St_Johns":{"offset_string":"UTC-2:30","offset_value":-9000,"changed_offset_string":"UTC-3:30","readable_name":"-2:30 St Johns ( America )","changed_offset_value":-12600,"name":"America/St_Johns","dst_change_epoch":1414895824,"changed_readable_name":"-3:30 St Johns ( America )"},"Pacific/Guam":{"offset_string":"UTC+10","offset_value":36000,"readable_name":"+10:00 Guam ( Pacific )","name":"Pacific/Guam"},"Australia/Currie":{"offset_string":"UTC+10","offset_value":36000,"changed_offset_string":"UTC+11","readable_name":"+10:00 Currie ( Australia )","changed_offset_value":39600,"name":"Australia/Currie","dst_change_epoch":1412439246,"changed_readable_name":"+11:00 Currie ( Australia )"},"America/Hermosillo":{"offset_string":"UTC-7","offset_value":-25200,"readable_name":"-7:00 Hermosillo ( America )","name":"America/Hermosillo"},"Asia/Muscat":{"offset_string":"UTC+4","offset_value":14400,"readable_name":"+4:00 Muscat ( Asia )","name":"Asia/Muscat"},"America/Indiana/Knox":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Knox ( America/Indiana )","changed_offset_value":-21600,"name":"America/Indiana/Knox","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Knox ( America/Indiana )"},"America/Grenada":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Grenada ( America )","name":"America/Grenada"},"Asia/Bahrain":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Bahrain ( Asia )","name":"Asia/Bahrain"},"Africa/Addis_Ababa":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Addis Ababa ( Africa )","name":"Africa/Addis_Ababa"},"Asia/Samarkand":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Samarkand ( Asia )","name":"Asia/Samarkand"},"America/Halifax":{"offset_string":"UTC-3","offset_value":-10800,"changed_offset_string":"UTC-4","readable_name":"-3:00 Halifax ( America )","changed_offset_value":-14400,"name":"America/Halifax","dst_change_epoch":1414905317,"changed_readable_name":"-4:00 Halifax ( America )"},"Asia/Ulaanbaatar":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Ulaanbaatar ( Asia )","name":"Asia/Ulaanbaatar"},"Asia/Jerusalem":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Jerusalem ( Asia )","changed_offset_value":7200,"name":"Asia/Jerusalem","dst_change_epoch":1411860223,"changed_readable_name":"+2:00 Jerusalem ( Asia )"},"America/Cayman":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Cayman ( America )","name":"America/Cayman"},"America/Guyana":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Guyana ( America )","name":"America/Guyana"},"America/Indiana/Vevay":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Vevay ( America/Indiana )","changed_offset_value":-18000,"name":"America/Indiana/Vevay","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Vevay ( America/Indiana )"},"Asia/Kuwait":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Kuwait ( Asia )","name":"Asia/Kuwait"},"Europe/Chisinau":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Chisinau ( Europe )","changed_offset_value":7200,"name":"Europe/Chisinau","dst_change_epoch":1414286426,"changed_readable_name":"+2:00 Chisinau ( Europe )"},"Atlantic/Reykjavik":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Reykjavik ( Atlantic )","name":"Atlantic/Reykjavik"},"Asia/Krasnoyarsk":{"offset_string":"UTC+8","offset_value":28800,"changed_offset_string":"UTC+7","readable_name":"+8:00 Krasnoyarsk ( Asia )","changed_offset_value":25200,"name":"Asia/Krasnoyarsk","dst_change_epoch":1414263645,"changed_readable_name":"+7:00 Krasnoyarsk ( Asia )"},"Europe/Bucharest":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Bucharest ( Europe )","changed_offset_value":7200,"name":"Europe/Bucharest","dst_change_epoch":1414286426,"changed_readable_name":"+2:00 Bucharest ( Europe )"},"Pacific/Wake":{"offset_string":"UTC+12","offset_value":43200,"readable_name":"+12:00 Wake ( Pacific )","name":"Pacific/Wake"},"Africa/Blantyre":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Blantyre ( Africa )","name":"Africa/Blantyre"},"America/Dawson_Creek":{"offset_string":"UTC-7","offset_value":-25200,"readable_name":"-7:00 Dawson Creek ( America )","name":"America/Dawson_Creek"},"America/North_Dakota/New_Salem":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 New Salem ( America/North Dakota )","changed_offset_value":-21600,"name":"America/North_Dakota/New_Salem","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 New Salem ( America/North Dakota )"},"Pacific/Tahiti":{"offset_string":"UTC-10","offset_value":-36000,"readable_name":"-10:00 Tahiti ( Pacific )","name":"Pacific/Tahiti"},"Europe/Istanbul":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Istanbul ( Europe )","changed_offset_value":7200,"name":"Europe/Istanbul","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Istanbul ( Europe )"},"Pacific/Fiji":{"offset_string":"UTC+12","offset_value":43200,"readable_name":"+12:00 Fiji ( Pacific )","name":"Pacific/Fiji"},"America/Atikokan":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Atikokan ( America )","name":"America/Atikokan"},"America/Bahia":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Bahia ( America )","name":"America/Bahia"},"America/Matamoros":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Matamoros ( America )","changed_offset_value":-21600,"name":"America/Matamoros","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Matamoros ( America )"},"Pacific/Marquesas":{"offset_string":"UTC-9:30","offset_value":-34200,"readable_name":"-9:30 Marquesas ( Pacific )","name":"Pacific/Marquesas"},"Australia/Broken_Hill":{"offset_string":"UTC+9:30","offset_value":34200,"changed_offset_string":"UTC+10:30","readable_name":"+9:30 Broken Hill ( Australia )","changed_offset_value":37800,"name":"Australia/Broken_Hill","dst_change_epoch":1412441145,"changed_readable_name":"+10:30 Broken Hill ( Australia )"},"America/Antigua":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Antigua ( America )","name":"America/Antigua"},"EST":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 EST","name":"EST"},"America/New_York":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 New York ( America )","changed_offset_value":-18000,"name":"America/New_York","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 New York ( America )"},"America/El_Salvador":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 El Salvador ( America )","name":"America/El_Salvador"},"Pacific/Pohnpei":{"offset_string":"UTC+11","offset_value":39600,"readable_name":"+11:00 Pohnpei ( Pacific )","name":"Pacific/Pohnpei"},"America/Blanc-Sablon":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Blanc-Sablon ( America )","name":"America/Blanc-Sablon"},"Africa/Harare":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Harare ( Africa )","name":"Africa/Harare"},"Asia/Shanghai":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Shanghai ( Asia )","name":"Asia/Shanghai"},"Indian/Comoro":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Comoro ( Indian )","name":"Indian/Comoro"},"Africa/Porto-Novo":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Porto-Novo ( Africa )","name":"Africa/Porto-Novo"},"Pacific/Nauru":{"offset_string":"UTC+12","offset_value":43200,"readable_name":"+12:00 Nauru ( Pacific )","name":"Pacific/Nauru"},"Europe/Warsaw":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Warsaw ( Europe )","changed_offset_value":3600,"name":"Europe/Warsaw","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Warsaw ( Europe )"},"UTC":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 UTC","name":"UTC"},"Europe/Brussels":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Brussels ( Europe )","changed_offset_value":3600,"name":"Europe/Brussels","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Brussels ( Europe )"},"America/Guadeloupe":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Guadeloupe ( America )","name":"America/Guadeloupe"},"America/Havana":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Havana ( America )","changed_offset_value":-18000,"name":"America/Havana","dst_change_epoch":1414299715,"changed_readable_name":"-5:00 Havana ( America )"},"Antarctica/Casey":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Casey ( Antarctica )","name":"Antarctica/Casey"},"America/Barbados":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Barbados ( America )","name":"America/Barbados"},"Pacific/Kwajalein":{"offset_string":"UTC+12","offset_value":43200,"readable_name":"+12:00 Kwajalein ( Pacific )","name":"Pacific/Kwajalein"},"Africa/Ouagadougou":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Ouagadougou ( Africa )","name":"Africa/Ouagadougou"},"Africa/Abidjan":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Abidjan ( Africa )","name":"Africa/Abidjan"},"America/Rainy_River":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Rainy River ( America )","changed_offset_value":-21600,"name":"America/Rainy_River","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Rainy River ( America )"},"Asia/Makassar":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Makassar ( Asia )","name":"Asia/Makassar"},"MET":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 MET","changed_offset_value":3600,"name":"MET","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 MET"},"America/Santarem":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Santarem ( America )","name":"America/Santarem"},"Asia/Vladivostok":{"offset_string":"UTC+11","offset_value":39600,"changed_offset_string":"UTC+10","readable_name":"+11:00 Vladivostok ( Asia )","changed_offset_value":36000,"name":"Asia/Vladivostok","dst_change_epoch":1414254152,"changed_readable_name":"+10:00 Vladivostok ( Asia )"},"Asia/Pontianak":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Pontianak ( Asia )","name":"Asia/Pontianak"},"Africa/Lusaka":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Lusaka ( Africa )","name":"Africa/Lusaka"},"Africa/Luanda":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Luanda ( Africa )","name":"Africa/Luanda"},"America/Argentina/Mendoza":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Mendoza ( America/Argentina )","name":"America/Argentina/Mendoza"},"Europe/Kaliningrad":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Kaliningrad ( Europe )","changed_offset_value":7200,"name":"Europe/Kaliningrad","dst_change_epoch":1414282630,"changed_readable_name":"+2:00 Kaliningrad ( Europe )"},"Europe/Madrid":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Madrid ( Europe )","changed_offset_value":3600,"name":"Europe/Madrid","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Madrid ( Europe )"},"Africa/Mogadishu":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Mogadishu ( Africa )","name":"Africa/Mogadishu"},"America/Yellowknife":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Yellowknife ( America )","changed_offset_value":-25200,"name":"America/Yellowknife","dst_change_epoch":1414916707,"changed_readable_name":"-7:00 Yellowknife ( America )"},"America/St_Thomas":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 St Thomas ( America )","name":"America/St_Thomas"},"Atlantic/Stanley":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-3","readable_name":"-4:00 Stanley ( Atlantic )","changed_offset_value":-10800,"name":"Atlantic/Stanley","dst_change_epoch":1410069996,"changed_readable_name":"-3:00 Stanley ( Atlantic )"},"Pacific/Majuro":{"offset_string":"UTC+12","offset_value":43200,"readable_name":"+12:00 Majuro ( Pacific )","name":"Pacific/Majuro"},"America/Jamaica":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Jamaica ( America )","name":"America/Jamaica"},"America/Argentina/Cordoba":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Cordoba ( America/Argentina )","name":"America/Argentina/Cordoba"},"Asia/Kashgar":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Kashgar ( Asia )","name":"Asia/Kashgar"},"Indian/Antananarivo":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Antananarivo ( Indian )","name":"Indian/Antananarivo"},"Asia/Anadyr":{"offset_string":"UTC+12","offset_value":43200,"changed_offset_string":"UTC+11","readable_name":"+12:00 Anadyr ( Asia )","changed_offset_value":39600,"name":"Asia/Anadyr","dst_change_epoch":1414250355,"changed_readable_name":"+11:00 Anadyr ( Asia )"},"Indian/Mauritius":{"offset_string":"UTC+4","offset_value":14400,"readable_name":"+4:00 Mauritius ( Indian )","name":"Indian/Mauritius"},"MST7MDT":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 MST7MDT","changed_offset_value":-25200,"name":"MST7MDT","dst_change_epoch":1414916708,"changed_readable_name":"-7:00 MST7MDT"},"America/Cuiaba":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-3","readable_name":"-4:00 Cuiaba ( America )","changed_offset_value":-10800,"name":"America/Cuiaba","dst_change_epoch":1413692215,"changed_readable_name":"-3:00 Cuiaba ( America )"},"Asia/Irkutsk":{"offset_string":"UTC+9","offset_value":32400,"changed_offset_string":"UTC+8","readable_name":"+9:00 Irkutsk ( Asia )","changed_offset_value":28800,"name":"Asia/Irkutsk","dst_change_epoch":1414261746,"changed_readable_name":"+8:00 Irkutsk ( Asia )"},"Asia/Sakhalin":{"offset_string":"UTC+11","offset_value":39600,"changed_offset_string":"UTC+10","readable_name":"+11:00 Sakhalin ( Asia )","changed_offset_value":36000,"name":"Asia/Sakhalin","dst_change_epoch":1414254152,"changed_readable_name":"+10:00 Sakhalin ( Asia )"},"Africa/Sao_Tome":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Sao Tome ( Africa )","name":"Africa/Sao_Tome"},"America/Manaus":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Manaus ( America )","name":"America/Manaus"},"Pacific/Niue":{"offset_string":"UTC-11","offset_value":-39600,"readable_name":"-11:00 Niue ( Pacific )","name":"Pacific/Niue"},"Africa/Monrovia":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Monrovia ( Africa )","name":"Africa/Monrovia"},"America/Tijuana":{"offset_string":"UTC-7","offset_value":-25200,"changed_offset_string":"UTC-8","readable_name":"-7:00 Tijuana ( America )","changed_offset_value":-28800,"name":"America/Tijuana","dst_change_epoch":1414920504,"changed_readable_name":"-8:00 Tijuana ( America )"},"Asia/Ho_Chi_Minh":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Ho Chi Minh ( Asia )","name":"Asia/Ho_Chi_Minh"},"Africa/Algiers":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Algiers ( Africa )","name":"Africa/Algiers"},"Europe/Riga":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Riga ( Europe )","changed_offset_value":7200,"name":"Europe/Riga","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Riga ( Europe )"},"Europe/Vilnius":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Vilnius ( Europe )","changed_offset_value":7200,"name":"Europe/Vilnius","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Vilnius ( Europe )"},"Asia/Colombo":{"offset_string":"UTC+5:30","offset_value":19800,"readable_name":"+5:30 Colombo ( Asia )","name":"Asia/Colombo"},"Antarctica/DumontDUrville":{"offset_string":"UTC+10","offset_value":36000,"readable_name":"+10:00 DumontDUrville ( Antarctica )","name":"Antarctica/DumontDUrville"},"America/Boise":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Boise ( America )","changed_offset_value":-25200,"name":"America/Boise","dst_change_epoch":1414916707,"changed_readable_name":"-7:00 Boise ( America )"},"Pacific/Pago_Pago":{"offset_string":"UTC-11","offset_value":-39600,"readable_name":"-11:00 Pago Pago ( Pacific )","name":"Pacific/Pago_Pago"},"Africa/Kampala":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Kampala ( Africa )","name":"Africa/Kampala"},"Indian/Christmas":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Christmas ( Indian )","name":"Indian/Christmas"},"Asia/Dubai":{"offset_string":"UTC+4","offset_value":14400,"readable_name":"+4:00 Dubai ( Asia )","name":"Asia/Dubai"},"America/Dawson":{"offset_string":"UTC-7","offset_value":-25200,"changed_offset_string":"UTC-8","readable_name":"-7:00 Dawson ( America )","changed_offset_value":-28800,"name":"America/Dawson","dst_change_epoch":1414920504,"changed_readable_name":"-8:00 Dawson ( America )"},"Pacific/Kiritimati":{"offset_string":"UTC+14","offset_value":50400,"readable_name":"+14:00 Kiritimati ( Pacific )","name":"Pacific/Kiritimati"},"America/Bahia_Banderas":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Bahia Banderas ( America )","changed_offset_value":-21600,"name":"America/Bahia_Banderas","dst_change_epoch":1414307309,"changed_readable_name":"-6:00 Bahia Banderas ( America )"},"America/Yakutat":{"offset_string":"UTC-8","offset_value":-28800,"changed_offset_string":"UTC-9","readable_name":"-8:00 Yakutat ( America )","changed_offset_value":-32400,"name":"America/Yakutat","dst_change_epoch":1414922402,"changed_readable_name":"-9:00 Yakutat ( America )"},"Asia/Kabul":{"offset_string":"UTC+4:30","offset_value":16200,"readable_name":"+4:30 Kabul ( Asia )","name":"Asia/Kabul"},"America/Danmarkshavn":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Danmarkshavn ( America )","name":"America/Danmarkshavn"},"Europe/Uzhgorod":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Uzhgorod ( Europe )","changed_offset_value":7200,"name":"Europe/Uzhgorod","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Uzhgorod ( Europe )"},"America/Glace_Bay":{"offset_string":"UTC-3","offset_value":-10800,"changed_offset_string":"UTC-4","readable_name":"-3:00 Glace Bay ( America )","changed_offset_value":-14400,"name":"America/Glace_Bay","dst_change_epoch":1414905317,"changed_readable_name":"-4:00 Glace Bay ( America )"},"Africa/Bissau":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Bissau ( Africa )","name":"Africa/Bissau"},"America/Kentucky/Louisville":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Louisville ( America/Kentucky )","changed_offset_value":-18000,"name":"America/Kentucky/Louisville","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Louisville ( America/Kentucky )"},"Africa/Dar_es_Salaam":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Dar es Salaam ( Africa )","name":"Africa/Dar_es_Salaam"},"HST":{"offset_string":"UTC-10","offset_value":-36000,"readable_name":"-10:00 HST","name":"HST"},"Africa/El_Aaiun":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 El Aaiun ( Africa )","name":"Africa/El_Aaiun"},"Asia/Amman":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Amman ( Asia )","changed_offset_value":7200,"name":"Asia/Amman","dst_change_epoch":1414707879,"changed_readable_name":"+2:00 Amman ( Asia )"},"America/La_Paz":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 La Paz ( America )","name":"America/La_Paz"},"America/Costa_Rica":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 Costa Rica ( America )","name":"America/Costa_Rica"},"Pacific/Tongatapu":{"offset_string":"UTC+13","offset_value":46800,"readable_name":"+13:00 Tongatapu ( Pacific )","name":"Pacific/Tongatapu"},"America/Nipigon":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Nipigon ( America )","changed_offset_value":-18000,"name":"America/Nipigon","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Nipigon ( America )"},"Africa/Tunis":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Tunis ( Africa )","name":"Africa/Tunis"},"Asia/Tbilisi":{"offset_string":"UTC+4","offset_value":14400,"readable_name":"+4:00 Tbilisi ( Asia )","name":"Asia/Tbilisi"},"Europe/Simferopol":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Simferopol ( Europe )","changed_offset_value":7200,"name":"Europe/Simferopol","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Simferopol ( Europe )"},"America/Regina":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 Regina ( America )","name":"America/Regina"},"Pacific/Guadalcanal":{"offset_string":"UTC+11","offset_value":39600,"readable_name":"+11:00 Guadalcanal ( Pacific )","name":"Pacific/Guadalcanal"},"Pacific/Enderbury":{"offset_string":"UTC+13","offset_value":46800,"readable_name":"+13:00 Enderbury ( Pacific )","name":"Pacific/Enderbury"},"Indian/Cocos":{"offset_string":"UTC+6:30","offset_value":23400,"readable_name":"+6:30 Cocos ( Indian )","name":"Indian/Cocos"},"Australia/Perth":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Perth ( Australia )","name":"Australia/Perth"},"CST6CDT":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 CST6CDT","changed_offset_value":-21600,"name":"CST6CDT","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 CST6CDT"},"Asia/Kolkata":{"offset_string":"UTC+5:30","offset_value":19800,"readable_name":"+5:30 Kolkata ( Asia )","name":"Asia/Kolkata"},"America/Argentina/Rio_Gallegos":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Rio Gallegos ( America/Argentina )","name":"America/Argentina/Rio_Gallegos"},"America/Porto_Velho":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Porto Velho ( America )","name":"America/Porto_Velho"},"Asia/Magadan":{"offset_string":"UTC+12","offset_value":43200,"changed_offset_string":"UTC+11","readable_name":"+12:00 Magadan ( Asia )","changed_offset_value":39600,"name":"Asia/Magadan","dst_change_epoch":1414250355,"changed_readable_name":"+11:00 Magadan ( Asia )"},"Asia/Phnom_Penh":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Phnom Penh ( Asia )","name":"Asia/Phnom_Penh"},"Atlantic/Canary":{"offset_string":"UTC+1","offset_value":3600,"changed_offset_string":"UTC","readable_name":"+1:00 Canary ( Atlantic )","changed_offset_value":0,"name":"Atlantic/Canary","dst_change_epoch":1414286426,"changed_readable_name":"+0:00 Canary ( Atlantic )"},"America/Kentucky/Monticello":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Monticello ( America/Kentucky )","changed_offset_value":-18000,"name":"America/Kentucky/Monticello","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Monticello ( America/Kentucky )"},"Pacific/Chuuk":{"offset_string":"UTC+10","offset_value":36000,"readable_name":"+10:00 Chuuk ( Pacific )","name":"Pacific/Chuuk"},"America/Swift_Current":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 Swift Current ( America )","name":"America/Swift_Current"},"Europe/Minsk":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Minsk ( Europe )","changed_offset_value":7200,"name":"Europe/Minsk","dst_change_epoch":1414282630,"changed_readable_name":"+2:00 Minsk ( Europe )"},"Pacific/Palau":{"offset_string":"UTC+9","offset_value":32400,"readable_name":"+9:00 Palau ( Pacific )","name":"Pacific/Palau"},"Europe/Helsinki":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Helsinki ( Europe )","changed_offset_value":7200,"name":"Europe/Helsinki","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Helsinki ( Europe )"},"Australia/Melbourne":{"offset_string":"UTC+10","offset_value":36000,"changed_offset_string":"UTC+11","readable_name":"+10:00 Melbourne ( Australia )","changed_offset_value":39600,"name":"Australia/Melbourne","dst_change_epoch":1412439246,"changed_readable_name":"+11:00 Melbourne ( Australia )"},"America/Monterrey":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Monterrey ( America )","changed_offset_value":-21600,"name":"America/Monterrey","dst_change_epoch":1414307309,"changed_readable_name":"-6:00 Monterrey ( America )"},"America/Menominee":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Menominee ( America )","changed_offset_value":-21600,"name":"America/Menominee","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Menominee ( America )"},"America/Cayenne":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Cayenne ( America )","name":"America/Cayenne"},"America/Miquelon":{"offset_string":"UTC-2","offset_value":-7200,"changed_offset_string":"UTC-3","readable_name":"-2:00 Miquelon ( America )","changed_offset_value":-10800,"name":"America/Miquelon","dst_change_epoch":1414901520,"changed_readable_name":"-3:00 Miquelon ( America )"},"America/Iqaluit":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Iqaluit ( America )","changed_offset_value":-18000,"name":"America/Iqaluit","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Iqaluit ( America )"},"Asia/Novosibirsk":{"offset_string":"UTC+7","offset_value":25200,"changed_offset_string":"UTC+6","readable_name":"+7:00 Novosibirsk ( Asia )","changed_offset_value":21600,"name":"Asia/Novosibirsk","dst_change_epoch":1414267442,"changed_readable_name":"+6:00 Novosibirsk ( Asia )"},"Australia/Adelaide":{"offset_string":"UTC+9:30","offset_value":34200,"changed_offset_string":"UTC+10:30","readable_name":"+9:30 Adelaide ( Australia )","changed_offset_value":37800,"name":"Australia/Adelaide","dst_change_epoch":1412441145,"changed_readable_name":"+10:30 Adelaide ( Australia )"},"Europe/Amsterdam":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Amsterdam ( Europe )","changed_offset_value":3600,"name":"Europe/Amsterdam","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Amsterdam ( Europe )"},"Europe/Moscow":{"offset_string":"UTC+4","offset_value":14400,"changed_offset_string":"UTC+3","readable_name":"+4:00 Moscow ( Europe )","changed_offset_value":10800,"name":"Europe/Moscow","dst_change_epoch":1414278833,"changed_readable_name":"+3:00 Moscow ( Europe )"},"Pacific/Rarotonga":{"offset_string":"UTC-10","offset_value":-36000,"readable_name":"-10:00 Rarotonga ( Pacific )","name":"Pacific/Rarotonga"},"Europe/Malta":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Malta ( Europe )","changed_offset_value":3600,"name":"Europe/Malta","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Malta ( Europe )"},"Africa/Banjul":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Banjul ( Africa )","name":"Africa/Banjul"},"Africa/Tripoli":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Tripoli ( Africa )","name":"Africa/Tripoli"},"Indian/Kerguelen":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Kerguelen ( Indian )","name":"Indian/Kerguelen"},"Asia/Urumqi":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Urumqi ( Asia )","name":"Asia/Urumqi"},"Africa/Libreville":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Libreville ( Africa )","name":"Africa/Libreville"},"Africa/Khartoum":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Khartoum ( Africa )","name":"Africa/Khartoum"},"America/Recife":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Recife ( America )","name":"America/Recife"},"America/Argentina/La_Rioja":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 La Rioja ( America/Argentina )","name":"America/Argentina/La_Rioja"},"Europe/Paris":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Paris ( Europe )","changed_offset_value":3600,"name":"Europe/Paris","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Paris ( Europe )"},"Indian/Mayotte":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Mayotte ( Indian )","name":"Indian/Mayotte"},"PST8PDT":{"offset_string":"UTC-7","offset_value":-25200,"changed_offset_string":"UTC-8","readable_name":"-7:00 PST8PDT","changed_offset_value":-28800,"name":"PST8PDT","dst_change_epoch":1414920505,"changed_readable_name":"-8:00 PST8PDT"},"America/Argentina/Salta":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Salta ( America/Argentina )","name":"America/Argentina/Salta"},"Pacific/Funafuti":{"offset_string":"UTC+12","offset_value":43200,"readable_name":"+12:00 Funafuti ( Pacific )","name":"Pacific/Funafuti"},"Europe/Berlin":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Berlin ( Europe )","changed_offset_value":3600,"name":"Europe/Berlin","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Berlin ( Europe )"},"Asia/Choibalsan":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Choibalsan ( Asia )","name":"Asia/Choibalsan"},"America/Montevideo":{"offset_string":"UTC-3","offset_value":-10800,"changed_offset_string":"UTC-2","readable_name":"-3:00 Montevideo ( America )","changed_offset_value":-7200,"name":"America/Montevideo","dst_change_epoch":1412486707,"changed_readable_name":"-2:00 Montevideo ( America )"},"America/Belize":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 Belize ( America )","name":"America/Belize"},"Africa/Djibouti":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Djibouti ( Africa )","name":"Africa/Djibouti"},"America/Argentina/San_Juan":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 San Juan ( America/Argentina )","name":"America/Argentina/San_Juan"},"America/Thunder_Bay":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Thunder Bay ( America )","changed_offset_value":-18000,"name":"America/Thunder_Bay","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Thunder Bay ( America )"},"Asia/Hovd":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Hovd ( Asia )","name":"Asia/Hovd"},"Asia/Novokuznetsk":{"offset_string":"UTC+7","offset_value":25200,"changed_offset_string":"UTC+6","readable_name":"+7:00 Novokuznetsk ( Asia )","changed_offset_value":21600,"name":"Asia/Novokuznetsk","dst_change_epoch":1414267442,"changed_readable_name":"+6:00 Novokuznetsk ( Asia )"},"Indian/Maldives":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Maldives ( Indian )","name":"Indian/Maldives"},"America/Toronto":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Toronto ( America )","changed_offset_value":-18000,"name":"America/Toronto","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Toronto ( America )"},"Australia/Eucla":{"offset_string":"UTC+8:45","offset_value":31500,"readable_name":"+8:45 Eucla ( Australia )","name":"Australia/Eucla"},"Pacific/Galapagos":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 Galapagos ( Pacific )","name":"Pacific/Galapagos"},"Africa/Malabo":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Malabo ( Africa )","name":"Africa/Malabo"},"America/Martinique":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Martinique ( America )","name":"America/Martinique"},"Asia/Aden":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Aden ( Asia )","name":"Asia/Aden"},"Asia/Tehran":{"offset_string":"UTC+4:30","offset_value":16200,"changed_offset_string":"UTC+3:30","readable_name":"+4:30 Tehran ( Asia )","changed_offset_value":12600,"name":"Asia/Tehran","dst_change_epoch":1411328661,"changed_readable_name":"+3:30 Tehran ( Asia )"},"America/Chihuahua":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Chihuahua ( America )","changed_offset_value":-25200,"name":"America/Chihuahua","dst_change_epoch":1414311105,"changed_readable_name":"-7:00 Chihuahua ( America )"},"Australia/Sydney":{"offset_string":"UTC+10","offset_value":36000,"changed_offset_string":"UTC+11","readable_name":"+10:00 Sydney ( Australia )","changed_offset_value":39600,"name":"Australia/Sydney","dst_change_epoch":1412439246,"changed_readable_name":"+11:00 Sydney ( Australia )"},"America/Moncton":{"offset_string":"UTC-3","offset_value":-10800,"changed_offset_string":"UTC-4","readable_name":"-3:00 Moncton ( America )","changed_offset_value":-14400,"name":"America/Moncton","dst_change_epoch":1414905317,"changed_readable_name":"-4:00 Moncton ( America )"},"America/Goose_Bay":{"offset_string":"UTC-3","offset_value":-10800,"changed_offset_string":"UTC-4","readable_name":"-3:00 Goose Bay ( America )","changed_offset_value":-14400,"name":"America/Goose_Bay","dst_change_epoch":1414897723,"changed_readable_name":"-4:00 Goose Bay ( America )"},"America/Detroit":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Detroit ( America )","changed_offset_value":-18000,"name":"America/Detroit","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Detroit ( America )"},"Australia/Lindeman":{"offset_string":"UTC+10","offset_value":36000,"readable_name":"+10:00 Lindeman ( Australia )","name":"Australia/Lindeman"},"Africa/Mbabane":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Mbabane ( Africa )","name":"Africa/Mbabane"},"Africa/Lubumbashi":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Lubumbashi ( Africa )","name":"Africa/Lubumbashi"},"America/Asuncion":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-3","readable_name":"-4:00 Asuncion ( America )","changed_offset_value":-10800,"name":"America/Asuncion","dst_change_epoch":1412482911,"changed_readable_name":"-3:00 Asuncion ( America )"},"Antarctica/Vostok":{"offset_string":"UTC+6","offset_value":21600,"readable_name":"+6:00 Vostok ( Antarctica )","name":"Antarctica/Vostok"},"Africa/Lome":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Lome ( Africa )","name":"Africa/Lome"},"America/Indiana/Petersburg":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Petersburg ( America/Indiana )","changed_offset_value":-18000,"name":"America/Indiana/Petersburg","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Petersburg ( America/Indiana )"},"Asia/Harbin":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Harbin ( Asia )","name":"Asia/Harbin"},"Asia/Tashkent":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Tashkent ( Asia )","name":"Asia/Tashkent"},"America/Montreal":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Montreal ( America )","changed_offset_value":-18000,"name":"America/Montreal","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Montreal ( America )"},"Atlantic/St_Helena":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 St Helena ( Atlantic )","name":"Atlantic/St_Helena"},"Africa/Brazzaville":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Brazzaville ( Africa )","name":"Africa/Brazzaville"},"Pacific/Saipan":{"offset_string":"UTC+10","offset_value":36000,"readable_name":"+10:00 Saipan ( Pacific )","name":"Pacific/Saipan"},"Antarctica/Macquarie":{"offset_string":"UTC+11","offset_value":39600,"readable_name":"+11:00 Macquarie ( Antarctica )","name":"Antarctica/Macquarie"},"America/Edmonton":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Edmonton ( America )","changed_offset_value":-25200,"name":"America/Edmonton","dst_change_epoch":1414916707,"changed_readable_name":"-7:00 Edmonton ( America )"},"Asia/Yerevan":{"offset_string":"UTC+5","offset_value":18000,"changed_offset_string":"UTC+4","readable_name":"+5:00 Yerevan ( Asia )","changed_offset_value":14400,"name":"Asia/Yerevan","dst_change_epoch":1414275036,"changed_readable_name":"+4:00 Yerevan ( Asia )"},"Africa/Dakar":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Dakar ( Africa )","name":"Africa/Dakar"},"Europe/London":{"offset_string":"UTC+1","offset_value":3600,"changed_offset_string":"UTC","readable_name":"+1:00 London ( Europe )","changed_offset_value":0,"name":"Europe/London","dst_change_epoch":1414286427,"changed_readable_name":"+0:00 London ( Europe )"},"America/Anguilla":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Anguilla ( America )","name":"America/Anguilla"},"America/Indiana/Indianapolis":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Indianapolis ( America/Indiana )","changed_offset_value":-18000,"name":"America/Indiana/Indianapolis","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Indianapolis ( America/Indiana )"},"Asia/Aqtobe":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Aqtobe ( Asia )","name":"Asia/Aqtobe"},"Africa/Bamako":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Bamako ( Africa )","name":"Africa/Bamako"},"Australia/Lord_Howe":{"offset_string":"UTC+10:30","offset_value":37800,"changed_offset_string":"UTC+11","readable_name":"+10:30 Lord Howe ( Australia )","changed_offset_value":39600,"name":"Australia/Lord_Howe","dst_change_epoch":1412437348,"changed_readable_name":"+11:00 Lord Howe ( Australia )"},"Europe/Rome":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Rome ( Europe )","changed_offset_value":3600,"name":"Europe/Rome","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Rome ( Europe )"},"Europe/Budapest":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Budapest ( Europe )","changed_offset_value":3600,"name":"Europe/Budapest","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Budapest ( Europe )"},"Pacific/Fakaofo":{"offset_string":"UTC-10","offset_value":-36000,"readable_name":"-10:00 Fakaofo ( Pacific )","name":"Pacific/Fakaofo"},"MST":{"offset_string":"UTC-7","offset_value":-25200,"readable_name":"-7:00 MST","name":"MST"},"Africa/Maseru":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Maseru ( Africa )","name":"Africa/Maseru"},"Europe/Oslo":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Oslo ( Europe )","changed_offset_value":3600,"name":"Europe/Oslo","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Oslo ( Europe )"},"Africa/Asmara":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Asmara ( Africa )","name":"Africa/Asmara"},"Africa/Douala":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Douala ( Africa )","name":"Africa/Douala"},"America/Merida":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Merida ( America )","changed_offset_value":-21600,"name":"America/Merida","dst_change_epoch":1414307309,"changed_readable_name":"-6:00 Merida ( America )"},"Asia/Brunei":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Brunei ( Asia )","name":"Asia/Brunei"},"Asia/Rangoon":{"offset_string":"UTC+6:30","offset_value":23400,"readable_name":"+6:30 Rangoon ( Asia )","name":"Asia/Rangoon"},"America/Thule":{"offset_string":"UTC-3","offset_value":-10800,"changed_offset_string":"UTC-4","readable_name":"-3:00 Thule ( America )","changed_offset_value":-14400,"name":"America/Thule","dst_change_epoch":1414905317,"changed_readable_name":"-4:00 Thule ( America )"},"Asia/Macau":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Macau ( Asia )","name":"Asia/Macau"},"Asia/Oral":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Oral ( Asia )","name":"Asia/Oral"},"America/Cancun":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Cancun ( America )","changed_offset_value":-21600,"name":"America/Cancun","dst_change_epoch":1414307309,"changed_readable_name":"-6:00 Cancun ( America )"},"Asia/Singapore":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Singapore ( Asia )","name":"Asia/Singapore"},"Asia/Chongqing":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Chongqing ( Asia )","name":"Asia/Chongqing"},"America/Maceio":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Maceio ( America )","name":"America/Maceio"},"America/St_Vincent":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 St Vincent ( America )","name":"America/St_Vincent"},"America/North_Dakota/Center":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Center ( America/North Dakota )","changed_offset_value":-21600,"name":"America/North_Dakota/Center","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Center ( America/North Dakota )"},"Pacific/Easter":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-5","readable_name":"-6:00 Easter ( Pacific )","changed_offset_value":-18000,"name":"Pacific/Easter","dst_change_epoch":1413086615,"changed_readable_name":"-5:00 Easter ( Pacific )"},"Europe/Prague":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Prague ( Europe )","changed_offset_value":3600,"name":"Europe/Prague","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Prague ( Europe )"},"Africa/Johannesburg":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Johannesburg ( Africa )","name":"Africa/Johannesburg"},"America/Resolute":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Resolute ( America )","name":"America/Resolute"},"America/Indiana/Winamac":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Winamac ( America/Indiana )","changed_offset_value":-18000,"name":"America/Indiana/Winamac","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Winamac ( America/Indiana )"},"Pacific/Noumea":{"offset_string":"UTC+11","offset_value":39600,"readable_name":"+11:00 Noumea ( Pacific )","name":"Pacific/Noumea"},"Asia/Bishkek":{"offset_string":"UTC+6","offset_value":21600,"readable_name":"+6:00 Bishkek ( Asia )","name":"Asia/Bishkek"},"Pacific/Chatham":{"offset_string":"UTC+12:45","offset_value":45900,"changed_offset_string":"UTC+13:45","readable_name":"+12:45 Chatham ( Pacific )","changed_offset_value":49500,"name":"Pacific/Chatham","dst_change_epoch":1411827950,"changed_readable_name":"+13:45 Chatham ( Pacific )"},"America/Eirunepe":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Eirunepe ( America )","name":"America/Eirunepe"},"America/Dominica":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Dominica ( America )","name":"America/Dominica"},"America/Rankin_Inlet":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Rankin Inlet ( America )","changed_offset_value":-21600,"name":"America/Rankin_Inlet","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Rankin Inlet ( America )"},"America/Cambridge_Bay":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Cambridge Bay ( America )","changed_offset_value":-25200,"name":"America/Cambridge_Bay","dst_change_epoch":1414916707,"changed_readable_name":"-7:00 Cambridge Bay ( America )"},"Atlantic/South_Georgia":{"offset_string":"UTC-2","offset_value":-7200,"readable_name":"-2:00 South Georgia ( Atlantic )","name":"Atlantic/South_Georgia"},"Pacific/Tarawa":{"offset_string":"UTC+12","offset_value":43200,"readable_name":"+12:00 Tarawa ( Pacific )","name":"Pacific/Tarawa"},"America/Araguaina":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Araguaina ( America )","name":"America/Araguaina"},"Asia/Yakutsk":{"offset_string":"UTC+10","offset_value":36000,"changed_offset_string":"UTC+9","readable_name":"+10:00 Yakutsk ( Asia )","changed_offset_value":32400,"name":"Asia/Yakutsk","dst_change_epoch":1414257949,"changed_readable_name":"+9:00 Yakutsk ( Asia )"},"Pacific/Efate":{"offset_string":"UTC+11","offset_value":39600,"readable_name":"+11:00 Efate ( Pacific )","name":"Pacific/Efate"},"Pacific/Pitcairn":{"offset_string":"UTC-8","offset_value":-28800,"readable_name":"-8:00 Pitcairn ( Pacific )","name":"Pacific/Pitcairn"},"Atlantic/Cape_Verde":{"offset_string":"UTC-1","offset_value":-3600,"readable_name":"-1:00 Cape Verde ( Atlantic )","name":"Atlantic/Cape_Verde"},"Africa/Gaborone":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Gaborone ( Africa )","name":"Africa/Gaborone"},"Pacific/Johnston":{"offset_string":"UTC-10","offset_value":-36000,"readable_name":"-10:00 Johnston ( Pacific )","name":"Pacific/Johnston"},"America/Argentina/Jujuy":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Jujuy ( America/Argentina )","name":"America/Argentina/Jujuy"},"Africa/Cairo":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Cairo ( Africa )","name":"Africa/Cairo"},"America/Winnipeg":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Winnipeg ( America )","changed_offset_value":-21600,"name":"America/Winnipeg","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Winnipeg ( America )"},"Africa/Windhoek":{"offset_string":"UTC+1","offset_value":3600,"changed_offset_string":"UTC+2","readable_name":"+1:00 Windhoek ( Africa )","changed_offset_value":7200,"name":"Africa/Windhoek","dst_change_epoch":1410052911,"changed_readable_name":"+2:00 Windhoek ( Africa )"},"America/St_Lucia":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 St Lucia ( America )","name":"America/St_Lucia"},"Africa/Casablanca":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Casablanca ( Africa )","name":"Africa/Casablanca"},"Africa/Kigali":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Kigali ( Africa )","name":"Africa/Kigali"},"Asia/Vientiane":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Vientiane ( Asia )","name":"Asia/Vientiane"},"Africa/Bangui":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Bangui ( Africa )","name":"Africa/Bangui"},"Asia/Ashgabat":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Ashgabat ( Asia )","name":"Asia/Ashgabat"},"America/Argentina/Tucuman":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Tucuman ( America/Argentina )","name":"America/Argentina/Tucuman"},"Africa/Nouakchott":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Nouakchott ( Africa )","name":"Africa/Nouakchott"},"Europe/Gibraltar":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Gibraltar ( Europe )","changed_offset_value":3600,"name":"Europe/Gibraltar","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Gibraltar ( Europe )"},"America/Pangnirtung":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Pangnirtung ( America )","changed_offset_value":-18000,"name":"America/Pangnirtung","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Pangnirtung ( America )"},"America/Sao_Paulo":{"offset_string":"UTC-3","offset_value":-10800,"changed_offset_string":"UTC-2","readable_name":"-3:00 Sao Paulo ( America )","changed_offset_value":-7200,"name":"America/Sao_Paulo","dst_change_epoch":1413688418,"changed_readable_name":"-2:00 Sao Paulo ( America )"},"Asia/Nicosia":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Nicosia ( Asia )","changed_offset_value":7200,"name":"Asia/Nicosia","dst_change_epoch":1414286426,"changed_readable_name":"+2:00 Nicosia ( Asia )"},"Europe/Andorra":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Andorra ( Europe )","changed_offset_value":3600,"name":"Europe/Andorra","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Andorra ( Europe )"},"Pacific/Midway":{"offset_string":"UTC-11","offset_value":-39600,"readable_name":"-11:00 Midway ( Pacific )","name":"Pacific/Midway"},"Asia/Riyadh":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Riyadh ( Asia )","name":"Asia/Riyadh"},"Europe/Athens":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Athens ( Europe )","changed_offset_value":7200,"name":"Europe/Athens","dst_change_epoch":1414286426,"changed_readable_name":"+2:00 Athens ( Europe )"},"Europe/Volgograd":{"offset_string":"UTC+4","offset_value":14400,"changed_offset_string":"UTC+3","readable_name":"+4:00 Volgograd ( Europe )","changed_offset_value":10800,"name":"Europe/Volgograd","dst_change_epoch":1414278833,"changed_readable_name":"+3:00 Volgograd ( Europe )"},"Asia/Qyzylorda":{"offset_string":"UTC+6","offset_value":21600,"readable_name":"+6:00 Qyzylorda ( Asia )","name":"Asia/Qyzylorda"},"Asia/Omsk":{"offset_string":"UTC+7","offset_value":25200,"changed_offset_string":"UTC+6","readable_name":"+7:00 Omsk ( Asia )","changed_offset_value":21600,"name":"Asia/Omsk","dst_change_epoch":1414267442,"changed_readable_name":"+6:00 Omsk ( Asia )"},"Asia/Gaza":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Gaza ( Asia )","changed_offset_value":7200,"name":"Asia/Gaza","dst_change_epoch":1409872559,"changed_readable_name":"+2:00 Gaza ( Asia )"},"America/Sitka":{"offset_string":"UTC-8","offset_value":-28800,"changed_offset_string":"UTC-9","readable_name":"-8:00 Sitka ( America )","changed_offset_value":-32400,"name":"America/Sitka","dst_change_epoch":1414922402,"changed_readable_name":"-9:00 Sitka ( America )"},"Asia/Tokyo":{"offset_string":"UTC+9","offset_value":32400,"readable_name":"+9:00 Tokyo ( Asia )","name":"Asia/Tokyo"},"Asia/Jayapura":{"offset_string":"UTC+9","offset_value":32400,"readable_name":"+9:00 Jayapura ( Asia )","name":"Asia/Jayapura"},"Asia/Thimphu":{"offset_string":"UTC+6","offset_value":21600,"readable_name":"+6:00 Thimphu ( Asia )","name":"Asia/Thimphu"},"Antarctica/Syowa":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Syowa ( Antarctica )","name":"Antarctica/Syowa"},"America/Port-au-Prince":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Port-au-Prince ( America )","name":"America/Port-au-Prince"},"Asia/Damascus":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Damascus ( Asia )","changed_offset_value":7200,"name":"Asia/Damascus","dst_change_epoch":1414704082,"changed_readable_name":"+2:00 Damascus ( Asia )"},"America/Indiana/Marengo":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Marengo ( America/Indiana )","changed_offset_value":-18000,"name":"America/Indiana/Marengo","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Marengo ( America/Indiana )"},"Asia/Qatar":{"offset_string":"UTC+3","offset_value":10800,"readable_name":"+3:00 Qatar ( Asia )","name":"Asia/Qatar"},"America/Fortaleza":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Fortaleza ( America )","name":"America/Fortaleza"},"Europe/Sofia":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Sofia ( Europe )","changed_offset_value":7200,"name":"Europe/Sofia","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Sofia ( Europe )"},"America/Mexico_City":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Mexico City ( America )","changed_offset_value":-21600,"name":"America/Mexico_City","dst_change_epoch":1414307309,"changed_readable_name":"-6:00 Mexico City ( America )"},"America/Belem":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Belem ( America )","name":"America/Belem"},"Atlantic/Azores":{"offset_string":"UTC","offset_value":0,"changed_offset_string":"UTC-1","readable_name":"+0:00 Azores ( Atlantic )","changed_offset_value":-3600,"name":"Atlantic/Azores","dst_change_epoch":1414286426,"changed_readable_name":"-1:00 Azores ( Atlantic )"},"Asia/Hong_Kong":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Hong Kong ( Asia )","name":"Asia/Hong_Kong"},"America/Nome":{"offset_string":"UTC-8","offset_value":-28800,"changed_offset_string":"UTC-9","readable_name":"-8:00 Nome ( America )","changed_offset_value":-32400,"name":"America/Nome","dst_change_epoch":1414922402,"changed_readable_name":"-9:00 Nome ( America )"},"America/Godthab":{"offset_string":"UTC-2","offset_value":-7200,"changed_offset_string":"UTC-3","readable_name":"-2:00 Godthab ( America )","changed_offset_value":-10800,"name":"America/Godthab","dst_change_epoch":1414286426,"changed_readable_name":"-3:00 Godthab ( America )"},"Antarctica/Davis":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Davis ( Antarctica )","name":"Antarctica/Davis"},"America/Scoresbysund":{"offset_string":"UTC","offset_value":0,"changed_offset_string":"UTC-1","readable_name":"+0:00 Scoresbysund ( America )","changed_offset_value":-3600,"name":"America/Scoresbysund","dst_change_epoch":1414286426,"changed_readable_name":"-1:00 Scoresbysund ( America )"},"Australia/Brisbane":{"offset_string":"UTC+10","offset_value":36000,"readable_name":"+10:00 Brisbane ( Australia )","name":"Australia/Brisbane"},"Asia/Kuala_Lumpur":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Kuala Lumpur ( Asia )","name":"Asia/Kuala_Lumpur"},"Asia/Baku":{"offset_string":"UTC+5","offset_value":18000,"changed_offset_string":"UTC+4","readable_name":"+5:00 Baku ( Asia )","changed_offset_value":14400,"name":"Asia/Baku","dst_change_epoch":1414282629,"changed_readable_name":"+4:00 Baku ( Asia )"},"Africa/Lagos":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Lagos ( Africa )","name":"Africa/Lagos"},"Indian/Chagos":{"offset_string":"UTC+6","offset_value":21600,"readable_name":"+6:00 Chagos ( Indian )","name":"Indian/Chagos"},"America/Vancouver":{"offset_string":"UTC-7","offset_value":-25200,"changed_offset_string":"UTC-8","readable_name":"-7:00 Vancouver ( America )","changed_offset_value":-28800,"name":"America/Vancouver","dst_change_epoch":1414920504,"changed_readable_name":"-8:00 Vancouver ( America )"},"Asia/Yekaterinburg":{"offset_string":"UTC+6","offset_value":21600,"changed_offset_string":"UTC+5","readable_name":"+6:00 Yekaterinburg ( Asia )","changed_offset_value":18000,"name":"Asia/Yekaterinburg","dst_change_epoch":1414271239,"changed_readable_name":"+5:00 Yekaterinburg ( Asia )"},"EST5EDT":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 EST5EDT","changed_offset_value":-18000,"name":"EST5EDT","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 EST5EDT"},"Pacific/Port_Moresby":{"offset_string":"UTC+10","offset_value":36000,"readable_name":"+10:00 Port Moresby ( Pacific )","name":"Pacific/Port_Moresby"},"America/Phoenix":{"offset_string":"UTC-7","offset_value":-25200,"readable_name":"-7:00 Phoenix ( America )","name":"America/Phoenix"},"Europe/Copenhagen":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Copenhagen ( Europe )","changed_offset_value":3600,"name":"Europe/Copenhagen","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Copenhagen ( Europe )"},"Antarctica/McMurdo":{"offset_string":"UTC+12","offset_value":43200,"changed_offset_string":"UTC+13","readable_name":"+12:00 McMurdo ( Antarctica )","changed_offset_value":46800,"name":"Antarctica/McMurdo","dst_change_epoch":1411827949,"changed_readable_name":"+13:00 McMurdo ( Antarctica )"},"Asia/Almaty":{"offset_string":"UTC+6","offset_value":21600,"readable_name":"+6:00 Almaty ( Asia )","name":"Asia/Almaty"},"Asia/Kathmandu":{"offset_string":"UTC+5:45","offset_value":20700,"readable_name":"+5:45 Kathmandu ( Asia )","name":"Asia/Kathmandu"},"Asia/Dili":{"offset_string":"UTC+9","offset_value":32400,"readable_name":"+9:00 Dili ( Asia )","name":"Asia/Dili"},"America/Adak":{"offset_string":"UTC-9","offset_value":-32400,"changed_offset_string":"UTC-10","readable_name":"-9:00 Adak ( America )","changed_offset_value":-36000,"name":"America/Adak","dst_change_epoch":1414926199,"changed_readable_name":"-10:00 Adak ( America )"},"America/Argentina/Catamarca":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Catamarca ( America/Argentina )","name":"America/Argentina/Catamarca"},"America/Caracas":{"offset_string":"UTC-4:30","offset_value":-16200,"readable_name":"-4:30 Caracas ( America )","name":"America/Caracas"},"WET":{"offset_string":"UTC+1","offset_value":3600,"changed_offset_string":"UTC","readable_name":"+1:00 WET","changed_offset_value":0,"name":"WET","dst_change_epoch":1414286427,"changed_readable_name":"+0:00 WET"},"America/Curacao":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Curacao ( America )","name":"America/Curacao"},"America/Tegucigalpa":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 Tegucigalpa ( America )","name":"America/Tegucigalpa"},"Pacific/Honolulu":{"offset_string":"UTC-10","offset_value":-36000,"readable_name":"-10:00 Honolulu ( Pacific )","name":"Pacific/Honolulu"},"Pacific/Wallis":{"offset_string":"UTC+12","offset_value":43200,"readable_name":"+12:00 Wallis ( Pacific )","name":"Pacific/Wallis"},"Africa/Niamey":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Niamey ( Africa )","name":"Africa/Niamey"},"America/Ojinaga":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Ojinaga ( America )","changed_offset_value":-25200,"name":"America/Ojinaga","dst_change_epoch":1414916707,"changed_readable_name":"-7:00 Ojinaga ( America )"},"Europe/Tirane":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Tirane ( Europe )","changed_offset_value":3600,"name":"Europe/Tirane","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Tirane ( Europe )"},"America/Rio_Branco":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Rio Branco ( America )","name":"America/Rio_Branco"},"America/Guatemala":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 Guatemala ( America )","name":"America/Guatemala"},"Africa/Ceuta":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Ceuta ( Africa )","changed_offset_value":3600,"name":"Africa/Ceuta","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 Ceuta ( Africa )"},"America/Argentina/San_Luis":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 San Luis ( America/Argentina )","name":"America/Argentina/San_Luis"},"America/Santa_Isabel":{"offset_string":"UTC-7","offset_value":-25200,"changed_offset_string":"UTC-8","readable_name":"-7:00 Santa Isabel ( America )","changed_offset_value":-28800,"name":"America/Santa_Isabel","dst_change_epoch":1414314902,"changed_readable_name":"-8:00 Santa Isabel ( America )"},"Africa/Maputo":{"offset_string":"UTC+2","offset_value":7200,"readable_name":"+2:00 Maputo ( Africa )","name":"Africa/Maputo"},"America/Managua":{"offset_string":"UTC-6","offset_value":-21600,"readable_name":"-6:00 Managua ( America )","name":"America/Managua"},"America/Noronha":{"offset_string":"UTC-2","offset_value":-7200,"readable_name":"-2:00 Noronha ( America )","name":"America/Noronha"},"America/Santiago":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-3","readable_name":"-4:00 Santiago ( America )","changed_offset_value":-10800,"name":"America/Santiago","dst_change_epoch":1413086614,"changed_readable_name":"-3:00 Santiago ( America )"},"Asia/Kamchatka":{"offset_string":"UTC+12","offset_value":43200,"changed_offset_string":"UTC+11","readable_name":"+12:00 Kamchatka ( Asia )","changed_offset_value":39600,"name":"Asia/Kamchatka","dst_change_epoch":1414250355,"changed_readable_name":"+11:00 Kamchatka ( Asia )"},"America/Campo_Grande":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-3","readable_name":"-4:00 Campo Grande ( America )","changed_offset_value":-10800,"name":"America/Campo_Grande","dst_change_epoch":1413692215,"changed_readable_name":"-3:00 Campo Grande ( America )"},"Europe/Lisbon":{"offset_string":"UTC+1","offset_value":3600,"changed_offset_string":"UTC","readable_name":"+1:00 Lisbon ( Europe )","changed_offset_value":0,"name":"Europe/Lisbon","dst_change_epoch":1414286427,"changed_readable_name":"+0:00 Lisbon ( Europe )"},"Asia/Bangkok":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Bangkok ( Asia )","name":"Asia/Bangkok"},"America/Lima":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Lima ( America )","name":"America/Lima"},"Australia/Darwin":{"offset_string":"UTC+9:30","offset_value":34200,"readable_name":"+9:30 Darwin ( Australia )","name":"Australia/Darwin"},"CET":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 CET","changed_offset_value":3600,"name":"CET","dst_change_epoch":1414286426,"changed_readable_name":"+1:00 CET"},"America/Metlakatla":{"offset_string":"UTC-7","offset_value":-25200,"changed_offset_string":"UTC-8","readable_name":"-7:00 Metlakatla ( America )","changed_offset_value":-28800,"name":"America/Metlakatla","dst_change_epoch":1414920504,"changed_readable_name":"-8:00 Metlakatla ( America )"},"Asia/Seoul":{"offset_string":"UTC+9","offset_value":32400,"readable_name":"+9:00 Seoul ( Asia )","name":"Asia/Seoul"},"Europe/Luxembourg":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Luxembourg ( Europe )","changed_offset_value":3600,"name":"Europe/Luxembourg","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Luxembourg ( Europe )"},"Atlantic/Faroe":{"offset_string":"UTC+1","offset_value":3600,"changed_offset_string":"UTC","readable_name":"+1:00 Faroe ( Atlantic )","changed_offset_value":0,"name":"Atlantic/Faroe","dst_change_epoch":1414286426,"changed_readable_name":"+0:00 Faroe ( Atlantic )"},"America/Boa_Vista":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Boa Vista ( America )","name":"America/Boa_Vista"},"Pacific/Apia":{"offset_string":"UTC-11","offset_value":-39600,"readable_name":"-11:00 Apia ( Pacific )","name":"Pacific/Apia"},"Antarctica/Mawson":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Mawson ( Antarctica )","name":"Antarctica/Mawson"},"Europe/Monaco":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Monaco ( Europe )","changed_offset_value":3600,"name":"Europe/Monaco","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Monaco ( Europe )"},"America/Argentina/Buenos_Aires":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Buenos Aires ( America/Argentina )","name":"America/Argentina/Buenos_Aires"},"America/Santo_Domingo":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Santo Domingo ( America )","name":"America/Santo_Domingo"},"Europe/Kiev":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Kiev ( Europe )","changed_offset_value":7200,"name":"Europe/Kiev","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Kiev ( Europe )"},"Asia/Jakarta":{"offset_string":"UTC+7","offset_value":25200,"readable_name":"+7:00 Jakarta ( Asia )","name":"Asia/Jakarta"},"Africa/Ndjamena":{"offset_string":"UTC+1","offset_value":3600,"readable_name":"+1:00 Ndjamena ( Africa )","name":"Africa/Ndjamena"},"America/Guayaquil":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Guayaquil ( America )","name":"America/Guayaquil"},"America/Chicago":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Chicago ( America )","changed_offset_value":-21600,"name":"America/Chicago","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Chicago ( America )"},"Europe/Samara":{"offset_string":"UTC+4","offset_value":14400,"changed_offset_string":"UTC+3","readable_name":"+4:00 Samara ( Europe )","changed_offset_value":10800,"name":"Europe/Samara","dst_change_epoch":1414278833,"changed_readable_name":"+3:00 Samara ( Europe )"},"America/Indiana/Tell_City":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Tell City ( America/Indiana )","changed_offset_value":-21600,"name":"America/Indiana/Tell_City","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Tell City ( America/Indiana )"},"America/Denver":{"offset_string":"UTC-6","offset_value":-21600,"changed_offset_string":"UTC-7","readable_name":"-6:00 Denver ( America )","changed_offset_value":-25200,"name":"America/Denver","dst_change_epoch":1414916707,"changed_readable_name":"-7:00 Denver ( America )"},"Europe/Zaporozhye":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Zaporozhye ( Europe )","changed_offset_value":7200,"name":"Europe/Zaporozhye","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Zaporozhye ( Europe )"},"Pacific/Auckland":{"offset_string":"UTC+12","offset_value":43200,"changed_offset_string":"UTC+13","readable_name":"+12:00 Auckland ( Pacific )","changed_offset_value":46800,"name":"Pacific/Auckland","dst_change_epoch":1411827950,"changed_readable_name":"+13:00 Auckland ( Pacific )"},"Europe/Vienna":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Vienna ( Europe )","changed_offset_value":3600,"name":"Europe/Vienna","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Vienna ( Europe )"},"America/Argentina/Ushuaia":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Ushuaia ( America/Argentina )","name":"America/Argentina/Ushuaia"},"America/Grand_Turk":{"offset_string":"UTC-4","offset_value":-14400,"changed_offset_string":"UTC-5","readable_name":"-4:00 Grand Turk ( America )","changed_offset_value":-18000,"name":"America/Grand_Turk","dst_change_epoch":1414909114,"changed_readable_name":"-5:00 Grand Turk ( America )"},"Asia/Kuching":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Kuching ( Asia )","name":"Asia/Kuching"},"America/Aruba":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Aruba ( America )","name":"America/Aruba"},"Asia/Karachi":{"offset_string":"UTC+5","offset_value":18000,"readable_name":"+5:00 Karachi ( Asia )","name":"Asia/Karachi"},"Africa/Accra":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Accra ( Africa )","name":"Africa/Accra"},"America/Port_of_Spain":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Port of Spain ( America )","name":"America/Port_of_Spain"},"America/Paramaribo":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Paramaribo ( America )","name":"America/Paramaribo"},"America/North_Dakota/Beulah":{"offset_string":"UTC-5","offset_value":-18000,"changed_offset_string":"UTC-6","readable_name":"-5:00 Beulah ( America/North Dakota )","changed_offset_value":-21600,"name":"America/North_Dakota/Beulah","dst_change_epoch":1414912911,"changed_readable_name":"-6:00 Beulah ( America/North Dakota )"},"America/Anchorage":{"offset_string":"UTC-8","offset_value":-28800,"changed_offset_string":"UTC-9","readable_name":"-8:00 Anchorage ( America )","changed_offset_value":-32400,"name":"America/Anchorage","dst_change_epoch":1414922402,"changed_readable_name":"-9:00 Anchorage ( America )"},"Asia/Taipei":{"offset_string":"UTC+8","offset_value":28800,"readable_name":"+8:00 Taipei ( Asia )","name":"Asia/Taipei"},"Antarctica/Rothera":{"offset_string":"UTC-3","offset_value":-10800,"readable_name":"-3:00 Rothera ( Antarctica )","name":"Antarctica/Rothera"},"Europe/Dublin":{"offset_string":"UTC+1","offset_value":3600,"changed_offset_string":"UTC","readable_name":"+1:00 Dublin ( Europe )","changed_offset_value":0,"name":"Europe/Dublin","dst_change_epoch":1414286426,"changed_readable_name":"+0:00 Dublin ( Europe )"},"Africa/Freetown":{"offset_string":"UTC","offset_value":0,"readable_name":"+0:00 Freetown ( Africa )","name":"Africa/Freetown"},"Atlantic/Bermuda":{"offset_string":"UTC-3","offset_value":-10800,"changed_offset_string":"UTC-4","readable_name":"-3:00 Bermuda ( Atlantic )","changed_offset_value":-14400,"name":"Atlantic/Bermuda","dst_change_epoch":1414905317,"changed_readable_name":"-4:00 Bermuda ( Atlantic )"},"Pacific/Kosrae":{"offset_string":"UTC+11","offset_value":39600,"readable_name":"+11:00 Kosrae ( Pacific )","name":"Pacific/Kosrae"},"Europe/Tallinn":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 Tallinn ( Europe )","changed_offset_value":7200,"name":"Europe/Tallinn","dst_change_epoch":1414286427,"changed_readable_name":"+2:00 Tallinn ( Europe )"},"Pacific/Gambier":{"offset_string":"UTC-9","offset_value":-32400,"readable_name":"-9:00 Gambier ( Pacific )","name":"Pacific/Gambier"},"Australia/Hobart":{"offset_string":"UTC+10","offset_value":36000,"changed_offset_string":"UTC+11","readable_name":"+10:00 Hobart ( Australia )","changed_offset_value":39600,"name":"Australia/Hobart","dst_change_epoch":1412439246,"changed_readable_name":"+11:00 Hobart ( Australia )"},"America/Panama":{"offset_string":"UTC-5","offset_value":-18000,"readable_name":"-5:00 Panama ( America )","name":"America/Panama"},"America/Montserrat":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Montserrat ( America )","name":"America/Montserrat"},"Indian/Reunion":{"offset_string":"UTC+4","offset_value":14400,"readable_name":"+4:00 Reunion ( Indian )","name":"Indian/Reunion"},"Europe/Zurich":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Zurich ( Europe )","changed_offset_value":3600,"name":"Europe/Zurich","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Zurich ( Europe )"},"America/Tortola":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Tortola ( America )","name":"America/Tortola"},"EET":{"offset_string":"UTC+3","offset_value":10800,"changed_offset_string":"UTC+2","readable_name":"+3:00 EET","changed_offset_value":7200,"name":"EET","dst_change_epoch":1414286426,"changed_readable_name":"+2:00 EET"},"America/Puerto_Rico":{"offset_string":"UTC-4","offset_value":-14400,"readable_name":"-4:00 Puerto Rico ( America )","name":"America/Puerto_Rico"},"Atlantic/Madeira":{"offset_string":"UTC+1","offset_value":3600,"changed_offset_string":"UTC","readable_name":"+1:00 Madeira ( Atlantic )","changed_offset_value":0,"name":"Atlantic/Madeira","dst_change_epoch":1414286426,"changed_readable_name":"+0:00 Madeira ( Atlantic )"},"Europe/Stockholm":{"offset_string":"UTC+2","offset_value":7200,"changed_offset_string":"UTC+1","readable_name":"+2:00 Stockholm ( Europe )","changed_offset_value":3600,"name":"Europe/Stockholm","dst_change_epoch":1414286427,"changed_readable_name":"+1:00 Stockholm ( Europe )"},"Indian/Mahe":{"offset_string":"UTC+4","offset_value":14400,"readable_name":"+4:00 Mahe ( Indian )","name":"Indian/Mahe"}},"choices":["Pacific/Apia","Pacific/Midway","Pacific/Niue","Pacific/Pago_Pago","HST","Pacific/Fakaofo","Pacific/Honolulu","Pacific/Johnston","Pacific/Rarotonga","Pacific/Tahiti","Pacific/Marquesas","America/Adak","Pacific/Gambier","America/Anchorage","America/Juneau","America/Nome","America/Sitka","America/Yakutat","Pacific/Pitcairn","America/Dawson","America/Dawson_Creek","America/Hermosillo","America/Los_Angeles","America/Metlakatla","America/Phoenix","America/Santa_Isabel","America/Tijuana","America/Vancouver","America/Whitehorse","MST","PST8PDT","America/Belize","America/Boise","America/Cambridge_Bay","America/Chihuahua","America/Costa_Rica","America/Denver","America/Edmonton","America/El_Salvador","America/Guatemala","America/Inuvik","America/Managua","America/Mazatlan","America/Ojinaga","America/Regina","America/Swift_Current","America/Tegucigalpa","America/Yellowknife","MST7MDT","Pacific/Easter","Pacific/Galapagos","America/Atikokan","America/Bahia_Banderas","America/Bogota","America/Cancun","America/Cayman","America/Chicago","America/Guayaquil","America/Indiana/Knox","America/Indiana/Tell_City","America/Jamaica","America/Lima","America/Matamoros","America/Menominee","America/Merida","America/Mexico_City","America/Monterrey","America/North_Dakota/Beulah","America/North_Dakota/Center","America/North_Dakota/New_Salem","America/Panama","America/Port-au-Prince","America/Rainy_River","America/Rankin_Inlet","America/Resolute","America/Winnipeg","CST6CDT","EST","America/Caracas","America/Anguilla","America/Antigua","America/Aruba","America/Asuncion","America/Barbados","America/Blanc-Sablon","America/Boa_Vista","America/Campo_Grande","America/Cuiaba","America/Curacao","America/Detroit","America/Dominica","America/Eirunepe","America/Grand_Turk","America/Grenada","America/Guadeloupe","America/Guyana","America/Havana","America/Indiana/Indianapolis","America/Indiana/Marengo","America/Indiana/Petersburg","America/Indiana/Vevay","America/Indiana/Vincennes","America/Indiana/Winamac","America/Iqaluit","America/Kentucky/Louisville","America/Kentucky/Monticello","America/La_Paz","America/Manaus","America/Martinique","America/Montreal","America/Montserrat","America/Nassau","America/New_York","America/Nipigon","America/Pangnirtung","America/Port_of_Spain","America/Porto_Velho","America/Puerto_Rico","America/Rio_Branco","America/Santiago","America/Santo_Domingo","America/St_Kitts","America/St_Lucia","America/St_Thomas","America/St_Vincent","America/Thunder_Bay","America/Toronto","America/Tortola","Antarctica/Palmer","Atlantic/Stanley","EST5EDT","America/Araguaina","America/Argentina/Buenos_Aires","America/Argentina/Catamarca","America/Argentina/Cordoba","America/Argentina/Jujuy","America/Argentina/La_Rioja","America/Argentina/Mendoza","America/Argentina/Rio_Gallegos","America/Argentina/Salta","America/Argentina/San_Juan","America/Argentina/San_Luis","America/Argentina/Tucuman","America/Argentina/Ushuaia","America/Bahia","America/Belem","America/Cayenne","America/Fortaleza","America/Glace_Bay","America/Goose_Bay","America/Halifax","America/Maceio","America/Moncton","America/Montevideo","America/Paramaribo","America/Recife","America/Santarem","America/Sao_Paulo","America/Thule","Antarctica/Rothera","Atlantic/Bermuda","America/St_Johns","America/Godthab","America/Miquelon","America/Noronha","Atlantic/South_Georgia","Atlantic/Cape_Verde","Africa/Abidjan","Africa/Accra","Africa/Bamako","Africa/Banjul","Africa/Bissau","Africa/Casablanca","Africa/Conakry","Africa/Dakar","Africa/El_Aaiun","Africa/Freetown","Africa/Lome","Africa/Monrovia","Africa/Nouakchott","Africa/Ouagadougou","Africa/Sao_Tome","America/Danmarkshavn","America/Scoresbysund","Atlantic/Azores","Atlantic/Reykjavik","Atlantic/St_Helena","UTC","Africa/Algiers","Africa/Bangui","Africa/Brazzaville","Africa/Douala","Africa/Kinshasa","Africa/Lagos","Africa/Libreville","Africa/Luanda","Africa/Malabo","Africa/Ndjamena","Africa/Niamey","Africa/Porto-Novo","Africa/Tunis","Africa/Windhoek","Atlantic/Canary","Atlantic/Faroe","Atlantic/Madeira","Europe/Dublin","Europe/Lisbon","Europe/London","WET","Africa/Blantyre","Africa/Bujumbura","Africa/Cairo","Africa/Ceuta","Africa/Gaborone","Africa/Harare","Africa/Johannesburg","Africa/Kigali","Africa/Lubumbashi","Africa/Lusaka","Africa/Maputo","Africa/Maseru","Africa/Mbabane","Africa/Tripoli","CET","Europe/Amsterdam","Europe/Andorra","Europe/Belgrade","Europe/Berlin","Europe/Brussels","Europe/Budapest","Europe/Copenhagen","Europe/Gibraltar","Europe/Luxembourg","Europe/Madrid","Europe/Malta","Europe/Monaco","Europe/Oslo","Europe/Paris","Europe/Prague","Europe/Rome","Europe/Stockholm","Europe/Tirane","Europe/Vaduz","Europe/Vienna","Europe/Warsaw","Europe/Zurich","MET","Africa/Addis_Ababa","Africa/Asmara","Africa/Dar_es_Salaam","Africa/Djibouti","Africa/Kampala","Africa/Khartoum","Africa/Mogadishu","Africa/Nairobi","Antarctica/Syowa","Asia/Aden","Asia/Amman","Asia/Baghdad","Asia/Bahrain","Asia/Beirut","Asia/Damascus","Asia/Gaza","Asia/Jerusalem","Asia/Kuwait","Asia/Nicosia","Asia/Qatar","Asia/Riyadh","EET","Europe/Athens","Europe/Bucharest","Europe/Chisinau","Europe/Helsinki","Europe/Istanbul","Europe/Kaliningrad","Europe/Kiev","Europe/Minsk","Europe/Riga","Europe/Simferopol","Europe/Sofia","Europe/Tallinn","Europe/Uzhgorod","Europe/Vilnius","Europe/Zaporozhye","Indian/Antananarivo","Indian/Comoro","Indian/Mayotte","Asia/Dubai","Asia/Muscat","Asia/Tbilisi","Europe/Moscow","Europe/Samara","Europe/Volgograd","Indian/Mahe","Indian/Mauritius","Indian/Reunion","Asia/Kabul","Asia/Tehran","Antarctica/Mawson","Asia/Aqtau","Asia/Aqtobe","Asia/Ashgabat","Asia/Baku","Asia/Dushanbe","Asia/Karachi","Asia/Oral","Asia/Samarkand","Asia/Tashkent","Asia/Yerevan","Indian/Kerguelen","Indian/Maldives","Asia/Colombo","Asia/Kolkata","Asia/Kathmandu","Antarctica/Vostok","Asia/Almaty","Asia/Bishkek","Asia/Dhaka","Asia/Qyzylorda","Asia/Thimphu","Asia/Yekaterinburg","Indian/Chagos","Asia/Rangoon","Indian/Cocos","Antarctica/Davis","Asia/Bangkok","Asia/Ho_Chi_Minh","Asia/Hovd","Asia/Jakarta","Asia/Novokuznetsk","Asia/Novosibirsk","Asia/Omsk","Asia/Phnom_Penh","Asia/Pontianak","Asia/Vientiane","Indian/Christmas","Antarctica/Casey","Asia/Brunei","Asia/Choibalsan","Asia/Chongqing","Asia/Harbin","Asia/Hong_Kong","Asia/Kashgar","Asia/Krasnoyarsk","Asia/Kuala_Lumpur","Asia/Kuching","Asia/Macau","Asia/Makassar","Asia/Manila","Asia/Shanghai","Asia/Singapore","Asia/Taipei","Asia/Ulaanbaatar","Asia/Urumqi","Australia/Perth","Australia/Eucla","Asia/Dili","Asia/Irkutsk","Asia/Jayapura","Asia/Pyongyang","Asia/Seoul","Asia/Tokyo","Pacific/Palau","Australia/Adelaide","Australia/Broken_Hill","Australia/Darwin","Antarctica/DumontDUrville","Asia/Yakutsk","Australia/Brisbane","Australia/Currie","Australia/Hobart","Australia/Lindeman","Australia/Melbourne","Australia/Sydney","Pacific/Chuuk","Pacific/Guam","Pacific/Port_Moresby","Pacific/Saipan","Australia/Lord_Howe","Antarctica/Macquarie","Asia/Sakhalin","Asia/Vladivostok","Pacific/Efate","Pacific/Guadalcanal","Pacific/Kosrae","Pacific/Noumea","Pacific/Pohnpei","Pacific/Norfolk","Antarctica/McMurdo","Asia/Anadyr","Asia/Kamchatka","Asia/Magadan","Pacific/Auckland","Pacific/Fiji","Pacific/Funafuti","Pacific/Kwajalein","Pacific/Majuro","Pacific/Nauru","Pacific/Tarawa","Pacific/Wake","Pacific/Wallis","Pacific/Chatham","Pacific/Enderbury","Pacific/Tongatapu","Pacific/Kiritimati"]},
-    //"
     auth : {
         user : null,
         token : null,
@@ -669,7 +667,3043 @@ window.app = {
             app.helpers.hideContent();
             Backbone.history.loadUrl();
         });
-    }
+    },
+    // Value of this is the result from:
+    // curl -s https://meetin.gs/meetings_json/timezone_data_export/ | python -m json.tool
+    timezones : {
+        "choices": [
+            "Pacific/Niue",
+            "Pacific/Pago_Pago",
+            "HST",
+            "Pacific/Honolulu",
+            "Pacific/Rarotonga",
+            "Pacific/Tahiti",
+            "Pacific/Marquesas",
+            "America/Adak",
+            "Pacific/Gambier",
+            "America/Anchorage",
+            "America/Juneau",
+            "America/Metlakatla",
+            "America/Nome",
+            "America/Sitka",
+            "America/Yakutat",
+            "Pacific/Pitcairn",
+            "America/Creston",
+            "America/Dawson",
+            "America/Dawson_Creek",
+            "America/Hermosillo",
+            "America/Los_Angeles",
+            "America/Phoenix",
+            "America/Santa_Isabel",
+            "America/Tijuana",
+            "America/Vancouver",
+            "America/Whitehorse",
+            "MST",
+            "PST8PDT",
+            "America/Belize",
+            "America/Boise",
+            "America/Cambridge_Bay",
+            "America/Chihuahua",
+            "America/Costa_Rica",
+            "America/Denver",
+            "America/Edmonton",
+            "America/El_Salvador",
+            "America/Guatemala",
+            "America/Inuvik",
+            "America/Managua",
+            "America/Mazatlan",
+            "America/Ojinaga",
+            "America/Regina",
+            "America/Swift_Current",
+            "America/Tegucigalpa",
+            "America/Yellowknife",
+            "MST7MDT",
+            "Pacific/Galapagos",
+            "America/Atikokan",
+            "America/Bahia_Banderas",
+            "America/Bogota",
+            "America/Cancun",
+            "America/Cayman",
+            "America/Chicago",
+            "America/Eirunepe",
+            "America/Guayaquil",
+            "America/Indiana/Knox",
+            "America/Indiana/Tell_City",
+            "America/Jamaica",
+            "America/Lima",
+            "America/Matamoros",
+            "America/Menominee",
+            "America/Merida",
+            "America/Mexico_City",
+            "America/Monterrey",
+            "America/North_Dakota/Beulah",
+            "America/North_Dakota/Center",
+            "America/North_Dakota/New_Salem",
+            "America/Panama",
+            "America/Rainy_River",
+            "America/Rankin_Inlet",
+            "America/Resolute",
+            "America/Rio_Branco",
+            "America/Winnipeg",
+            "CST6CDT",
+            "EST",
+            "Pacific/Easter",
+            "America/Caracas",
+            "America/Asuncion",
+            "America/Barbados",
+            "America/Blanc-Sablon",
+            "America/Boa_Vista",
+            "America/Campo_Grande",
+            "America/Cuiaba",
+            "America/Curacao",
+            "America/Detroit",
+            "America/Grand_Turk",
+            "America/Guyana",
+            "America/Havana",
+            "America/Indiana/Indianapolis",
+            "America/Indiana/Marengo",
+            "America/Indiana/Petersburg",
+            "America/Indiana/Vevay",
+            "America/Indiana/Vincennes",
+            "America/Indiana/Winamac",
+            "America/Iqaluit",
+            "America/Kentucky/Louisville",
+            "America/Kentucky/Monticello",
+            "America/La_Paz",
+            "America/Manaus",
+            "America/Martinique",
+            "America/Nassau",
+            "America/New_York",
+            "America/Nipigon",
+            "America/Pangnirtung",
+            "America/Port-au-Prince",
+            "America/Port_of_Spain",
+            "America/Porto_Velho",
+            "America/Puerto_Rico",
+            "America/Santo_Domingo",
+            "America/Thunder_Bay",
+            "America/Toronto",
+            "EST5EDT",
+            "America/Araguaina",
+            "America/Argentina/Buenos_Aires",
+            "America/Argentina/Catamarca",
+            "America/Argentina/Cordoba",
+            "America/Argentina/Jujuy",
+            "America/Argentina/La_Rioja",
+            "America/Argentina/Mendoza",
+            "America/Argentina/Rio_Gallegos",
+            "America/Argentina/Salta",
+            "America/Argentina/San_Juan",
+            "America/Argentina/San_Luis",
+            "America/Argentina/Tucuman",
+            "America/Argentina/Ushuaia",
+            "America/Bahia",
+            "America/Belem",
+            "America/Cayenne",
+            "America/Fortaleza",
+            "America/Glace_Bay",
+            "America/Goose_Bay",
+            "America/Halifax",
+            "America/Maceio",
+            "America/Moncton",
+            "America/Montevideo",
+            "America/Paramaribo",
+            "America/Recife",
+            "America/Santarem",
+            "America/Santiago",
+            "America/Sao_Paulo",
+            "America/Thule",
+            "Antarctica/Palmer",
+            "Antarctica/Rothera",
+            "Atlantic/Bermuda",
+            "Atlantic/Stanley",
+            "America/St_Johns",
+            "America/Godthab",
+            "America/Miquelon",
+            "America/Noronha",
+            "Atlantic/South_Georgia",
+            "Atlantic/Cape_Verde",
+            "Africa/Abidjan",
+            "Africa/Accra",
+            "Africa/Bissau",
+            "Africa/Monrovia",
+            "America/Danmarkshavn",
+            "America/Scoresbysund",
+            "Atlantic/Azores",
+            "Atlantic/Reykjavik",
+            "UTC",
+            "UTC",
+            "Africa/Algiers",
+            "Africa/Casablanca",
+            "Africa/El_Aaiun",
+            "Africa/Lagos",
+            "Africa/Ndjamena",
+            "Africa/Tunis",
+            "Atlantic/Canary",
+            "Atlantic/Faroe",
+            "Atlantic/Madeira",
+            "Europe/Dublin",
+            "Europe/Lisbon",
+            "Europe/London",
+            "WET",
+            "Africa/Cairo",
+            "Africa/Ceuta",
+            "Africa/Johannesburg",
+            "Africa/Maputo",
+            "Africa/Tripoli",
+            "Africa/Windhoek",
+            "Antarctica/Troll",
+            "CET",
+            "Europe/Amsterdam",
+            "Europe/Andorra",
+            "Europe/Belgrade",
+            "Europe/Berlin",
+            "Europe/Brussels",
+            "Europe/Budapest",
+            "Europe/Copenhagen",
+            "Europe/Gibraltar",
+            "Europe/Kaliningrad",
+            "Europe/Luxembourg",
+            "Europe/Madrid",
+            "Europe/Malta",
+            "Europe/Monaco",
+            "Europe/Oslo",
+            "Europe/Paris",
+            "Europe/Prague",
+            "Europe/Rome",
+            "Europe/Stockholm",
+            "Europe/Tirane",
+            "Europe/Vienna",
+            "Europe/Warsaw",
+            "Europe/Zurich",
+            "MET",
+            "Africa/Khartoum",
+            "Africa/Nairobi",
+            "Antarctica/Syowa",
+            "Asia/Amman",
+            "Asia/Baghdad",
+            "Asia/Beirut",
+            "Asia/Damascus",
+            "Asia/Gaza",
+            "Asia/Hebron",
+            "Asia/Jerusalem",
+            "Asia/Nicosia",
+            "Asia/Qatar",
+            "Asia/Riyadh",
+            "EET",
+            "Europe/Athens",
+            "Europe/Bucharest",
+            "Europe/Chisinau",
+            "Europe/Helsinki",
+            "Europe/Istanbul",
+            "Europe/Kiev",
+            "Europe/Minsk",
+            "Europe/Moscow",
+            "Europe/Riga",
+            "Europe/Simferopol",
+            "Europe/Sofia",
+            "Europe/Tallinn",
+            "Europe/Uzhgorod",
+            "Europe/Vilnius",
+            "Europe/Volgograd",
+            "Europe/Zaporozhye",
+            "Asia/Tehran",
+            "Asia/Dubai",
+            "Asia/Tbilisi",
+            "Asia/Yerevan",
+            "Europe/Samara",
+            "Indian/Mahe",
+            "Indian/Mauritius",
+            "Indian/Reunion",
+            "Asia/Kabul",
+            "Antarctica/Mawson",
+            "Asia/Aqtau",
+            "Asia/Aqtobe",
+            "Asia/Ashgabat",
+            "Asia/Baku",
+            "Asia/Dushanbe",
+            "Asia/Karachi",
+            "Asia/Oral",
+            "Asia/Samarkand",
+            "Asia/Tashkent",
+            "Asia/Yekaterinburg",
+            "Indian/Kerguelen",
+            "Indian/Maldives",
+            "Asia/Colombo",
+            "Asia/Kolkata",
+            "Asia/Kathmandu",
+            "Antarctica/Vostok",
+            "Asia/Almaty",
+            "Asia/Bishkek",
+            "Asia/Dhaka",
+            "Asia/Novosibirsk",
+            "Asia/Omsk",
+            "Asia/Qyzylorda",
+            "Asia/Thimphu",
+            "Asia/Urumqi",
+            "Indian/Chagos",
+            "Asia/Rangoon",
+            "Indian/Cocos",
+            "Antarctica/Davis",
+            "Asia/Bangkok",
+            "Asia/Ho_Chi_Minh",
+            "Asia/Hovd",
+            "Asia/Jakarta",
+            "Asia/Krasnoyarsk",
+            "Asia/Novokuznetsk",
+            "Asia/Pontianak",
+            "Indian/Christmas",
+            "Antarctica/Casey",
+            "Asia/Brunei",
+            "Asia/Chita",
+            "Asia/Choibalsan",
+            "Asia/Hong_Kong",
+            "Asia/Irkutsk",
+            "Asia/Kuala_Lumpur",
+            "Asia/Kuching",
+            "Asia/Macau",
+            "Asia/Makassar",
+            "Asia/Manila",
+            "Asia/Shanghai",
+            "Asia/Singapore",
+            "Asia/Taipei",
+            "Asia/Ulaanbaatar",
+            "Australia/Perth",
+            "Asia/Pyongyang",
+            "Australia/Eucla",
+            "Asia/Dili",
+            "Asia/Jayapura",
+            "Asia/Khandyga",
+            "Asia/Seoul",
+            "Asia/Tokyo",
+            "Asia/Yakutsk",
+            "Pacific/Palau",
+            "Australia/Adelaide",
+            "Australia/Broken_Hill",
+            "Australia/Darwin",
+            "Antarctica/DumontDUrville",
+            "Asia/Magadan",
+            "Asia/Sakhalin",
+            "Asia/Ust-Nera",
+            "Asia/Vladivostok",
+            "Australia/Brisbane",
+            "Australia/Currie",
+            "Australia/Hobart",
+            "Australia/Lindeman",
+            "Australia/Melbourne",
+            "Australia/Sydney",
+            "Pacific/Chuuk",
+            "Pacific/Guam",
+            "Pacific/Port_Moresby",
+            "Australia/Lord_Howe",
+            "Antarctica/Macquarie",
+            "Asia/Srednekolymsk",
+            "Pacific/Bougainville",
+            "Pacific/Efate",
+            "Pacific/Guadalcanal",
+            "Pacific/Kosrae",
+            "Pacific/Noumea",
+            "Pacific/Pohnpei",
+            "Pacific/Norfolk",
+            "Asia/Anadyr",
+            "Asia/Kamchatka",
+            "Pacific/Fiji",
+            "Pacific/Funafuti",
+            "Pacific/Kwajalein",
+            "Pacific/Majuro",
+            "Pacific/Nauru",
+            "Pacific/Tarawa",
+            "Pacific/Wake",
+            "Pacific/Wallis",
+            "Pacific/Auckland",
+            "Pacific/Enderbury",
+            "Pacific/Fakaofo",
+            "Pacific/Tongatapu",
+            "Pacific/Chatham",
+            "Pacific/Apia",
+            "Pacific/Kiritimati"
+        ],
+        "data": {
+            "Africa/Abidjan": {
+                "name": "Africa/Abidjan",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 Abidjan ( Africa )"
+            },
+            "Africa/Accra": {
+                "name": "Africa/Accra",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 Accra ( Africa )"
+            },
+            "Africa/Algiers": {
+                "name": "Africa/Algiers",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Algiers ( Africa )"
+            },
+            "Africa/Bissau": {
+                "name": "Africa/Bissau",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 Bissau ( Africa )"
+            },
+            "Africa/Cairo": {
+                "name": "Africa/Cairo",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Cairo ( Africa )"
+            },
+            "Africa/Casablanca": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 Casablanca ( Africa )",
+                "dst_change_epoch": 1445739731,
+                "name": "Africa/Casablanca",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Casablanca ( Africa )"
+            },
+            "Africa/Ceuta": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Ceuta ( Africa )",
+                "dst_change_epoch": 1445735934,
+                "name": "Africa/Ceuta",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Ceuta ( Africa )"
+            },
+            "Africa/El_Aaiun": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 El Aaiun ( Africa )",
+                "dst_change_epoch": 1445739731,
+                "name": "Africa/El_Aaiun",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 El Aaiun ( Africa )"
+            },
+            "Africa/Johannesburg": {
+                "name": "Africa/Johannesburg",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Johannesburg ( Africa )"
+            },
+            "Africa/Khartoum": {
+                "name": "Africa/Khartoum",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Khartoum ( Africa )"
+            },
+            "Africa/Lagos": {
+                "name": "Africa/Lagos",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Lagos ( Africa )"
+            },
+            "Africa/Maputo": {
+                "name": "Africa/Maputo",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Maputo ( Africa )"
+            },
+            "Africa/Monrovia": {
+                "name": "Africa/Monrovia",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 Monrovia ( Africa )"
+            },
+            "Africa/Nairobi": {
+                "name": "Africa/Nairobi",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Nairobi ( Africa )"
+            },
+            "Africa/Ndjamena": {
+                "name": "Africa/Ndjamena",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Ndjamena ( Africa )"
+            },
+            "Africa/Tripoli": {
+                "name": "Africa/Tripoli",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Tripoli ( Africa )"
+            },
+            "Africa/Tunis": {
+                "name": "Africa/Tunis",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Tunis ( Africa )"
+            },
+            "Africa/Windhoek": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Windhoek ( Africa )",
+                "dst_change_epoch": 1459641989,
+                "name": "Africa/Windhoek",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Windhoek ( Africa )"
+            },
+            "America/Adak": {
+                "changed_offset_string": "UTC-10",
+                "changed_offset_value": -36000,
+                "changed_readable_name": "-10:00 Adak ( America )",
+                "dst_change_epoch": 1446375708,
+                "name": "America/Adak",
+                "offset_string": "UTC-9",
+                "offset_value": -32400,
+                "readable_name": "-9:00 Adak ( America )"
+            },
+            "America/Anchorage": {
+                "changed_offset_string": "UTC-9",
+                "changed_offset_value": -32400,
+                "changed_readable_name": "-9:00 Anchorage ( America )",
+                "dst_change_epoch": 1446373809,
+                "name": "America/Anchorage",
+                "offset_string": "UTC-8",
+                "offset_value": -28800,
+                "readable_name": "-8:00 Anchorage ( America )"
+            },
+            "America/Araguaina": {
+                "name": "America/Araguaina",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Araguaina ( America )"
+            },
+            "America/Argentina/Buenos_Aires": {
+                "name": "America/Argentina/Buenos_Aires",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Buenos Aires ( America/Argentina )"
+            },
+            "America/Argentina/Catamarca": {
+                "name": "America/Argentina/Catamarca",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Catamarca ( America/Argentina )"
+            },
+            "America/Argentina/Cordoba": {
+                "name": "America/Argentina/Cordoba",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Cordoba ( America/Argentina )"
+            },
+            "America/Argentina/Jujuy": {
+                "name": "America/Argentina/Jujuy",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Jujuy ( America/Argentina )"
+            },
+            "America/Argentina/La_Rioja": {
+                "name": "America/Argentina/La_Rioja",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 La Rioja ( America/Argentina )"
+            },
+            "America/Argentina/Mendoza": {
+                "name": "America/Argentina/Mendoza",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Mendoza ( America/Argentina )"
+            },
+            "America/Argentina/Rio_Gallegos": {
+                "name": "America/Argentina/Rio_Gallegos",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Rio Gallegos ( America/Argentina )"
+            },
+            "America/Argentina/Salta": {
+                "name": "America/Argentina/Salta",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Salta ( America/Argentina )"
+            },
+            "America/Argentina/San_Juan": {
+                "name": "America/Argentina/San_Juan",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 San Juan ( America/Argentina )"
+            },
+            "America/Argentina/San_Luis": {
+                "name": "America/Argentina/San_Luis",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 San Luis ( America/Argentina )"
+            },
+            "America/Argentina/Tucuman": {
+                "name": "America/Argentina/Tucuman",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Tucuman ( America/Argentina )"
+            },
+            "America/Argentina/Ushuaia": {
+                "name": "America/Argentina/Ushuaia",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Ushuaia ( America/Argentina )"
+            },
+            "America/Asuncion": {
+                "changed_offset_string": "UTC-3",
+                "changed_offset_value": -10800,
+                "changed_readable_name": "-3:00 Asuncion ( America )",
+                "dst_change_epoch": 1443932418,
+                "name": "America/Asuncion",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Asuncion ( America )"
+            },
+            "America/Atikokan": {
+                "name": "America/Atikokan",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Atikokan ( America )"
+            },
+            "America/Bahia": {
+                "name": "America/Bahia",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Bahia ( America )"
+            },
+            "America/Bahia_Banderas": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Bahia Banderas ( America )",
+                "dst_change_epoch": 1445756817,
+                "name": "America/Bahia_Banderas",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Bahia Banderas ( America )"
+            },
+            "America/Barbados": {
+                "name": "America/Barbados",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Barbados ( America )"
+            },
+            "America/Belem": {
+                "name": "America/Belem",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Belem ( America )"
+            },
+            "America/Belize": {
+                "name": "America/Belize",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Belize ( America )"
+            },
+            "America/Blanc-Sablon": {
+                "name": "America/Blanc-Sablon",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Blanc-Sablon ( America )"
+            },
+            "America/Boa_Vista": {
+                "name": "America/Boa_Vista",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Boa Vista ( America )"
+            },
+            "America/Bogota": {
+                "name": "America/Bogota",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Bogota ( America )"
+            },
+            "America/Boise": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Boise ( America )",
+                "dst_change_epoch": 1446366215,
+                "name": "America/Boise",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Boise ( America )"
+            },
+            "America/Cambridge_Bay": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Cambridge Bay ( America )",
+                "dst_change_epoch": 1446366215,
+                "name": "America/Cambridge_Bay",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Cambridge Bay ( America )"
+            },
+            "America/Campo_Grande": {
+                "changed_offset_string": "UTC-3",
+                "changed_offset_value": -10800,
+                "changed_readable_name": "-3:00 Campo Grande ( America )",
+                "dst_change_epoch": 1445141724,
+                "name": "America/Campo_Grande",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Campo Grande ( America )"
+            },
+            "America/Cancun": {
+                "name": "America/Cancun",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Cancun ( America )"
+            },
+            "America/Caracas": {
+                "name": "America/Caracas",
+                "offset_string": "UTC-4:30",
+                "offset_value": -16200,
+                "readable_name": "-4:30 Caracas ( America )"
+            },
+            "America/Cayenne": {
+                "name": "America/Cayenne",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Cayenne ( America )"
+            },
+            "America/Cayman": {
+                "changed_offset_string": "UTC-4",
+                "changed_offset_value": -14400,
+                "changed_readable_name": "-4:00 Cayman ( America )",
+                "dst_change_epoch": 1457853661,
+                "name": "America/Cayman",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Cayman ( America )"
+            },
+            "America/Chicago": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Chicago ( America )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Chicago",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Chicago ( America )"
+            },
+            "America/Chihuahua": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Chihuahua ( America )",
+                "dst_change_epoch": 1445760614,
+                "name": "America/Chihuahua",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Chihuahua ( America )"
+            },
+            "America/Costa_Rica": {
+                "name": "America/Costa_Rica",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Costa Rica ( America )"
+            },
+            "America/Creston": {
+                "name": "America/Creston",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Creston ( America )"
+            },
+            "America/Cuiaba": {
+                "changed_offset_string": "UTC-3",
+                "changed_offset_value": -10800,
+                "changed_readable_name": "-3:00 Cuiaba ( America )",
+                "dst_change_epoch": 1445141724,
+                "name": "America/Cuiaba",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Cuiaba ( America )"
+            },
+            "America/Curacao": {
+                "name": "America/Curacao",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Curacao ( America )"
+            },
+            "America/Danmarkshavn": {
+                "name": "America/Danmarkshavn",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 Danmarkshavn ( America )"
+            },
+            "America/Dawson": {
+                "changed_offset_string": "UTC-8",
+                "changed_offset_value": -28800,
+                "changed_readable_name": "-8:00 Dawson ( America )",
+                "dst_change_epoch": 1446370012,
+                "name": "America/Dawson",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Dawson ( America )"
+            },
+            "America/Dawson_Creek": {
+                "name": "America/Dawson_Creek",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Dawson Creek ( America )"
+            },
+            "America/Denver": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Denver ( America )",
+                "dst_change_epoch": 1446366215,
+                "name": "America/Denver",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Denver ( America )"
+            },
+            "America/Detroit": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Detroit ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Detroit",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Detroit ( America )"
+            },
+            "America/Edmonton": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Edmonton ( America )",
+                "dst_change_epoch": 1446366215,
+                "name": "America/Edmonton",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Edmonton ( America )"
+            },
+            "America/Eirunepe": {
+                "name": "America/Eirunepe",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Eirunepe ( America )"
+            },
+            "America/El_Salvador": {
+                "name": "America/El_Salvador",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 El Salvador ( America )"
+            },
+            "America/Fortaleza": {
+                "name": "America/Fortaleza",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Fortaleza ( America )"
+            },
+            "America/Glace_Bay": {
+                "changed_offset_string": "UTC-4",
+                "changed_offset_value": -14400,
+                "changed_readable_name": "-4:00 Glace Bay ( America )",
+                "dst_change_epoch": 1446354825,
+                "name": "America/Glace_Bay",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Glace Bay ( America )"
+            },
+            "America/Godthab": {
+                "changed_offset_string": "UTC-3",
+                "changed_offset_value": -10800,
+                "changed_readable_name": "-3:00 Godthab ( America )",
+                "dst_change_epoch": 1445735934,
+                "name": "America/Godthab",
+                "offset_string": "UTC-2",
+                "offset_value": -7200,
+                "readable_name": "-2:00 Godthab ( America )"
+            },
+            "America/Goose_Bay": {
+                "changed_offset_string": "UTC-4",
+                "changed_offset_value": -14400,
+                "changed_readable_name": "-4:00 Goose Bay ( America )",
+                "dst_change_epoch": 1446354825,
+                "name": "America/Goose_Bay",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Goose Bay ( America )"
+            },
+            "America/Grand_Turk": {
+                "name": "America/Grand_Turk",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Grand Turk ( America )"
+            },
+            "America/Guatemala": {
+                "name": "America/Guatemala",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Guatemala ( America )"
+            },
+            "America/Guayaquil": {
+                "name": "America/Guayaquil",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Guayaquil ( America )"
+            },
+            "America/Guyana": {
+                "name": "America/Guyana",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Guyana ( America )"
+            },
+            "America/Halifax": {
+                "changed_offset_string": "UTC-4",
+                "changed_offset_value": -14400,
+                "changed_readable_name": "-4:00 Halifax ( America )",
+                "dst_change_epoch": 1446354825,
+                "name": "America/Halifax",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Halifax ( America )"
+            },
+            "America/Havana": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Havana ( America )",
+                "dst_change_epoch": 1446354825,
+                "name": "America/Havana",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Havana ( America )"
+            },
+            "America/Hermosillo": {
+                "name": "America/Hermosillo",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Hermosillo ( America )"
+            },
+            "America/Indiana/Indianapolis": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Indianapolis ( America/Indiana )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Indiana/Indianapolis",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Indianapolis ( America/Indiana )"
+            },
+            "America/Indiana/Knox": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Knox ( America/Indiana )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Indiana/Knox",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Knox ( America/Indiana )"
+            },
+            "America/Indiana/Marengo": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Marengo ( America/Indiana )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Indiana/Marengo",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Marengo ( America/Indiana )"
+            },
+            "America/Indiana/Petersburg": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Petersburg ( America/Indiana )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Indiana/Petersburg",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Petersburg ( America/Indiana )"
+            },
+            "America/Indiana/Tell_City": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Tell City ( America/Indiana )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Indiana/Tell_City",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Tell City ( America/Indiana )"
+            },
+            "America/Indiana/Vevay": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Vevay ( America/Indiana )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Indiana/Vevay",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Vevay ( America/Indiana )"
+            },
+            "America/Indiana/Vincennes": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Vincennes ( America/Indiana )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Indiana/Vincennes",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Vincennes ( America/Indiana )"
+            },
+            "America/Indiana/Winamac": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Winamac ( America/Indiana )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Indiana/Winamac",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Winamac ( America/Indiana )"
+            },
+            "America/Inuvik": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Inuvik ( America )",
+                "dst_change_epoch": 1446366215,
+                "name": "America/Inuvik",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Inuvik ( America )"
+            },
+            "America/Iqaluit": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Iqaluit ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Iqaluit",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Iqaluit ( America )"
+            },
+            "America/Jamaica": {
+                "name": "America/Jamaica",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Jamaica ( America )"
+            },
+            "America/Juneau": {
+                "changed_offset_string": "UTC-9",
+                "changed_offset_value": -32400,
+                "changed_readable_name": "-9:00 Juneau ( America )",
+                "dst_change_epoch": 1446373809,
+                "name": "America/Juneau",
+                "offset_string": "UTC-8",
+                "offset_value": -28800,
+                "readable_name": "-8:00 Juneau ( America )"
+            },
+            "America/Kentucky/Louisville": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Louisville ( America/Kentucky )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Kentucky/Louisville",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Louisville ( America/Kentucky )"
+            },
+            "America/Kentucky/Monticello": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Monticello ( America/Kentucky )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Kentucky/Monticello",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Monticello ( America/Kentucky )"
+            },
+            "America/La_Paz": {
+                "name": "America/La_Paz",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 La Paz ( America )"
+            },
+            "America/Lima": {
+                "name": "America/Lima",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Lima ( America )"
+            },
+            "America/Los_Angeles": {
+                "changed_offset_string": "UTC-8",
+                "changed_offset_value": -28800,
+                "changed_readable_name": "-8:00 Los Angeles ( America )",
+                "dst_change_epoch": 1446370012,
+                "name": "America/Los_Angeles",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Los Angeles ( America )"
+            },
+            "America/Maceio": {
+                "name": "America/Maceio",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Maceio ( America )"
+            },
+            "America/Managua": {
+                "name": "America/Managua",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Managua ( America )"
+            },
+            "America/Manaus": {
+                "name": "America/Manaus",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Manaus ( America )"
+            },
+            "America/Martinique": {
+                "name": "America/Martinique",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Martinique ( America )"
+            },
+            "America/Matamoros": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Matamoros ( America )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Matamoros",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Matamoros ( America )"
+            },
+            "America/Mazatlan": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Mazatlan ( America )",
+                "dst_change_epoch": 1445760614,
+                "name": "America/Mazatlan",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Mazatlan ( America )"
+            },
+            "America/Menominee": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Menominee ( America )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Menominee",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Menominee ( America )"
+            },
+            "America/Merida": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Merida ( America )",
+                "dst_change_epoch": 1445756817,
+                "name": "America/Merida",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Merida ( America )"
+            },
+            "America/Metlakatla": {
+                "name": "America/Metlakatla",
+                "offset_string": "UTC-8",
+                "offset_value": -28800,
+                "readable_name": "-8:00 Metlakatla ( America )"
+            },
+            "America/Mexico_City": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Mexico City ( America )",
+                "dst_change_epoch": 1445756817,
+                "name": "America/Mexico_City",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Mexico City ( America )"
+            },
+            "America/Miquelon": {
+                "changed_offset_string": "UTC-3",
+                "changed_offset_value": -10800,
+                "changed_readable_name": "-3:00 Miquelon ( America )",
+                "dst_change_epoch": 1446351028,
+                "name": "America/Miquelon",
+                "offset_string": "UTC-2",
+                "offset_value": -7200,
+                "readable_name": "-2:00 Miquelon ( America )"
+            },
+            "America/Moncton": {
+                "changed_offset_string": "UTC-4",
+                "changed_offset_value": -14400,
+                "changed_readable_name": "-4:00 Moncton ( America )",
+                "dst_change_epoch": 1446354825,
+                "name": "America/Moncton",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Moncton ( America )"
+            },
+            "America/Monterrey": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Monterrey ( America )",
+                "dst_change_epoch": 1445756817,
+                "name": "America/Monterrey",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Monterrey ( America )"
+            },
+            "America/Montevideo": {
+                "name": "America/Montevideo",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Montevideo ( America )"
+            },
+            "America/Nassau": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Nassau ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Nassau",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Nassau ( America )"
+            },
+            "America/New_York": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 New York ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/New_York",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 New York ( America )"
+            },
+            "America/Nipigon": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Nipigon ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Nipigon",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Nipigon ( America )"
+            },
+            "America/Nome": {
+                "changed_offset_string": "UTC-9",
+                "changed_offset_value": -32400,
+                "changed_readable_name": "-9:00 Nome ( America )",
+                "dst_change_epoch": 1446373809,
+                "name": "America/Nome",
+                "offset_string": "UTC-8",
+                "offset_value": -28800,
+                "readable_name": "-8:00 Nome ( America )"
+            },
+            "America/Noronha": {
+                "name": "America/Noronha",
+                "offset_string": "UTC-2",
+                "offset_value": -7200,
+                "readable_name": "-2:00 Noronha ( America )"
+            },
+            "America/North_Dakota/Beulah": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Beulah ( America/North Dakota )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/North_Dakota/Beulah",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Beulah ( America/North Dakota )"
+            },
+            "America/North_Dakota/Center": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Center ( America/North Dakota )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/North_Dakota/Center",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Center ( America/North Dakota )"
+            },
+            "America/North_Dakota/New_Salem": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 New Salem ( America/North Dakota )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/North_Dakota/New_Salem",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 New Salem ( America/North Dakota )"
+            },
+            "America/Ojinaga": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Ojinaga ( America )",
+                "dst_change_epoch": 1446366215,
+                "name": "America/Ojinaga",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Ojinaga ( America )"
+            },
+            "America/Panama": {
+                "name": "America/Panama",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Panama ( America )"
+            },
+            "America/Pangnirtung": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Pangnirtung ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Pangnirtung",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Pangnirtung ( America )"
+            },
+            "America/Paramaribo": {
+                "name": "America/Paramaribo",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Paramaribo ( America )"
+            },
+            "America/Phoenix": {
+                "name": "America/Phoenix",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Phoenix ( America )"
+            },
+            "America/Port-au-Prince": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Port-au-Prince ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Port-au-Prince",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Port-au-Prince ( America )"
+            },
+            "America/Port_of_Spain": {
+                "name": "America/Port_of_Spain",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Port of Spain ( America )"
+            },
+            "America/Porto_Velho": {
+                "name": "America/Porto_Velho",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Porto Velho ( America )"
+            },
+            "America/Puerto_Rico": {
+                "name": "America/Puerto_Rico",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Puerto Rico ( America )"
+            },
+            "America/Rainy_River": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Rainy River ( America )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Rainy_River",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Rainy River ( America )"
+            },
+            "America/Rankin_Inlet": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Rankin Inlet ( America )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Rankin_Inlet",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Rankin Inlet ( America )"
+            },
+            "America/Recife": {
+                "name": "America/Recife",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Recife ( America )"
+            },
+            "America/Regina": {
+                "name": "America/Regina",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Regina ( America )"
+            },
+            "America/Resolute": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Resolute ( America )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Resolute",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Resolute ( America )"
+            },
+            "America/Rio_Branco": {
+                "name": "America/Rio_Branco",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Rio Branco ( America )"
+            },
+            "America/Santa_Isabel": {
+                "changed_offset_string": "UTC-8",
+                "changed_offset_value": -28800,
+                "changed_readable_name": "-8:00 Santa Isabel ( America )",
+                "dst_change_epoch": 1445764411,
+                "name": "America/Santa_Isabel",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Santa Isabel ( America )"
+            },
+            "America/Santarem": {
+                "name": "America/Santarem",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Santarem ( America )"
+            },
+            "America/Santiago": {
+                "name": "America/Santiago",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Santiago ( America )"
+            },
+            "America/Santo_Domingo": {
+                "name": "America/Santo_Domingo",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Santo Domingo ( America )"
+            },
+            "America/Sao_Paulo": {
+                "changed_offset_string": "UTC-2",
+                "changed_offset_value": -7200,
+                "changed_readable_name": "-2:00 Sao Paulo ( America )",
+                "dst_change_epoch": 1445137927,
+                "name": "America/Sao_Paulo",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Sao Paulo ( America )"
+            },
+            "America/Scoresbysund": {
+                "changed_offset_string": "UTC-1",
+                "changed_offset_value": -3600,
+                "changed_readable_name": "-1:00 Scoresbysund ( America )",
+                "dst_change_epoch": 1445735934,
+                "name": "America/Scoresbysund",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 Scoresbysund ( America )"
+            },
+            "America/Sitka": {
+                "changed_offset_string": "UTC-9",
+                "changed_offset_value": -32400,
+                "changed_readable_name": "-9:00 Sitka ( America )",
+                "dst_change_epoch": 1446373809,
+                "name": "America/Sitka",
+                "offset_string": "UTC-8",
+                "offset_value": -28800,
+                "readable_name": "-8:00 Sitka ( America )"
+            },
+            "America/St_Johns": {
+                "changed_offset_string": "UTC-3:30",
+                "changed_offset_value": -12600,
+                "changed_readable_name": "-3:30 St Johns ( America )",
+                "dst_change_epoch": 1446352927,
+                "name": "America/St_Johns",
+                "offset_string": "UTC-2:30",
+                "offset_value": -9000,
+                "readable_name": "-2:30 St Johns ( America )"
+            },
+            "America/Swift_Current": {
+                "name": "America/Swift_Current",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Swift Current ( America )"
+            },
+            "America/Tegucigalpa": {
+                "name": "America/Tegucigalpa",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Tegucigalpa ( America )"
+            },
+            "America/Thule": {
+                "changed_offset_string": "UTC-4",
+                "changed_offset_value": -14400,
+                "changed_readable_name": "-4:00 Thule ( America )",
+                "dst_change_epoch": 1446354825,
+                "name": "America/Thule",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Thule ( America )"
+            },
+            "America/Thunder_Bay": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Thunder Bay ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Thunder_Bay",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Thunder Bay ( America )"
+            },
+            "America/Tijuana": {
+                "changed_offset_string": "UTC-8",
+                "changed_offset_value": -28800,
+                "changed_readable_name": "-8:00 Tijuana ( America )",
+                "dst_change_epoch": 1446370012,
+                "name": "America/Tijuana",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Tijuana ( America )"
+            },
+            "America/Toronto": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 Toronto ( America )",
+                "dst_change_epoch": 1446358622,
+                "name": "America/Toronto",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 Toronto ( America )"
+            },
+            "America/Vancouver": {
+                "changed_offset_string": "UTC-8",
+                "changed_offset_value": -28800,
+                "changed_readable_name": "-8:00 Vancouver ( America )",
+                "dst_change_epoch": 1446370012,
+                "name": "America/Vancouver",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Vancouver ( America )"
+            },
+            "America/Whitehorse": {
+                "changed_offset_string": "UTC-8",
+                "changed_offset_value": -28800,
+                "changed_readable_name": "-8:00 Whitehorse ( America )",
+                "dst_change_epoch": 1446370012,
+                "name": "America/Whitehorse",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 Whitehorse ( America )"
+            },
+            "America/Winnipeg": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 Winnipeg ( America )",
+                "dst_change_epoch": 1446362418,
+                "name": "America/Winnipeg",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Winnipeg ( America )"
+            },
+            "America/Yakutat": {
+                "changed_offset_string": "UTC-9",
+                "changed_offset_value": -32400,
+                "changed_readable_name": "-9:00 Yakutat ( America )",
+                "dst_change_epoch": 1446373809,
+                "name": "America/Yakutat",
+                "offset_string": "UTC-8",
+                "offset_value": -28800,
+                "readable_name": "-8:00 Yakutat ( America )"
+            },
+            "America/Yellowknife": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 Yellowknife ( America )",
+                "dst_change_epoch": 1446366215,
+                "name": "America/Yellowknife",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Yellowknife ( America )"
+            },
+            "Antarctica/Casey": {
+                "name": "Antarctica/Casey",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Casey ( Antarctica )"
+            },
+            "Antarctica/Davis": {
+                "name": "Antarctica/Davis",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Davis ( Antarctica )"
+            },
+            "Antarctica/DumontDUrville": {
+                "name": "Antarctica/DumontDUrville",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 DumontDUrville ( Antarctica )"
+            },
+            "Antarctica/Macquarie": {
+                "name": "Antarctica/Macquarie",
+                "offset_string": "UTC+11",
+                "offset_value": 39600,
+                "readable_name": "+11:00 Macquarie ( Antarctica )"
+            },
+            "Antarctica/Mawson": {
+                "name": "Antarctica/Mawson",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Mawson ( Antarctica )"
+            },
+            "Antarctica/Palmer": {
+                "name": "Antarctica/Palmer",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Palmer ( Antarctica )"
+            },
+            "Antarctica/Rothera": {
+                "name": "Antarctica/Rothera",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Rothera ( Antarctica )"
+            },
+            "Antarctica/Syowa": {
+                "name": "Antarctica/Syowa",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Syowa ( Antarctica )"
+            },
+            "Antarctica/Troll": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 Troll ( Antarctica )",
+                "dst_change_epoch": 1445735934,
+                "name": "Antarctica/Troll",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Troll ( Antarctica )"
+            },
+            "Antarctica/Vostok": {
+                "name": "Antarctica/Vostok",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Vostok ( Antarctica )"
+            },
+            "Asia/Almaty": {
+                "name": "Asia/Almaty",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Almaty ( Asia )"
+            },
+            "Asia/Amman": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Amman ( Asia )",
+                "dst_change_epoch": 1446157387,
+                "name": "Asia/Amman",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Amman ( Asia )"
+            },
+            "Asia/Anadyr": {
+                "name": "Asia/Anadyr",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Anadyr ( Asia )"
+            },
+            "Asia/Aqtau": {
+                "name": "Asia/Aqtau",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Aqtau ( Asia )"
+            },
+            "Asia/Aqtobe": {
+                "name": "Asia/Aqtobe",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Aqtobe ( Asia )"
+            },
+            "Asia/Ashgabat": {
+                "name": "Asia/Ashgabat",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Ashgabat ( Asia )"
+            },
+            "Asia/Baghdad": {
+                "name": "Asia/Baghdad",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Baghdad ( Asia )"
+            },
+            "Asia/Baku": {
+                "changed_offset_string": "UTC+4",
+                "changed_offset_value": 14400,
+                "changed_readable_name": "+4:00 Baku ( Asia )",
+                "dst_change_epoch": 1445732137,
+                "name": "Asia/Baku",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Baku ( Asia )"
+            },
+            "Asia/Bangkok": {
+                "name": "Asia/Bangkok",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Bangkok ( Asia )"
+            },
+            "Asia/Beirut": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Beirut ( Asia )",
+                "dst_change_epoch": 1445720747,
+                "name": "Asia/Beirut",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Beirut ( Asia )"
+            },
+            "Asia/Bishkek": {
+                "name": "Asia/Bishkek",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Bishkek ( Asia )"
+            },
+            "Asia/Brunei": {
+                "name": "Asia/Brunei",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Brunei ( Asia )"
+            },
+            "Asia/Chita": {
+                "name": "Asia/Chita",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Chita ( Asia )"
+            },
+            "Asia/Choibalsan": {
+                "changed_offset_string": "UTC+9",
+                "changed_offset_value": 32400,
+                "changed_readable_name": "+9:00 Choibalsan ( Asia )",
+                "dst_change_epoch": 1458930075,
+                "name": "Asia/Choibalsan",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Choibalsan ( Asia )"
+            },
+            "Asia/Colombo": {
+                "name": "Asia/Colombo",
+                "offset_string": "UTC+5:30",
+                "offset_value": 19800,
+                "readable_name": "+5:30 Colombo ( Asia )"
+            },
+            "Asia/Damascus": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Damascus ( Asia )",
+                "dst_change_epoch": 1446153590,
+                "name": "Asia/Damascus",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Damascus ( Asia )"
+            },
+            "Asia/Dhaka": {
+                "name": "Asia/Dhaka",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Dhaka ( Asia )"
+            },
+            "Asia/Dili": {
+                "name": "Asia/Dili",
+                "offset_string": "UTC+9",
+                "offset_value": 32400,
+                "readable_name": "+9:00 Dili ( Asia )"
+            },
+            "Asia/Dubai": {
+                "name": "Asia/Dubai",
+                "offset_string": "UTC+4",
+                "offset_value": 14400,
+                "readable_name": "+4:00 Dubai ( Asia )"
+            },
+            "Asia/Dushanbe": {
+                "name": "Asia/Dushanbe",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Dushanbe ( Asia )"
+            },
+            "Asia/Gaza": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Gaza ( Asia )",
+                "dst_change_epoch": 1445547989,
+                "name": "Asia/Gaza",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Gaza ( Asia )"
+            },
+            "Asia/Hebron": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Hebron ( Asia )",
+                "dst_change_epoch": 1445547989,
+                "name": "Asia/Hebron",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Hebron ( Asia )"
+            },
+            "Asia/Ho_Chi_Minh": {
+                "name": "Asia/Ho_Chi_Minh",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Ho Chi Minh ( Asia )"
+            },
+            "Asia/Hong_Kong": {
+                "name": "Asia/Hong_Kong",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Hong Kong ( Asia )"
+            },
+            "Asia/Hovd": {
+                "changed_offset_string": "UTC+8",
+                "changed_offset_value": 28800,
+                "changed_readable_name": "+8:00 Hovd ( Asia )",
+                "dst_change_epoch": 1458933872,
+                "name": "Asia/Hovd",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Hovd ( Asia )"
+            },
+            "Asia/Irkutsk": {
+                "name": "Asia/Irkutsk",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Irkutsk ( Asia )"
+            },
+            "Asia/Jakarta": {
+                "name": "Asia/Jakarta",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Jakarta ( Asia )"
+            },
+            "Asia/Jayapura": {
+                "name": "Asia/Jayapura",
+                "offset_string": "UTC+9",
+                "offset_value": 32400,
+                "readable_name": "+9:00 Jayapura ( Asia )"
+            },
+            "Asia/Jerusalem": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Jerusalem ( Asia )",
+                "dst_change_epoch": 1445728340,
+                "name": "Asia/Jerusalem",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Jerusalem ( Asia )"
+            },
+            "Asia/Kabul": {
+                "name": "Asia/Kabul",
+                "offset_string": "UTC+4:30",
+                "offset_value": 16200,
+                "readable_name": "+4:30 Kabul ( Asia )"
+            },
+            "Asia/Kamchatka": {
+                "name": "Asia/Kamchatka",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Kamchatka ( Asia )"
+            },
+            "Asia/Karachi": {
+                "name": "Asia/Karachi",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Karachi ( Asia )"
+            },
+            "Asia/Kathmandu": {
+                "name": "Asia/Kathmandu",
+                "offset_string": "UTC+5:45",
+                "offset_value": 20700,
+                "readable_name": "+5:45 Kathmandu ( Asia )"
+            },
+            "Asia/Khandyga": {
+                "name": "Asia/Khandyga",
+                "offset_string": "UTC+9",
+                "offset_value": 32400,
+                "readable_name": "+9:00 Khandyga ( Asia )"
+            },
+            "Asia/Kolkata": {
+                "name": "Asia/Kolkata",
+                "offset_string": "UTC+5:30",
+                "offset_value": 19800,
+                "readable_name": "+5:30 Kolkata ( Asia )"
+            },
+            "Asia/Krasnoyarsk": {
+                "name": "Asia/Krasnoyarsk",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Krasnoyarsk ( Asia )"
+            },
+            "Asia/Kuala_Lumpur": {
+                "name": "Asia/Kuala_Lumpur",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Kuala Lumpur ( Asia )"
+            },
+            "Asia/Kuching": {
+                "name": "Asia/Kuching",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Kuching ( Asia )"
+            },
+            "Asia/Macau": {
+                "name": "Asia/Macau",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Macau ( Asia )"
+            },
+            "Asia/Magadan": {
+                "name": "Asia/Magadan",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Magadan ( Asia )"
+            },
+            "Asia/Makassar": {
+                "name": "Asia/Makassar",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Makassar ( Asia )"
+            },
+            "Asia/Manila": {
+                "name": "Asia/Manila",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Manila ( Asia )"
+            },
+            "Asia/Nicosia": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Nicosia ( Asia )",
+                "dst_change_epoch": 1445735934,
+                "name": "Asia/Nicosia",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Nicosia ( Asia )"
+            },
+            "Asia/Novokuznetsk": {
+                "name": "Asia/Novokuznetsk",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Novokuznetsk ( Asia )"
+            },
+            "Asia/Novosibirsk": {
+                "name": "Asia/Novosibirsk",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Novosibirsk ( Asia )"
+            },
+            "Asia/Omsk": {
+                "name": "Asia/Omsk",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Omsk ( Asia )"
+            },
+            "Asia/Oral": {
+                "name": "Asia/Oral",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Oral ( Asia )"
+            },
+            "Asia/Pontianak": {
+                "name": "Asia/Pontianak",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Pontianak ( Asia )"
+            },
+            "Asia/Pyongyang": {
+                "name": "Asia/Pyongyang",
+                "offset_string": "UTC+8:30",
+                "offset_value": 30600,
+                "readable_name": "+8:30 Pyongyang ( Asia )"
+            },
+            "Asia/Qatar": {
+                "name": "Asia/Qatar",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Qatar ( Asia )"
+            },
+            "Asia/Qyzylorda": {
+                "name": "Asia/Qyzylorda",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Qyzylorda ( Asia )"
+            },
+            "Asia/Rangoon": {
+                "name": "Asia/Rangoon",
+                "offset_string": "UTC+6:30",
+                "offset_value": 23400,
+                "readable_name": "+6:30 Rangoon ( Asia )"
+            },
+            "Asia/Riyadh": {
+                "name": "Asia/Riyadh",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Riyadh ( Asia )"
+            },
+            "Asia/Sakhalin": {
+                "name": "Asia/Sakhalin",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Sakhalin ( Asia )"
+            },
+            "Asia/Samarkand": {
+                "name": "Asia/Samarkand",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Samarkand ( Asia )"
+            },
+            "Asia/Seoul": {
+                "name": "Asia/Seoul",
+                "offset_string": "UTC+9",
+                "offset_value": 32400,
+                "readable_name": "+9:00 Seoul ( Asia )"
+            },
+            "Asia/Shanghai": {
+                "name": "Asia/Shanghai",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Shanghai ( Asia )"
+            },
+            "Asia/Singapore": {
+                "name": "Asia/Singapore",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Singapore ( Asia )"
+            },
+            "Asia/Srednekolymsk": {
+                "name": "Asia/Srednekolymsk",
+                "offset_string": "UTC+11",
+                "offset_value": 39600,
+                "readable_name": "+11:00 Srednekolymsk ( Asia )"
+            },
+            "Asia/Taipei": {
+                "name": "Asia/Taipei",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Taipei ( Asia )"
+            },
+            "Asia/Tashkent": {
+                "name": "Asia/Tashkent",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Tashkent ( Asia )"
+            },
+            "Asia/Tbilisi": {
+                "name": "Asia/Tbilisi",
+                "offset_string": "UTC+4",
+                "offset_value": 14400,
+                "readable_name": "+4:00 Tbilisi ( Asia )"
+            },
+            "Asia/Tehran": {
+                "changed_offset_string": "UTC+4:30",
+                "changed_offset_value": 16200,
+                "changed_readable_name": "+4:30 Tehran ( Asia )",
+                "dst_change_epoch": 1458506724,
+                "name": "Asia/Tehran",
+                "offset_string": "UTC+3:30",
+                "offset_value": 12600,
+                "readable_name": "+3:30 Tehran ( Asia )"
+            },
+            "Asia/Thimphu": {
+                "name": "Asia/Thimphu",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Thimphu ( Asia )"
+            },
+            "Asia/Tokyo": {
+                "name": "Asia/Tokyo",
+                "offset_string": "UTC+9",
+                "offset_value": 32400,
+                "readable_name": "+9:00 Tokyo ( Asia )"
+            },
+            "Asia/Ulaanbaatar": {
+                "changed_offset_string": "UTC+9",
+                "changed_offset_value": 32400,
+                "changed_readable_name": "+9:00 Ulaanbaatar ( Asia )",
+                "dst_change_epoch": 1458930075,
+                "name": "Asia/Ulaanbaatar",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Ulaanbaatar ( Asia )"
+            },
+            "Asia/Urumqi": {
+                "name": "Asia/Urumqi",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Urumqi ( Asia )"
+            },
+            "Asia/Ust-Nera": {
+                "name": "Asia/Ust-Nera",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Ust-Nera ( Asia )"
+            },
+            "Asia/Vladivostok": {
+                "name": "Asia/Vladivostok",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Vladivostok ( Asia )"
+            },
+            "Asia/Yakutsk": {
+                "name": "Asia/Yakutsk",
+                "offset_string": "UTC+9",
+                "offset_value": 32400,
+                "readable_name": "+9:00 Yakutsk ( Asia )"
+            },
+            "Asia/Yekaterinburg": {
+                "name": "Asia/Yekaterinburg",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Yekaterinburg ( Asia )"
+            },
+            "Asia/Yerevan": {
+                "name": "Asia/Yerevan",
+                "offset_string": "UTC+4",
+                "offset_value": 14400,
+                "readable_name": "+4:00 Yerevan ( Asia )"
+            },
+            "Atlantic/Azores": {
+                "changed_offset_string": "UTC-1",
+                "changed_offset_value": -3600,
+                "changed_readable_name": "-1:00 Azores ( Atlantic )",
+                "dst_change_epoch": 1445735934,
+                "name": "Atlantic/Azores",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 Azores ( Atlantic )"
+            },
+            "Atlantic/Bermuda": {
+                "changed_offset_string": "UTC-4",
+                "changed_offset_value": -14400,
+                "changed_readable_name": "-4:00 Bermuda ( Atlantic )",
+                "dst_change_epoch": 1446354825,
+                "name": "Atlantic/Bermuda",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Bermuda ( Atlantic )"
+            },
+            "Atlantic/Canary": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 Canary ( Atlantic )",
+                "dst_change_epoch": 1445735934,
+                "name": "Atlantic/Canary",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Canary ( Atlantic )"
+            },
+            "Atlantic/Cape_Verde": {
+                "name": "Atlantic/Cape_Verde",
+                "offset_string": "UTC-1",
+                "offset_value": -3600,
+                "readable_name": "-1:00 Cape Verde ( Atlantic )"
+            },
+            "Atlantic/Faroe": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 Faroe ( Atlantic )",
+                "dst_change_epoch": 1445735934,
+                "name": "Atlantic/Faroe",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Faroe ( Atlantic )"
+            },
+            "Atlantic/Madeira": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 Madeira ( Atlantic )",
+                "dst_change_epoch": 1445735934,
+                "name": "Atlantic/Madeira",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Madeira ( Atlantic )"
+            },
+            "Atlantic/Reykjavik": {
+                "name": "Atlantic/Reykjavik",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 Reykjavik ( Atlantic )"
+            },
+            "Atlantic/South_Georgia": {
+                "name": "Atlantic/South_Georgia",
+                "offset_string": "UTC-2",
+                "offset_value": -7200,
+                "readable_name": "-2:00 South Georgia ( Atlantic )"
+            },
+            "Atlantic/Stanley": {
+                "name": "Atlantic/Stanley",
+                "offset_string": "UTC-3",
+                "offset_value": -10800,
+                "readable_name": "-3:00 Stanley ( Atlantic )"
+            },
+            "Australia/Adelaide": {
+                "changed_offset_string": "UTC+10:30",
+                "changed_offset_value": 37800,
+                "changed_readable_name": "+10:30 Adelaide ( Australia )",
+                "dst_change_epoch": 1443890653,
+                "name": "Australia/Adelaide",
+                "offset_string": "UTC+9:30",
+                "offset_value": 34200,
+                "readable_name": "+9:30 Adelaide ( Australia )"
+            },
+            "Australia/Brisbane": {
+                "name": "Australia/Brisbane",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Brisbane ( Australia )"
+            },
+            "Australia/Broken_Hill": {
+                "changed_offset_string": "UTC+10:30",
+                "changed_offset_value": 37800,
+                "changed_readable_name": "+10:30 Broken Hill ( Australia )",
+                "dst_change_epoch": 1443890653,
+                "name": "Australia/Broken_Hill",
+                "offset_string": "UTC+9:30",
+                "offset_value": 34200,
+                "readable_name": "+9:30 Broken Hill ( Australia )"
+            },
+            "Australia/Currie": {
+                "changed_offset_string": "UTC+11",
+                "changed_offset_value": 39600,
+                "changed_readable_name": "+11:00 Currie ( Australia )",
+                "dst_change_epoch": 1443888755,
+                "name": "Australia/Currie",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Currie ( Australia )"
+            },
+            "Australia/Darwin": {
+                "name": "Australia/Darwin",
+                "offset_string": "UTC+9:30",
+                "offset_value": 34200,
+                "readable_name": "+9:30 Darwin ( Australia )"
+            },
+            "Australia/Eucla": {
+                "name": "Australia/Eucla",
+                "offset_string": "UTC+8:45",
+                "offset_value": 31500,
+                "readable_name": "+8:45 Eucla ( Australia )"
+            },
+            "Australia/Hobart": {
+                "changed_offset_string": "UTC+11",
+                "changed_offset_value": 39600,
+                "changed_readable_name": "+11:00 Hobart ( Australia )",
+                "dst_change_epoch": 1443888755,
+                "name": "Australia/Hobart",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Hobart ( Australia )"
+            },
+            "Australia/Lindeman": {
+                "name": "Australia/Lindeman",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Lindeman ( Australia )"
+            },
+            "Australia/Lord_Howe": {
+                "changed_offset_string": "UTC+11",
+                "changed_offset_value": 39600,
+                "changed_readable_name": "+11:00 Lord Howe ( Australia )",
+                "dst_change_epoch": 1443886856,
+                "name": "Australia/Lord_Howe",
+                "offset_string": "UTC+10:30",
+                "offset_value": 37800,
+                "readable_name": "+10:30 Lord Howe ( Australia )"
+            },
+            "Australia/Melbourne": {
+                "changed_offset_string": "UTC+11",
+                "changed_offset_value": 39600,
+                "changed_readable_name": "+11:00 Melbourne ( Australia )",
+                "dst_change_epoch": 1443888755,
+                "name": "Australia/Melbourne",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Melbourne ( Australia )"
+            },
+            "Australia/Perth": {
+                "name": "Australia/Perth",
+                "offset_string": "UTC+8",
+                "offset_value": 28800,
+                "readable_name": "+8:00 Perth ( Australia )"
+            },
+            "Australia/Sydney": {
+                "changed_offset_string": "UTC+11",
+                "changed_offset_value": 39600,
+                "changed_readable_name": "+11:00 Sydney ( Australia )",
+                "dst_change_epoch": 1443888755,
+                "name": "Australia/Sydney",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Sydney ( Australia )"
+            },
+            "CET": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 CET",
+                "dst_change_epoch": 1445735934,
+                "name": "CET",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 CET"
+            },
+            "CST6CDT": {
+                "changed_offset_string": "UTC-6",
+                "changed_offset_value": -21600,
+                "changed_readable_name": "-6:00 CST6CDT",
+                "dst_change_epoch": 1446362418,
+                "name": "CST6CDT",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 CST6CDT"
+            },
+            "EET": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 EET",
+                "dst_change_epoch": 1445735934,
+                "name": "EET",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 EET"
+            },
+            "EST": {
+                "name": "EST",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 EST"
+            },
+            "EST5EDT": {
+                "changed_offset_string": "UTC-5",
+                "changed_offset_value": -18000,
+                "changed_readable_name": "-5:00 EST5EDT",
+                "dst_change_epoch": 1446358622,
+                "name": "EST5EDT",
+                "offset_string": "UTC-4",
+                "offset_value": -14400,
+                "readable_name": "-4:00 EST5EDT"
+            },
+            "Europe/Amsterdam": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Amsterdam ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Amsterdam",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Amsterdam ( Europe )"
+            },
+            "Europe/Andorra": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Andorra ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Andorra",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Andorra ( Europe )"
+            },
+            "Europe/Athens": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Athens ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Athens",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Athens ( Europe )"
+            },
+            "Europe/Belgrade": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Belgrade ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Belgrade",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Belgrade ( Europe )"
+            },
+            "Europe/Berlin": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Berlin ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Berlin",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Berlin ( Europe )"
+            },
+            "Europe/Brussels": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Brussels ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Brussels",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Brussels ( Europe )"
+            },
+            "Europe/Bucharest": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Bucharest ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Bucharest",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Bucharest ( Europe )"
+            },
+            "Europe/Budapest": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Budapest ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Budapest",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Budapest ( Europe )"
+            },
+            "Europe/Chisinau": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Chisinau ( Europe )",
+                "dst_change_epoch": 1445732137,
+                "name": "Europe/Chisinau",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Chisinau ( Europe )"
+            },
+            "Europe/Copenhagen": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Copenhagen ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Copenhagen",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Copenhagen ( Europe )"
+            },
+            "Europe/Dublin": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 Dublin ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Dublin",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Dublin ( Europe )"
+            },
+            "Europe/Gibraltar": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Gibraltar ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Gibraltar",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Gibraltar ( Europe )"
+            },
+            "Europe/Helsinki": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Helsinki ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Helsinki",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Helsinki ( Europe )"
+            },
+            "Europe/Istanbul": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Istanbul ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Istanbul",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Istanbul ( Europe )"
+            },
+            "Europe/Kaliningrad": {
+                "name": "Europe/Kaliningrad",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Kaliningrad ( Europe )"
+            },
+            "Europe/Kiev": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Kiev ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Kiev",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Kiev ( Europe )"
+            },
+            "Europe/Lisbon": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 Lisbon ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Lisbon",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 Lisbon ( Europe )"
+            },
+            "Europe/London": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 London ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/London",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 London ( Europe )"
+            },
+            "Europe/Luxembourg": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Luxembourg ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Luxembourg",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Luxembourg ( Europe )"
+            },
+            "Europe/Madrid": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Madrid ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Madrid",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Madrid ( Europe )"
+            },
+            "Europe/Malta": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Malta ( Europe )",
+                "dst_change_epoch": 1445735934,
+                "name": "Europe/Malta",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Malta ( Europe )"
+            },
+            "Europe/Minsk": {
+                "name": "Europe/Minsk",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Minsk ( Europe )"
+            },
+            "Europe/Monaco": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Monaco ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Monaco",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Monaco ( Europe )"
+            },
+            "Europe/Moscow": {
+                "name": "Europe/Moscow",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Moscow ( Europe )"
+            },
+            "Europe/Oslo": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Oslo ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Oslo",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Oslo ( Europe )"
+            },
+            "Europe/Paris": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Paris ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Paris",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Paris ( Europe )"
+            },
+            "Europe/Prague": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Prague ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Prague",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Prague ( Europe )"
+            },
+            "Europe/Riga": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Riga ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Riga",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Riga ( Europe )"
+            },
+            "Europe/Rome": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Rome ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Rome",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Rome ( Europe )"
+            },
+            "Europe/Samara": {
+                "name": "Europe/Samara",
+                "offset_string": "UTC+4",
+                "offset_value": 14400,
+                "readable_name": "+4:00 Samara ( Europe )"
+            },
+            "Europe/Simferopol": {
+                "name": "Europe/Simferopol",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Simferopol ( Europe )"
+            },
+            "Europe/Sofia": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Sofia ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Sofia",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Sofia ( Europe )"
+            },
+            "Europe/Stockholm": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Stockholm ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Stockholm",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Stockholm ( Europe )"
+            },
+            "Europe/Tallinn": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Tallinn ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Tallinn",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Tallinn ( Europe )"
+            },
+            "Europe/Tirane": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Tirane ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Tirane",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Tirane ( Europe )"
+            },
+            "Europe/Uzhgorod": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Uzhgorod ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Uzhgorod",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Uzhgorod ( Europe )"
+            },
+            "Europe/Vienna": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Vienna ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Vienna",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Vienna ( Europe )"
+            },
+            "Europe/Vilnius": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Vilnius ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Vilnius",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Vilnius ( Europe )"
+            },
+            "Europe/Volgograd": {
+                "name": "Europe/Volgograd",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Volgograd ( Europe )"
+            },
+            "Europe/Warsaw": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Warsaw ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Warsaw",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Warsaw ( Europe )"
+            },
+            "Europe/Zaporozhye": {
+                "changed_offset_string": "UTC+2",
+                "changed_offset_value": 7200,
+                "changed_readable_name": "+2:00 Zaporozhye ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Zaporozhye",
+                "offset_string": "UTC+3",
+                "offset_value": 10800,
+                "readable_name": "+3:00 Zaporozhye ( Europe )"
+            },
+            "Europe/Zurich": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 Zurich ( Europe )",
+                "dst_change_epoch": 1445735935,
+                "name": "Europe/Zurich",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 Zurich ( Europe )"
+            },
+            "HST": {
+                "name": "HST",
+                "offset_string": "UTC-10",
+                "offset_value": -36000,
+                "readable_name": "-10:00 HST"
+            },
+            "Indian/Chagos": {
+                "name": "Indian/Chagos",
+                "offset_string": "UTC+6",
+                "offset_value": 21600,
+                "readable_name": "+6:00 Chagos ( Indian )"
+            },
+            "Indian/Christmas": {
+                "name": "Indian/Christmas",
+                "offset_string": "UTC+7",
+                "offset_value": 25200,
+                "readable_name": "+7:00 Christmas ( Indian )"
+            },
+            "Indian/Cocos": {
+                "name": "Indian/Cocos",
+                "offset_string": "UTC+6:30",
+                "offset_value": 23400,
+                "readable_name": "+6:30 Cocos ( Indian )"
+            },
+            "Indian/Kerguelen": {
+                "name": "Indian/Kerguelen",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Kerguelen ( Indian )"
+            },
+            "Indian/Mahe": {
+                "name": "Indian/Mahe",
+                "offset_string": "UTC+4",
+                "offset_value": 14400,
+                "readable_name": "+4:00 Mahe ( Indian )"
+            },
+            "Indian/Maldives": {
+                "name": "Indian/Maldives",
+                "offset_string": "UTC+5",
+                "offset_value": 18000,
+                "readable_name": "+5:00 Maldives ( Indian )"
+            },
+            "Indian/Mauritius": {
+                "name": "Indian/Mauritius",
+                "offset_string": "UTC+4",
+                "offset_value": 14400,
+                "readable_name": "+4:00 Mauritius ( Indian )"
+            },
+            "Indian/Reunion": {
+                "name": "Indian/Reunion",
+                "offset_string": "UTC+4",
+                "offset_value": 14400,
+                "readable_name": "+4:00 Reunion ( Indian )"
+            },
+            "MET": {
+                "changed_offset_string": "UTC+1",
+                "changed_offset_value": 3600,
+                "changed_readable_name": "+1:00 MET",
+                "dst_change_epoch": 1445735935,
+                "name": "MET",
+                "offset_string": "UTC+2",
+                "offset_value": 7200,
+                "readable_name": "+2:00 MET"
+            },
+            "MST": {
+                "name": "MST",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 MST"
+            },
+            "MST7MDT": {
+                "changed_offset_string": "UTC-7",
+                "changed_offset_value": -25200,
+                "changed_readable_name": "-7:00 MST7MDT",
+                "dst_change_epoch": 1446366216,
+                "name": "MST7MDT",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 MST7MDT"
+            },
+            "PST8PDT": {
+                "changed_offset_string": "UTC-8",
+                "changed_offset_value": -28800,
+                "changed_readable_name": "-8:00 PST8PDT",
+                "dst_change_epoch": 1446370013,
+                "name": "PST8PDT",
+                "offset_string": "UTC-7",
+                "offset_value": -25200,
+                "readable_name": "-7:00 PST8PDT"
+            },
+            "Pacific/Apia": {
+                "changed_offset_string": "UTC+13",
+                "changed_offset_value": 46800,
+                "changed_readable_name": "+13:00 Apia ( Pacific )",
+                "dst_change_epoch": 1459605919,
+                "name": "Pacific/Apia",
+                "offset_string": "UTC+14",
+                "offset_value": 50400,
+                "readable_name": "+14:00 Apia ( Pacific )"
+            },
+            "Pacific/Auckland": {
+                "changed_offset_string": "UTC+12",
+                "changed_offset_value": 43200,
+                "changed_readable_name": "+12:00 Auckland ( Pacific )",
+                "dst_change_epoch": 1459605919,
+                "name": "Pacific/Auckland",
+                "offset_string": "UTC+13",
+                "offset_value": 46800,
+                "readable_name": "+13:00 Auckland ( Pacific )"
+            },
+            "Pacific/Bougainville": {
+                "name": "Pacific/Bougainville",
+                "offset_string": "UTC+11",
+                "offset_value": 39600,
+                "readable_name": "+11:00 Bougainville ( Pacific )"
+            },
+            "Pacific/Chatham": {
+                "changed_offset_string": "UTC+12:45",
+                "changed_offset_value": 45900,
+                "changed_readable_name": "+12:45 Chatham ( Pacific )",
+                "dst_change_epoch": 1459605919,
+                "name": "Pacific/Chatham",
+                "offset_string": "UTC+13:45",
+                "offset_value": 49500,
+                "readable_name": "+13:45 Chatham ( Pacific )"
+            },
+            "Pacific/Chuuk": {
+                "name": "Pacific/Chuuk",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Chuuk ( Pacific )"
+            },
+            "Pacific/Easter": {
+                "name": "Pacific/Easter",
+                "offset_string": "UTC-5",
+                "offset_value": -18000,
+                "readable_name": "-5:00 Easter ( Pacific )"
+            },
+            "Pacific/Efate": {
+                "name": "Pacific/Efate",
+                "offset_string": "UTC+11",
+                "offset_value": 39600,
+                "readable_name": "+11:00 Efate ( Pacific )"
+            },
+            "Pacific/Enderbury": {
+                "name": "Pacific/Enderbury",
+                "offset_string": "UTC+13",
+                "offset_value": 46800,
+                "readable_name": "+13:00 Enderbury ( Pacific )"
+            },
+            "Pacific/Fakaofo": {
+                "name": "Pacific/Fakaofo",
+                "offset_string": "UTC+13",
+                "offset_value": 46800,
+                "readable_name": "+13:00 Fakaofo ( Pacific )"
+            },
+            "Pacific/Fiji": {
+                "changed_offset_string": "UTC+13",
+                "changed_offset_value": 46800,
+                "changed_readable_name": "+13:00 Fiji ( Pacific )",
+                "dst_change_epoch": 1446301669,
+                "name": "Pacific/Fiji",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Fiji ( Pacific )"
+            },
+            "Pacific/Funafuti": {
+                "name": "Pacific/Funafuti",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Funafuti ( Pacific )"
+            },
+            "Pacific/Galapagos": {
+                "name": "Pacific/Galapagos",
+                "offset_string": "UTC-6",
+                "offset_value": -21600,
+                "readable_name": "-6:00 Galapagos ( Pacific )"
+            },
+            "Pacific/Gambier": {
+                "name": "Pacific/Gambier",
+                "offset_string": "UTC-9",
+                "offset_value": -32400,
+                "readable_name": "-9:00 Gambier ( Pacific )"
+            },
+            "Pacific/Guadalcanal": {
+                "name": "Pacific/Guadalcanal",
+                "offset_string": "UTC+11",
+                "offset_value": 39600,
+                "readable_name": "+11:00 Guadalcanal ( Pacific )"
+            },
+            "Pacific/Guam": {
+                "name": "Pacific/Guam",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Guam ( Pacific )"
+            },
+            "Pacific/Honolulu": {
+                "name": "Pacific/Honolulu",
+                "offset_string": "UTC-10",
+                "offset_value": -36000,
+                "readable_name": "-10:00 Honolulu ( Pacific )"
+            },
+            "Pacific/Kiritimati": {
+                "name": "Pacific/Kiritimati",
+                "offset_string": "UTC+14",
+                "offset_value": 50400,
+                "readable_name": "+14:00 Kiritimati ( Pacific )"
+            },
+            "Pacific/Kosrae": {
+                "name": "Pacific/Kosrae",
+                "offset_string": "UTC+11",
+                "offset_value": 39600,
+                "readable_name": "+11:00 Kosrae ( Pacific )"
+            },
+            "Pacific/Kwajalein": {
+                "name": "Pacific/Kwajalein",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Kwajalein ( Pacific )"
+            },
+            "Pacific/Majuro": {
+                "name": "Pacific/Majuro",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Majuro ( Pacific )"
+            },
+            "Pacific/Marquesas": {
+                "name": "Pacific/Marquesas",
+                "offset_string": "UTC-9:30",
+                "offset_value": -34200,
+                "readable_name": "-9:30 Marquesas ( Pacific )"
+            },
+            "Pacific/Nauru": {
+                "name": "Pacific/Nauru",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Nauru ( Pacific )"
+            },
+            "Pacific/Niue": {
+                "name": "Pacific/Niue",
+                "offset_string": "UTC-11",
+                "offset_value": -39600,
+                "readable_name": "-11:00 Niue ( Pacific )"
+            },
+            "Pacific/Norfolk": {
+                "name": "Pacific/Norfolk",
+                "offset_string": "UTC+11:30",
+                "offset_value": 41400,
+                "readable_name": "+11:30 Norfolk ( Pacific )"
+            },
+            "Pacific/Noumea": {
+                "name": "Pacific/Noumea",
+                "offset_string": "UTC+11",
+                "offset_value": 39600,
+                "readable_name": "+11:00 Noumea ( Pacific )"
+            },
+            "Pacific/Pago_Pago": {
+                "name": "Pacific/Pago_Pago",
+                "offset_string": "UTC-11",
+                "offset_value": -39600,
+                "readable_name": "-11:00 Pago Pago ( Pacific )"
+            },
+            "Pacific/Palau": {
+                "name": "Pacific/Palau",
+                "offset_string": "UTC+9",
+                "offset_value": 32400,
+                "readable_name": "+9:00 Palau ( Pacific )"
+            },
+            "Pacific/Pitcairn": {
+                "name": "Pacific/Pitcairn",
+                "offset_string": "UTC-8",
+                "offset_value": -28800,
+                "readable_name": "-8:00 Pitcairn ( Pacific )"
+            },
+            "Pacific/Pohnpei": {
+                "name": "Pacific/Pohnpei",
+                "offset_string": "UTC+11",
+                "offset_value": 39600,
+                "readable_name": "+11:00 Pohnpei ( Pacific )"
+            },
+            "Pacific/Port_Moresby": {
+                "name": "Pacific/Port_Moresby",
+                "offset_string": "UTC+10",
+                "offset_value": 36000,
+                "readable_name": "+10:00 Port Moresby ( Pacific )"
+            },
+            "Pacific/Rarotonga": {
+                "name": "Pacific/Rarotonga",
+                "offset_string": "UTC-10",
+                "offset_value": -36000,
+                "readable_name": "-10:00 Rarotonga ( Pacific )"
+            },
+            "Pacific/Tahiti": {
+                "name": "Pacific/Tahiti",
+                "offset_string": "UTC-10",
+                "offset_value": -36000,
+                "readable_name": "-10:00 Tahiti ( Pacific )"
+            },
+            "Pacific/Tarawa": {
+                "name": "Pacific/Tarawa",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Tarawa ( Pacific )"
+            },
+            "Pacific/Tongatapu": {
+                "name": "Pacific/Tongatapu",
+                "offset_string": "UTC+13",
+                "offset_value": 46800,
+                "readable_name": "+13:00 Tongatapu ( Pacific )"
+            },
+            "Pacific/Wake": {
+                "name": "Pacific/Wake",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Wake ( Pacific )"
+            },
+            "Pacific/Wallis": {
+                "name": "Pacific/Wallis",
+                "offset_string": "UTC+12",
+                "offset_value": 43200,
+                "readable_name": "+12:00 Wallis ( Pacific )"
+            },
+            "UTC": {
+                "name": "UTC",
+                "offset_string": "UTC",
+                "offset_value": 0,
+                "readable_name": "+0:00 UTC"
+            },
+            "WET": {
+                "changed_offset_string": "UTC",
+                "changed_offset_value": 0,
+                "changed_readable_name": "+0:00 WET",
+                "dst_change_epoch": 1445735935,
+                "name": "WET",
+                "offset_string": "UTC+1",
+                "offset_value": 3600,
+                "readable_name": "+1:00 WET"
+            }
+        }
+    },
 };
 
 $(document).ready(function() {
@@ -688,4 +3722,3 @@ $(document).ready(function() {
 
     app.init();
 });
-
